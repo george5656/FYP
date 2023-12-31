@@ -1,5 +1,7 @@
 package view;
 
-public class RootView {
+import javafx.scene.layout.VBox;
+
+public class RootView extends VBox{
 
 }

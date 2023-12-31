@@ -16,17 +16,15 @@ public class Main extends Application {
 	}
 	@Override
 	public void start(Stage primaryStage) throws Exception {
-		
-		
-		private var stage = Stage (new Scene(new RootView()));
-		
+		 primaryStage.setScene(new Scene(view));
+		primaryStage.show();
 	}
 
 
 	
 	public static void main(String[] args) {
 
-
+			launch("kitchen stock management");
 	}
 
 	
