@@ -1,4 +1,8 @@
 package main;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.SQLException;
+
 import controller.Controller;
 import javafx.application.Application;
 import javafx.scene.Scene;
@@ -24,7 +28,16 @@ public class Main extends Application {
 	
 	public static void main(String[] args) {
 
-			launch("kitchen stock management");
+		try {
+		System.out.println("connecting...");
+		Connection connetion = DriverManager.getConnection("jdbc:mysql://localhost:3306/MySQL","root","Root123@");
+		System.out.println("connected");	
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		
+		
+			//launch("kitchen stock management");
 	}
 
 	
