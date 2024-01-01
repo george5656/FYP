@@ -6,10 +6,9 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
-import com.mysql.cj.xdevapi.PreparableStatement;
 /**
  * 
- * @author Student
+ * @author George
  *class for the database connection, and database queries
  */
 public class WritableDatabase {
