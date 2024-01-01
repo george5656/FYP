@@ -1,22 +1,25 @@
 package controller;
 
-import com.oracle.tools.packager.Platform;
-
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
+import javafx.scene.layout.Priority;
 import model.ModelRoot;
 import view.Login;
 import view.RootView;
 
+/**
+ * is the controller class of the MVC for the kitchen management system.
+ * @author George
+ */
 public class Controller {
 // field 
 	private ModelRoot model;
 	private RootView view;
 	private Login login;
 	/**
-	 * contructor, intictae all the other classes and assigning the event handlers.
+	 * Constructor, intictae all the other classes and assigning the event handlers.
 	 * @param model. the root of the M from MVC
 	 * @param view. the root of the v from MVC
 	 */
@@ -80,7 +83,8 @@ private class EHLogin implements EventHandler<ActionEvent>{
 			alert.show();	
 		}else {
 			view.getChildren().remove(0);
-			view.getChildren().add(view.getBudgetFilter());
+			view.getChildren().add(view.getHomePage());
+			view.setVgrow(view.getHomePage(),Priority.ALWAYS);
 		}
 		}
 		

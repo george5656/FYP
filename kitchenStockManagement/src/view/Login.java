@@ -15,7 +15,7 @@ import javafx.scene.layout.VBox;
 import javafx.scene.text.Font;
 /**
  * 
- * @author Student
+ * @author George
  *first page loaded, login page for the application.
  */
 public class Login extends VBox {
@@ -115,14 +115,14 @@ public class Login extends VBox {
 	}
 	/**
 	 * get the user input. the input that the user input in to tfUsername
-	 * @return
+	 * @return string (user input)
 	 */
 public String getUserUsernameInput() {
 	return tfUsername.getText().toString();
 }
 /**
  * get the user input. the input that the user input in to pfPassword
- * @return
+ * @return String (user input)
  */
 public String getUserPasswordInput() {
 	return pfPassword. getText().toString(); 
