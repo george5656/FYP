@@ -15,12 +15,13 @@ public class Main extends Application {
 	@Override
 	public void init() {
 		view = new RootView();
-		ModelRoot model = new ModelRoot();
-		new Controller();
+		
+		new Controller(new ModelRoot(), view);
 	}
 	@Override
 	public void start(Stage primaryStage) throws Exception {
-		 primaryStage.setScene(new Scene(view));
+		primaryStage.setTitle("kitchen stock management");
+		primaryStage.setScene(new Scene(view));
 		primaryStage.show();
 	}
 
@@ -28,16 +29,9 @@ public class Main extends Application {
 	
 	public static void main(String[] args) {
 
-		try {
-		System.out.println("connecting...");
-		Connection connetion = DriverManager.getConnection("jdbc:mysql://localhost:3306/MySQL","root","Root123@");
-		System.out.println("connected");	
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
 		
 		
-			//launch("kitchen stock management");
+			launch("kitchen stock management");
 	}
 
 	
