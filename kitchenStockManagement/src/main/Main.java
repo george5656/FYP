@@ -27,7 +27,10 @@ public class Main extends Application {
 	@Override
 	public void start(Stage primaryStage) throws Exception {
 		primaryStage.setTitle("kitchen stock management");
-		primaryStage.setScene(new Scene(view));
+		Scene scene = new Scene(view);
+		//scene.getStylesheets().add(getClass().getResource("StockManegment.css").toExternalForm());
+		primaryStage.setScene(scene);
+		
 		primaryStage.show();
 	}
 

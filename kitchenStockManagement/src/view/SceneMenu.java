@@ -2,6 +2,8 @@ package view;
 
 
 
+import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.scene.control.Menu;
 import javafx.scene.control.MenuBar;
 import javafx.scene.layout.BorderPane;
@@ -26,6 +28,9 @@ public SceneMenu() {
 	home.setStyle("-fx-Font-size:20");
 	about.setStyle("-fx-Font-size:20");
 	logout.setStyle("-fx-Font-size:20");
-
+ 
+}
+public void setHomeEventHandler(EventHandler<ActionEvent> event) {
+	home.setOnAction(event);
 }
 }

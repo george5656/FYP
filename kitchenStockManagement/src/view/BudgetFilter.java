@@ -12,5 +12,5 @@ import javafx.scene.layout.HBox;
 		private Label test = new Label("test");
 		public BudgetFilter() {
 	this.getChildren().add(test);
-		}
+		} 
 	}

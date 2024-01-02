@@ -1,0 +1,15 @@
+Label {
+-fx-font-size: 20;
+-fx-text-alignment: "center";
+}
+Button {
+-fx-font-size: 20;
+-fx-text-alignment: "center";
+}
+VBox {
+-fx-alignment: "center";
+}
+HBox {
+-fx-alignment: "center";
+}
+

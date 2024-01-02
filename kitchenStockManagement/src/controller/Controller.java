@@ -24,12 +24,29 @@ public class Controller {
 	 * @param view. the root of the v from MVC
 	 */
 	public Controller(ModelRoot model, RootView view) {
-			//shadowing	
+			
+		//shadowing	
 			this.model = model;
 			this.view = view;
 			login = view.getLoginPage();
 			login.setBtnExitEventHandler(new EHExit());
 			login.setBtnLoginEventHandler(new EHLogin());
+			// just tying out a lamabda to see if they still work as expected.
+			view.getHomePage().setBtnStockEventHandler(event -> {
+			view.getChildren().remove(0);
+			view.getChildren().add(view.getStockListPage());
+			view.setVgrow(view.getStockListPage(),Priority.ALWAYS);} );
+			view.getHomePage().setBtnMenuEventHandler(new EHHomePageMenuLoad());
+			view.getMenuListPage().setBtnAddEventHandler(new EHMenuListBtnAdd());
+			view.getStockListPage().setBtnDeleteEventHandler(new EHStockListBtnDelete());
+			view.getMenuDetails().setBtnAddEventHandler(new EHMenudetailsBtnAdd());
+			view.getStockListPage().setBtnAddEventHandler(new EHStockBtnAdd());
+			view.getHomePage().setBtnBudgetEventHandler(new EHHomeBtnBudget());
+			view.getBudgetListPage().setBtnAddEventHandler(new EHBudgetBtnAdd());
+			view.getHomePage().setBtnStorageEventHandler(new EHHomeBtnStorage());
+			view.getStorageLocationListPage().setBtnAddEventHandler(new EHStorageBtnAdd());
+	 
+	
 	}
 	/**
 	 *  this is simply a functional interface, to pass function in to the tbnExit event handler in the
@@ -87,7 +104,107 @@ private class EHLogin implements EventHandler<ActionEvent>{
 			view.setVgrow(view.getHomePage(),Priority.ALWAYS);
 		}
 		}
-		
+		 
 	} 
+}
+
+private class EHHomePageMenuLoad implements EventHandler<ActionEvent>{
+
+	@Override
+	public void handle(ActionEvent event) {
+		view.getChildren().remove(0);
+		view.getChildren().add(view.getMenuListPage());
+		view.setVgrow(view.getMenuListPage(),Priority.ALWAYS);
+	}
+
+
+}
+private class EHMenuListBtnAdd implements EventHandler<ActionEvent>{
+
+	@Override
+	public void handle(ActionEvent event) {
+		view.getChildren().remove(0);
+		view.getChildren().add(view.getMenuDetails());
+		view.setVgrow(view.getMenuDetails(),Priority.ALWAYS);
+	}
+
+
+}
+private class EHStockListBtnDelete implements EventHandler<ActionEvent>{
+
+	@Override
+	public void handle(ActionEvent event) {
+		view.getChildren().remove(0);
+		view.getChildren().add(view.getDeleteConfirmationPage());
+		view.setVgrow(view.getDeleteConfirmationPage(),Priority.ALWAYS);
+	}
+
+
+}
+private class EHMenudetailsBtnAdd implements EventHandler<ActionEvent>{
+
+	@Override
+	public void handle(ActionEvent event) {
+		view.getChildren().remove(0);
+		view.getChildren().add(view.getDishDetailsPage());
+		view.setVgrow(view.getDishDetailsPage(),Priority.ALWAYS);
+		
+	}
+	
+}
+private class EHStockBtnAdd implements EventHandler<ActionEvent>{
+
+	@Override
+	public void handle(ActionEvent event) {
+		view.getChildren().remove(0);
+		view.getChildren().add(view.getStockDetails());
+		view.setVgrow(view.getStockDetails(),Priority.ALWAYS);
+		
+	}
+	
+}
+private class EHBudgetBtnAdd implements EventHandler<ActionEvent>{
+
+	@Override
+	public void handle(ActionEvent event) {
+		view.getChildren().remove(0);
+		view.getChildren().add(view.getBudgetDetailsPage());
+		view.setVgrow(view.getBudgetDetailsPage(),Priority.ALWAYS);
+		
+	}
+	
+}
+private class EHHomeBtnBudget implements EventHandler<ActionEvent>{
+
+	@Override
+	public void handle(ActionEvent event) {
+		view.getChildren().remove(0);
+		view.getChildren().add(view.getBudgetListPage());
+		view.setVgrow(view.getBudgetListPage(),Priority.ALWAYS);
+		
+	}
+	
+}
+private class EHHomeBtnStorage implements EventHandler<ActionEvent>{
+
+	@Override
+	public void handle(ActionEvent event) {
+		view.getChildren().remove(0);
+		view.getChildren().add(view.getStorageLocationListPage());
+		view.setVgrow(view.getStorageLocationListPage(),Priority.ALWAYS);
+		
+	}
+	
+}
+private class EHStorageBtnAdd implements EventHandler<ActionEvent>{
+
+	@Override
+	public void handle(ActionEvent event) {
+		view.getChildren().remove(0);
+		view.getChildren().add(view.getStockStorageLoctionDetailsPage());
+		view.setVgrow(view.getStockStorageLoctionDetailsPage(),Priority.ALWAYS);
+		
+	}
+	
 }
 }

@@ -15,7 +15,16 @@ public class RootView extends VBox {
 	private Login login = new Login();
 	private BudgetFilter budgetFilter = new BudgetFilter();
 	private HomePage homePage = new HomePage();
-
+	private ListPage stockListPage = new ListPage();
+	private MenuDetails menuDetails = new MenuDetails();
+	private ListPage menuListPage = new ListPage();
+	private DeleteConfirmationPage dcp= new DeleteConfirmationPage(); 
+	private DishDetailsPage ddp = new DishDetailsPage();
+	private StockDetails sd = new StockDetails();
+	private ListPage budgetListPage = new ListPage();
+	private BudgetDetailsPage bdp = new BudgetDetailsPage();
+	private ListPage storageLocationListPage = new ListPage();
+	private StockStorageLocationDetails ssld = new StockStorageLocationDetails();
 	/**
 	 * default constructor
 	 */
@@ -50,5 +59,36 @@ public class RootView extends VBox {
 	 */
 public HomePage getHomePage() {
 	return homePage;
+}
+public ListPage getStockListPage() {
+	return stockListPage;
+}
+
+public ListPage getMenuListPage() {
+	return menuListPage;
+}
+public MenuDetails getMenuDetails() {
+return menuDetails;
+}
+public DeleteConfirmationPage getDeleteConfirmationPage() {
+	return dcp;
+}
+public DishDetailsPage getDishDetailsPage() {
+	return ddp;
+}
+public StockDetails getStockDetails() {
+	return sd;
+}
+public ListPage getBudgetListPage() {
+	return budgetListPage;
+}
+public BudgetDetailsPage getBudgetDetailsPage() {
+	return bdp;
+}
+public ListPage getStorageLocationListPage() {
+	return storageLocationListPage;
+}
+public StockStorageLocationDetails getStockStorageLoctionDetailsPage() {
+	return ssld;
 }
 }

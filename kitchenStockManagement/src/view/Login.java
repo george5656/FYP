@@ -58,6 +58,7 @@ public class Login extends VBox {
 	 password.setAlignment(Pos.CENTER);
 	 controls.setAlignment(Pos.CENTER);
 	 
+	 
 	 //button growth 
 	 btnExit.setMaxSize(Double.MAX_VALUE, Double.MAX_VALUE);
 	 btnLogin.setMaxSize(Double.MAX_VALUE, Double.MAX_VALUE);
@@ -73,8 +74,10 @@ public class Login extends VBox {
 	lbPassword.setFont(new Font(40));
 	btnExit.setFont(new Font(40));
 	btnLogin.setFont(new Font(40));
-	tfUsername.setFont(new Font(40));
-	pfPassword.setFont(new Font(40));
+	
+	 
+	 tfUsername.setFont(new Font(20));
+		pfPassword.setFont(new Font(20));
 	 //growth 
 	 this.setVgrow(lbTitle, Priority.SOMETIMES);
 	 this.setVgrow(username, Priority.SOMETIMES);
@@ -110,8 +113,8 @@ public class Login extends VBox {
 	 * set the btnExit event handler
 	 * @param Event = EventHandler<ActionEvent>
 	 */
-	public void setBtnExitEventHandler(EventHandler<ActionEvent> Event) {
-		btnExit.setOnAction(Event);
+	public void setBtnExitEventHandler(EventHandler<ActionEvent> event) {
+		btnExit.setOnAction(event);
 	}
 	/**
 	 * get the user input. the input that the user input in to tfUsername
