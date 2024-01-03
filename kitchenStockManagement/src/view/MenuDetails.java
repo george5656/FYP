@@ -23,6 +23,7 @@ public class MenuDetails extends SceneMenu {
 	private Button btnSettings = new Button("settings");
 	private Button btnDeleteDishPeremently = new Button("delete dish peremently");
 	private Button btnFind = new Button("find");
+	private Button btnFilter = new Button("filter");
 	private Label txtBudget = new Label("Budget =");
 	private Label txtErrorMessage = new Label("Error");
 	private TextField tfUserInput = new TextField();
@@ -39,8 +40,8 @@ public class MenuDetails extends SceneMenu {
 		mainLayout.getChildren().addAll(lists,controlsTop,controlsBottom);
 		lists.getChildren().addAll(lvDishes,lvMenu,lvShopping);
 		controlsTop.getChildren().addAll(txtBudget, txtErrorMessage,btnAdd,btnEdit,btnRemoveFromList,btnLoadFromFileChooser);
-		controlsBottom.getChildren().addAll(btnFind,tfUserInput,btnNewDish,btnSettings,btnDeleteDishPeremently);
-	
+		controlsBottom.getChildren().addAll(btnFind,tfUserInput,btnNewDish,btnSettings,btnDeleteDishPeremently,btnFilter);
+	 
 	//mainLayout.setAlignment(Pos.CENTER);
 	//lists.setAlignment(Pos.CENTER);
 	controlsTop.setAlignment(Pos.CENTER);
@@ -66,6 +67,7 @@ public class MenuDetails extends SceneMenu {
 	controlsBottom.setHgrow(btnNewDish, Priority.ALWAYS);
 	controlsBottom.setHgrow(btnSettings, Priority.ALWAYS);
 	controlsBottom.setHgrow(btnDeleteDishPeremently, Priority.ALWAYS);
+	controlsBottom.setHgrow(btnFilter, Priority.ALWAYS);
 	
 	mainLayout.setPadding(new Insets(20,20,20,20));
 	
@@ -77,6 +79,7 @@ public class MenuDetails extends SceneMenu {
 	btnSettings.setMaxSize(Double.MAX_VALUE, Double.MAX_VALUE);
 	btnDeleteDishPeremently.setMaxSize(Double.MAX_VALUE, Double.MAX_VALUE);
 	btnFind.setMaxSize(Double.MAX_VALUE, Double.MAX_VALUE);
+	btnFilter.setMaxSize(Double.MAX_VALUE, Double.MAX_VALUE);
 	tfUserInput.setMaxSize(Double.MAX_VALUE, Double.MAX_VALUE);
 	txtBudget.setMaxSize(Double.MAX_VALUE, Double.MAX_VALUE);
 	txtErrorMessage.setMaxSize(Double.MAX_VALUE, Double.MAX_VALUE);
@@ -89,6 +92,7 @@ public class MenuDetails extends SceneMenu {
 	btnSettings.setFont(new Font(20));
 	btnDeleteDishPeremently.setFont(new Font(20));
 	btnFind.setFont(new Font(20));
+	btnFilter.setFont(new Font(20));
 	
 	txtBudget.setFont(new Font(20));
 	txtErrorMessage.setFont(new Font(20));
@@ -97,5 +101,11 @@ public class MenuDetails extends SceneMenu {
 	}
 	public void setBtnAddEventHandler(EventHandler<ActionEvent> event) {
 		btnAdd.setOnAction(event);
+	}
+	public void setBtnFilterEventHandler(EventHandler<ActionEvent> event) {
+		btnFilter.setOnAction(event);
+	}
+	public void setBtnSettingEventHandler(EventHandler<ActionEvent> event) {
+		btnSettings.setOnAction(event);
 	}
 }

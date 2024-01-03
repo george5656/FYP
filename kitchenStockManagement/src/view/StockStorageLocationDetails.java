@@ -9,9 +9,10 @@ import javafx.scene.control.TextField;
 import javafx.scene.control.ToggleGroup;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Priority;
+import javafx.scene.layout.VBox;
 import javafx.scene.text.Font;
 
-public class StockStorageLocationDetails extends EntityDetails{
+public class StockStorageLocationDetails extends BasicLayoutDetails{
 private Label txtStockStorageLocationName = new Label("name");
 private Label txtIsAvailbe = new Label("is available");
 private Label txtType = new Label("Type");
@@ -23,8 +24,11 @@ private RadioButton rbNo = new RadioButton("no");
 private ArrayList<Label> labelList = new ArrayList<>();
 private ArrayList<TextField> textFieldList = new ArrayList<>();
 private HBox radioButtonLayout = new HBox();
-
+private VBox labels;
+private VBox userTextInput;
 public StockStorageLocationDetails() {
+	 labels = getLabels();
+	 userTextInput = getUserTextInput();
 	rbYes.setToggleGroup(tg);
 	rbNo.setToggleGroup(tg);
 	labelList.add(txtStockStorageLocationName);
@@ -37,18 +41,18 @@ public StockStorageLocationDetails() {
 	radioButtonLayout.setHgrow(rbYes, Priority.ALWAYS);
 	radioButtonLayout.setHgrow(rbNo, Priority.ALWAYS);
 	
-	super.labels.getChildren().addAll(labelList);
+	labels.getChildren().addAll(labelList);
 	for(Label i : labelList) {
 		i.setFont(new Font(30));
 		i.setMaxSize(Double.MAX_VALUE, Double.MAX_VALUE);
-		super.labels.setVgrow(i,Priority.ALWAYS);
+		labels.setVgrow(i,Priority.ALWAYS);
 		i.setAlignment(Pos.CENTER);
 	}
-super.userTextInput.getChildren().addAll(tfName,radioButtonLayout,tfType);
+userTextInput.getChildren().addAll(tfName,radioButtonLayout,tfType);
 	for(TextField i : textFieldList) {
 		i.setFont(new Font(30));
 		i.setMaxSize(Double.MAX_VALUE, Double.MAX_VALUE);
-		super.userTextInput.setVgrow(i,Priority.ALWAYS);
+		userTextInput.setVgrow(i,Priority.ALWAYS);
 
 	}
 rbYes.setFont(new Font(30));
@@ -56,7 +60,7 @@ rbNo.setFont(new Font(30));
 rbYes.setMaxSize(Double.MAX_VALUE, Double.MAX_VALUE);
 rbNo.setMaxSize(Double.MAX_VALUE, Double.MAX_VALUE);
 
-super.userTextInput.setVgrow(radioButtonLayout,Priority.ALWAYS);
+userTextInput.setVgrow(radioButtonLayout,Priority.ALWAYS);
 
 }
 

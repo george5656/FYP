@@ -8,9 +8,10 @@ import javafx.geometry.Pos;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.Priority;
+import javafx.scene.layout.VBox;
 import javafx.scene.text.Font;
 
-public class BudgetDetailsPage extends EntityDetails {
+public class BudgetDetailsPage extends BasicLayoutDetails {
 	private Label txtBudgetName = new Label("Budget Name");
 	private Label txtAmount = new Label("Amount");
 	private Label txtStartDate = new Label("Quanity");
@@ -21,29 +22,32 @@ public class BudgetDetailsPage extends EntityDetails {
 	private TextField tfEndDate = new TextField();
 	private ArrayList<Label> labelList =new  ArrayList<>();
 	private ArrayList<TextField> textFieldList =new  ArrayList<>();
-	
+	private VBox labels;
+	private VBox userTextInput;
 	public BudgetDetailsPage() {
+		 labels = getLabels();
+		 userTextInput = getUserTextInput();
 		labelList.add(txtBudgetName);
 		labelList.add(txtAmount);
 		labelList.add(txtStartDate);
 		labelList.add(txtEndDate);
 	
-		super.labels.getChildren().addAll(labelList);
+		labels.getChildren().addAll(labelList);
 		for(Label i : labelList) {
 			i.setFont(new Font(30));
 			i.setMaxSize(Double.MAX_VALUE, Double.MAX_VALUE);
-			super.labels.setVgrow(i,Priority.ALWAYS);
+			labels.setVgrow(i,Priority.ALWAYS);
 			i.setAlignment(Pos.CENTER);
 		}
 		textFieldList.add(tfBudgetName);
 		textFieldList.add(tfAmount);
 		textFieldList.add(tfStartDate);
 		textFieldList.add(tfEndDate);
-	super.userTextInput.getChildren().addAll(textFieldList);
+	userTextInput.getChildren().addAll(textFieldList);
 		for(TextField i : textFieldList) {
 			i.setFont(new Font(30));
 			i.setMaxSize(Double.MAX_VALUE, Double.MAX_VALUE);
-			super.userTextInput.setVgrow(i,Priority.ALWAYS);
+			userTextInput.setVgrow(i,Priority.ALWAYS);
 	
 		}
 		

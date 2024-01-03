@@ -3,7 +3,6 @@ package view;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.Button;
-import javafx.scene.control.Label;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Priority;
 import javafx.scene.layout.VBox;
@@ -13,20 +12,20 @@ import javafx.scene.text.Font;
  * @author Student
  *
  */
-public class EntityDetails extends SceneMenu {
-	private Button save = new Button("Save");
-	private Button cancel = new Button("Cancel");
+public class BasicLayoutDetails extends SceneMenu {
+	private Button btnSave = new Button("Save");
+	private Button btnCancel = new Button("Cancel");
 	private VBox mainLayout = new VBox(20);
 	private HBox labelsAndUserTextInput = new HBox();
-	protected VBox labels = new VBox(20);
-	protected VBox userTextInput = new VBox(20);
+	private VBox labels = new VBox(20);
+	private VBox userTextInput = new VBox(20);
 	private HBox buttons = new HBox(20);
 
-	public EntityDetails() {
+	public BasicLayoutDetails() {
 		super.setCenter(mainLayout);
 		mainLayout.getChildren().addAll(labelsAndUserTextInput,buttons);
 		labelsAndUserTextInput.getChildren().addAll(labels,userTextInput);
-		buttons.getChildren().addAll(cancel,save);
+		buttons.getChildren().addAll(btnCancel,btnSave);
 	
 		mainLayout.setPadding(new Insets(20,20,20,20));
 		
@@ -36,21 +35,34 @@ public class EntityDetails extends SceneMenu {
 		userTextInput.setAlignment(Pos.CENTER);
 		buttons.setAlignment(Pos.CENTER);
 		
-		save.setMaxSize(Double.MAX_VALUE, Double.MAX_VALUE);
-		cancel.setMaxSize(Double.MAX_VALUE, Double.MAX_VALUE);
+		btnSave.setMaxSize(Double.MAX_VALUE, Double.MAX_VALUE);
+		btnCancel.setMaxSize(Double.MAX_VALUE, Double.MAX_VALUE);
 		
-		save.setFont(new Font(20));
-		cancel.setFont(new Font(20));
+		btnSave.setFont(new Font(20));
+		btnCancel.setFont(new Font(20));
 		
 		mainLayout.setVgrow(labelsAndUserTextInput, Priority.ALWAYS);
 		mainLayout.setVgrow(buttons, Priority.ALWAYS);
 		labelsAndUserTextInput.setHgrow(labels, Priority.ALWAYS);
-		labelsAndUserTextInput.setHgrow(userTextInput, Priority.ALWAYS);
-		buttons.setHgrow(cancel, Priority.ALWAYS);
-		buttons.setHgrow(save, Priority.ALWAYS);
+		labelsAndUserTextInput.setHgrow(userTextInput, Priority.ALWAYS );
+		buttons.setHgrow(btnCancel, Priority.ALWAYS);
+		buttons.setHgrow(btnSave, Priority.ALWAYS);
 	
 		
 		
 		
+	}
+	public Button getbtnSave() {
+		return btnSave;
+	}
+	public VBox getLabels() {
+		return labels; 
+	}
+	
+	public VBox getUserTextInput() {
+		return userTextInput; 
+	}
+	public HBox getLabelsAndUserTextInput() {
+		return labelsAndUserTextInput;
 	}
 }

@@ -40,7 +40,7 @@ public class HomePage extends SceneMenu {
 		btnAccount.setMaxSize(Double.MAX_VALUE, Double.MAX_VALUE);
 		btnMenu.setMaxSize(Double.MAX_VALUE, Double.MAX_VALUE);
 		btnStorage.setMaxSize(Double.MAX_VALUE, Double.MAX_VALUE);
-		
+		 
 	layout.setPadding(new Insets(20,20,20,20));
 	
 	btnStock.setFont(new Font(30));
@@ -62,5 +62,9 @@ public class HomePage extends SceneMenu {
 	public void setBtnStorageEventHandler(EventHandler<ActionEvent> Event) {
 		btnStorage.setOnAction(Event);
 	}
+	public void setBtnAccountEventHandler(EventHandler<ActionEvent> Event) {
+		btnAccount.setOnAction(Event);
+	}
+
 }
 

@@ -7,9 +7,10 @@ import javafx.geometry.Pos;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.Priority;
+import javafx.scene.layout.VBox;
 import javafx.scene.text.Font;
 
-public class StockDetails extends EntityDetails {
+public class StockDetails extends BasicLayoutDetails {
 private Label txtStockName = new Label("StockName");
 private Label txtStorageLocation = new Label("Storage Location");
 private Label txtQuanity = new Label("Quanity");
@@ -20,11 +21,14 @@ private TextField tfStorageLocation = new TextField();
 private TextField tfQuanity = new TextField();
 private TextField tfQuantityType = new TextField();
 private TextField tfExpiereDate = new TextField();
-
+private VBox labels;
+private VBox userTextInput;
 
 public StockDetails() {
-	super.labels.getChildren().addAll(txtStockName,txtStorageLocation,txtQuanity,txtQuantityType,txtExpiereDate);
-	super.userTextInput.getChildren().addAll(tfStockName,tfStorageLocation,tfQuanity,tfQuantityType,tfExpiereDate);
+	 labels = getLabels();
+	 userTextInput = getUserTextInput();
+	labels.getChildren().addAll(txtStockName,txtStorageLocation,txtQuanity,txtQuantityType,txtExpiereDate);
+	userTextInput.getChildren().addAll(tfStockName,tfStorageLocation,tfQuanity,tfQuantityType,tfExpiereDate);
 
 	tfStockName.setFont(new Font(20));
 	tfStorageLocation.setFont(new Font(20));
@@ -54,17 +58,17 @@ public StockDetails() {
 	txtQuantityType.setAlignment(Pos.CENTER);
 	txtExpiereDate.setAlignment(Pos.CENTER);
 	
-	super.labels.setVgrow(txtStockName,Priority.ALWAYS);
-	super.labels.setVgrow(txtStorageLocation,Priority.ALWAYS);
-	super.labels.setVgrow(txtQuanity,Priority.ALWAYS);
-	super.labels.setVgrow(txtQuantityType,Priority.ALWAYS);
-	super.labels.setVgrow(txtExpiereDate,Priority.ALWAYS);
+	labels.setVgrow(txtStockName,Priority.ALWAYS);
+	labels.setVgrow(txtStorageLocation,Priority.ALWAYS);
+	labels.setVgrow(txtQuanity,Priority.ALWAYS);
+	labels.setVgrow(txtQuantityType,Priority.ALWAYS);
+	labels.setVgrow(txtExpiereDate,Priority.ALWAYS);
 	
-	super.userTextInput.setVgrow(tfStockName,Priority.ALWAYS);
-	super.userTextInput.setVgrow(tfStorageLocation,Priority.ALWAYS);
-	super.userTextInput.setVgrow(tfQuanity,Priority.ALWAYS);
-	super.userTextInput.setVgrow(tfQuantityType,Priority.ALWAYS);
-	super.userTextInput.setVgrow(tfExpiereDate,Priority.ALWAYS);
+	userTextInput.setVgrow(tfStockName,Priority.ALWAYS);
+	userTextInput.setVgrow(tfStorageLocation,Priority.ALWAYS);
+userTextInput.setVgrow(tfQuanity,Priority.ALWAYS);
+	userTextInput.setVgrow(tfQuantityType,Priority.ALWAYS);
+	userTextInput.setVgrow(tfExpiereDate,Priority.ALWAYS);
 }
 
 }

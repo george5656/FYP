@@ -20,12 +20,13 @@ import javafx.scene.text.Font;
  */
 public class Login extends VBox {
 //fields 
-	private HBox username;
-	private HBox password;
-	private HBox controls;
-	private Label lbTitle = new Label("Login");
-	private Label lbUsername = new Label("username");
-	private Label lbPassword = new Label("password");
+	private HBox labelAndTextInputLayout = new HBox(20);
+	private VBox label = new VBox(20);
+	private VBox textInput = new VBox(20);
+	private HBox controls = new HBox(20);
+	private Label txtTitle = new Label("Login");
+	private Label txtUsername = new Label("username");
+	private Label txtPassword = new Label("password");
 	private Button btnExit = new Button("Exit");
 	private Button btnLogin = new Button("Login");
 	private TextField tfUsername = new TextField();
@@ -40,38 +41,45 @@ public class Login extends VBox {
 		super(20);
 		
 		//Creating HBox, adding the children.
-	 username = new HBox(20);
-	 username.getChildren().addAll(lbUsername,tfUsername);
+	labelAndTextInputLayout.getChildren().addAll(label,textInput);
+	label.getChildren().addAll(txtUsername,txtPassword);
+	textInput.getChildren().addAll(tfUsername,pfPassword);
 	
-	 password = new HBox(20);
-	 password.getChildren().addAll(lbPassword,pfPassword);
+	labelAndTextInputLayout.setHgrow(label, Priority.ALWAYS);
+	labelAndTextInputLayout.setHgrow(textInput, Priority.ALWAYS);
+	label.setVgrow(txtUsername, Priority.ALWAYS);
+	label.setVgrow(txtPassword, Priority.ALWAYS);
+	textInput.setVgrow(tfUsername, Priority.ALWAYS);
+	textInput.setVgrow(pfPassword, Priority.ALWAYS);
 	 
-	 controls = new HBox(20);
-	 controls.getChildren().addAll(btnExit,btnLogin);
+	controls.getChildren().addAll(btnExit,btnLogin);
 	 
 	 //adding to the scene graph
-	 this.getChildren().addAll(lbTitle,username,password,controls);
+	 this.getChildren().addAll(txtTitle,labelAndTextInputLayout,controls);
 	
 	 //pane alignment 
 	 this.setAlignment(Pos.CENTER);
-	 username.setAlignment(Pos.CENTER);
-	 password.setAlignment(Pos.CENTER);
-	 controls.setAlignment(Pos.CENTER);
+	 txtTitle.setAlignment(Pos.CENTER);
+	 txtUsername.setAlignment(Pos.CENTER);
+	 txtPassword.setAlignment(Pos.CENTER);
 	 
 	 
-	 //button growth 
+	
 	 btnExit.setMaxSize(Double.MAX_VALUE, Double.MAX_VALUE);
 	 btnLogin.setMaxSize(Double.MAX_VALUE, Double.MAX_VALUE);
 	 tfUsername.setMaxSize(Double.MAX_VALUE, Double.MAX_VALUE);
 	 pfPassword.setMaxSize(Double.MAX_VALUE, Double.MAX_VALUE);
-	
+	 txtTitle.setMaxSize(Double.MAX_VALUE, Double.MAX_VALUE);
+	 txtUsername.setMaxSize(Double.MAX_VALUE, Double.MAX_VALUE);
+	 txtPassword.setMaxSize(Double.MAX_VALUE, Double.MAX_VALUE);
+	 
 	 //underline the title
-	 lbTitle.setUnderline(true);
+	 txtTitle.setUnderline(true);
 	
 	//seting font size
-	lbTitle.setFont(new Font(40));
-	lbUsername.setFont(new Font(40));
-	lbPassword.setFont(new Font(40));
+	txtTitle.setFont(new Font(40));
+	txtUsername.setFont(new Font(40));
+	txtPassword.setFont(new Font(40));
 	btnExit.setFont(new Font(40));
 	btnLogin.setFont(new Font(40));
 	
@@ -79,19 +87,12 @@ public class Login extends VBox {
 	 tfUsername.setFont(new Font(20));
 		pfPassword.setFont(new Font(20));
 	 //growth 
-	 this.setVgrow(lbTitle, Priority.SOMETIMES);
-	 this.setVgrow(username, Priority.SOMETIMES);
-	 this.setVgrow(password, Priority.SOMETIMES);
-	 this.setVgrow(controls, Priority.ALWAYS);
-	 this.setFillWidth(true);
+	this.setVgrow(txtTitle, Priority.ALWAYS);
+	this.setVgrow(labelAndTextInputLayout, Priority.ALWAYS);
+	this.setVgrow(controls, Priority.ALWAYS);
+	this.setFillWidth(true);
 	 
-	 username.setHgrow(lbUsername, Priority.ALWAYS);
-	 username.setHgrow(tfUsername, Priority.ALWAYS);
-	 username.setFillHeight(true);
 	 
-	 password.setHgrow(lbPassword, Priority.ALWAYS);
-	 password.setHgrow(pfPassword, Priority.ALWAYS);
-	 password.setFillHeight(true);
 	 
 	 controls.setFillHeight(true);
 	 controls.setHgrow(btnExit, Priority.ALWAYS);

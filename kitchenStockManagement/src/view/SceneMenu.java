@@ -15,7 +15,7 @@ import javafx.scene.layout.BorderPane;
  */
 public class SceneMenu extends BorderPane {
 private MenuBar mb = new MenuBar();
-private Menu home = new Menu("home");
+private static Menu home= new Menu("home");
 private Menu about = new Menu("about");
 private Menu logout = new Menu("logout");
 /**
@@ -30,7 +30,7 @@ public SceneMenu() {
 	logout.setStyle("-fx-Font-size:20");
  
 }
-public void setHomeEventHandler(EventHandler<ActionEvent> event) {
+public static void setHomeEventHandler(EventHandler<ActionEvent> event) {
 	home.setOnAction(event);
 }
 }

@@ -25,6 +25,14 @@ public class RootView extends VBox {
 	private BudgetDetailsPage bdp = new BudgetDetailsPage();
 	private ListPage storageLocationListPage = new ListPage();
 	private StockStorageLocationDetails ssld = new StockStorageLocationDetails();
+	private AccountDetails ad = new AccountDetails();
+	private ListPage accountListPage = new ListPage();
+	private StockStorageLocationFilter sslf = new StockStorageLocationFilter();
+	private StockFilter sf = new StockFilter();
+	private FilterDishes fd = new FilterDishes();
+	private AccountFilter af = new AccountFilter();
+	private MenuFilter mf = new MenuFilter();
+	private MenuSettingPage msp = new MenuSettingPage();
 	/**
 	 * default constructor
 	 */
@@ -91,4 +99,30 @@ public ListPage getStorageLocationListPage() {
 public StockStorageLocationDetails getStockStorageLoctionDetailsPage() {
 	return ssld;
 }
+public AccountDetails getAccountDetails() {
+	return ad;
+}
+public ListPage getAccountListPage() {
+	return accountListPage;
+}
+public StockStorageLocationFilter getStockStorageLocationFilter() {
+	return sslf;
+}
+public StockFilter getStockFilter() {
+	return sf;
+}
+public FilterDishes getFilterDishes() {
+	return fd;
+}
+public AccountFilter getAccountFilter() {
+	return af;
+}
+public MenuFilter getMenuFilter() {
+	return mf;
+}
+public MenuSettingPage getMenuSettingPage() {
+	return msp;
+}
+
+
 }

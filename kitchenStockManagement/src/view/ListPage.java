@@ -87,6 +87,8 @@ public void setBtnAddEventHandler(EventHandler<ActionEvent> event) {
 public void setBtnDeleteEventHandler(EventHandler<ActionEvent> event) {
 	btnDelete.setOnAction(event);
 }
-
+public void setBtnFilterEventHandler(EventHandler<ActionEvent> event) {
+	btnFilter.setOnAction(event);
+}
 
 }

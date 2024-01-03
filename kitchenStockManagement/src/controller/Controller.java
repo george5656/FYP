@@ -8,6 +8,7 @@ import javafx.scene.layout.Priority;
 import model.ModelRoot;
 import view.Login;
 import view.RootView;
+import view.SceneMenu;
 
 /**
  * is the controller class of the MVC for the kitchen management system.
@@ -45,8 +46,16 @@ public class Controller {
 			view.getBudgetListPage().setBtnAddEventHandler(new EHBudgetBtnAdd());
 			view.getHomePage().setBtnStorageEventHandler(new EHHomeBtnStorage());
 			view.getStorageLocationListPage().setBtnAddEventHandler(new EHStorageBtnAdd());
-	 
-	
+			view.getHomePage().setBtnAccountEventHandler(new EHHomeBtnAccount());
+			view.getAccountListPage().setBtnAddEventHandler(new EHAccountBtnAdd());
+			view.getStorageLocationListPage().setBtnFilterEventHandler(new EHStorageBtnFilter());
+			view.getStockListPage().setBtnFilterEventHandler(new EHStockBtnFilter());
+			view.getBudgetListPage().setBtnFilterEventHandler(new EHBudgetBtnFilter()); 
+			view.getMenuDetails().setBtnFilterEventHandler(new EHDishesBtnFilter());
+			view.getAccountListPage().setBtnFilterEventHandler(new EHAccountBtnFilter());
+			view.getMenuListPage().setBtnFilterEventHandler(new EHMenuBtnFilter());
+			view.getMenuDetails().setBtnSettingEventHandler(new EHMenuDetailsBtnSetting());
+			SceneMenu.setHomeEventHandler(new EHHomeLoad());
 	}
 	/**
 	 *  this is simply a functional interface, to pass function in to the tbnExit event handler in the
@@ -203,6 +212,116 @@ private class EHStorageBtnAdd implements EventHandler<ActionEvent>{
 		view.getChildren().remove(0);
 		view.getChildren().add(view.getStockStorageLoctionDetailsPage());
 		view.setVgrow(view.getStockStorageLoctionDetailsPage(),Priority.ALWAYS);
+		
+	}
+	
+}
+private class EHHomeBtnAccount implements EventHandler<ActionEvent>{
+
+	@Override
+	public void handle(ActionEvent event) {
+		view.getChildren().remove(0);
+		view.getChildren().add(view.getAccountListPage());
+		view.setVgrow(view.getAccountListPage(),Priority.ALWAYS);
+		
+	}
+	
+}
+private class EHAccountBtnAdd implements EventHandler<ActionEvent>{
+
+	@Override
+	public void handle(ActionEvent event) {
+		view.getChildren().remove(0);
+		view.getChildren().add(view.getAccountDetails());
+		view.setVgrow(view.getAccountDetails(),Priority.ALWAYS);
+		
+	}
+	
+}
+private class EHStorageBtnFilter implements EventHandler<ActionEvent>{
+
+	@Override
+	public void handle(ActionEvent event) {
+		view.getChildren().remove(0);
+		view.getChildren().add(view.getStockStorageLocationFilter());
+		view.setVgrow(view.getStockStorageLocationFilter(),Priority.ALWAYS);
+		
+	}
+	
+}
+private class EHStockBtnFilter implements EventHandler<ActionEvent>{
+
+	@Override
+	public void handle(ActionEvent event) {
+		view.getChildren().remove(0);
+		view.getChildren().add(view.getStockFilter());
+		view.setVgrow(view.getStockFilter(),Priority.ALWAYS);
+		
+	}
+	
+}
+private class EHBudgetBtnFilter implements EventHandler<ActionEvent>{
+
+	@Override
+	public void handle(ActionEvent event) {
+		view.getChildren().remove(0);
+		view.getChildren().add(view.getBudgetFilter());
+		view.setVgrow(view.getBudgetFilter(),Priority.ALWAYS);
+		
+	}
+	
+}
+private class EHDishesBtnFilter implements EventHandler<ActionEvent>{
+
+	@Override
+	public void handle(ActionEvent event) {
+		view.getChildren().remove(0);
+		view.getChildren().add(view.getFilterDishes());
+		view.setVgrow(view.getFilterDishes(),Priority.ALWAYS);
+		
+	}
+	
+}
+private class EHAccountBtnFilter implements EventHandler<ActionEvent>{
+
+	@Override
+	public void handle(ActionEvent event) {
+		view.getChildren().remove(0);
+		view.getChildren().add(view.getAccountFilter());
+		view.setVgrow(view.getAccountFilter(),Priority.ALWAYS);
+		
+	}
+	
+}
+private class EHMenuBtnFilter implements EventHandler<ActionEvent>{
+
+	@Override
+	public void handle(ActionEvent event) {
+		view.getChildren().remove(0);
+		view.getChildren().add(view.getMenuFilter());
+		view.setVgrow(view.getMenuFilter(),Priority.ALWAYS);
+		
+	}
+	
+}
+private class EHMenuDetailsBtnSetting implements EventHandler<ActionEvent>{
+
+	@Override
+	public void handle(ActionEvent event) {
+		view.getChildren().remove(0);
+		view.getChildren().add(view.getMenuSettingPage());
+		view.setVgrow(view.getMenuSettingPage(),Priority.ALWAYS);
+		
+	}
+	
+}
+private class EHHomeLoad implements EventHandler<ActionEvent>{
+
+	@Override
+	public void handle(ActionEvent event) {
+		view.getChildren().remove(0);
+		view.getChildren().add(view.getHomePage());
+		view.setVgrow(view.getHomePage(),Priority.ALWAYS);
 		
 	}
 	
