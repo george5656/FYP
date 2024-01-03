@@ -1,8 +1,11 @@
 package view;
 
+import java.util.ArrayList;
+
 import javafx.geometry.Pos;
 import javafx.scene.layout.Priority;
 import javafx.scene.layout.VBox;
+import javafx.scene.layout.Pane;
 
 /**
  * class is the root of the view in the MVC
@@ -123,6 +126,29 @@ public MenuFilter getMenuFilter() {
 public MenuSettingPage getMenuSettingPage() {
 	return msp;
 }
-
+public ArrayList<SceneMenu> getAllView(){
+	ArrayList<SceneMenu> all = new ArrayList<>();
+	all.add(budgetFilter);
+	all.add(homePage);
+	all.add(stockListPage);
+	all.add(menuDetails);
+	all.add(menuListPage);
+	all.add(dcp);
+	all.add(ddp);
+	all.add(sd);
+	all.add(budgetListPage);
+	all.add(bdp);
+	all.add(storageLocationListPage);
+	all.add(ssld);
+	all.add(ad);
+	all.add(accountListPage);
+	all.add(sslf);
+	all.add(sf);
+	all.add(fd);
+	all.add(af);
+	all.add(mf);
+	all.add(msp);
+	return all;
+}
 
 }

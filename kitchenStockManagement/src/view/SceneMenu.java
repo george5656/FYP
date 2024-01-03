@@ -2,11 +2,24 @@ package view;
 
 
 
+
+import java.util.ArrayList;
+
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
+import javafx.geometry.Insets;
+import javafx.geometry.Pos;
+import javafx.scene.control.Button;
+import javafx.scene.control.ButtonBar;
+import javafx.scene.control.ButtonBar.ButtonData;
 import javafx.scene.control.Menu;
 import javafx.scene.control.MenuBar;
+import javafx.scene.control.MenuItem;
+import javafx.scene.layout.Background;
+import javafx.scene.layout.Border;
 import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.HBox;
+import javafx.scene.text.Font;
 
 /**
  * this class just make a menu bar the rest of the classes can extend. 
@@ -14,23 +27,52 @@ import javafx.scene.layout.BorderPane;
  *
  */
 public class SceneMenu extends BorderPane {
+/*
 private MenuBar mb = new MenuBar();
-private static Menu home= new Menu("home");
+private Menu home= new Menu("home");
 private Menu about = new Menu("about");
 private Menu logout = new Menu("logout");
+private MenuItem test = new MenuItem("test");
+*/
+	//private ButtonBar mb = new ButtonBar();
+	private HBox mb = new HBox(0);
+	private Button btnHome= new Button("home");
+	private Button btnAbout = new Button("about");
+	private Button btnLogout = new Button("logout");
+	private ArrayList<Button> controls = new ArrayList<>();
 /**
  * default constructor, assigning the menu items and adding the
  * elements to the scene graph, with basic ui set up
  */
 public SceneMenu() {
+	mb.setStyle("-fx-background-color : #d4d4d4");
+	this.setTop(mb);
+	//mb.getChildren().addAll(home,about,logout);
+	mb.setPadding(new Insets(0,0,0,0));
+	controls.add(btnHome);
+	controls.add(btnAbout);
+	controls.add(btnLogout);
+	//mb.getButtons().addAll(controls);
+	mb.getChildren().addAll(controls);
+	for(Button i : controls) {
+		i.setFont(new Font(20));
+	
+	}
+	
+	/*
 	mb.getMenus().addAll(home,about,logout);
 	this.setTop(mb);
 	home.setStyle("-fx-Font-size:20");
 	about.setStyle("-fx-Font-size:20");
 	logout.setStyle("-fx-Font-size:20");
- 
+	
+ */
+	
 }
-public static void setHomeEventHandler(EventHandler<ActionEvent> event) {
-	home.setOnAction(event);
+public void setHomeEventHandler(EventHandler<ActionEvent> event) {
+	btnHome.setOnAction(event);
+}
+public void setLogoutEventHandler(EventHandler<ActionEvent> event) {
+	btnLogout.setOnAction(event);
 }
 }

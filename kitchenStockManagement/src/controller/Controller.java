@@ -1,9 +1,12 @@
 package controller;
 
+import java.util.ArrayList;
+
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
+import javafx.scene.layout.Pane;
 import javafx.scene.layout.Priority;
 import model.ModelRoot;
 import view.Login;
@@ -55,7 +58,12 @@ public class Controller {
 			view.getAccountListPage().setBtnFilterEventHandler(new EHAccountBtnFilter());
 			view.getMenuListPage().setBtnFilterEventHandler(new EHMenuBtnFilter());
 			view.getMenuDetails().setBtnSettingEventHandler(new EHMenuDetailsBtnSetting());
-			SceneMenu.setHomeEventHandler(new EHHomeLoad());
+		
+			ArrayList<SceneMenu> all = view.getAllView();
+			for(SceneMenu i : all) {
+				i.setHomeEventHandler(new EHHomeLoad());
+				i.setLogoutEventHandler(new EHLogout());
+			}
 	}
 	/**
 	 *  this is simply a functional interface, to pass function in to the tbnExit event handler in the
@@ -323,6 +331,17 @@ private class EHHomeLoad implements EventHandler<ActionEvent>{
 		view.getChildren().add(view.getHomePage());
 		view.setVgrow(view.getHomePage(),Priority.ALWAYS);
 		
+	}
+	
+}
+private class EHLogout implements EventHandler<ActionEvent>{
+
+	@Override
+	public void handle(ActionEvent event) {
+		view.getChildren().remove(0);
+		view.getChildren().add(view.getLoginPage());
+		view.setVgrow(view.getLoginPage(),Priority.ALWAYS);
+		view.getLoginPage().clearInput();
 	}
 	
 }

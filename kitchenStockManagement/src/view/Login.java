@@ -131,4 +131,8 @@ public String getUserUsernameInput() {
 public String getUserPasswordInput() {
 	return pfPassword. getText().toString(); 
 }
+public void clearInput() {
+	pfPassword.setText("");
+	tfUsername.setText("");
+}
 }
