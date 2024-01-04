@@ -1,5 +1,10 @@
 package view;
 
+
+
+import java.util.ArrayList;
+
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.geometry.Insets;
@@ -90,5 +95,7 @@ public void setBtnDeleteEventHandler(EventHandler<ActionEvent> event) {
 public void setBtnFilterEventHandler(EventHandler<ActionEvent> event) {
 	btnFilter.setOnAction(event);
 }
-
+public void setObservableList(ObservableList<String> test) {
+	lv.setItems(test);
+}
 }

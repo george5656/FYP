@@ -26,8 +26,10 @@ public class Main extends Application {
 	 */
 	@Override
 	public void start(Stage primaryStage) throws Exception {
+		primaryStage.setMinHeight(600);
+		primaryStage.setMinWidth(1200);
 		primaryStage.setTitle("kitchen stock management");
-		Scene scene = new Scene(view,600,400);
+		Scene scene = new Scene(view,1200,600);
 		//scene.getStylesheets().add(getClass().getResource("StockManegment.css").toExternalForm());
 		primaryStage.setScene(scene);
 		

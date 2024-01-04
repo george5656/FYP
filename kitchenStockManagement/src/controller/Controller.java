@@ -2,15 +2,20 @@ package controller;
 
 import java.util.ArrayList;
 
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.Priority;
+import model.CurrentStock;
 import model.ModelRoot;
+import model.StockType;
 import view.Login;
 import view.RootView;
+import view.StockDetails;
 import view.PaneMenu;
 
 /**
@@ -59,6 +64,9 @@ public class Controller {
 			view.getMenuListPage().setBtnFilterEventHandler(new EHMenuBtnFilter());
 			view.getMenuDetails().setBtnSettingEventHandler(new EHMenuDetailsBtnSetting());
 			view.getMenuDetails().setBtnOutputEventHandler(new EHMenuDetailsBtnOutput());
+			view.getStockListPage().setObservableList(setStockListContent());
+			view.getStockDetails().setBtnSaveEventHandler(new EHStockDetailsBtnSave());
+			
 			
 			ArrayList<PaneMenu> all = view.getAllView();
 			for(PaneMenu i : all) {
@@ -357,4 +365,27 @@ private class EHMenuDetailsBtnOutput implements EventHandler<ActionEvent>{
 	
 }
 }
+
+private ObservableList<String> setStockListContent() {
+	
+	ObservableList<String> test = FXCollections.observableArrayList(model.getDatabase().getCurrentStock());
+	
+	return test;
+}
+
+private class EHStockDetailsBtnSave implements EventHandler<ActionEvent>{
+
+	@Override
+	public void handle(ActionEvent event) {
+		StockDetails userInput = view.getStockDetails();
+		CurrentStock stock = new CurrentStock(Double.parseDouble(userInput.getQuanity().getText().toString()),userInput.getQuantityType().getText(),userInput.getExpiereDate().getValue().toString(),userInput.getStockName().getText().toString(), 5.00);
+	ArrayList<CurrentStock> stockContainer = new ArrayList<>();
+	stockContainer.add(stock);
+		StockType toBeSaved = new StockType("apple","0.33",stockContainer);
+		model.getDatabase().addCurrentStock(toBeSaved);
+	
+	
+}
+}
+
 }
