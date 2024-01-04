@@ -36,6 +36,7 @@ public class RootView extends VBox {
 	private AccountFilter af = new AccountFilter();
 	private MenuFilter mf = new MenuFilter();
 	private MenuSettingPage msp = new MenuSettingPage();
+	private Output output = new Output();
 	/**
 	 * default constructor
 	 */
@@ -126,8 +127,8 @@ public MenuFilter getMenuFilter() {
 public MenuSettingPage getMenuSettingPage() {
 	return msp;
 }
-public ArrayList<SceneMenu> getAllView(){
-	ArrayList<SceneMenu> all = new ArrayList<>();
+public ArrayList<PaneMenu> getAllView(){
+	ArrayList<PaneMenu> all = new ArrayList<>();
 	all.add(budgetFilter);
 	all.add(homePage);
 	all.add(stockListPage);
@@ -148,7 +149,11 @@ public ArrayList<SceneMenu> getAllView(){
 	all.add(af);
 	all.add(mf);
 	all.add(msp);
+	all.add(output);
+	
 	return all;
 }
-
+public Output getOutputPage() {
+	return output;
+}
 }

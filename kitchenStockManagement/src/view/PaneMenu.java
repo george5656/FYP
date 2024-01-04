@@ -26,7 +26,7 @@ import javafx.scene.text.Font;
  * @author George
  *
  */
-public class SceneMenu extends BorderPane {
+public class PaneMenu extends BorderPane {
 /*
 private MenuBar mb = new MenuBar();
 private Menu home= new Menu("home");
@@ -44,7 +44,7 @@ private MenuItem test = new MenuItem("test");
  * default constructor, assigning the menu items and adding the
  * elements to the scene graph, with basic ui set up
  */
-public SceneMenu() {
+public PaneMenu() {
 	mb.setStyle("-fx-background-color : #d4d4d4");
 	this.setTop(mb);
 	//mb.getChildren().addAll(home,about,logout);

@@ -8,6 +8,6 @@ public class BasicLayoutFilter extends BasicLayoutDetails {
 	public BasicLayoutFilter() {
 		 apply.setText("apply");
 		 
-		
+		 
 	}
 }

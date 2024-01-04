@@ -13,7 +13,7 @@ import javafx.scene.layout.Priority;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Font;
 
-public class MenuDetails extends SceneMenu {
+public class MenuDetails extends PaneMenu {
 	//feilds 
 	private Button btnAdd = new Button("add");
 	private Button btnEdit = new Button("edit");
@@ -24,6 +24,7 @@ public class MenuDetails extends SceneMenu {
 	private Button btnDeleteDishPeremently = new Button("delete dish peremently");
 	private Button btnFind = new Button("find");
 	private Button btnFilter = new Button("filter");
+	private Button btnOutput = new Button("output list");
 	private Label txtBudget = new Label("Budget =");
 	private Label txtErrorMessage = new Label("Error");
 	private TextField tfUserInput = new TextField();
@@ -40,7 +41,7 @@ public class MenuDetails extends SceneMenu {
 		mainLayout.getChildren().addAll(lists,controlsTop,controlsBottom);
 		lists.getChildren().addAll(lvDishes,lvMenu,lvShopping);
 		controlsTop.getChildren().addAll(txtBudget, txtErrorMessage,btnAdd,btnEdit,btnRemoveFromList,btnLoadFromFileChooser);
-		controlsBottom.getChildren().addAll(btnFind,tfUserInput,btnNewDish,btnSettings,btnDeleteDishPeremently,btnFilter);
+		controlsBottom.getChildren().addAll(btnFind,tfUserInput,btnNewDish,btnSettings,btnDeleteDishPeremently,btnFilter,btnOutput);
 	 
 	//mainLayout.setAlignment(Pos.CENTER);
 	//lists.setAlignment(Pos.CENTER);
@@ -68,6 +69,7 @@ public class MenuDetails extends SceneMenu {
 	controlsBottom.setHgrow(btnSettings, Priority.ALWAYS);
 	controlsBottom.setHgrow(btnDeleteDishPeremently, Priority.ALWAYS);
 	controlsBottom.setHgrow(btnFilter, Priority.ALWAYS);
+	controlsBottom.setHgrow(btnOutput, Priority.ALWAYS);
 	
 	mainLayout.setPadding(new Insets(20,20,20,20));
 	
@@ -80,6 +82,7 @@ public class MenuDetails extends SceneMenu {
 	btnDeleteDishPeremently.setMaxSize(Double.MAX_VALUE, Double.MAX_VALUE);
 	btnFind.setMaxSize(Double.MAX_VALUE, Double.MAX_VALUE);
 	btnFilter.setMaxSize(Double.MAX_VALUE, Double.MAX_VALUE);
+	btnOutput.setMaxSize(Double.MAX_VALUE, Double.MAX_VALUE);
 	tfUserInput.setMaxSize(Double.MAX_VALUE, Double.MAX_VALUE);
 	txtBudget.setMaxSize(Double.MAX_VALUE, Double.MAX_VALUE);
 	txtErrorMessage.setMaxSize(Double.MAX_VALUE, Double.MAX_VALUE);
@@ -93,6 +96,7 @@ public class MenuDetails extends SceneMenu {
 	btnDeleteDishPeremently.setFont(new Font(20));
 	btnFind.setFont(new Font(20));
 	btnFilter.setFont(new Font(20));
+	btnOutput.setFont(new Font(20));
 	
 	txtBudget.setFont(new Font(20));
 	txtErrorMessage.setFont(new Font(20));
@@ -107,5 +111,8 @@ public class MenuDetails extends SceneMenu {
 	}
 	public void setBtnSettingEventHandler(EventHandler<ActionEvent> event) {
 		btnSettings.setOnAction(event);
+	}
+	public void setBtnOutputEventHandler(EventHandler<ActionEvent> event) {
+		btnOutput.setOnAction(event);
 	}
 }

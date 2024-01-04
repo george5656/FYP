@@ -12,7 +12,7 @@ import javafx.scene.text.Font;
  * @author Student
  *
  */
-public class BasicLayoutDetails extends SceneMenu {
+public class BasicLayoutDetails extends PaneMenu {
 	private Button btnSave = new Button("Save");
 	private Button btnCancel = new Button("Cancel");
 	private VBox mainLayout = new VBox(20);

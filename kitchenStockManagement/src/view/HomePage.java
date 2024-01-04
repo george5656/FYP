@@ -13,7 +13,7 @@ import javafx.scene.text.Font;
  * @author George
  *
  */
-public class HomePage extends SceneMenu {
+public class HomePage extends PaneMenu {
 //fields
 	private VBox layout = new VBox(20);
 	private Button btnStock = new Button("stock");

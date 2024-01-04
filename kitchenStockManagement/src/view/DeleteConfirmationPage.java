@@ -9,7 +9,7 @@ import javafx.scene.layout.Priority;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Font;
 
-public class DeleteConfirmationPage extends SceneMenu {
+public class DeleteConfirmationPage extends PaneMenu {
 	private Button cancel = new Button("cancel");
 	private Button confirm = new Button("confirm");
 	private Label txtConfirmMessage = new Label("are you sure want to delete ");

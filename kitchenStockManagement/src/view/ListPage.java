@@ -18,7 +18,7 @@ import javafx.scene.text.Font;
  * @author Student
  *
  */
-public class ListPage extends SceneMenu {
+public class ListPage extends PaneMenu {
 	//fields 
 	private Button btnAdd = new Button("add");
 	private Button btnEdit = new Button("edit");

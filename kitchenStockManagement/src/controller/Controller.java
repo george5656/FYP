@@ -11,7 +11,7 @@ import javafx.scene.layout.Priority;
 import model.ModelRoot;
 import view.Login;
 import view.RootView;
-import view.SceneMenu;
+import view.PaneMenu;
 
 /**
  * is the controller class of the MVC for the kitchen management system.
@@ -58,9 +58,10 @@ public class Controller {
 			view.getAccountListPage().setBtnFilterEventHandler(new EHAccountBtnFilter());
 			view.getMenuListPage().setBtnFilterEventHandler(new EHMenuBtnFilter());
 			view.getMenuDetails().setBtnSettingEventHandler(new EHMenuDetailsBtnSetting());
-		
-			ArrayList<SceneMenu> all = view.getAllView();
-			for(SceneMenu i : all) {
+			view.getMenuDetails().setBtnOutputEventHandler(new EHMenuDetailsBtnOutput());
+			
+			ArrayList<PaneMenu> all = view.getAllView();
+			for(PaneMenu i : all) {
 				i.setHomeEventHandler(new EHHomeLoad());
 				i.setLogoutEventHandler(new EHLogout());
 			}
@@ -344,5 +345,16 @@ private class EHLogout implements EventHandler<ActionEvent>{
 		view.getLoginPage().clearInput();
 	}
 	
+}
+private class EHMenuDetailsBtnOutput implements EventHandler<ActionEvent>{
+
+	@Override
+	public void handle(ActionEvent event) {
+		view.getChildren().remove(0);
+		view.getChildren().add(view.getOutputPage());
+		view.setVgrow(view.getOutputPage(),Priority.ALWAYS);
+	
+	
+}
 }
 }

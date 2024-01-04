@@ -11,7 +11,7 @@ import javafx.scene.layout.Priority;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Font;
 
-public class DishDetailsPage extends SceneMenu {
+public class DishDetailsPage extends PaneMenu {
 private Button btnAdd = new Button("Add");
 private Button btnEdit = new Button("Edit");
 private Button btnDelete = new Button("Delete");
