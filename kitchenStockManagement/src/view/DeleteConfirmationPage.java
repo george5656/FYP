@@ -1,5 +1,7 @@
 package view;
 
+import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.Button;
@@ -41,5 +43,13 @@ public class DeleteConfirmationPage extends PaneMenu {
 		mainLayout.setVgrow(controls, Priority.ALWAYS);
 		controls.setHgrow(cancel, Priority.ALWAYS);
 		controls.setHgrow(confirm, Priority.ALWAYS);
+	}
+	
+	
+	public void setBtnCancelEventHandler(EventHandler<ActionEvent> event) {
+		cancel.setOnAction(event);
+	}
+	public void setBtnConfirmEventHandler(EventHandler<ActionEvent> event) {
+		confirm.setOnAction(event);
 	}
 }

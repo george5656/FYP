@@ -26,8 +26,8 @@ private VBox labels;
 private VBox userTextInput;
 
 public StockDetails() {
-	 labels = getLabels();
-	 userTextInput = getUserTextInput();
+	labels = getLabels();
+	userTextInput = getUserTextInput();
 	labels.getChildren().addAll(txtStockName,txtStorageLocation,txtQuanity,txtQuantityType,txtExpiereDate);
 	userTextInput.getChildren().addAll(tfStockName,tfStorageLocation,tfQuanity,tfQuantityType,dpExpiereDate);
 

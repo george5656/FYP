@@ -1,13 +1,19 @@
 package model;
 
 public class CurrentStock {
+private int id;
+private String storageLocationId;
 private Double quantity;
 private String quantityType;
 private String expiereDate;
 private String name;
 private Double cost;
 
-public CurrentStock(Double quantity, String quantityType, String expiereDate, String name, Double cost ) {
+public CurrentStock(int id, String storageLocationId, Double quantity, 
+		String quantityType, String expiereDate, String name, Double cost ) {
+
+	this.id = id;
+	this.storageLocationId =storageLocationId;
 	this.quantity = quantity;
 	this.quantityType = quantityType;
 	this.expiereDate = expiereDate;
@@ -20,7 +26,7 @@ public CurrentStock(Double quantity, String quantityType, String expiereDate, St
  */
 @Override
 	public String toString() {
-		return "name = " + name + " quantity = " +  quantity.toString() + " quantity unit = " + quantityType +" expeiere date = " + expiereDate + " cost = " + cost.toString();
+		return "id = "+ id + " name = " + name + " quantity = " +  quantity.toString() + " quantity unit = " + quantityType +" expeiere date = " + expiereDate + " cost = " + cost.toString() + "storage location id = " + storageLocationId + "";
 	}
 public Double getQuantity() {
 	return quantity;
@@ -30,5 +36,11 @@ public String getQuantityType() {
 }
 public String getExpiereDate() {
 	return expiereDate;
+}
+public String getstorageLocationId() {
+	return storageLocationId;
+}
+public String getName() {
+	return name;
 }
 }

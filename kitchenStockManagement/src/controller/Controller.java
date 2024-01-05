@@ -41,10 +41,13 @@ public class Controller {
 			login.setBtnExitEventHandler(new EHExit());
 			login.setBtnLoginEventHandler(new EHLogin());
 			// just tying out a lamabda to see if they still work as expected.
+			/*
 			view.getHomePage().setBtnStockEventHandler(event -> {
 			view.getChildren().remove(0);
 			view.getChildren().add(view.getStockListPage());
 			view.setVgrow(view.getStockListPage(),Priority.ALWAYS);} );
+			*/
+			view.getHomePage().setBtnStockEventHandler(new EHStockListLaod());
 			view.getHomePage().setBtnMenuEventHandler(new EHHomePageMenuLoad());
 			view.getMenuListPage().setBtnAddEventHandler(new EHMenuListBtnAdd());
 			view.getStockListPage().setBtnDeleteEventHandler(new EHStockListBtnDelete());
@@ -66,8 +69,9 @@ public class Controller {
 			view.getMenuDetails().setBtnOutputEventHandler(new EHMenuDetailsBtnOutput());
 			view.getStockListPage().setObservableList(setStockListContent());
 			view.getStockDetails().setBtnSaveEventHandler(new EHStockDetailsBtnSave());
-			
-			
+			view.getStockDetails().setBtnCancelEventHandler(new EHStockListLaod());
+			view.getDeleteConfirmationPage().setBtnConfirmEventHandler(new EHStockDeleteBtnConfirm());
+			view.getDeleteConfirmationPage().setBtnCancelEventHandler(new EHStockListLaod());
 			ArrayList<PaneMenu> all = view.getAllView();
 			for(PaneMenu i : all) {
 				i.setHomeEventHandler(new EHHomeLoad());
@@ -368,9 +372,9 @@ private class EHMenuDetailsBtnOutput implements EventHandler<ActionEvent>{
 
 private ObservableList<String> setStockListContent() {
 	
-	ObservableList<String> test = FXCollections.observableArrayList(model.getDatabase().getCurrentStock());
+	ObservableList<String> dataToBeDisplayed = FXCollections.observableArrayList(model.getDatabase().getCurrentStock());
 	
-	return test;
+	return dataToBeDisplayed;
 }
 
 private class EHStockDetailsBtnSave implements EventHandler<ActionEvent>{
@@ -378,14 +382,49 @@ private class EHStockDetailsBtnSave implements EventHandler<ActionEvent>{
 	@Override
 	public void handle(ActionEvent event) {
 		StockDetails userInput = view.getStockDetails();
-		CurrentStock stock = new CurrentStock(Double.parseDouble(userInput.getQuanity().getText().toString()),userInput.getQuantityType().getText(),userInput.getExpiereDate().getValue().toString(),userInput.getStockName().getText().toString(), 5.00);
-	ArrayList<CurrentStock> stockContainer = new ArrayList<>();
-	stockContainer.add(stock);
-		StockType toBeSaved = new StockType("apple","0.33",stockContainer);
-		model.getDatabase().addCurrentStock(toBeSaved);
-	
+		//CurrentStock stock = new CurrentStock(-1,userInput.getStorageLocation().toString(),Double.parseDouble(userInput.getQuanity().getText().toString()),userInput.getQuantityType().getText().toString(),userInput.getExpiereDate().getValue().toString(),userInput.getStockName().getText().toString(), 5.00);
+
+		CurrentStock stock = new CurrentStock(-1,"cubbord",10.56,"units","2004-01-05","apple",5.00);
+		model.getDatabase().addCurrentStock(stock);
+		
+		loadStockListPage();
 	
 }
 }
+private class EHStockListLaod implements EventHandler<ActionEvent>{
+
+	@Override
+	public void handle(ActionEvent event) {
+		
+
+loadStockListPage();
+	}
+}
+
+private void loadStockListPage() {
+	
+	view.getStockListPage().setObservableList(setStockListContent());
+	view.getChildren().remove(0);
+	view.getChildren().add(view.getStockListPage());
+	view.setVgrow(view.getStockListPage(),Priority.ALWAYS);
+	
+}
+
+private class EHStockDeleteBtnConfirm implements EventHandler<ActionEvent>{
+
+	@Override
+	public void handle(ActionEvent event) {
+		String userSelection = view.getStockListPage().getSelection();
+		
+		int nameStart = userSelection.indexOf("name");
+		String userSelectionId = userSelection.substring(5, nameStart-1);
+		
+		model.getDatabase().deleteSelectedStock(userSelectionId);
+		
+		loadStockListPage();
+	
+}
+}
+
 
 }

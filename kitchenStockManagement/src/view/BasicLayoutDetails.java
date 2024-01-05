@@ -70,4 +70,7 @@ public class BasicLayoutDetails extends PaneMenu {
 	public void setBtnSaveEventHandler(EventHandler<ActionEvent> event) {
 		btnSave.setOnAction(event);
 	}
+	public void setBtnCancelEventHandler(EventHandler<ActionEvent> event) {
+		btnCancel.setOnAction(event);
+	}
 }

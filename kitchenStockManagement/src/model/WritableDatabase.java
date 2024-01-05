@@ -64,7 +64,7 @@ public ArrayList<String> getCurrentStock() {
 		ResultSet result = statement.executeQuery();
 		//if(result.first()) {
 		while (result.next()) {
-			CurrentStock input = new CurrentStock(result.getDouble(4),result.getString(5),result.getDate(6).toString(),result.getString(8),result.getDouble(9));
+			CurrentStock input = new CurrentStock(result.getInt(1),result.getString(2),result.getDouble(4),result.getString(5),result.getDate(6).toString(),result.getString(7),result.getDouble(8));
 			currentStock.add(input.toString());
 		}
 		//}
@@ -75,11 +75,11 @@ public ArrayList<String> getCurrentStock() {
 	
 	return currentStock;
 }
-	public void addCurrentStock(StockType data) {
+	public void addCurrentStock(CurrentStock data) {
 		PreparedStatement statement;
 		try {
-			CurrentStock stock = data.getcurrentStock().get(0);
-			statement = connection.prepareStatement("Insert Into stock_mangemnet.tbl_stock_iteration (storageLocationId, stockTypeId, quanity, quantityType, expiereDate) Values ( 1, 1, " + stock.getQuantity() + ",\'" + stock.getQuantityType() + "\'," + "\'2023-01-04\'" + "); ");
+			//CurrentStock stock = data.getcurrentStock().get(0);
+			statement = connection.prepareStatement("Insert Into stock_mangemnet.tbl_stock_iteration (storageLocationId, stockTypeId, quanity, quantityType, expiereDate) Values ( \'" + data.getstorageLocationId() + "\',\'" + data.getName() +"\',\'" + data.getQuantity() + "\',\'" + data.getQuantityType() + "\',\'" + data.getExpiereDate() + "\'); ");
 			statement.execute();
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
@@ -88,4 +88,17 @@ public ArrayList<String> getCurrentStock() {
 		
 				
 	}
+	
+	public void deleteSelectedStock(String id) {
+		PreparedStatement statement;
+		try {
+			statement = connection.prepareStatement("Delete from stock_mangemnet.tbl_stock_iteration where tbl_stock_iteration.stockIterationId = \'" + id + "\';");
+			statement.execute();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+
+	
 }

@@ -12,6 +12,7 @@ import javafx.geometry.Pos;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
+import javafx.scene.control.MultipleSelectionModel;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Priority;
@@ -85,6 +86,7 @@ public class ListPage extends PaneMenu {
 		txtErrorMessage.setFont(new Font(30));
 		
 		tfFind.setFont(new Font(30)); 
+
 	}
 public void setBtnAddEventHandler(EventHandler<ActionEvent> event) {
 	btnAdd.setOnAction(event);
@@ -97,5 +99,8 @@ public void setBtnFilterEventHandler(EventHandler<ActionEvent> event) {
 }
 public void setObservableList(ObservableList<String> test) {
 	lv.setItems(test);
+}
+public String getSelection() {
+	return lv.getSelectionModel().getSelectedItem();
 }
 }
