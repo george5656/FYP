@@ -42,11 +42,13 @@ public class ListPage extends PaneMenu {
 	public ListPage() {
 	
 		super.setCenter(mainLayout);
+		txtErrorMessage.setVisible(false);
 		mainLayout.getChildren().addAll(list,buttons);
 		list.getChildren().addAll(lv,txtErrorMessage);
 		buttons.getChildren().addAll(btnAdd,btnEdit,btnDelete,btnFilter,find);
 		find.getChildren().addAll(btnFind,tfFind);
 		
+		lv.setPlaceholder(new Label("No data"));
 		
 		mainLayout.setAlignment(Pos.CENTER);
 		list.setAlignment(Pos.CENTER);
@@ -97,10 +99,25 @@ public void setBtnDeleteEventHandler(EventHandler<ActionEvent> event) {
 public void setBtnFilterEventHandler(EventHandler<ActionEvent> event) {
 	btnFilter.setOnAction(event);
 }
+public void setBtnFindEventHandler(EventHandler<ActionEvent> event) {
+	btnFind.setOnAction(event);
+}
+public void setBtnEditEventHandler(EventHandler<ActionEvent> event) {
+	btnEdit.setOnAction(event);
+}
 public void setObservableList(ObservableList<String> test) {
 	lv.setItems(test);
 }
 public String getSelection() {
 	return lv.getSelectionModel().getSelectedItem();
+}
+public ListView<String> getSelectionNode(){
+	return lv;
+}
+public String getTfFindValue() {
+	return tfFind.getText();
+}
+public Label getErrorLabel() {
+	return txtErrorMessage;
 }
 }

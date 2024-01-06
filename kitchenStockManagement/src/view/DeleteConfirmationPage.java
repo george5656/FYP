@@ -52,4 +52,10 @@ public class DeleteConfirmationPage extends PaneMenu {
 	public void setBtnConfirmEventHandler(EventHandler<ActionEvent> event) {
 		confirm.setOnAction(event);
 	}
+	/**
+	 *  to be able to edit the label so ask if they want to delete the item they have selected
+	 */
+	public void setTxtConfirmMessage(String message) {
+		txtConfirmMessage.setText(message);
+	}
 }

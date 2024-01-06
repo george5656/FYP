@@ -5,18 +5,40 @@ import java.util.ArrayList;
 public class StockType {
 private String name;
 private String cost;
-private ArrayList<CurrentStock> currentStock;
+private String quanityType;
 
-public StockType(String name, String cost, ArrayList<CurrentStock> currentStock) {
+
+public StockType(String name, String cost, String quanityType) {
 	
 	this.name = name;
 	this.cost = cost;
-	this.currentStock = currentStock;
+	this.quanityType = quanityType;
+	
 }
- public ArrayList<CurrentStock> getcurrentStock(){
-	 return currentStock;
+ 
+ public String getStockName() {
+	 return name;
  }
- public void setCurrentStock(ArrayList<CurrentStock> stock) {
-	 currentStock = stock;
+ public String getCost() {
+	 return cost;
  }
+ public String getQuanityType() {
+	 return quanityType; 
+ }
+ public void setname(String name) {
+	 this.name = name;
+ }
+ public void setcost(String cost) {
+	 this.cost = cost;
+ }
+ public void setquanityType(String quanityType) {
+	 this.quanityType = quanityType;
+ }
+ /**
+  * not official format, this way for the listview
+  */
+ @Override
+	public String toString() {
+		return "name = " + name + ", cost = " + cost + " quantityType = " + quanityType;
+	}
 }

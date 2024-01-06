@@ -64,7 +64,7 @@ public ArrayList<String> getCurrentStock() {
 		ResultSet result = statement.executeQuery();
 		//if(result.first()) {
 		while (result.next()) {
-			CurrentStock input = new CurrentStock(result.getInt(1),result.getString(2),result.getDouble(4),result.getString(5),result.getDate(6).toString(),result.getString(7),result.getDouble(8));
+			CurrentStock input = new CurrentStock(result.getInt(1),result.getString(2),result.getDouble(4),result.getString(8),result.getDate(5).toString(),result.getString(3),result.getDouble(7));
 			currentStock.add(input.toString());
 		}
 		//}
@@ -75,11 +75,32 @@ public ArrayList<String> getCurrentStock() {
 	
 	return currentStock;
 }
+
+public ArrayList<String> getCurrentStockThatsLike(String where) {
+	PreparedStatement statement;
+	ArrayList<String> currentStock = new ArrayList<>();
+	try {
+		statement = connection.prepareStatement("select * from stock_mangemnet.tbl_stock_iteration, stock_mangemnet.tbl_stock_type where (tbl_stock_iteration.stockTypeId = tbl_stock_type.stockTypeId) and tbl_stock_type.stockTypeId like \'%" + where +"%\' ;");
+		ResultSet result = statement.executeQuery();
+		//if(result.first()) {
+		while (result.next()) {
+			CurrentStock input = new CurrentStock(result.getInt(1),result.getString(2),result.getDouble(4),result.getString(8),result.getDate(5).toString(),result.getString(6),result.getDouble(7));
+			currentStock.add(input.toString());
+		}
+		//}
+		} catch (SQLException e) {
+		// TODO Auto-generated catch block
+		e.printStackTrace();
+	}
+	
+	return currentStock;
+}
+
 	public void addCurrentStock(CurrentStock data) {
 		PreparedStatement statement;
 		try {
 			//CurrentStock stock = data.getcurrentStock().get(0);
-			statement = connection.prepareStatement("Insert Into stock_mangemnet.tbl_stock_iteration (storageLocationId, stockTypeId, quanity, quantityType, expiereDate) Values ( \'" + data.getstorageLocationId() + "\',\'" + data.getName() +"\',\'" + data.getQuantity() + "\',\'" + data.getQuantityType() + "\',\'" + data.getExpiereDate() + "\'); ");
+			statement = connection.prepareStatement("Insert Into stock_mangemnet.tbl_stock_iteration (storageLocationId, stockTypeId, quanity, expiereDate) Values ( \'" + data.getstorageLocationId() + "\',\'" + data.getStockName() +"\',\'" + data.getQuantity() + "\',\'" + data.getExpiereDate() + "\'); ");
 			statement.execute();
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
@@ -99,6 +120,190 @@ public ArrayList<String> getCurrentStock() {
 			e.printStackTrace();
 		}
 	}
+/**
+ * made for the combo box in the stock details
+ * @return
+ */
+	public ArrayList<String> getStorageLocations(){
+		PreparedStatement statement;
+		ArrayList<String> storageLocations = new ArrayList<>();
+		try {
+			statement = connection.prepareStatement("select * from stock_mangemnet.tbl_storage_location");
+			ResultSet results = statement.executeQuery();
+			while(results.next()) {
+				storageLocations.add(results.getString(1));
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	
+	return storageLocations;
+	}
+	/**
+	 * to check if it exists so know in the stock details if need to make the stock type or not.
+	 * @param stockTypeId
+	 * @return true = exist, false = dosent exist
+	 */
+	public StockType StockTypeExists(String stockTypeId){
+		PreparedStatement statement;
+		// haave to make sure they cant put null in
+		StockType stockTypeIteration = new StockType("null","null","null");
+		try {
+			statement = connection.prepareStatement("select * from stock_mangemnet.tbl_stock_type where tbl_stock_type.stockTypeId = \"" + stockTypeId + "\"" );
+			ResultSet results = statement.executeQuery();
+			if(results.next()) {
+				stockTypeIteration = new StockType(results.getString(1), results.getString(2), results.getString(3));
+			}
+			} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	return stockTypeIteration;
+	
+	}
+	/**
+	 * makes a new stock type if one doesn't exists in the database that the user has input
+	 * @param stockTypeId
+	 * @param cost
+	 */
+	public void addStockType(String stockTypeId, String cost, String quanityType){
+		PreparedStatement statement;
+		
+		try {
+			statement = connection.prepareStatement("Insert into stock_mangemnet.tbl_stock_type (stockTypeId,Cost,quantityType) values (\""+stockTypeId + "\",\""+cost+ "\",\"" +quanityType + "\");");
+			statement.execute();
+			
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 
 	
+	}
+	/**
+	 * update the cost of stock type if user intput in stock details vaires from stored value
+	 * @param stockTypeId
+	 * @param cost
+	 */
+	public void updateStockTypeCost(String stockTypeId ,String cost){
+		PreparedStatement statement;
+		
+		try {
+			statement = connection.prepareStatement("Update stock_mangemnet.tbl_stock_type set cost = \"" + cost + "\" where stockTypeId = \"" + stockTypeId + "\";" );
+			statement.execute();
+			
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
+	
+	}
+	/**
+	 * to update the stock type qunaity type if it doesn't matc
+	 * @param stockTypeId
+	 * @param cost
+	 */
+	public void updateStockTypeQuanityType(String stockTypeId ,String quantityType){
+		PreparedStatement statement;
+		
+		try {
+			statement = connection.prepareStatement("Update stock_mangemnet.tbl_stock_type set tbl_stock_type.quantityType = \'" + quantityType + "\' where stockTypeId = \"" + stockTypeId + "\";" );
+			statement.execute();
+			
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
+	
+	}
+	/**
+	 * mean for the filter to work in the stock page.
+	 * @param where
+	 * @return
+	 */
+	public ArrayList<String> getCurrentStockThatMatchesWhere(String where){
+		PreparedStatement statement;
+		ArrayList<String> currentStock = new ArrayList<>();
+		try {
+			statement = connection.prepareStatement("select * from stock_mangemnet.tbl_stock_iteration, stock_mangemnet.tbl_stock_type where (tbl_stock_iteration.stockTypeId = tbl_stock_type.stockTypeId) and " + where + ";");
+			ResultSet result = statement.executeQuery();
+			//if(result.first()) {
+			while (result.next()) {
+				CurrentStock input = new CurrentStock(result.getInt(1),result.getString(2),result.getDouble(4),result.getString(8),result.getDate(5).toString(),result.getString(6),result.getDouble(7));
+				currentStock.add(input.toString());
+			}
+			//}
+			} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		return currentStock;
+	}
+	/**
+	 * originally made fo the combo box, in stock filter
+	 * @param where
+	 * @return
+	 */
+	public ArrayList<String> getAllStockType(){
+		PreparedStatement statement;
+		ArrayList<String> currentStock = new ArrayList<>();
+		try {
+			statement = connection.prepareStatement("select stockTypeId from stock_mangemnet.tbl_stock_type;");
+			ResultSet result = statement.executeQuery();
+			//if(result.first()) {
+			while (result.next()) {
+				currentStock.add(result.getString(1));
+			}
+			//}
+			} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		return currentStock;
+	}
+	/**
+	 * used by the stock edit to populate the lists
+	 * @return
+	 */
+	public CurrentStock getSpecificCurrentStock(String Id) {
+		PreparedStatement statement;
+		CurrentStock currentStock = new CurrentStock(-1,"null",-1.0,"null","null","null",-1.0);
+		try {
+			statement = connection.prepareStatement("select * from stock_mangemnet.tbl_stock_iteration, stock_mangemnet.tbl_stock_type where (tbl_stock_iteration.stockIterationId = \""+Id+"\");");
+			ResultSet result = statement.executeQuery();
+			//if(result.first()) {
+			if(result.next()) {
+				currentStock = new CurrentStock(result.getInt(1),result.getString(2),result.getDouble(4),result.getString(8),result.getDate(5).toString(),result.getString(3),result.getDouble(7));
+				
+			}
+			//}
+			} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		return currentStock;
+	}
+	/**
+	 * used in the stock edit to updae the data
+	 * @param data
+	 */
+ public void updateStockIteration(CurrentStock data, int id) {
+	 PreparedStatement statement;
+	
+		try {
+			
+			statement = connection.prepareStatement("Update stock_mangemnet.tbl_stock_iteration set tbl_stock_iteration.storageLocationId = \'" + data.getstorageLocationId() + "\', stockTypeId = \'" + data.getStockName()+"\', quanity = \'" + data.getQuantity() +"\', expiereDate = \'" +  data.getExpiereDate()  +"\' where stockIterationId = \"" + id + "\";" );
+			statement.execute();
+			
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+ }
 }
