@@ -54,8 +54,10 @@ public StockFilter() {
 	input.add(dpAfterDate);
 	input.add(dpBeforeDate);
 	
-	userTextInput.getChildren().addAll(tfMinQuanity,tfMaxQuanity,tfAboveCost,tfBelowCost);
-	userTextInput.getChildren().addAll(cbStorageLocation,cbStockType,dpAfterDate,dpBeforeDate);
+	userTextInput.getChildren().addAll(cbStorageLocation,cbStockType,tfMinQuanity,tfMaxQuanity);
+	userTextInput.getChildren().addAll(dpAfterDate,dpBeforeDate,tfAboveCost,tfBelowCost);
+	//userTextInput.getChildren().addAll(tfMinQuanity,tfMaxQuanity,tfAboveCost,tfBelowCost);
+	//userTextInput.getChildren().addAll(cbStorageLocation,cbStockType,dpAfterDate,dpBeforeDate);
 	
 	for(Region i : input) {
 		i.setMaxSize(Double.MAX_VALUE, Double.MAX_VALUE);
@@ -85,5 +87,31 @@ public StockFilter() {
 	}
 
 	
+}
+
+
+public TextField getTfMinQunaity() {
+	return tfMinQuanity;
+}
+public TextField getTfMaxQuanity() {
+	return tfMaxQuanity;
+}
+public TextField getTfAboveCost() {
+	return tfAboveCost;
+}
+public TextField getTfBelowCost() {
+	return tfBelowCost;
+}
+public ComboBox<String> getCbStorageLocation(){
+	return cbStorageLocation;
+}
+public ComboBox<String> getCbStockType(){
+	return cbStockType;
+}
+public DatePicker getDpAfterDate() {
+	return dpAfterDate;
+}
+public DatePicker getDpBeforeDate() {
+	return dpBeforeDate;
 }
 }

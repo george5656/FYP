@@ -8,6 +8,7 @@ import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
+import javafx.scene.control.Label;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.Priority;
 import model.CurrentStock;
@@ -27,6 +28,8 @@ public class Controller {
 	private ModelRoot model;
 	private RootView view;
 	private Login login;
+	private String stockId;
+	private int selectedStockId;
 	/**
 	 * Constructor, intictae all the other classes and assigning the event handlers.
 	 * @param model. the root of the M from MVC
@@ -41,10 +44,13 @@ public class Controller {
 			login.setBtnExitEventHandler(new EHExit());
 			login.setBtnLoginEventHandler(new EHLogin());
 			// just tying out a lamabda to see if they still work as expected.
+			/*
 			view.getHomePage().setBtnStockEventHandler(event -> {
 			view.getChildren().remove(0);
 			view.getChildren().add(view.getStockListPage());
 			view.setVgrow(view.getStockListPage(),Priority.ALWAYS);} );
+			*/
+			view.getHomePage().setBtnStockEventHandler(new EHStockListLaod());
 			view.getHomePage().setBtnMenuEventHandler(new EHHomePageMenuLoad());
 			view.getMenuListPage().setBtnAddEventHandler(new EHMenuListBtnAdd());
 			view.getStockListPage().setBtnDeleteEventHandler(new EHStockListBtnDelete());
@@ -66,8 +72,12 @@ public class Controller {
 			view.getMenuDetails().setBtnOutputEventHandler(new EHMenuDetailsBtnOutput());
 			view.getStockListPage().setObservableList(setStockListContent());
 			view.getStockDetails().setBtnSaveEventHandler(new EHStockDetailsBtnSave());
-			
-			
+			view.getStockDetails().setBtnCancelEventHandler(new EHStockListLaod());
+			view.getDeleteConfirmationPage().setBtnConfirmEventHandler(new EHStockDeleteBtnConfirm());
+			view.getDeleteConfirmationPage().setBtnCancelEventHandler(new EHStockListLaod());
+			view.getStockListPage().setBtnFindEventHandler(new EHStockListBtnFind());
+			view.getStockFilter().setBtnApply(new EHStockFilterBtnApply());
+			view.getStockListPage().setBtnEditEventHandler(new EHStockListBtnEdit());
 			ArrayList<PaneMenu> all = view.getAllView();
 			for(PaneMenu i : all) {
 				i.setHomeEventHandler(new EHHomeLoad());
@@ -160,10 +170,27 @@ private class EHStockListBtnDelete implements EventHandler<ActionEvent>{
 
 	@Override
 	public void handle(ActionEvent event) {
+		
+String userSelection = view.getStockListPage().getSelection();
+		
+if(!(view.getStockListPage().getSelectionNode().getSelectionModel().getSelectedItem() == null)) {
+		int nameStart = userSelection.indexOf("name");
+		//need to check they don't put this as name of the item
+		int costStart = userSelection.indexOf("cost");
+		String userSelectionName = userSelection.substring(nameStart + 7, costStart -2);
+		
+		view.getDeleteConfirmationPage().setTxtConfirmMessage("Are you sure you wan to delete " + userSelectionName+"?");
+		
+		
+		
 		view.getChildren().remove(0);
 		view.getChildren().add(view.getDeleteConfirmationPage());
 		view.setVgrow(view.getDeleteConfirmationPage(),Priority.ALWAYS);
-	}
+}else { 
+	view.getStockListPage().getErrorLabel().setVisible(true);
+	view.getStockListPage().getErrorLabel().setText("No data selected");
+}
+}
 
 
 }
@@ -182,9 +209,12 @@ private class EHStockBtnAdd implements EventHandler<ActionEvent>{
 
 	@Override
 	public void handle(ActionEvent event) {
+		stockId = "null";
+		resetStockDetailsPage();
 		view.getChildren().remove(0);
 		view.getChildren().add(view.getStockDetails());
 		view.setVgrow(view.getStockDetails(),Priority.ALWAYS);
+		
 		
 	}
 	
@@ -270,6 +300,12 @@ private class EHStockBtnFilter implements EventHandler<ActionEvent>{
 
 	@Override
 	public void handle(ActionEvent event) {
+		view.getStockFilter().getCbStorageLocation().getItems().clear();
+		view.getStockFilter().getCbStorageLocation().getItems().addAll(model.getDatabase().getStorageLocations());
+		
+		view.getStockFilter().getCbStockType().getItems().clear();
+		view.getStockFilter().getCbStockType().getItems().addAll(model.getDatabase().getAllStockType());
+		
 		view.getChildren().remove(0);
 		view.getChildren().add(view.getStockFilter());
 		view.setVgrow(view.getStockFilter(),Priority.ALWAYS);
@@ -368,9 +404,9 @@ private class EHMenuDetailsBtnOutput implements EventHandler<ActionEvent>{
 
 private ObservableList<String> setStockListContent() {
 	
-	ObservableList<String> test = FXCollections.observableArrayList(model.getDatabase().getCurrentStock());
+	ObservableList<String> dataToBeDisplayed = FXCollections.observableArrayList(model.getDatabase().getCurrentStock());
 	
-	return test;
+	return dataToBeDisplayed;
 }
 
 private class EHStockDetailsBtnSave implements EventHandler<ActionEvent>{
@@ -378,14 +414,204 @@ private class EHStockDetailsBtnSave implements EventHandler<ActionEvent>{
 	@Override
 	public void handle(ActionEvent event) {
 		StockDetails userInput = view.getStockDetails();
-		CurrentStock stock = new CurrentStock(Double.parseDouble(userInput.getQuanity().getText().toString()),userInput.getQuantityType().getText(),userInput.getExpiereDate().getValue().toString(),userInput.getStockName().getText().toString(), 5.00);
-	ArrayList<CurrentStock> stockContainer = new ArrayList<>();
-	stockContainer.add(stock);
-		StockType toBeSaved = new StockType("apple","0.33",stockContainer);
-		model.getDatabase().addCurrentStock(toBeSaved);
+		//a way to know if need to create it or not
+		StockType  typeUserInput = model.getDatabase().StockTypeExists(view.getStockDetails().getStockName().getText());
+		if(typeUserInput.getStockName() == "null") {
+			model.getDatabase().addStockType(view.getStockDetails().getStockName().getText(), view.getStockDetails().getCost().getText(), view.getStockDetails().getQuantityType().getText());
+		} 
+		if(typeUserInput.getCost() != view.getStockDetails().getCost().getText()) {
+			model.getDatabase().updateStockTypeCost(view.getStockDetails().getStockName().getText(), view.getStockDetails().getCost().getText());
+			
+		}
+		if(typeUserInput.getQuanityType() != view.getStockDetails().getQuantityType().getText()) {
+			model.getDatabase().updateStockTypeQuanityType(view.getStockDetails().getStockName().getText(), view.getStockDetails().getQuantityType().getText());
+		}
+		CurrentStock stock = new CurrentStock(-1,userInput.getStorageLocation().getSelectionModel().getSelectedItem().toString(),Double.parseDouble(userInput.getQuanity().getText()),userInput.getQuantityType().getText().toString(),userInput.getExpiereDate().getValue().toString(),userInput.getStockName().getText().toString(), 10.5);
+
+		if(stockId.equals("null")) {
+		
+		//CurrentStock stock = new CurrentStock(-1,"cubbord",10.56,"units","2004-01-05","apple",5.00);
+		model.getDatabase().addCurrentStock(stock);
+		
+		
+		}else {
+			model.getDatabase().updateStockIteration(stock, selectedStockId);
+		}
+		loadStockListPage();
+}
+}
+private class EHStockListLaod implements EventHandler<ActionEvent>{
+
+	@Override
+	public void handle(ActionEvent event) {
+		
+
+loadStockListPage();
+	}
+}
+
+private void loadStockListPage() {
 	
+	view.getStockListPage().getErrorLabel().setVisible(false);
+	view.getStockListPage().setObservableList(setStockListContent());
+	view.getChildren().remove(0);
+	view.getChildren().add(view.getStockListPage());
+	view.setVgrow(view.getStockListPage(),Priority.ALWAYS);
 	
+}
+
+private class EHStockDeleteBtnConfirm implements EventHandler<ActionEvent>{
+
+	@Override
+	public void handle(ActionEvent event) {
+		
+		String userSelection = view.getStockListPage().getSelection();
+		
+		
+		int idStart = userSelection.indexOf("id");
+		int storageStart = userSelection.indexOf("storage");
+		String userSelectionId = userSelection.substring(idStart + 5, storageStart -2);
+		
+	
+		model.getDatabase().deleteSelectedStock(userSelectionId);
+		
+		loadStockListPage();
+		
 }
 }
 
+private class EHStockListBtnFind implements EventHandler<ActionEvent>{
+
+	@Override
+	public void handle(ActionEvent event) {
+		
+		ObservableList<String> dataToBeDisplayed = FXCollections.observableArrayList(model.getDatabase().getCurrentStockThatsLike(view.getStockListPage().getTfFindValue()));
+		view.getStockListPage().setObservableList(dataToBeDisplayed);
+		
+	
+}
+}
+private class EHStockFilterBtnApply implements EventHandler<ActionEvent>{
+
+	@Override
+	public void handle(ActionEvent event) {
+		String whereClause = "";
+		
+		//so if the user didn't input a value it not added
+		if(view.getStockFilter().getCbStorageLocation().getSelectionModel().getSelectedItem()!=null) {
+			whereClause = whereClause + "tbl_stock_iteration.storageLocationId = \"" + view.getStockFilter().getCbStorageLocation().getSelectionModel().getSelectedItem().toString() + "\" And ";
+			System.out.println("hit1");
+		}
+		
+		if(view.getStockFilter().getCbStockType().getSelectionModel().getSelectedItem()!=null) {
+			whereClause = whereClause + "tbl_stock_iteration.stockTypeId = \"" + view.getStockFilter().getCbStockType().getSelectionModel().getSelectedItem().toString() + "\" And ";
+		}
+		
+		if(!view.getStockFilter().getTfMinQunaity().getText().equals("")) {
+			
+			 whereClause = whereClause + "tbl_stock_iteration.quanity >= \"" + view.getStockFilter().getTfMinQunaity().getUserData().toString() + "\" And ";
+		}
+
+		if(!view.getStockFilter().getTfMaxQuanity().getText().equals("")) {
+			whereClause = whereClause + "tbl_stock_iteration.quanity <= \"" + view.getStockFilter().getTfMaxQuanity().getText() + "\" And ";
+			
+		}
+		
+		System.out.println(view.getStockFilter().getTfMinQunaity().getText());
+		if(!view.getStockFilter().getDpAfterDate().getEditor().getText().equals("")) {
+			String date = view.getStockFilter().getDpAfterDate().getEditor().getText();
+			String year = date.substring(6,10);
+			String month = date.substring(3, 5);
+			String day = date.substring(0,2);
+			date = year + "-"+month+"-"+day;
+			whereClause = whereClause + "tbl_stock_iteration.expiereDate > \"" + date+ "\" And ";
+			
+		}
+
+		if(!view.getStockFilter().getDpBeforeDate().getEditor().getText().equals("")) {
+			String date = view.getStockFilter().getDpBeforeDate().getEditor().getText();
+			String year = date.substring(6,10);
+			String month = date.substring(3, 5);
+			String day = date.substring(0,2);
+			date = year + "-"+month+"-"+day;
+			whereClause = whereClause + "tbl_stock_iteration.expiereDate < \"" + date + "\" And ";
+			
+		}	
+
+		if(!view.getStockFilter().getTfAboveCost().getText().equals("")) {
+			whereClause = whereClause + "tbl_stock_type.cost >= \"" + view.getStockFilter().getTfAboveCost().getText() + "\" And ";
+			
+		}
+		if(!view.getStockFilter().getTfBelowCost().getText().equals("")) {
+			whereClause = whereClause + "tbl_stock_type.cost <= \"" + view.getStockFilter().getTfAboveCost().getText() + "\" And ";
+			
+		}
+		// so doesn't run and crash if none put in, and also remove that \"and\" have at the end as could end anywhere
+		if(!whereClause.equals("")) {
+			whereClause = whereClause.substring(0, whereClause.length()-5) + ";";
+			ObservableList<String> dataToBeDisplayed = FXCollections.observableArrayList(model.getDatabase().getCurrentStockThatMatchesWhere(whereClause));
+			view.getStockListPage().setObservableList(dataToBeDisplayed);
+		}
+		
+		
+		view.getChildren().remove(0);
+		view.getChildren().add(view.getStockListPage());
+		view.setVgrow(view.getStockListPage(),Priority.ALWAYS);
+}
+}
+private class EHStockListBtnEdit implements EventHandler<ActionEvent>{
+
+	@Override
+	public void handle(ActionEvent event) {
+		
+		
+		resetStockDetailsPage();
+		if(!(view.getStockListPage().getSelectionNode().getSelectionModel().getSelectedItem() == null)) {
+		
+		stockId = view.getStockListPage().getSelection();
+		
+		
+		int idStart = stockId.indexOf("id");
+		int storageStart = stockId.indexOf("storage");
+		stockId = stockId.substring(idStart + 5, storageStart -2);
+		CurrentStock selectedStock = model.getDatabase().getSpecificCurrentStock(stockId);
+		
+		//reformatting the text so the save isn't in a diffrente format
+		String date = selectedStock.getExpiereDate();
+		String year = date.substring(0,4);
+		String month = date.substring(5, 7);
+		String day = date.substring(8,10);
+		date = year + "/"+month+"/"+day;
+		
+		//populating the items
+		view.getStockDetails().getStockName().setText(selectedStock.getStockName());
+		view.getStockDetails().getStorageLocation().setValue(selectedStock.getstorageLocationId());
+		view.getStockDetails().getQuanity().setText(selectedStock.getQuantity().toString());
+		view.getStockDetails().getQuantityType().setText(selectedStock.getQuanityType());
+		view.getStockDetails().getExpiereDate().getEditor().setText(date);
+		view.getStockDetails().getCost().setText(selectedStock.getCost());
+		
+		selectedStockId = selectedStock.getId();
+		
+		view.getChildren().remove(0);
+		view.getChildren().add(view.getStockDetails());
+		view.setVgrow(view.getStockDetails(),Priority.ALWAYS);
+		} else {
+			view.getStockListPage().getErrorLabel().setVisible(true);
+			view.getStockListPage().getErrorLabel().setText("No data selected");
+		}
+	}
+	
+}
+
+public void resetStockDetailsPage() {
+	view.getStockDetails().getStorageLocation().getItems().clear();
+	view.getStockDetails().getStorageLocation().getItems().addAll(model.getDatabase().getStorageLocations());
+	
+	view.getStockDetails().getStockName().clear();
+	view.getStockDetails().getQuanity().clear();
+	view.getStockDetails().getQuantityType().clear();
+	view.getStockDetails().getExpiereDate().getEditor().clear();
+	view.getStockDetails().getCost().clear();
+}
 }
