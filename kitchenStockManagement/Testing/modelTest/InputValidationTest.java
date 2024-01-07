@@ -12,33 +12,33 @@ private String stringLength50 = new String("012345678901234567890123456789012345
 
 	@Test
 	public void stringValidationMinBoundary() {
-		assertEquals("no input",testingclass.stringValidation(new String("")));
+		assertEquals("no input",testingclass.stringMustBePresetValidation(new String("")));
 	}
 	@Test
 	public void stringValidationMinBoundaryPlusOne() {
-		assertEquals("",testingclass.stringValidation(new String(" ")));
+		assertEquals("",testingclass.stringMustBePresetValidation(new String(" ")));
 	}
 	@Test
 	public void stringValidationMaxBoundary() {
-		assertEquals("",testingclass.stringValidation(stringLength50));
+		assertEquals("",testingclass.stringMustBePresetValidation(stringLength50));
 	}
 	@Test
 	public void stringValidationMaxBoundaryPlusOne() {
-		assertEquals("user input to big",testingclass.stringValidation(stringLength50+"1"));
+		assertEquals("user input to big",testingclass.stringMustBePresetValidation(stringLength50+"1"));
 	}
 	@Test
 	public void stringValidationMaxBoundaryMinusOne() {
-		assertEquals("",testingclass.stringValidation(stringLength50.substring(1)));
+		assertEquals("",testingclass.stringMustBePresetValidation(stringLength50.substring(1)));
 	}
 	@Test
 	public void stringValidatioCharWrongType() {
-		assertEquals("only a-z and A-Z",testingclass.stringValidation(new String("@@@")));
+		assertEquals("only a-z and A-Z",testingclass.stringMustBePresetValidation(new String("@@@")));
 	}
 	@Test
 	public void stringValidatioCharInRangeAndWriteTypeString() {
-		assertEquals("",testingclass.stringValidation(new String("Hello")));
+		assertEquals("",testingclass.stringMustBePresetValidation(new String("Hello")));
 	}@Test
 	public void stringValidatioCharInRangeAndWriteTypeStringInt() {
-		assertEquals("",testingclass.stringValidation(new String("1234")));
+		assertEquals("",testingclass.stringMustBePresetValidation(new String("1234")));
 	}
 }

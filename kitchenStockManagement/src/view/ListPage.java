@@ -80,14 +80,14 @@ public class ListPage extends PaneMenu {
 		
 		mainLayout.setPadding(new Insets(20,20,20,20));
 		
-		btnAdd.setFont(new Font(30));
-		btnEdit.setFont(new Font(30));
-		btnFilter.setFont(new Font(30));
-		btnFind.setFont(new Font(30));
-		btnDelete.setFont(new Font(30));
-		txtErrorMessage.setFont(new Font(30));
+		btnAdd.setFont(new Font(20));
+		btnEdit.setFont(new Font(20));
+		btnFilter.setFont(new Font(20));
+		btnFind.setFont(new Font(20));
+		btnDelete.setFont(new Font(20));
+		txtErrorMessage.setFont(new Font(20));
 		
-		tfFind.setFont(new Font(30)); 
+		tfFind.setFont(new Font(20)); 
 
 	}
 public void setBtnAddEventHandler(EventHandler<ActionEvent> event) {
