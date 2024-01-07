@@ -4,7 +4,6 @@ public class CurrentStock extends StockType{
 private int id;
 private String storageLocationId;
 private Double quantity;
-
 private String expiereDate;
 
 

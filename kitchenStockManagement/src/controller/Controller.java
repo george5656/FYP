@@ -11,9 +11,11 @@ import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Label;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.Priority;
+import model.Budget;
 import model.CurrentStock;
 import model.ModelRoot;
 import model.StockType;
+import view.BudgetDetailsPage;
 import view.Login;
 import view.RootView;
 import view.StockDetails;
@@ -52,32 +54,42 @@ public class Controller {
 			*/
 			view.getHomePage().setBtnStockEventHandler(new EHStockListLaod());
 			view.getHomePage().setBtnMenuEventHandler(new EHHomePageMenuLoad());
-			view.getMenuListPage().setBtnAddEventHandler(new EHMenuListBtnAdd());
-			view.getStockListPage().setBtnDeleteEventHandler(new EHStockListBtnDelete());
-			view.getMenuDetails().setBtnAddEventHandler(new EHMenudetailsBtnAdd());
-			view.getStockListPage().setBtnAddEventHandler(new EHStockBtnAdd());
-			view.getHomePage().setBtnBudgetEventHandler(new EHHomeBtnBudget());
-			view.getBudgetListPage().setBtnAddEventHandler(new EHBudgetBtnAdd());
-			view.getHomePage().setBtnStorageEventHandler(new EHHomeBtnStorage());
-			view.getStorageLocationListPage().setBtnAddEventHandler(new EHStorageBtnAdd());
 			view.getHomePage().setBtnAccountEventHandler(new EHHomeBtnAccount());
+			view.getHomePage().setBtnBudgetEventHandler(new EHHomeBtnBudget());
+			view.getHomePage().setBtnStorageEventHandler(new EHHomeBtnStorage());
+			
+			view.getStockListPage().setBtnDeleteEventHandler(new EHStockListBtnDelete());
+			view.getStockListPage().setBtnAddEventHandler(new EHStockBtnAdd());
+			view.getStockListPage().setBtnFilterEventHandler(new EHStockBtnFilter());
+			view.getStockListPage().setObservableList(setStockListContent());
+			view.getStockListPage().setBtnFindEventHandler(new EHStockListBtnFind());
+			view.getStockListPage().setBtnEditEventHandler(new EHStockListBtnEdit());
+			
+			view.getMenuListPage().setBtnAddEventHandler(new EHMenuListBtnAdd());
+			view.getMenuDetails().setBtnAddEventHandler(new EHMenudetailsBtnAdd());
+			view.getBudgetListPage().setBtnAddEventHandler(new EHBudgetBtnAdd());
+			
+			view.getStorageLocationListPage().setBtnAddEventHandler(new EHStorageBtnAdd());
 			view.getAccountListPage().setBtnAddEventHandler(new EHAccountBtnAdd());
 			view.getStorageLocationListPage().setBtnFilterEventHandler(new EHStorageBtnFilter());
-			view.getStockListPage().setBtnFilterEventHandler(new EHStockBtnFilter());
+			
 			view.getBudgetListPage().setBtnFilterEventHandler(new EHBudgetBtnFilter()); 
 			view.getMenuDetails().setBtnFilterEventHandler(new EHDishesBtnFilter());
 			view.getAccountListPage().setBtnFilterEventHandler(new EHAccountBtnFilter());
 			view.getMenuListPage().setBtnFilterEventHandler(new EHMenuBtnFilter());
 			view.getMenuDetails().setBtnSettingEventHandler(new EHMenuDetailsBtnSetting());
 			view.getMenuDetails().setBtnOutputEventHandler(new EHMenuDetailsBtnOutput());
-			view.getStockListPage().setObservableList(setStockListContent());
+			
 			view.getStockDetails().setBtnSaveEventHandler(new EHStockDetailsBtnSave());
 			view.getStockDetails().setBtnCancelEventHandler(new EHStockListLaod());
 			view.getDeleteConfirmationPage().setBtnConfirmEventHandler(new EHStockDeleteBtnConfirm());
 			view.getDeleteConfirmationPage().setBtnCancelEventHandler(new EHStockListLaod());
-			view.getStockListPage().setBtnFindEventHandler(new EHStockListBtnFind());
+			
 			view.getStockFilter().setBtnApply(new EHStockFilterBtnApply());
-			view.getStockListPage().setBtnEditEventHandler(new EHStockListBtnEdit());
+			
+			view.getBudgetDetailsPage().setBtnSaveEventHandler(new EHBudgetDetailsBtnSave());
+			view.getBudgetListPage().setBtnFindEventHandler(new EHBudgetListBtnFind());
+			
 			ArrayList<PaneMenu> all = view.getAllView();
 			for(PaneMenu i : all) {
 				i.setHomeEventHandler(new EHHomeLoad());
@@ -112,8 +124,8 @@ private class EHLogin implements EventHandler<ActionEvent>{
 
 	@Override
 	public void handle(ActionEvent event) {
-		String errorUsername = model.getValidation().stringValidation(login.getUserUsernameInput());
-		String errorPassword = model.getValidation().stringValidation(login.getUserPasswordInput());
+		String errorUsername = model.getValidation().stringMustBePresetValidation(login.getUserUsernameInput());
+		String errorPassword = model.getValidation().stringMustBePresetValidation(login.getUserPasswordInput());
 		Boolean passValidation = false;
 		Boolean success = false;
 		Alert alert = new Alert(AlertType.ERROR);
@@ -230,28 +242,8 @@ private class EHBudgetBtnAdd implements EventHandler<ActionEvent>{
 	}
 	
 }
-private class EHHomeBtnBudget implements EventHandler<ActionEvent>{
 
-	@Override
-	public void handle(ActionEvent event) {
-		view.getChildren().remove(0);
-		view.getChildren().add(view.getBudgetListPage());
-		view.setVgrow(view.getBudgetListPage(),Priority.ALWAYS);
-		
-	}
-	
-}
-private class EHHomeBtnStorage implements EventHandler<ActionEvent>{
 
-	@Override
-	public void handle(ActionEvent event) {
-		view.getChildren().remove(0);
-		view.getChildren().add(view.getStorageLocationListPage());
-		view.setVgrow(view.getStorageLocationListPage(),Priority.ALWAYS);
-		
-	}
-	
-}
 private class EHStorageBtnAdd implements EventHandler<ActionEvent>{
 
 	@Override
@@ -263,17 +255,7 @@ private class EHStorageBtnAdd implements EventHandler<ActionEvent>{
 	}
 	
 }
-private class EHHomeBtnAccount implements EventHandler<ActionEvent>{
 
-	@Override
-	public void handle(ActionEvent event) {
-		view.getChildren().remove(0);
-		view.getChildren().add(view.getAccountListPage());
-		view.setVgrow(view.getAccountListPage(),Priority.ALWAYS);
-		
-	}
-	
-}
 private class EHAccountBtnAdd implements EventHandler<ActionEvent>{
 
 	@Override
@@ -415,6 +397,41 @@ private class EHStockDetailsBtnSave implements EventHandler<ActionEvent>{
 	public void handle(ActionEvent event) {
 		StockDetails userInput = view.getStockDetails();
 		//a way to know if need to create it or not
+		String masterErrorMessage = "";
+		String issuesWith = "";
+		String date = "null";
+		if(view.getStockDetails().getExpiereDate().getValue() != null) {
+		date = view.getStockDetails().getExpiereDate().getValue().toString();
+		}
+		String nameErrorMessage = model.getValidation().stringMustBePresetValidation(view.getStockDetails().getStockName().getText());
+		String quanityErrorMessage = model.getValidation().doubleMustBePresetValidation(view.getStockDetails().getQuanity().getText());
+		String quanityTypeErrorMessage = model.getValidation().stringMustBePresetValidation(view.getStockDetails().getQuantityType().getText());
+		String expiereDateErrorMessage = model.getValidation().dateValidation(date);
+		String costErrorMessage = model.getValidation().doubleMustBePresetValidation(view.getStockDetails().getCost().getText());
+		
+		//userInput.getExpiereDate().getValue().toString()
+		if(!nameErrorMessage.equals("")) {
+			masterErrorMessage = nameErrorMessage;
+			issuesWith = "stock name";
+		}else if(!quanityErrorMessage.equals("")) {
+			masterErrorMessage = quanityErrorMessage;
+			issuesWith = "quanity";
+		}else if(!quanityTypeErrorMessage.equals("")) {
+			masterErrorMessage = quanityTypeErrorMessage;
+			issuesWith = "quantity type";
+		}else if(!expiereDateErrorMessage.equals("")) {
+			masterErrorMessage = expiereDateErrorMessage;
+			issuesWith = "expiere date";
+		}else if(!costErrorMessage.equals("")) {
+			masterErrorMessage = costErrorMessage;
+			issuesWith = "cost";
+		}else if(view.getStockDetails().getStorageLocation().getSelectionModel().getSelectedItem() == null) {
+			masterErrorMessage = "no item has been chosen";
+			issuesWith = "storage location";
+		}
+		
+		
+		if(masterErrorMessage.equals("")) {
 		StockType  typeUserInput = model.getDatabase().StockTypeExists(view.getStockDetails().getStockName().getText());
 		if(typeUserInput.getStockName() == "null") {
 			model.getDatabase().addStockType(view.getStockDetails().getStockName().getText(), view.getStockDetails().getCost().getText(), view.getStockDetails().getQuantityType().getText());
@@ -438,7 +455,16 @@ private class EHStockDetailsBtnSave implements EventHandler<ActionEvent>{
 			model.getDatabase().updateStockIteration(stock, selectedStockId);
 		}
 		loadStockListPage();
-}
+		} else {
+			// if it fails the first if, eg validation of the inputs fails
+			Alert errorPopup = new Alert(AlertType.ERROR);
+			errorPopup.setContentText(masterErrorMessage);
+			errorPopup.setHeaderText("issue with " + issuesWith);
+			errorPopup.setTitle("input error");
+			
+			errorPopup.show();
+		}
+	}
 }
 private class EHStockListLaod implements EventHandler<ActionEvent>{
 
@@ -484,10 +510,15 @@ private class EHStockListBtnFind implements EventHandler<ActionEvent>{
 
 	@Override
 	public void handle(ActionEvent event) {
-		
+		String errorMessage = model.getValidation().stringPresentIsOptionalValidation(view.getStockListPage().getTfFindValue());
+		if(errorMessage.equals("")) {
+			view.getStockListPage().getErrorLabel().setVisible(false);
 		ObservableList<String> dataToBeDisplayed = FXCollections.observableArrayList(model.getDatabase().getCurrentStockThatsLike(view.getStockListPage().getTfFindValue()));
 		view.getStockListPage().setObservableList(dataToBeDisplayed);
-		
+		}else {
+			view.getStockListPage().getErrorLabel().setText(errorMessage);
+			view.getStockListPage().getErrorLabel().setVisible(true);
+		}
 	
 }
 }
@@ -495,8 +526,51 @@ private class EHStockFilterBtnApply implements EventHandler<ActionEvent>{
 
 	@Override
 	public void handle(ActionEvent event) {
-		String whereClause = "";
+		String masterErrorMessage = "";
+		String issueFrom = "";
+		String moreQuanityErrorMessage = model.getValidation().doublePresentIsOptionalValidation(view.getStockFilter().getTfMinQunaity().getText());
+		String lessQuanityErrorMessage = model.getValidation().doublePresentIsOptionalValidation(view.getStockFilter().getTfMaxQuanity().getText());
+		/*
+		String date = "null";
+		if(view.getStockDetails().getExpiereDate().getEditor().getText() != null) {
+		date = view.getStockDetails().getExpiereDate().getValue().toString();
+		}
+		*/
+		String expiresAfterErrorMessage = "";
+		String expiresBeforeErrorMessage = "";
+		if((!view.getStockFilter().getDpAfterDate().getEditor().getText().equals(""))&& view.getStockFilter().getDpAfterDate().getValue() == null) {
+			expiresAfterErrorMessage = "no data found, if some does exists try selecting it and preesing enter";
+		}
+		if((!view.getStockFilter().getDpBeforeDate().getEditor().getText().equals(""))&& view.getStockFilter().getDpBeforeDate().getValue() == null) {
+			expiresBeforeErrorMessage = "no data found, if some does exists try selecting it and preesing enter";
+		}
+		String costMoreErrorMessage = model.getValidation().doublePresentIsOptionalValidation(view.getStockFilter().getTfAboveCost().getText());
+		String costLessErrorMessage = model.getValidation().doublePresentIsOptionalValidation(view.getStockFilter().getTfBelowCost().getText());
 		
+		if(!moreQuanityErrorMessage.equals("")) {
+			masterErrorMessage = moreQuanityErrorMessage;
+			issueFrom = "more quantit than";
+		}else if(!lessQuanityErrorMessage.equals("")) {
+			masterErrorMessage = lessQuanityErrorMessage;
+			issueFrom = "less quantit than";
+		}else if(!expiresAfterErrorMessage.equals("")) {
+			masterErrorMessage = expiresAfterErrorMessage;
+			issueFrom = "expires after";
+		}else if(!expiresBeforeErrorMessage.equals("")) {
+			masterErrorMessage = expiresBeforeErrorMessage;
+			issueFrom = "expires before";
+		}else if(!costMoreErrorMessage.equals("")) {
+			masterErrorMessage = costMoreErrorMessage;
+			issueFrom = "cost more than";
+		}else if(!costLessErrorMessage.equals("")) {
+			masterErrorMessage = costLessErrorMessage;
+			issueFrom = "cost less than";
+		}
+		
+		
+		
+		if(masterErrorMessage.equals("")) {
+		String whereClause = "";
 		//so if the user didn't input a value it not added
 		if(view.getStockFilter().getCbStorageLocation().getSelectionModel().getSelectedItem()!=null) {
 			whereClause = whereClause + "tbl_stock_iteration.storageLocationId = \"" + view.getStockFilter().getCbStorageLocation().getSelectionModel().getSelectedItem().toString() + "\" And ";
@@ -509,7 +583,7 @@ private class EHStockFilterBtnApply implements EventHandler<ActionEvent>{
 		
 		if(!view.getStockFilter().getTfMinQunaity().getText().equals("")) {
 			
-			 whereClause = whereClause + "tbl_stock_iteration.quanity >= \"" + view.getStockFilter().getTfMinQunaity().getUserData().toString() + "\" And ";
+			 whereClause = whereClause + "tbl_stock_iteration.quanity >= \"" + view.getStockFilter().getTfMinQunaity().getText() + "\" And ";
 		}
 
 		if(!view.getStockFilter().getTfMaxQuanity().getText().equals("")) {
@@ -557,7 +631,15 @@ private class EHStockFilterBtnApply implements EventHandler<ActionEvent>{
 		view.getChildren().remove(0);
 		view.getChildren().add(view.getStockListPage());
 		view.setVgrow(view.getStockListPage(),Priority.ALWAYS);
-}
+		}else {
+			//if fails validation does this part
+			Alert errorMessagePopup = new Alert(AlertType.ERROR);
+			errorMessagePopup.setTitle("input error");
+			errorMessagePopup.setHeaderText(issueFrom);
+			errorMessagePopup.setContentText(masterErrorMessage);
+			errorMessagePopup.show();
+		}
+		}
 }
 private class EHStockListBtnEdit implements EventHandler<ActionEvent>{
 
@@ -614,4 +696,121 @@ public void resetStockDetailsPage() {
 	view.getStockDetails().getExpiereDate().getEditor().clear();
 	view.getStockDetails().getCost().clear();
 }
+
+
+private void loadBudgetListPage() {
+	
+	view.getBudgetListPage().getErrorLabel().setVisible(false);
+	view.getBudgetListPage().setObservableList(setBudgetListContent());
+	view.getChildren().remove(0);
+	view.getChildren().add(view.getBudgetListPage());
+	view.setVgrow(view.getBudgetListPage(),Priority.ALWAYS);
+	
+}
+
+private ObservableList<String> setBudgetListContent() {
+	
+	ObservableList<String> dataToBeDisplayed = FXCollections.observableArrayList(model.getDatabase().getAllBudgets());
+	return dataToBeDisplayed;
+}
+private class EHHomeBtnBudget implements EventHandler<ActionEvent>{
+
+	@Override
+	public void handle(ActionEvent event) {
+		loadBudgetListPage();
+		
+	}
+	
+}
+
+
+private class EHBudgetDetailsBtnSave implements EventHandler<ActionEvent>{
+
+	@Override
+	public void handle(ActionEvent event) {
+		
+		BudgetDetailsPage userInput = view.getBudgetDetailsPage();
+		
+		model.getDatabase().addBudget(new Budget(userInput.getName().getText(),Double.parseDouble(userInput.getAmount().getText()),userInput.getStartDate().getValue().toString(),userInput.getEndDate().getValue().toString()));
+		
+		
+		loadBudgetListPage();
+		
+	}
+	
+}
+private class EHBudgetListBtnFind implements EventHandler<ActionEvent>{
+
+	@Override
+	public void handle(ActionEvent event) {
+		
+		ObservableList<String> dataToBeDisplayed = FXCollections.observableArrayList(model.getDatabase().getBudgetsThatsLike(view.getBudgetListPage().getTfFindValue()));
+		
+		view.getBudgetListPage().setObservableList(dataToBeDisplayed);
+		
+		
+	}
+	
+}
+
+
+
+
+private void loadAccountListPage() {
+	
+	view.getAccountListPage().getErrorLabel().setVisible(false);
+	view.getAccountListPage().setObservableList(setAccountListContent());
+	view.getChildren().remove(0);
+	view.getChildren().add(view.getAccountListPage());
+	view.setVgrow(view.getAccountListPage(),Priority.ALWAYS);
+	
+}
+
+private ObservableList<String> setAccountListContent() {
+	
+	ObservableList<String> dataToBeDisplayed = FXCollections.observableArrayList(model.getDatabase().getAllAccounts());
+	return dataToBeDisplayed;
+}
+
+
+private class EHHomeBtnAccount implements EventHandler<ActionEvent>{
+
+	@Override
+	public void handle(ActionEvent event) {
+		loadAccountListPage();
+		
+	}
+	
+}
+
+
+
+
+private void loadStorgaeLocationListPage() {
+	
+	view.getStorageLocationListPage().getErrorLabel().setVisible(false);
+	view.getStorageLocationListPage().setObservableList(setStorgaeLocationListContent());
+	view.getChildren().remove(0);
+	view.getChildren().add(view.getStorageLocationListPage());
+	view.setVgrow(view.getStorageLocationListPage(),Priority.ALWAYS);
+	
+}
+
+private ObservableList<String> setStorgaeLocationListContent() {
+	
+	ObservableList<String> dataToBeDisplayed = FXCollections.observableArrayList(model.getDatabase().getAllStorageLocations());
+	return dataToBeDisplayed;
+
+}
+private class EHHomeBtnStorage implements EventHandler<ActionEvent>{
+
+	@Override
+	public void handle(ActionEvent event) {
+		loadStorgaeLocationListPage();
+		
+	}
+	
+}
+
+
 }
