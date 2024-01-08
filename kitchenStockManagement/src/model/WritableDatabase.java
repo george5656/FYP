@@ -23,9 +23,7 @@ public class WritableDatabase {
 	 */
 	public WritableDatabase() {
 	try {
-		System.out.println("connecting...");
-		connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/MySQL","root","Root123@");
-		System.out.println("connected");	
+		connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/MySQL","root","Root123@");	
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}

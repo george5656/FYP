@@ -1,7 +1,7 @@
 package model;
 
 public class CurrentStock extends StockType{
-private int id;
+private Integer id;
 private String storageLocationId;
 private Double quantity;
 private String expiereDate;

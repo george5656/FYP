@@ -1,4 +1,7 @@
 package model;
+
+import java.time.LocalDate;
+
 /**
  * a class to check if the user input is valid.
  * @author George
@@ -92,18 +95,20 @@ public class InputValidation {
 		}
 		return errorMessage;
 	}
-	public String dateValidation(String userInput) {
+	public String dateValidation(String input, LocalDate valuePresent) {
 		errorMessage ="";
 		//int indexOfFirstSlash = userInput.indexOf('/');
 		//int indexOfSecondSlash = -1;
 		
-		
+		/*
 		if(!userInput.matches("[0-9/-]+")&&!userInput.equals("")) {
 			errorMessage = "only 0-9 and \'/\' characters allowed";
 		}
 		if(userInput.length()!=10) {
 			errorMessage = "date must be in the format, dd/mm/yyyy";
 		}
+		*/
+		
 		/*
 		if(indexOfFirstSlash == -1) {
 			errorMessage = "date must be in the format, dd/mm/yyyy";
@@ -120,10 +125,14 @@ public class InputValidation {
 			System.out.println(indexOfSecondSlash);
 		}
 		*/
-		if(userInput.equals("null")) {
+		
+		if (!input.equals("")&&valuePresent == null) {
 			errorMessage = "no data found, if some does exists try selecting it and preesing enter";
 		}
 		
+		if(input.equals("null")) {
+			errorMessage = "error no date";
+		}
 		return errorMessage;
 	}
 	

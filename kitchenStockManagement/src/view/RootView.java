@@ -1,5 +1,6 @@
 package view;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 
 import javafx.collections.ObservableList;
@@ -225,8 +226,21 @@ public void stockListLoad(ObservableList<String> data) {
 	stockListPage.getErrorLabel().setVisible(false);
 	stockListPage.setObservableList(data);
 	this.getChildren().remove(0);
-	this.getChildren().add(ad);
-	this.setVgrow(ad, Priority.ALWAYS);
+	this.getChildren().add(stockListPage);
+	this.setVgrow(stockListPage, Priority.ALWAYS);
+}
+public String getStockListSelectedItem() {
+	
+	if(stockListPage.getSelectionNode().getSelectionModel().getSelectedItem()!= null) {
+	return stockListPage.getSelectionNode().getSelectionModel().getSelectedItem();
+	}else {
+		return "null";
+	}
+}
+
+public void setStockListError(String errorMessgae) {
+	stockListPage.getErrorLabel().setVisible(true);
+	stockListPage.getErrorLabel().setText("No data selected");
 }
 
 /*
@@ -240,6 +254,21 @@ public void setStockListBtnFindEventHandler(EventHandler<ActionEvent> event) {
 public void setStockListBtnEditEventHandler(EventHandler<ActionEvent> event) {
 	stockListPage.setBtnEditEventHandler(event);
 }
+
+public String getSelectedStockId() {
+	String stockId = stockListPage.getSelection();
+	int idStart = stockId.indexOf("id");
+	int storageStart = stockId.indexOf("storage");
+	return stockId.substring(idStart + 5, storageStart -2);
+}
+
+public String getStockListTfFindValue() {
+	return stockListPage.getTfFindValue();
+}
+public void setStockListValues(ObservableList<String> data) {
+stockListPage.setObservableList(data);
+}
+
 
 
 // stock details 
@@ -255,6 +284,74 @@ public void stockDetailsLoad() {
 	this.getChildren().add(sd);
 	this.setVgrow(sd, Priority.ALWAYS);
 }
+public String getStockDetailsStockName() {
+	return sd.getStockName().getText();
+}
+public String getStockDetailsQuantity() {
+	return sd.getQuanity().getText();
+}
+public String getStockDetailsQuanitType() {
+	return sd.getQuantityType().getText();
+}
+public String getStockDetailsCost() {
+	return sd.getCost().getText();
+}
+public String getStockDetailsDateValue() {
+	if(sd.getExpiereDate().getValue() != null) {
+	return sd.getExpiereDate().getValue().toString();
+	}else {
+		return "null";
+	}
+	
+	}
+public LocalDate getStockDetailsDateValueAsLocalDate() {
+	
+	return sd.getExpiereDate().getValue();
+
+	
+	
+	}
+public String getStockDetailsDateText() {
+	if(sd.getExpiereDate().getEditor().getText() != null) {
+	return sd.getExpiereDate().getEditor().getText();
+	}else {
+		return "null";
+	}
+	
+	}
+public String getStorageLocation() {
+	return sd.getStorageLocation().getSelectionModel().getSelectedItem().toString();
+}
+
+
+public void resetStockDetailsPage(ObservableList<String> data) {
+	sd.getStorageLocation().getItems().clear();
+	sd.getStorageLocation().getItems().addAll(data);
+	sd.getStockName().clear();
+	sd.getQuanity().clear();
+	sd.getQuantityType().clear();
+	sd.getExpiereDate().getEditor().clear();
+	sd.getCost().clear();
+}
+
+public void setStockDetailsName(String name) {
+	sd.getStockName().setText(name);
+}
+public void setStockDetailsStorgeLocation(String StorgeLocation) {
+	sd.getStorageLocation().setValue(StorgeLocation);
+}
+public void setStockDetailsQuanity(String Quanity) {
+	sd.getQuanity().setText(Quanity);
+}
+public void setStockDetailsQuanityType(String QuanityType) {
+	sd.getQuantityType().setText(QuanityType);
+}
+public void setStockDetailsExpiereDate(String ExpiereDate) {
+	sd.getExpiereDate().getEditor().setText(ExpiereDate);
+}
+public void setStockDetailsCost(String Cost) {
+	sd.getCost().setText(Cost);
+}
 
 // stock filter 
 
@@ -262,6 +359,58 @@ public void setStockFilterBtnApply(EventHandler<ActionEvent> event) {
 	sf.setBtnApply(event);
 }
 
+public void stockFilterLoad(ArrayList<String> storageLocations, ArrayList<String> stockType) {
+	
+	sf.getCbStorageLocation().getItems().clear();
+	sf.getCbStorageLocation().getItems().addAll(storageLocations);
+	
+	sf.getCbStockType().getItems().clear();
+	sf.getCbStockType().getItems().addAll(stockType);
+	
+	this.getChildren().remove(0);
+	this.getChildren().add(sf);
+	this.setVgrow(sf, Priority.ALWAYS);
+}
+public String getStockFilterTfMinQunaity() {
+	return sf.getTfMinQunaity().getText();
+}
+public String getStockFilterTfMaxQunaity() {
+	return sf.getTfMaxQuanity().getText();
+}
+public String getStockFilterDpAfterDateText() {
+	return sf.getDpAfterDate().getEditor().getText();
+}
+public String getStockFilterDpBeforeDateText() {
+	return sf.getDpBeforeDate().getEditor().getText();
+}
+
+public LocalDate getStockFilterDpAfterDateValuePresent() {
+	return sf.getDpAfterDate().getValue();
+}
+public LocalDate getStockFilterDpBeforeDateValuePresent() {
+	return sf.getDpBeforeDate().getValue();
+}
+
+public String getStockFilterAboveCost() {
+	return sf.getTfAboveCost().getText();
+}
+public String getStockFilterBelowCost() {
+	return sf.getTfBelowCost().getText();
+}
+public String getStockFilterStorgaeLocation() {
+	if(sf.getCbStorageLocation().getSelectionModel().getSelectedItem()!=null) {
+		return sf.getCbStorageLocation().getSelectionModel().getSelectedItem();
+	}else {
+		return "null";
+	}
+}
+public String getStockFilterStockType() {
+	if(sf.getCbStockType().getSelectionModel().getSelectedItem()!=null) {
+		return sf.getCbStockType().getSelectionModel().getSelectedItem();
+	}else {
+		return "null";
+	}
+}
 //menuList
 
 public void setMenuListBtnFilterEventHandler(EventHandler<ActionEvent> event) {
@@ -275,6 +424,7 @@ public void menuListLoad() {
 	this.getChildren().add(menuListPage);
 	this.setVgrow(menuListPage, Priority.ALWAYS);
 }
+
 
 
 // menuDetails
@@ -328,6 +478,19 @@ public void setBudgetListBtnFilterEventHandler(EventHandler<ActionEvent> event) 
 public void setBudgetListBtnFindEventHandler(EventHandler<ActionEvent> event) {
 	budgetListPage.setBtnFindEventHandler(event);
 }
+
+public void BudgetListLoad(ObservableList<String> data) {
+	budgetListPage.getErrorLabel().setVisible(false);
+	budgetListPage.setObservableList(data);
+	this.getChildren().remove(0);
+	this.getChildren().add(budgetListPage);
+	this.setVgrow(budgetListPage, Priority.ALWAYS);
+}
+
+public String getBudgetTfFind() {
+	return budgetListPage.getTfFindValue();
+}
+
 //budgetDetailsPage
 public void setBudgetDetailsBtnSaveEventHandler(EventHandler<ActionEvent> event) {
 	bdp.setBtnSaveEventHandler(event);
@@ -336,6 +499,19 @@ public void budgetDetailsLoad() {
 	this.getChildren().remove(0);
 	this.getChildren().add(bdp);
 	this.setVgrow(bdp, Priority.ALWAYS);
+}
+
+public String getBudgetDetailsInputtedName() {
+	return bdp.getName().getText();
+}
+public Double getBudgetDetailsInputtedAmount() {
+	return Double.parseDouble(bdp.getAmount().getText());
+}
+public String getBudgetDetailsInputtedStartDate() {
+	return bdp.getStartDate().getValue().toString();
+}
+public String getBudgetDetailsInputtedEndDate() {
+	return bdp.getEndDate().getValue().toString();
 }
 
 //budget filter
@@ -353,6 +529,14 @@ public void setStorgaeLocationListBtnAddEventHandler(EventHandler<ActionEvent> e
 public void setStorgaeLocationListBtnFilterEventHandler(EventHandler<ActionEvent> event) {
 	storageLocationListPage.setBtnFilterEventHandler(event);
 }
+public void storgaeLocationListLoad(ObservableList<String> storageLocations) {
+	storageLocationListPage.getErrorLabel().setVisible(false);
+	storageLocationListPage.setObservableList(storageLocations);
+	this.getChildren().remove(0);
+	this.getChildren().add(storageLocationListPage);
+	this.setVgrow(storageLocationListPage,Priority.ALWAYS);
+}
+
 //storageLocationDetails
 
 public void StorgaeLocationDetailsLoad() {
@@ -376,11 +560,18 @@ public void setAccountListBtnAddEventHandler(EventHandler<ActionEvent> event) {
 public void setAccountListBtnFilterEventHandler(EventHandler<ActionEvent> event) {
 	accountListPage.setBtnFilterEventHandler(event);
 }
-//account details
 public void accountDetailsLoad() {
 	this.getChildren().remove(0);
 	this.getChildren().add(ad);
 	this.setVgrow(ad, Priority.ALWAYS);
+}
+//account details
+public void accountListLoad(ObservableList<String> data) {
+	accountListPage.getErrorLabel().setVisible(false);
+	accountListPage.setObservableList(data);
+	this.getChildren().remove(0);
+	this.getChildren().add(accountListPage);
+	this.setVgrow(accountListPage, Priority.ALWAYS);
 }
 
 // account filter 
@@ -399,6 +590,15 @@ public void setDeleteConfirmationBtnConfirmEventHandler(EventHandler<ActionEvent
 public void setDeleteConfirmationBtnCancelEventHandler(EventHandler<ActionEvent> event) {
 	dcp.setBtnCancelEventHandler(event);
 }
+
+
+public void deleteConfirmationLoad() {
+	this.getChildren().remove(0);
+	this.getChildren().add(dcp);
+	this.setVgrow(dcp, Priority.ALWAYS);
+}
+
+
 public void setAllPaneMenu(EventHandler<ActionEvent> home,EventHandler<ActionEvent> Logout) {
 	ArrayList<PaneMenu> all = getAllView();
 	for(PaneMenu i : all) {
@@ -406,6 +606,8 @@ public void setAllPaneMenu(EventHandler<ActionEvent> home,EventHandler<ActionEve
 		i.setLogoutEventHandler(Logout);
 	}
 }
+
+
 
 // dish 
 public void dishDetailsLoad() {
