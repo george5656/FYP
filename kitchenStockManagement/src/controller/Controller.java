@@ -11,15 +11,9 @@ import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Label;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.Priority;
-import model.Budget;
-import model.CurrentStock;
 import model.ModelRoot;
-import model.StockType;
-import view.BudgetDetailsPage;
-import view.Login;
 import view.RootView;
-import view.StockDetails;
-import view.PaneMenu;
+
 
 /**
  * is the controller class of the MVC for the kitchen management system.
@@ -29,7 +23,6 @@ public class Controller {
 // field 
 	private ModelRoot model;
 	private RootView view;
-	private Login login;
 	private String stockId;
 	private int selectedStockId;
 	/**
@@ -42,9 +35,10 @@ public class Controller {
 		//shadowing	
 			this.model = model;
 			this.view = view;
-			login = view.getLoginPage();
-			login.setBtnExitEventHandler(new EHExit());
-			login.setBtnLoginEventHandler(new EHLogin());
+				
+			view.setLoginBtnExit(new EHExit());
+			view.setLoginBtnLogin(new EHLogin());
+			
 			// just tying out a lamabda to see if they still work as expected.
 			/*
 			view.getHomePage().setBtnStockEventHandler(event -> {
@@ -52,49 +46,48 @@ public class Controller {
 			view.getChildren().add(view.getStockListPage());
 			view.setVgrow(view.getStockListPage(),Priority.ALWAYS);} );
 			*/
-			view.getHomePage().setBtnStockEventHandler(new EHStockListLaod());
-			view.getHomePage().setBtnMenuEventHandler(new EHHomePageMenuLoad());
-			view.getHomePage().setBtnAccountEventHandler(new EHHomeBtnAccount());
-			view.getHomePage().setBtnBudgetEventHandler(new EHHomeBtnBudget());
-			view.getHomePage().setBtnStorageEventHandler(new EHHomeBtnStorage());
+			view.setHomeBtnStockEventHandler(new EHStockListLaod());
+			view.setHomeBtnMenuEventHandler(new EHHomePageMenuLoad());
+			view.setHomeBtnAccountEventHandler(new EHHomeBtnAccount());
+			view.setHomeBtnBudgetEventHandler(new EHHomeBtnBudget());
+			view.setHomeBtnStorageEventHandler(new EHHomeBtnStorage());
 			
-			view.getStockListPage().setBtnDeleteEventHandler(new EHStockListBtnDelete());
-			view.getStockListPage().setBtnAddEventHandler(new EHStockBtnAdd());
-			view.getStockListPage().setBtnFilterEventHandler(new EHStockBtnFilter());
-			view.getStockListPage().setObservableList(setStockListContent());
-			view.getStockListPage().setBtnFindEventHandler(new EHStockListBtnFind());
-			view.getStockListPage().setBtnEditEventHandler(new EHStockListBtnEdit());
+			view.setStockListBtnDeleteEventHandler(new EHStockListBtnDelete());
+			view.setStockListBtnAddEventHandler(new EHStockBtnAdd());
+			view.setStockListBtnFilterEventHandler(new EHStockBtnFilter());
+			//view.getStockListPage().setObservableList(setStockListContent());
+			view.setStockListBtnFindEventHandler(new EHStockListBtnFind());
+			view.setStockListBtnEditEventHandler(new EHStockListBtnEdit());
 			
-			view.getMenuListPage().setBtnAddEventHandler(new EHMenuListBtnAdd());
-			view.getMenuDetails().setBtnAddEventHandler(new EHMenudetailsBtnAdd());
-			view.getBudgetListPage().setBtnAddEventHandler(new EHBudgetBtnAdd());
+			view.setStockDetailsBtnSaveEventHandler(new EHStockDetailsBtnSave());
+			view.setStockDetailsBtnCancelEventHandler(new EHStockListLaod());
 			
-			view.getStorageLocationListPage().setBtnAddEventHandler(new EHStorageBtnAdd());
-			view.getAccountListPage().setBtnAddEventHandler(new EHAccountBtnAdd());
-			view.getStorageLocationListPage().setBtnFilterEventHandler(new EHStorageBtnFilter());
+			view.setStockFilterBtnApply(new EHStockFilterBtnApply());
 			
-			view.getBudgetListPage().setBtnFilterEventHandler(new EHBudgetBtnFilter()); 
-			view.getMenuDetails().setBtnFilterEventHandler(new EHDishesBtnFilter());
-			view.getAccountListPage().setBtnFilterEventHandler(new EHAccountBtnFilter());
-			view.getMenuListPage().setBtnFilterEventHandler(new EHMenuBtnFilter());
-			view.getMenuDetails().setBtnSettingEventHandler(new EHMenuDetailsBtnSetting());
-			view.getMenuDetails().setBtnOutputEventHandler(new EHMenuDetailsBtnOutput());
+			view.setMenuListBtnFilterEventHandler(new EHMenuBtnFilter());
+			view.setMenuListBtnAddEventHandler(new EHMenuListBtnAdd());
 			
-			view.getStockDetails().setBtnSaveEventHandler(new EHStockDetailsBtnSave());
-			view.getStockDetails().setBtnCancelEventHandler(new EHStockListLaod());
-			view.getDeleteConfirmationPage().setBtnConfirmEventHandler(new EHStockDeleteBtnConfirm());
-			view.getDeleteConfirmationPage().setBtnCancelEventHandler(new EHStockListLaod());
+			view.setMenuDetailsBtnSettingEventHandler(new EHMenuDetailsBtnSetting());
+			view.setMenuDetailsBtnOutputEventHandler(new EHMenuDetailsBtnOutput());
+			view.setMenuDetailsBtnFilterEventHandler(new EHDishesBtnFilter());
+			view.setMenuDetailsBtnAddEventHandler(new EHMenudetailsBtnAdd());
 			
-			view.getStockFilter().setBtnApply(new EHStockFilterBtnApply());
+			view.setBudgetListBtnAddEventHandler(new EHBudgetBtnAdd());
+			view.setBudgetListBtnFilterEventHandler(new EHBudgetBtnFilter());
+			view.setBudgetListBtnFindEventHandler(new EHBudgetListBtnFind());
 			
-			view.getBudgetDetailsPage().setBtnSaveEventHandler(new EHBudgetDetailsBtnSave());
-			view.getBudgetListPage().setBtnFindEventHandler(new EHBudgetListBtnFind());
+			view.setBudgetDetailsBtnSaveEventHandler(new EHBudgetDetailsBtnSave());
 			
-			ArrayList<PaneMenu> all = view.getAllView();
-			for(PaneMenu i : all) {
-				i.setHomeEventHandler(new EHHomeLoad());
-				i.setLogoutEventHandler(new EHLogout());
-			}
+			view.setStorgaeLocationListBtnAddEventHandler(new EHStorageBtnAdd());
+			view.setStorgaeLocationListBtnFilterEventHandler(new EHStorageBtnFilter());
+			
+			view.setAccountListBtnAddEventHandler(new EHAccountBtnAdd());
+			view.setAccountListBtnFilterEventHandler(new EHAccountBtnFilter());
+			
+			view.setDeleteConfirmationBtnConfirmEventHandler(new EHStockDeleteBtnConfirm());
+			view.setDeleteConfirmationBtnCancelEventHandler(new EHStockListLaod());
+			
+			view.setAllPaneMenu(new EHHomeLoad(), new EHLogout());
 	}
 	/**
 	 *  this is simply a functional interface, to pass function in to the tbnExit event handler in the
@@ -102,67 +95,61 @@ public class Controller {
 	 * @author Student
 	 *EH = event handler
 	 */
-private class EHExit implements EventHandler<ActionEvent>{
+	private class EHExit implements EventHandler<ActionEvent> {
 
-	@Override
-	public void handle(ActionEvent event) {
-	// if not zero then it an abnormal exit
-		System.exit(0);
+		@Override
+		public void handle(ActionEvent event) {
+		// if not zero then it an abnormal exit
+			System.exit(0);
+			
+		}
 		
 	}
-	
-}
+
 /**
  * class for the btnLogin from Login class. it take the input and validates it, is an issue is present 
  * it shows an error message, if pass validation it check the database to see if it matches and it if 
  * does it loads the next page, if doesn't it again shows an error message. error message done by alert 
+ * 
  * dialog box.
  * @author Student
  *
  */
-private class EHLogin implements EventHandler<ActionEvent>{
+	private class EHLogin implements EventHandler<ActionEvent>{
 
-	@Override
-	public void handle(ActionEvent event) {
-		String errorUsername = model.getValidation().stringMustBePresetValidation(login.getUserUsernameInput());
-		String errorPassword = model.getValidation().stringMustBePresetValidation(login.getUserPasswordInput());
-		Boolean passValidation = false;
-		Boolean success = false;
-		Alert alert = new Alert(AlertType.ERROR);
-		if(!errorUsername.equals("")) {
-			alert.setTitle("username issue");
-			alert.setContentText(errorUsername);
-			alert.show();
-		}else if(!errorPassword.equals("")){
-			alert.setTitle("password issue");
-			alert.setContentText(errorPassword);
-			alert.show();
-		}else {
-			passValidation = true;
-		}
-		if(passValidation == true) {
-	 success =	model.getDatabase().passwordAndUsernameAreValid(login.getUserUsernameInput(), login.getUserPasswordInput());
-		if (success == false) {
-			alert.setTitle("input issue");
-			alert.setContentText("user name and password didn't match");
-			alert.show();	
-		}else {
-			view.getChildren().remove(0);
-			view.getChildren().add(view.getHomePage());
-			view.setVgrow(view.getHomePage(),Priority.ALWAYS);
-		}
-		}
+		@Override
+		public void handle(ActionEvent event) {
+			String errorUsername = model.stringMustBePresetValidation(view.getLoginUserUsernameInput());
+			String errorPassword = model.stringMustBePresetValidation(view.getLoginUserPasswordInput());
+			Boolean passValidation = false;
+			Alert alert;
+			if(!errorUsername.equals("")) {
+				alert = model.makeAlert("username issue", errorUsername);
+				alert.show();
+			}else if(!errorPassword.equals("")){
+				alert = model.makeAlert("password issue", errorPassword);
+				alert.show();
+			}else {
+				passValidation = true;
+			}
+			if(passValidation == true) {
 		 
-	} 
-}
+			if (!model.passwordAndUsernameAreValid(view.getLoginUserUsernameInput(), view.getLoginUserPasswordInput())) {
+				alert = model.makeAlert("input issue", "user name and password didn't match");
+				alert.show();	
+			}else {
+				view.homePageMenuLoad();
+			}
+			}
+			 
+		} 
+	}
 
 private class EHHomePageMenuLoad implements EventHandler<ActionEvent>{
 
 	@Override
 	public void handle(ActionEvent event) {
-		view.getChildren().remove(0);
-		view.getChildren().add(view.getMenuListPage());
-		view.setVgrow(view.getMenuListPage(),Priority.ALWAYS);
+	view.menuListLoad();
 	}
 
 
@@ -171,9 +158,7 @@ private class EHMenuListBtnAdd implements EventHandler<ActionEvent>{
 
 	@Override
 	public void handle(ActionEvent event) {
-		view.getChildren().remove(0);
-		view.getChildren().add(view.getMenuDetails());
-		view.setVgrow(view.getMenuDetails(),Priority.ALWAYS);
+		view.MenuDetailsLoad();
 	}
 
 
@@ -210,9 +195,7 @@ private class EHMenudetailsBtnAdd implements EventHandler<ActionEvent>{
 
 	@Override
 	public void handle(ActionEvent event) {
-		view.getChildren().remove(0);
-		view.getChildren().add(view.getDishDetailsPage());
-		view.setVgrow(view.getDishDetailsPage(),Priority.ALWAYS);
+		view.dishDetailsLoad();
 		
 	}
 	
@@ -223,9 +206,7 @@ private class EHStockBtnAdd implements EventHandler<ActionEvent>{
 	public void handle(ActionEvent event) {
 		stockId = "null";
 		resetStockDetailsPage();
-		view.getChildren().remove(0);
-		view.getChildren().add(view.getStockDetails());
-		view.setVgrow(view.getStockDetails(),Priority.ALWAYS);
+		view.stockDetailsLoad();
 		
 		
 	}
@@ -235,9 +216,7 @@ private class EHBudgetBtnAdd implements EventHandler<ActionEvent>{
 
 	@Override
 	public void handle(ActionEvent event) {
-		view.getChildren().remove(0);
-		view.getChildren().add(view.getBudgetDetailsPage());
-		view.setVgrow(view.getBudgetDetailsPage(),Priority.ALWAYS);
+		view.budgetDetailsLoad();
 		
 	}
 	
@@ -248,9 +227,7 @@ private class EHStorageBtnAdd implements EventHandler<ActionEvent>{
 
 	@Override
 	public void handle(ActionEvent event) {
-		view.getChildren().remove(0);
-		view.getChildren().add(view.getStockStorageLoctionDetailsPage());
-		view.setVgrow(view.getStockStorageLoctionDetailsPage(),Priority.ALWAYS);
+		view.StorgaeLocationDetailsLoad();
 		
 	}
 	
@@ -260,9 +237,7 @@ private class EHAccountBtnAdd implements EventHandler<ActionEvent>{
 
 	@Override
 	public void handle(ActionEvent event) {
-		view.getChildren().remove(0);
-		view.getChildren().add(view.getAccountDetails());
-		view.setVgrow(view.getAccountDetails(),Priority.ALWAYS);
+		view.accountDetailsLoad();
 		
 	}
 	
@@ -271,9 +246,7 @@ private class EHStorageBtnFilter implements EventHandler<ActionEvent>{
 
 	@Override
 	public void handle(ActionEvent event) {
-		view.getChildren().remove(0);
-		view.getChildren().add(view.getStockStorageLocationFilter());
-		view.setVgrow(view.getStockStorageLocationFilter(),Priority.ALWAYS);
+		view.getStockStorageLocationFilter();
 		
 	}
 	
@@ -299,10 +272,7 @@ private class EHBudgetBtnFilter implements EventHandler<ActionEvent>{
 
 	@Override
 	public void handle(ActionEvent event) {
-		view.getChildren().remove(0);
-		view.getChildren().add(view.getBudgetFilter());
-		view.setVgrow(view.getBudgetFilter(),Priority.ALWAYS);
-		
+		view.budgetfilterLoad();
 	}
 	
 }
@@ -310,9 +280,7 @@ private class EHDishesBtnFilter implements EventHandler<ActionEvent>{
 
 	@Override
 	public void handle(ActionEvent event) {
-		view.getChildren().remove(0);
-		view.getChildren().add(view.getFilterDishes());
-		view.setVgrow(view.getFilterDishes(),Priority.ALWAYS);
+		view.dishFilterLoad();
 		
 	}
 	
@@ -321,9 +289,7 @@ private class EHAccountBtnFilter implements EventHandler<ActionEvent>{
 
 	@Override
 	public void handle(ActionEvent event) {
-		view.getChildren().remove(0);
-		view.getChildren().add(view.getAccountFilter());
-		view.setVgrow(view.getAccountFilter(),Priority.ALWAYS);
+		view.accountFilterLoad();
 		
 	}
 	
@@ -332,9 +298,7 @@ private class EHMenuBtnFilter implements EventHandler<ActionEvent>{
 
 	@Override
 	public void handle(ActionEvent event) {
-		view.getChildren().remove(0);
-		view.getChildren().add(view.getMenuFilter());
-		view.setVgrow(view.getMenuFilter(),Priority.ALWAYS);
+		view.menuFilterLoad();
 		
 	}
 	
@@ -343,9 +307,7 @@ private class EHMenuDetailsBtnSetting implements EventHandler<ActionEvent>{
 
 	@Override
 	public void handle(ActionEvent event) {
-		view.getChildren().remove(0);
-		view.getChildren().add(view.getMenuSettingPage());
-		view.setVgrow(view.getMenuSettingPage(),Priority.ALWAYS);
+		view.menuSettingsLoad();
 		
 	}
 	
@@ -354,9 +316,7 @@ private class EHHomeLoad implements EventHandler<ActionEvent>{
 
 	@Override
 	public void handle(ActionEvent event) {
-		view.getChildren().remove(0);
-		view.getChildren().add(view.getHomePage());
-		view.setVgrow(view.getHomePage(),Priority.ALWAYS);
+		view.homePageMenuLoad();
 		
 	}
 	
@@ -365,10 +325,8 @@ private class EHLogout implements EventHandler<ActionEvent>{
 
 	@Override
 	public void handle(ActionEvent event) {
-		view.getChildren().remove(0);
-		view.getChildren().add(view.getLoginPage());
-		view.setVgrow(view.getLoginPage(),Priority.ALWAYS);
-		view.getLoginPage().clearInput();
+
+		view.loginLoad();
 	}
 	
 }
@@ -376,9 +334,7 @@ private class EHMenuDetailsBtnOutput implements EventHandler<ActionEvent>{
 
 	@Override
 	public void handle(ActionEvent event) {
-		view.getChildren().remove(0);
-		view.getChildren().add(view.getOutputPage());
-		view.setVgrow(view.getOutputPage(),Priority.ALWAYS);
+		view.outputPageLoad();
 	
 	
 }
@@ -471,8 +427,8 @@ private class EHStockListLaod implements EventHandler<ActionEvent>{
 	@Override
 	public void handle(ActionEvent event) {
 		
+view.stockListLoad(model.getObservableListStringStockList());
 
-loadStockListPage();
 	}
 }
 
@@ -501,7 +457,7 @@ private class EHStockDeleteBtnConfirm implements EventHandler<ActionEvent>{
 	
 		model.getDatabase().deleteSelectedStock(userSelectionId);
 		
-		loadStockListPage();
+		view.stockListLoad(model.getObservableListStringStockList());
 		
 }
 }
@@ -710,7 +666,7 @@ private void loadBudgetListPage() {
 
 private ObservableList<String> setBudgetListContent() {
 	
-	ObservableList<String> dataToBeDisplayed = FXCollections.observableArrayList(model.getDatabase().getAllBudgets());
+	ObservableList<String> dataToBeDisplayed = FXCollections.observableArrayList(model.getBudgetListAsString());
 	return dataToBeDisplayed;
 }
 private class EHHomeBtnBudget implements EventHandler<ActionEvent>{
@@ -767,8 +723,7 @@ private void loadAccountListPage() {
 }
 
 private ObservableList<String> setAccountListContent() {
-	
-	ObservableList<String> dataToBeDisplayed = FXCollections.observableArrayList(model.getDatabase().getAllAccounts());
+	ObservableList<String> dataToBeDisplayed = FXCollections.observableArrayList(model.getAccountsListAsString());
 	return dataToBeDisplayed;
 }
 
@@ -798,7 +753,7 @@ private void loadStorgaeLocationListPage() {
 
 private ObservableList<String> setStorgaeLocationListContent() {
 	
-	ObservableList<String> dataToBeDisplayed = FXCollections.observableArrayList(model.getDatabase().getAllStorageLocations());
+	ObservableList<String> dataToBeDisplayed = FXCollections.observableArrayList(model.getStorageLocationListAsString());
 	return dataToBeDisplayed;
 
 }

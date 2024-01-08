@@ -56,16 +56,16 @@ public class WritableDatabase {
 		return output;
 	}
 	
-public ArrayList<String> getCurrentStock() {
+public ArrayList<CurrentStock> getAllCurrentStock() {
 	PreparedStatement statement;
-	ArrayList<String> currentStock = new ArrayList<>();
+	ArrayList<CurrentStock> currentStock = new ArrayList<>();
 	try {
 		statement = connection.prepareStatement("select * from stock_mangemnet.tbl_stock_iteration, stock_mangemnet.tbl_stock_type where tbl_stock_iteration.stockTypeId = tbl_stock_type.stockTypeId ;");
 		ResultSet result = statement.executeQuery();
 		//if(result.first()) {
 		while (result.next()) {
 			CurrentStock input = new CurrentStock(result.getInt(1),result.getString(2),result.getDouble(4),result.getString(8),result.getDate(5).toString(),result.getString(3),result.getDouble(7));
-			currentStock.add(input.toString());
+			currentStock.add(input);
 		}
 		//}
 		} catch (SQLException e) {
@@ -310,16 +310,16 @@ public ArrayList<String> getCurrentStockThatsLike(String where) {
   * used to populate the budget ListView
   * @return
   */
- public ArrayList<String> getAllBudgets() {
+ public ArrayList<Budget> getAllBudgets() {
 		PreparedStatement statement;
-		ArrayList<String> allBudgets = new ArrayList<>();
+		ArrayList<Budget> allBudgets = new ArrayList<>();
 		try {
 			statement = connection.prepareStatement("select * from stock_mangemnet.tbl_budget;");
 			ResultSet result = statement.executeQuery();
 			//if(result.first()) {
 			while (result.next()) {
 				Budget input = new Budget(result.getString(1), result.getDouble(2), result.getDate(3).toString(), result.getDate(4).toString());
-				allBudgets.add(input.toString());
+				allBudgets.add(input);
 			}
 			//}
 			} catch (SQLException e) {
@@ -368,16 +368,16 @@ public ArrayList<String> getCurrentStockThatsLike(String where) {
 		return allBudgets;
 	}
  
- public ArrayList<String> getAllAccounts() {
+ public ArrayList<Account> getAllAccounts() {
 		PreparedStatement statement;
-		ArrayList<String> allAccounts = new ArrayList<>();
+		ArrayList<Account> allAccounts = new ArrayList<>();
 		try {
 			statement = connection.prepareStatement("select userName, isAdmin from stock_mangemnet.tbl_account_details;");
 			ResultSet result = statement.executeQuery();
 			//if(result.first()) {
 			while (result.next()) {
 				Account input = new Account(result.getString(1), result.getBoolean(2));
-				allAccounts.add(input.toString());
+				allAccounts.add(input);
 			}
 			//}
 			} catch (SQLException e) {
@@ -387,16 +387,16 @@ public ArrayList<String> getCurrentStockThatsLike(String where) {
 		
 		return allAccounts;
 	}
- public ArrayList<String> getAllStorageLocations() {
+ public ArrayList<StorageLocation> getAllStorageLocations() {
 		PreparedStatement statement;
-		ArrayList<String> allSl = new ArrayList<>();
+		ArrayList<StorageLocation> allSl = new ArrayList<>();
 		try {
 			statement = connection.prepareStatement("select * from stock_mangemnet.tbl_storage_location;");
 			ResultSet result = statement.executeQuery();
 			//if(result.first()) {
 			while (result.next()) {
 				StorageLocation input = new StorageLocation(result.getString(1), result.getString(3), result.getBoolean(2) );
-				allSl.add(input.toString());
+				allSl.add(input);
 			}
 			//}
 			} catch (SQLException e) {
