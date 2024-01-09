@@ -19,5 +19,7 @@ public StorageLocation(String name, String type, boolean isAvailble) {
 	public String toString() {
 		return "name = " + name + ", type = " + type + ", storage is available = " + isAvailble;
 	}
-
+public String getName() {
+	return name;
+}
 }

@@ -240,7 +240,7 @@ public String getStockListSelectedItem() {
 
 public void setStockListError(String errorMessgae) {
 	stockListPage.getErrorLabel().setVisible(true);
-	stockListPage.getErrorLabel().setText("No data selected");
+	stockListPage.getErrorLabel().setText(errorMessgae);
 }
 
 /*
@@ -279,10 +279,21 @@ public void setStockDetailsBtnSaveEventHandler(EventHandler<ActionEvent> event) 
 public void setStockDetailsBtnCancelEventHandler(EventHandler<ActionEvent> event) {
 	sd.setBtnCancelEventHandler(event);
 }
-public void stockDetailsLoad() {
+public void setStockDetailsBtnLoadFromFileEventHandler(EventHandler<ActionEvent> event) {
+	sd.setBtnLoadFromFileEventHandler(event);
+}
+//true means go to add, false means go to edit
+public void stockDetailsLoad(Boolean add) {
 	this.getChildren().remove(0);
 	this.getChildren().add(sd);
 	this.setVgrow(sd, Priority.ALWAYS);
+	
+	if(add) {
+		sd.setAddVarient();
+	}else {
+		sd.RemoveAddVarient();
+	}
+	
 }
 public String getStockDetailsStockName() {
 	return sd.getStockName().getText();
@@ -398,6 +409,7 @@ public String getStockFilterBelowCost() {
 	return sf.getTfBelowCost().getText();
 }
 public String getStockFilterStorgaeLocation() {
+	
 	if(sf.getCbStorageLocation().getSelectionModel().getSelectedItem()!=null) {
 		return sf.getCbStorageLocation().getSelectionModel().getSelectedItem();
 	}else {
@@ -405,6 +417,7 @@ public String getStockFilterStorgaeLocation() {
 	}
 }
 public String getStockFilterStockType() {
+	
 	if(sf.getCbStockType().getSelectionModel().getSelectedItem()!=null) {
 		return sf.getCbStockType().getSelectionModel().getSelectedItem();
 	}else {

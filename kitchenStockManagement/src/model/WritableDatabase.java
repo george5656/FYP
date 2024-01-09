@@ -1,5 +1,6 @@
 package model;
 
+
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
@@ -10,20 +11,20 @@ import java.util.ArrayList;
 /**
  * 
  * @author George
- *class for the database connection, and database queries
+ *class for the database mySqlDatabase, and database queries
  */
 public class WritableDatabase {
 	//fields 
-	Connection connection;
+	Connection mySqlDatabase;
 	
 	//Constructor
 	/**
 	 * default constructor, 
-	 * is used to make the database connection
+	 * is used to make the database mySqlDatabase
 	 */
 	public WritableDatabase() {
 	try {
-		connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/MySQL","root","Root123@");	
+		mySqlDatabase = DriverManager.getConnection("jdbc:mysql://localhost:3306/MySQL","root","Root123@");	
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
@@ -41,7 +42,7 @@ public class WritableDatabase {
 	public Boolean passwordAndUsernameAreValid(String username, String password) {
 		Boolean output = false;
 		try {
-			PreparedStatement statement = connection.prepareStatement("select userName, password from  stock_mangemnet.tbl_account_details where userName = \'" + username +"\' and password = \'" + password +"\';");
+			PreparedStatement statement = mySqlDatabase.prepareStatement("select userName, password from  stock_mangemnet.tbl_account_details where userName = \'" + username +"\' and password = \'" + password +"\';");
 			ResultSet result = statement.executeQuery();
 			if(result.next()) {
 				output = true;
@@ -58,7 +59,7 @@ public ArrayList<CurrentStock> getAllCurrentStock() {
 	PreparedStatement statement;
 	ArrayList<CurrentStock> currentStock = new ArrayList<>();
 	try {
-		statement = connection.prepareStatement("select * from stock_mangemnet.tbl_stock_iteration, stock_mangemnet.tbl_stock_type where tbl_stock_iteration.stockTypeId = tbl_stock_type.stockTypeId ;");
+		statement = mySqlDatabase.prepareStatement("select * from stock_mangemnet.tbl_stock_iteration, stock_mangemnet.tbl_stock_type where tbl_stock_iteration.stockTypeId = tbl_stock_type.stockTypeId ;");
 		ResultSet result = statement.executeQuery();
 		//if(result.first()) {
 		while (result.next()) {
@@ -78,7 +79,7 @@ public ArrayList<String> getCurrentStockThatsLike(String where) {
 	PreparedStatement statement;
 	ArrayList<String> currentStock = new ArrayList<>();
 	try {
-		statement = connection.prepareStatement("select * from stock_mangemnet.tbl_stock_iteration, stock_mangemnet.tbl_stock_type where (tbl_stock_iteration.stockTypeId = tbl_stock_type.stockTypeId) and tbl_stock_type.stockTypeId like \'%" + where +"%\' ;");
+		statement = mySqlDatabase.prepareStatement("select * from stock_mangemnet.tbl_stock_iteration, stock_mangemnet.tbl_stock_type where (tbl_stock_iteration.stockTypeId = tbl_stock_type.stockTypeId) and tbl_stock_type.stockTypeId like \'%" + where +"%\' ;");
 		ResultSet result = statement.executeQuery();
 		//if(result.first()) {
 		while (result.next()) {
@@ -98,7 +99,7 @@ public ArrayList<String> getCurrentStockThatsLike(String where) {
 		PreparedStatement statement;
 		try {
 			//CurrentStock stock = data.getcurrentStock().get(0);
-			statement = connection.prepareStatement("Insert Into stock_mangemnet.tbl_stock_iteration (storageLocationId, stockTypeId, quanity, expiereDate) Values ( \'" + data.getstorageLocationId() + "\',\'" + data.getStockName() +"\',\'" + data.getQuantity() + "\',\'" + data.getExpiereDate() + "\'); ");
+			statement = mySqlDatabase.prepareStatement("Insert Into stock_mangemnet.tbl_stock_iteration (storageLocationId, stockTypeId, quanity, expiereDate) Values ( \'" + data.getstorageLocationId() + "\',\'" + data.getStockName() +"\',\'" + data.getQuantity() + "\',\'" + data.getExpiereDate() + "\'); ");
 			statement.execute();
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
@@ -111,7 +112,7 @@ public ArrayList<String> getCurrentStockThatsLike(String where) {
 	public void deleteSelectedStock(String id) {
 		PreparedStatement statement;
 		try {
-			statement = connection.prepareStatement("Delete from stock_mangemnet.tbl_stock_iteration where tbl_stock_iteration.stockIterationId = \'" + id + "\';");
+			statement = mySqlDatabase.prepareStatement("Delete from stock_mangemnet.tbl_stock_iteration where tbl_stock_iteration.stockIterationId = \'" + id + "\';");
 			statement.execute();
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
@@ -126,7 +127,7 @@ public ArrayList<String> getCurrentStockThatsLike(String where) {
 		PreparedStatement statement;
 		ArrayList<String> storageLocations = new ArrayList<>();
 		try {
-			statement = connection.prepareStatement("select * from stock_mangemnet.tbl_storage_location");
+			statement = mySqlDatabase.prepareStatement("select * from stock_mangemnet.tbl_storage_location");
 			ResultSet results = statement.executeQuery();
 			while(results.next()) {
 				storageLocations.add(results.getString(1));
@@ -148,7 +149,7 @@ public ArrayList<String> getCurrentStockThatsLike(String where) {
 		// haave to make sure they cant put null in
 		StockType stockTypeIteration = new StockType("null","null","null");
 		try {
-			statement = connection.prepareStatement("select * from stock_mangemnet.tbl_stock_type where tbl_stock_type.stockTypeId = \"" + stockTypeId + "\"" );
+			statement = mySqlDatabase.prepareStatement("select * from stock_mangemnet.tbl_stock_type where tbl_stock_type.stockTypeId = \"" + stockTypeId + "\"" );
 			ResultSet results = statement.executeQuery();
 			if(results.next()) {
 				stockTypeIteration = new StockType(results.getString(1), results.getString(2), results.getString(3));
@@ -169,7 +170,7 @@ public ArrayList<String> getCurrentStockThatsLike(String where) {
 		PreparedStatement statement;
 		
 		try {
-			statement = connection.prepareStatement("Insert into stock_mangemnet.tbl_stock_type (stockTypeId,Cost,quantityType) values (\""+stockTypeId + "\",\""+cost+ "\",\"" +quanityType + "\");");
+			statement = mySqlDatabase.prepareStatement("Insert into stock_mangemnet.tbl_stock_type (stockTypeId,Cost,quantityType) values (\""+stockTypeId + "\",\""+cost+ "\",\"" +quanityType + "\");");
 			statement.execute();
 			
 		} catch (SQLException e) {
@@ -188,7 +189,7 @@ public ArrayList<String> getCurrentStockThatsLike(String where) {
 		PreparedStatement statement;
 		
 		try {
-			statement = connection.prepareStatement("Update stock_mangemnet.tbl_stock_type set cost = \"" + cost + "\" where stockTypeId = \"" + stockTypeId + "\";" );
+			statement = mySqlDatabase.prepareStatement("Update stock_mangemnet.tbl_stock_type set cost = \"" + cost + "\" where stockTypeId = \"" + stockTypeId + "\";" );
 			statement.execute();
 			
 		} catch (SQLException e) {
@@ -207,7 +208,7 @@ public ArrayList<String> getCurrentStockThatsLike(String where) {
 		PreparedStatement statement;
 		
 		try {
-			statement = connection.prepareStatement("Update stock_mangemnet.tbl_stock_type set tbl_stock_type.quantityType = \'" + quantityType + "\' where stockTypeId = \"" + stockTypeId + "\";" );
+			statement = mySqlDatabase.prepareStatement("Update stock_mangemnet.tbl_stock_type set tbl_stock_type.quantityType = \'" + quantityType + "\' where stockTypeId = \"" + stockTypeId + "\";" );
 			statement.execute();
 			
 		} catch (SQLException e) {
@@ -226,7 +227,7 @@ public ArrayList<String> getCurrentStockThatsLike(String where) {
 		PreparedStatement statement;
 		ArrayList<String> currentStock = new ArrayList<>();
 		try {
-			statement = connection.prepareStatement("select * from stock_mangemnet.tbl_stock_iteration, stock_mangemnet.tbl_stock_type where (tbl_stock_iteration.stockTypeId = tbl_stock_type.stockTypeId) and " + where + ";");
+			statement = mySqlDatabase.prepareStatement("select * from stock_mangemnet.tbl_stock_iteration, stock_mangemnet.tbl_stock_type where (tbl_stock_iteration.stockTypeId = tbl_stock_type.stockTypeId) and " + where + ";");
 			ResultSet result = statement.executeQuery();
 			//if(result.first()) {
 			while (result.next()) {
@@ -250,7 +251,7 @@ public ArrayList<String> getCurrentStockThatsLike(String where) {
 		PreparedStatement statement;
 		ArrayList<String> currentStock = new ArrayList<>();
 		try {
-			statement = connection.prepareStatement("select stockTypeId from stock_mangemnet.tbl_stock_type;");
+			statement = mySqlDatabase.prepareStatement("select stockTypeId from stock_mangemnet.tbl_stock_type;");
 			ResultSet result = statement.executeQuery();
 			//if(result.first()) {
 			while (result.next()) {
@@ -272,7 +273,7 @@ public ArrayList<String> getCurrentStockThatsLike(String where) {
 		PreparedStatement statement;
 		CurrentStock currentStock = new CurrentStock(-1,"null",-1.0,"null","null","null",-1.0);
 		try {
-			statement = connection.prepareStatement("select * from stock_mangemnet.tbl_stock_iteration, stock_mangemnet.tbl_stock_type where (tbl_stock_iteration.stockIterationId = \""+Id+"\");");
+			statement = mySqlDatabase.prepareStatement("select * from stock_mangemnet.tbl_stock_iteration, stock_mangemnet.tbl_stock_type where (tbl_stock_iteration.stockIterationId = \""+Id+"\");");
 			ResultSet result = statement.executeQuery();
 			//if(result.first()) {
 			if(result.next()) {
@@ -296,7 +297,7 @@ public ArrayList<String> getCurrentStockThatsLike(String where) {
 	
 		try {
 			
-			statement = connection.prepareStatement("Update stock_mangemnet.tbl_stock_iteration set tbl_stock_iteration.storageLocationId = \'" + data.getstorageLocationId() + "\', stockTypeId = \'" + data.getStockName()+"\', quanity = \'" + data.getQuantity() +"\', expiereDate = \'" +  data.getExpiereDate()  +"\' where stockIterationId = \"" + id + "\";" );
+			statement = mySqlDatabase.prepareStatement("Update stock_mangemnet.tbl_stock_iteration set tbl_stock_iteration.storageLocationId = \'" + data.getstorageLocationId() + "\', stockTypeId = \'" + data.getStockName()+"\', quanity = \'" + data.getQuantity() +"\', expiereDate = \'" +  data.getExpiereDate()  +"\' where stockIterationId = \"" + id + "\";" );
 			statement.execute();
 			
 		} catch (SQLException e) {
@@ -312,7 +313,7 @@ public ArrayList<String> getCurrentStockThatsLike(String where) {
 		PreparedStatement statement;
 		ArrayList<Budget> allBudgets = new ArrayList<>();
 		try {
-			statement = connection.prepareStatement("select * from stock_mangemnet.tbl_budget;");
+			statement = mySqlDatabase.prepareStatement("select * from stock_mangemnet.tbl_budget;");
 			ResultSet result = statement.executeQuery();
 			//if(result.first()) {
 			while (result.next()) {
@@ -334,7 +335,7 @@ public ArrayList<String> getCurrentStockThatsLike(String where) {
  public void addBudget(Budget userInput) {
 		PreparedStatement statement;
 		try {
-			statement = connection.prepareStatement("Insert into stock_mangemnet.tbl_budget values (\'" + userInput.getBudgetId() + "\',\'" + userInput.getAmount() + "\',\'" + userInput.getStartDate() + "\',\'" + userInput.getEndDate()+"\');");
+			statement = mySqlDatabase.prepareStatement("Insert into stock_mangemnet.tbl_budget values (\'" + userInput.getBudgetId() + "\',\'" + userInput.getAmount() + "\',\'" + userInput.getStartDate() + "\',\'" + userInput.getEndDate()+"\');");
 			statement.execute();
 			
 			//}
@@ -350,7 +351,7 @@ public ArrayList<String> getCurrentStockThatsLike(String where) {
 	 	PreparedStatement statement;
 		
 		try {
-			statement = connection.prepareStatement("select * from stock_mangemnet.tbl_budget where tbl_budget.budgetId like \'%" + where +"%\' ;");
+			statement = mySqlDatabase.prepareStatement("select * from stock_mangemnet.tbl_budget where tbl_budget.budgetId like \'%" + where +"%\' ;");
 			ResultSet result = statement.executeQuery();
 			//if(result.first()) {
 			while (result.next()) {
@@ -370,7 +371,7 @@ public ArrayList<String> getCurrentStockThatsLike(String where) {
 		PreparedStatement statement;
 		ArrayList<Account> allAccounts = new ArrayList<>();
 		try {
-			statement = connection.prepareStatement("select userName, isAdmin from stock_mangemnet.tbl_account_details;");
+			statement = mySqlDatabase.prepareStatement("select userName, isAdmin from stock_mangemnet.tbl_account_details;");
 			ResultSet result = statement.executeQuery();
 			//if(result.first()) {
 			while (result.next()) {
@@ -389,7 +390,7 @@ public ArrayList<String> getCurrentStockThatsLike(String where) {
 		PreparedStatement statement;
 		ArrayList<StorageLocation> allSl = new ArrayList<>();
 		try {
-			statement = connection.prepareStatement("select * from stock_mangemnet.tbl_storage_location;");
+			statement = mySqlDatabase.prepareStatement("select * from stock_mangemnet.tbl_storage_location;");
 			ResultSet result = statement.executeQuery();
 			//if(result.first()) {
 			while (result.next()) {
@@ -407,7 +408,21 @@ public ArrayList<String> getCurrentStockThatsLike(String where) {
 
 
 
-
+ public Boolean StorgaeLocationExists(String storagelocation){
+		PreparedStatement statement;
+		try {
+			statement = mySqlDatabase.prepareStatement("select * from stock_mangemnet.tbl_storage_location where tbl_storage_location.storageLocationId = \"" + storagelocation + "\"" );
+			ResultSet results = statement.executeQuery();
+			if(results.next()) {
+				return true;
+			}
+			} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	return false;
+	
+	}
 
 
 

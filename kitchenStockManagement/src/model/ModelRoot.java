@@ -1,7 +1,12 @@
 package model;
 
+import java.io.File;
+
+import java.io.FileNotFoundException;
+import java.net.URI;
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.Scanner;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -23,6 +28,8 @@ public class ModelRoot {
 	private ArrayList<CurrentStock> currentStock = new ArrayList<>();
 	private StockType testStockType;
 	private CurrentStock selectedStock;
+	//true = add, false = edit
+	private Boolean stockFrom;
 	
 	public ModelRoot(){
 		accounts = getDatabase().getAllAccounts();
@@ -65,6 +72,13 @@ public class ModelRoot {
 		budget.forEach((Budget i) -> output.add(i.toString()));
 		return output;
 	}
+	public ArrayList<String> getObservableStorgaeLocationListNameOnlyArrayList(){
+		sl = getDatabase().getAllStorageLocations();
+		ArrayList<String> output = new ArrayList<>();
+		sl.forEach((StorageLocation i) -> output.add(i.getName()));
+		return output;
+		
+	}
 	public ArrayList<String> getStockTypeListAsString(){
 		return db.getAllStockType();
 	}
@@ -89,9 +103,9 @@ public class ModelRoot {
 	
 	// make alert
 	
-	public Alert makeAlert(String Title, String content) {
+	public Alert makeAlert(String headerText, String content) {
 		Alert alert = new Alert(AlertType.ERROR);
-		alert.setTitle(Title);
+		alert.setHeaderText(headerText);
 		alert.setContentText(content);
 		return alert;
 	}
@@ -134,6 +148,11 @@ public class ModelRoot {
 		return FXCollections.observableArrayList(output);
 		
 	}
+	public ObservableList<String> getObservableStorgaeLocationListNameOnly(){
+		
+		return FXCollections.observableArrayList(getObservableStorgaeLocationListNameOnlyArrayList());
+		
+	}
 	
 	
 	// budget
@@ -171,9 +190,10 @@ public void updateStockTypeQuanityType(String stockTypeId, String quantityType) 
 	db.updateStockTypeQuanityType(stockTypeId, quantityType);
 }
 
+//delete 
 public void deleteStockType() {
-	
-	db.deleteSelectedStock(selectedStock.getStockName());
+	Integer id = selectedStock.getId(); 
+	db.deleteSelectedStock(id.toString());
 }
 public ObservableList<String> getCurrentStockThatsLike(String value) {
 	return FXCollections.observableArrayList(db.getCurrentStockThatsLike(value));
@@ -219,6 +239,57 @@ public void updateCurrentStock() {
 	}
 
 
+public String saveStockTypeFromFile(URI uri) {
+	String errorMessage = "";
+	System.out.println("hit");
+	
+		try {
+			//as wont identify text if not in format
+			if(!uri.toString().endsWith(".txt")) {
+				return "only \".txt\" file";
+			}
+			Scanner sc = new Scanner(new File(uri)).useDelimiter("[\"\n, \r]+");
+			
+			while(sc.hasNext()) {
+				
+				String storageLocationId = sc.next();
+				
+				Double quantity  = Double.parseDouble(sc.next());
+				
+				String quantityType  = sc.next();
+				
+				String expiereDate  = sc.next();
+				
+				String name  = sc.next();
+				
+				Double cost  = Double.parseDouble(sc.next());
+				
+				//to see if storag locaiton exists.
+				if(!db.StorgaeLocationExists(storageLocationId)) {
+					errorMessage= "storage location doesn't exists";
+					
+				}else if(db.StockTypeExists(name) == null) {
+					addStockType(name, cost.toString(), quantityType);
+				} else {
+					updateStockTypeCost(name, cost.toString());
+					updateStockTypeQuanityType( name, quantityType); 
+				}
+				
+				if(errorMessage.equals("")) {
+				createStock(-1, storageLocationId, quantity, quantityType, expiereDate, name, cost);
+				addCurrentStock();
+				}
+			}
+			
+		} catch (FileNotFoundException e) {
+			
+			e.printStackTrace();
+		errorMessage =  "issue with file";
+		} 
+	
+	return errorMessage;
+}
+
 
 //format date
 //nfd = not formatted date
@@ -235,5 +306,11 @@ public String deFormatDate(String nfd) {
 	String month = date.substring(5, 7);
 	String day = date.substring(8,10);
 	return year + "/"+month+"/"+day;
+}
+public void setStockFrom(Boolean from) {
+	stockFrom = from;
+}
+public Boolean getStockFrom() {
+	return stockFrom;
 }
 }

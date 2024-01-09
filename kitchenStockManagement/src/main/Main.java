@@ -1,4 +1,8 @@
 package main;
+import java.io.File;
+import java.net.MalformedURLException;
+import java.net.URL;
+
 import controller.Controller;
 import javafx.application.Application;
 import javafx.scene.Scene;
@@ -13,6 +17,7 @@ import view.RootView;
 public class Main extends Application {
 // fields
 	private RootView view;
+	private Scene scene ;
 	/**
 	 * where the root V,M and C are made
 	 */
@@ -20,6 +25,26 @@ public class Main extends Application {
 	public void init() {
 		view = new RootView();
 		new Controller(new ModelRoot(), view);
+	 scene = new Scene(view,1200,600);
+		
+			//scene.getStylesheets().add("file:/C:/Users/Student/Documents/DMU%202023%202024/modules/development%20project/Code/version14/FYP/kitchenStockManagement/bin/main/StockManegment.css");
+		//scene.getStylesheets().add("/../../bin/main/StockManegment.css");
+			//scene.getStylesheets().add("/./StockManegment");
+	//scene.getStylesheets().add("FYP/kitchenStockManagement/bin/main/StockManegment.css");		
+	// System.out.println(getClass().getResource("StockManegment.css").toExternalForm());
+	 try {
+		 URL pathToCurrentPlace = new File("StockManegment.css").toURL();
+		 
+		 
+		 scene.getStylesheets().add(pathToCurrentPlace.toExternalForm().replace(" ", "%20").replace("StockManegment.css", "bin/main/StockManegment.css"));
+		 
+		// System.out.println(new File(getParent() + "/./bin/main/stockManegment.css").toURL().toExternalForm().replace(" ", "%20"));
+	
+	 } catch (MalformedURLException e) {
+		// TODO Auto-generated catch block
+		e.printStackTrace();
+	}
+		
 	}
 	/**
 	 * where the scene is made and the stage is shown
@@ -29,8 +54,7 @@ public class Main extends Application {
 		primaryStage.setMinHeight(700);
 		primaryStage.setMinWidth(1200);
 		primaryStage.setTitle("kitchen stock management");
-		Scene scene = new Scene(view,1200,600);
-		scene.getStylesheets().add(getClass().getResource("StockManegment.css").toExternalForm());
+		
 		primaryStage.setScene(scene);
 		
 		primaryStage.show();

@@ -3,11 +3,15 @@ package view;
 import java.util.Collections;
 import java.util.List;
 
+import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.geometry.Pos;
+import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
+import javafx.scene.layout.HBox;
 import javafx.scene.layout.Priority;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Font;
@@ -27,13 +31,17 @@ private DatePicker dpExpiereDate = new DatePicker();
 private TextField tfCost = new TextField();
 private VBox labels;
 private VBox userTextInput;
-
+private Button btnFileLoad = new Button("load form file");
+private HBox buttons;
 public StockDetails() {
+	buttons = getButtonPane();
 	labels = getLabels();
 	userTextInput = getUserTextInput();
 	labels.getChildren().addAll(txtStockName,txtStorageLocation,txtQuanity,txtQuantityType,txtExpiereDate,txtCost);
 	userTextInput.getChildren().addAll(tfStockName,cbStorageLocation,tfQuanity,tfQuantityType,dpExpiereDate,tfCost);
+	
 
+	btnFileLoad.setFont(new Font(20));
 	tfStockName.setFont(new Font(20));
 	//cbStorageLocation.setFont(new Font(20));
 	tfQuanity.setFont(new Font(20));
@@ -47,6 +55,7 @@ public StockDetails() {
 	txtExpiereDate.setFont(new Font(20));
 	txtCost.setFont(new Font(20));
 	
+	btnFileLoad.setMaxSize(Double.MAX_VALUE, Double.MAX_VALUE);
 	tfStockName.setMaxSize(Double.MAX_VALUE, Double.MAX_VALUE);
 	//cbStorageLocation.setMaxSize(Double.MAX_VALUE, Double.MAX_VALUE);
 	tfQuanity.setMaxSize(Double.MAX_VALUE, Double.MAX_VALUE);
@@ -69,6 +78,8 @@ public StockDetails() {
 	txtQuantityType.setAlignment(Pos.CENTER);
 	txtExpiereDate.setAlignment(Pos.CENTER);
 	txtCost.setAlignment(Pos.CENTER);
+	
+	buttons.setHgrow(btnFileLoad, Priority.ALWAYS);
 	
 	labels.setVgrow(txtStockName,Priority.ALWAYS);
 	labels.setVgrow(txtStorageLocation,Priority.ALWAYS);
@@ -101,5 +112,18 @@ public TextField getQuantityType() {
 }
 public TextField getCost() {
 	return tfCost;
+}
+public void setAddVarient() {
+	if(buttons.getChildren().size() != 3) {
+	buttons.getChildren().add(btnFileLoad);
+	}
+}
+public void RemoveAddVarient() {
+	if(buttons.getChildren().size()==3) {
+	buttons.getChildren().remove(2);
+	}
+}
+public void setBtnLoadFromFileEventHandler(EventHandler<ActionEvent> event) {
+	btnFileLoad.setOnAction(event);
 }
 }

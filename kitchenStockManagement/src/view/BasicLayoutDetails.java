@@ -73,4 +73,7 @@ public class BasicLayoutDetails extends PaneMenu {
 	public void setBtnCancelEventHandler(EventHandler<ActionEvent> event) {
 		btnCancel.setOnAction(event);
 	}
+	public HBox getButtonPane() {
+		return buttons;
+	}
 }

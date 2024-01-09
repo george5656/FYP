@@ -1,5 +1,11 @@
 package model;
 
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.util.Scanner;
+
+
+
 public class CurrentStock extends StockType{
 private Integer id;
 private String storageLocationId;
@@ -7,7 +13,7 @@ private Double quantity;
 private String expiereDate;
 
 
-public CurrentStock(int id, String storageLocationId, Double quantity, 
+public CurrentStock(Integer id, String storageLocationId, Double quantity, 
 		String quantityType, String expiereDate, String name, Double cost ) {
 super(name,cost.toString(),quantityType);
 	this.id = id;
@@ -37,4 +43,7 @@ public String getstorageLocationId() {
 public int getId() {
 	return id;
 }
+
+
+
 }
