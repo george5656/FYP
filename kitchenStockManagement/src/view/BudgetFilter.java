@@ -48,12 +48,14 @@ import javafx.scene.text.Font;
 		labels.getChildren().addAll(labelList);
 	
 		for(Label i : labelList) {
-			i.setFont(new Font(30));
+			i.setFont(new Font(20));
 			i.setMaxSize(Double.MAX_VALUE, Double.MAX_VALUE);
 			labels.setVgrow(i,Priority.ALWAYS);
 			i.setAlignment(Pos.CENTER);
 		}
 		
+		tfMinAmount.setFont(new Font(20));
+		tfMaxAmount.setFont(new Font(20));
 		
 		userTextInput.getChildren().addAll(tfMinAmount,tfMaxAmount,dpStartBefore,dpStartAfter,dpEndsBefore,dpEndsAfter);
 		input.add(tfMinAmount);
@@ -69,4 +71,34 @@ import javafx.scene.text.Font;
 		}
 	
 	}
+	
+	
+	public TextField getMinAmount() {
+		return tfMinAmount;
+	}
+	public TextField getMaxAmount() {
+		return tfMaxAmount;
+	}
+	public DatePicker getStartBefore() {
+		return dpStartBefore;
+	}
+	public DatePicker getStartAfter() {
+		return dpStartAfter;
+	}
+	public DatePicker getEndsBefore() {
+		return dpEndsBefore;
+	}
+	public DatePicker getEndsAfter() {
+		return dpEndsAfter;
+	}
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 	}

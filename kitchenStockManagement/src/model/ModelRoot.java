@@ -28,9 +28,12 @@ public class ModelRoot {
 	private ArrayList<CurrentStock> currentStock = new ArrayList<>();
 	private StockType testStockType;
 	private CurrentStock selectedStock;
+	private Budget selectedBudget;
+	//used to determine which menu to use and is only set at login
+	private Boolean isAdmin;
 	//true = add, false = edit
 	private Boolean stockFrom;
-	
+	private String loadDeleteFrom;
 	public ModelRoot(){
 		accounts = getDatabase().getAllAccounts();
 		sl = getDatabase().getAllStorageLocations();
@@ -99,6 +102,9 @@ public class ModelRoot {
 	public String dateValidation(String input, LocalDate date) {
 		return validation.dateValidation(input, date);
 	}
+	public String dateValidationPresentIsOptional(String input, LocalDate date) {
+		return validation.dateValidationPresentIsOptional(input, date);
+	}
 	
 	
 	// make alert
@@ -162,9 +168,35 @@ public class ModelRoot {
 		
 		db.addBudget(new Budget(name,amount,startDate,endDate));
 	}
+public void updateBudget(String name, Double amount,String startDate, String endDate) {
+		
+		db.updateABudget(new Budget(name,amount,startDate,endDate),selectedBudget.getBudgetId());
+	}
 	public ObservableList<String> getBudgetThatsLike(String value) {
 		return FXCollections.observableArrayList(db.getBudgetsThatsLike(value));
 	}
+	public void selectABudget(String id) {
+		selectedBudget =	db.getSpecificBudget(id);
+		}
+	public void resetABudget() {
+		selectedBudget = null;
+	}
+	public Budget getSelectedBudget() {
+		return selectedBudget;
+	}
+	public String getSelectedBudgetName() {
+		return selectedBudget.getBudgetId();
+	}
+	public String getSelectedBudgetAmount() {
+		return selectedBudget.getAmount().toString();
+	}
+	public String getSelectedBudgetStartDate() {
+		return selectedBudget.getStartDate();
+	}
+	public String getSelectedBudgetEndDate() {
+		return selectedBudget.getEndDate();
+	}
+	
 	//stockType
 	
 	public void setTestStockType(String stockTypeId) {
@@ -195,11 +227,18 @@ public void deleteStockType() {
 	Integer id = selectedStock.getId(); 
 	db.deleteSelectedStock(id.toString());
 }
+public void deleteBudgetType() {
+	String id = selectedBudget.getBudgetId(); 
+	db.deleteSelectedBudgte(id);
+}
 public ObservableList<String> getCurrentStockThatsLike(String value) {
 	return FXCollections.observableArrayList(db.getCurrentStockThatsLike(value));
 }
 public ObservableList<String> getCurrentStockThatsMatchesWhere(String value) {
 	return FXCollections.observableArrayList(db.getCurrentStockThatMatchesWhere(value));
+}
+public ObservableList<String> getBudgetsThatMatchesWhere(String value) {
+	return FXCollections.observableArrayList(db.getBudgetsThatMatchesWhere(value));
 }
 	//current stock 
 	public void selectAStock(String id) {
@@ -230,6 +269,8 @@ public ObservableList<String> getCurrentStockThatsMatchesWhere(String value) {
 			String quantityType, String expiereDate, String name, Double cost) {
 		selectedStock = new CurrentStock(id,storageLocationId,quantity,quantityType,expiereDate,name,cost);
 	}
+	
+
 	
 	public void addCurrentStock() {
 		db.addCurrentStock(selectedStock);
@@ -312,5 +353,41 @@ public void setStockFrom(Boolean from) {
 }
 public Boolean getStockFrom() {
 	return stockFrom;
+}
+// basically so i know which type of menu to load, and is set at the login page. 
+public Boolean getAdminStatus() {
+	return isAdmin;
+}
+
+// true is admin, false isn't admin
+public void checkAdminStatusInDb(String id) {
+	isAdmin = db.isAccountAdmin(id);
+}
+//true is exist, false is doesn't exist 
+public Boolean doesBudgetNameAlreadyExist(String id) {
+	Boolean exist = false;
+	int counter = 0;
+	while(budget.size() !=  counter) {
+		if(budget.get(counter).getBudgetId().equals(id)) {
+			exist = true;
+			
+		}
+		counter = counter + 1; 
+	}
+	return exist;
+}
+public Boolean doesBudgetNameAlreadyExistAndIsntId(String id) {
+	if(!id.equals( selectedBudget.getBudgetId())) {
+	return doesBudgetNameAlreadyExist(id);
+	}else {
+		return false;
+	}
+	}
+
+public void setDeleteFrom(String delete) {
+	loadDeleteFrom = delete;
+}
+public String getDeleteFrom() {
+	return loadDeleteFrom;
 }
 }

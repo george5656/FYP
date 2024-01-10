@@ -73,7 +73,8 @@ public class RootView extends VBox {
 	 * get the Home page view
 	 * @return HomePage view
 	 */
-public HomePage getHomePage() {
+public HomePage getHomePage(Boolean isAdmin) {
+	homePage.setHomePagetype(isAdmin);
 	return homePage;
 }
 public ListPage getStockListPage() {
@@ -205,7 +206,8 @@ public void setHomeBtnStorageEventHandler(EventHandler<ActionEvent> event) {
 	homePage.setBtnStorageEventHandler(event);
 }
 
-public void homePageMenuLoad() {
+public void homePageMenuLoad(Boolean isAdmin) {
+	homePage.setHomePagetype(isAdmin);
 	this.getChildren().remove(0);
 	this.getChildren().add(homePage);
 	this.setVgrow(homePage, Priority.ALWAYS);
@@ -459,7 +461,14 @@ public void MenuDetailsLoad() {
 	this.getChildren().add(menuDetails);
 	this.setVgrow(menuDetails, Priority.ALWAYS);
 }
-
+public String getBudgetListSelectedItem() {
+	
+	if(budgetListPage.getSelectionNode().getSelectionModel().getSelectedItem()!= null) {
+	return budgetListPage.getSelectionNode().getSelectionModel().getSelectedItem();
+	}else {
+		return "null";
+	}
+}
 //menu filter
 public void menuFilterLoad() {
 	this.getChildren().remove(0);
@@ -491,7 +500,12 @@ public void setBudgetListBtnFilterEventHandler(EventHandler<ActionEvent> event) 
 public void setBudgetListBtnFindEventHandler(EventHandler<ActionEvent> event) {
 	budgetListPage.setBtnFindEventHandler(event);
 }
-
+public void setBudgetListBtnDeleteEventHandler(EventHandler<ActionEvent> event) {
+	budgetListPage.setBtnDeleteEventHandler(event);
+}
+public void setBudgetListBtnEditEventHandler(EventHandler<ActionEvent> event) {
+	budgetListPage.setBtnEditEventHandler(event);
+}
 public void BudgetListLoad(ObservableList<String> data) {
 	budgetListPage.getErrorLabel().setVisible(false);
 	budgetListPage.setObservableList(data);
@@ -502,6 +516,17 @@ public void BudgetListLoad(ObservableList<String> data) {
 
 public String getBudgetTfFind() {
 	return budgetListPage.getTfFindValue();
+}
+public void setBudgetListErrorMessage(String error) {
+	budgetListPage.getErrorLabel().setText(error);
+	budgetListPage.getErrorLabel().setVisible(true);
+}
+
+public String getSelectedBudgetId() {
+	String budgetId = budgetListPage.getSelection();
+	int idStart = budgetId.indexOf("id");
+	int amountStart = budgetId.indexOf("amount");
+	return budgetId.substring(idStart + 5, amountStart -2);
 }
 
 //budgetDetailsPage
@@ -517,22 +542,82 @@ public void budgetDetailsLoad() {
 public String getBudgetDetailsInputtedName() {
 	return bdp.getName().getText();
 }
-public Double getBudgetDetailsInputtedAmount() {
-	return Double.parseDouble(bdp.getAmount().getText());
+public String getBudgetDetailsInputtedAmount() {
+	return bdp.getAmount().getText();
+	
 }
 public String getBudgetDetailsInputtedStartDate() {
-	return bdp.getStartDate().getValue().toString();
+	return bdp.getStartDate().getEditor().getText();
+			
 }
 public String getBudgetDetailsInputtedEndDate() {
-	return bdp.getEndDate().getValue().toString();
+	return bdp.getEndDate().getEditor().getText();
+	//bdp.getEndDate().getEditor().
 }
-
+public LocalDate getBudgetDetailsInputtedStartDateAsLocalDate() {
+	return bdp.getStartDate().getValue();
+}
+public LocalDate getBudgetDetailsInputtedEndDateAsLocalDate() {
+	return bdp.getEndDate().getValue();
+}
+public void clearBudgetDetailsPage() {
+	bdp.getName().clear();
+	bdp.getAmount().clear();
+	bdp.getStartDate().getEditor().clear();
+	bdp.getEndDate().getEditor().clear();
+}
+public void setBudgetDetailsName(String name) {
+	 bdp.getName().setText(name);
+}
+public void setBudgetDetailsAmount(String amount) {
+	 bdp.getAmount().setText(amount);;
+}
+public void setBudgetDetailsStartDate(String startDate) {
+	 bdp.getStartDate().getEditor().setText(startDate);
+}
+public void setBudgetDetailsEndDate(String endDate) {
+	 bdp.getEndDate().getEditor().setText(endDate);
+}
 //budget filter
 
 public void budgetfilterLoad() {
 	this.getChildren().remove(0);
 	this.getChildren().add(budgetFilter);
 	this.setVgrow(budgetFilter, Priority.ALWAYS);
+}
+public void setBudgetFilterBtnSaveEventHandler(EventHandler<ActionEvent> event) {
+	budgetFilter.setBtnSaveEventHandler(event);
+}
+
+public String getBudgetFilterNoBudgetLessThan() {
+	return budgetFilter.getMinAmount().getText().toString();
+}
+public String getBudgetFilterNoBudgetMoreThan() {
+	return budgetFilter.getMaxAmount().getText().toString();
+}
+public String getBudgetFilterStartsBeforeDateText() {
+	return budgetFilter.getStartBefore().getEditor().getText();
+}
+public String getBudgetFilterStartsAfterDateText() {
+	return budgetFilter.getStartAfter().getEditor().getText();
+}
+public String getBudgetFilterEndsBeforeDateText() {
+	return budgetFilter.getEndsBefore().getEditor().getText();
+}
+public String getBudgetFilterEndsAfterDateText() {
+	return budgetFilter.getEndsAfter().getEditor().getText();
+}
+public LocalDate getBudgetFilterStartsBeforeValuePresent() {
+	return budgetFilter.getStartBefore().getValue();
+}
+public LocalDate getBudgetFilterStartsAfterValuePresent() {
+	return budgetFilter.getStartAfter().getValue();
+}
+public LocalDate getBudgetFilterEndsBeforeValuePresent() {
+	return budgetFilter.getEndsBefore().getValue();
+}
+public LocalDate getBudgetFilterEndsAfterValuePresent() {
+	return budgetFilter.getEndsAfter().getValue();
 }
 
 //storagelocationlist

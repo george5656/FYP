@@ -130,10 +130,19 @@ public class InputValidation {
 			errorMessage = "no data found, if some does exists try selecting it and preesing enter";
 		}
 		
-		if(input.equals("null")) {
+		if(input.equals("")) {
 			errorMessage = "error no date";
 		}
 		return errorMessage;
 	}
-	
+	public String dateValidationPresentIsOptional(String input, LocalDate valuePresent) {
+		errorMessage ="";
+		
+		
+		if (!input.equals("")&&valuePresent == null) {
+			errorMessage = "no data found, if some does exists try selecting it and preesing enter";
+		}
+		
+		return errorMessage;
+	}
 }

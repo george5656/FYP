@@ -119,6 +119,16 @@ public ArrayList<String> getCurrentStockThatsLike(String where) {
 			e.printStackTrace();
 		}
 	}
+	public void deleteSelectedBudgte(String id) {
+		PreparedStatement statement;
+		try {
+			statement = mySqlDatabase.prepareStatement("Delete from stock_mangemnet.tbl_budget where tbl_budget.budgetId = \'" + id + "\';");
+			statement.execute();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
 /**
  * made for the combo box in the stock details
  * @return
@@ -242,6 +252,7 @@ public ArrayList<String> getCurrentStockThatsLike(String where) {
 		
 		return currentStock;
 	}
+	
 	/**
 	 * originally made fo the combo box, in stock filter
 	 * @param where
@@ -328,6 +339,25 @@ public ArrayList<String> getCurrentStockThatsLike(String where) {
 		
 		return allBudgets;
 	}
+ public ArrayList<String> getBudgetsThatMatchesWhere(String where){
+		PreparedStatement statement;
+		ArrayList<String> budgets = new ArrayList<>();
+		try {
+			statement = mySqlDatabase.prepareStatement("select * from stock_mangemnet.tbl_budget where " + where + ";");
+			ResultSet result = statement.executeQuery();
+			//if(result.first()) {
+			while (result.next()) {
+				Budget input = new Budget(result.getString(1), result.getDouble(2), result.getDate(3).toString(), result.getDate(4).toString());
+				budgets.add(input.toString());
+			}
+			//}
+			} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		return budgets;
+	}
  /**
   * budget add
   * @return
@@ -366,7 +396,39 @@ public ArrayList<String> getCurrentStockThatsLike(String where) {
 		
 		return allBudgets;
 	}
+ //all check that id already exists so this should be fine
+ public Budget getSpecificBudget(String Id) {
+		PreparedStatement statement;
+		Budget budget = new Budget ("null", -1.00,"null","null");
+		try {
+			statement = mySqlDatabase.prepareStatement("select * from stock_mangemnet.tbl_budget where (tbl_budget.budgetId = \""+Id+"\");");
+			ResultSet result = statement.executeQuery();
+			//if(result.first()) {
+			if(result.next()) {
+				budget = new Budget(result.getString(1), result.getDouble(2), result.getDate(3).toLocalDate().toString(), result.getDate(4).toLocalDate().toString());
+				
+			}
+			//}
+			} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		return budget;
+	}
  
+ public void updateABudget(Budget userInput, String orginalId){
+		PreparedStatement statement;
+		
+		try {
+			statement = mySqlDatabase.prepareStatement("Update stock_mangemnet.tbl_budget set budgetId = \"" + userInput.getBudgetId() + "\", amount = \""+ userInput.getAmount() + "\", startDate = \""+  userInput.getStartDate() + "\", endDate = \""+userInput.getEndDate() +"\" where budgetId = \"" + orginalId + "\";" );
+			statement.execute();
+			
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+ }
  public ArrayList<Account> getAllAccounts() {
 		PreparedStatement statement;
 		ArrayList<Account> allAccounts = new ArrayList<>();
@@ -424,7 +486,21 @@ public ArrayList<String> getCurrentStockThatsLike(String where) {
 	
 	}
 
-
+ public Boolean isAccountAdmin(String id){
+		PreparedStatement statement;
+		try {
+			statement = mySqlDatabase.prepareStatement("select * from stock_mangemnet.tbl_account_details where tbl_account_details.userName = \"" + id + "\"" );
+			ResultSet results = statement.executeQuery();
+			if(results.next()) {
+				return results.getBoolean(3);
+			}
+			} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	return false;
+	
+	}
 
 
 

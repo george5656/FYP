@@ -35,7 +35,7 @@ public class BudgetDetailsPage extends BasicLayoutDetails {
 	
 		labels.getChildren().addAll(labelList);
 		for(Label i : labelList) {
-			i.setFont(new Font(30));
+			i.setFont(new Font(20));
 			i.setMaxSize(Double.MAX_VALUE, Double.MAX_VALUE);
 			labels.setVgrow(i,Priority.ALWAYS);
 			i.setAlignment(Pos.CENTER);
@@ -46,7 +46,7 @@ public class BudgetDetailsPage extends BasicLayoutDetails {
 	userTextInput.getChildren().addAll(textFieldList);
 	userTextInput.getChildren().addAll(dpStartDate,dpEndDate);
 		for(TextField i : textFieldList) {
-			i.setFont(new Font(30));
+			i.setFont(new Font(20));
 			i.setMaxSize(Double.MAX_VALUE, Double.MAX_VALUE);
 			userTextInput.setVgrow(i,Priority.ALWAYS);
 	

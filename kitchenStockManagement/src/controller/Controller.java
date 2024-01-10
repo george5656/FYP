@@ -73,9 +73,13 @@ public class Controller {
 		view.setBudgetListBtnAddEventHandler(new EHBudgetBtnAdd());
 		view.setBudgetListBtnFilterEventHandler(new EHBudgetBtnFilter());
 		view.setBudgetListBtnFindEventHandler(new EHBudgetListBtnFind());
-
+		view.setBudgetListBtnDeleteEventHandler(new EHBudgteListBtnDelete());
+		view.setBudgetListBtnEditEventHandler(new EHBudgetBtnEdit());
+		
 		view.setBudgetDetailsBtnSaveEventHandler(new EHBudgetDetailsBtnSave());
 
+		view.setBudgetFilterBtnSaveEventHandler(new EHBudgetFilterBtnApply());
+		
 		view.setStorgaeLocationListBtnAddEventHandler(new EHStorageBtnAdd());
 		view.setStorgaeLocationListBtnFilterEventHandler(new EHStorageBtnFilter());
 
@@ -140,7 +144,9 @@ public class Controller {
 					alert = model.makeAlert("input issue", "user name and password didn't match");
 					alert.show();
 				} else {
-					view.homePageMenuLoad();
+					model.checkAdminStatusInDb(view.getLoginUserUsernameInput());
+					
+					view.homePageMenuLoad(model.getAdminStatus());
 				}
 			}
 
@@ -176,11 +182,35 @@ public class Controller {
 
 				view.getDeleteConfirmationPage()
 						.setTxtConfirmMessage("Are you sure you wan to delete " + model.getSelectedStockName() + "?");
-
+				model.setDeleteFrom("StockList");
 				view.deleteConfirmationLoad();
 			} else {
 				view.setStockListError("No data selected");
 
+			}
+		}
+
+	}
+	private class EHBudgteListBtnDelete implements EventHandler<ActionEvent> {
+
+		@Override
+		public void handle(ActionEvent event) {
+
+			if (!view.getBudgetListSelectedItem().equals("null")) {
+				
+				model.selectABudget(view.getSelectedBudgetId());
+				
+				view.getDeleteConfirmationPage()
+						.setTxtConfirmMessage("Are you sure you wan to delete " + view.getSelectedBudgetId() + "?");
+				
+				model.setDeleteFrom("BudgteList");
+				
+				view.deleteConfirmationLoad();
+				
+			} else {
+				
+				view.setBudgetListErrorMessage("No data selected");
+				
 			}
 		}
 
@@ -212,12 +242,44 @@ public class Controller {
 
 		@Override
 		public void handle(ActionEvent event) {
+			view.clearBudgetDetailsPage();
+			model.resetABudget();
 			view.budgetDetailsLoad();
 
 		}
 
 	}
+	private class EHBudgetBtnEdit implements EventHandler<ActionEvent> {
 
+		@Override
+		public void handle(ActionEvent event) {
+			
+			
+			
+			
+if (!view.getBudgetListSelectedItem().equals("null")) {
+				
+		
+			view.clearBudgetDetailsPage();
+			model.resetABudget();
+			model.selectABudget(view.getSelectedBudgetId());
+			
+			view.setBudgetDetailsName(model.getSelectedBudgetName());
+			view.setBudgetDetailsAmount(model.getSelectedBudgetAmount());
+			view.setBudgetDetailsStartDate(model.deFormatDate(model.getSelectedBudgetStartDate()));
+			view.setBudgetDetailsEndDate(model.deFormatDate(model.getSelectedBudgetEndDate()));
+		
+			view.budgetDetailsLoad();
+} else {
+	
+	view.setBudgetListErrorMessage("No data selected");
+	
+}
+
+
+		}
+
+	}
 	private class EHStorageBtnAdd implements EventHandler<ActionEvent> {
 
 		@Override
@@ -312,7 +374,7 @@ public class Controller {
 
 		@Override
 		public void handle(ActionEvent event) {
-			view.homePageMenuLoad();
+			view.homePageMenuLoad(model.getAdminStatus());
 
 		}
 
@@ -450,10 +512,17 @@ model.createStock(model.getSelectedStockId(), view.getStorageLocation(), Double.
 
 		@Override
 		public void handle(ActionEvent event) {
-
+if(model.getDeleteFrom().equals("StockList")) {
 			model.selectAStock(view.getSelectedStockId());
 			model.deleteStockType();
 			view.stockListLoad(model.getObservableListStringStockList());
+}else if (model.getDeleteFrom().equals("BudgteList")) {
+	
+}
+model.selectABudget(view.getSelectedBudgetId());
+model.deleteBudgetType();
+view.BudgetListLoad(model.getObservableListBudgetList());
+
 
 		}
 	}
@@ -593,7 +662,83 @@ model.createStock(model.getSelectedStockId(), view.getStorageLocation(), Double.
 		}
 	
 	}
+	private class EHBudgetFilterBtnApply implements EventHandler<ActionEvent> {
 
+		@Override
+		public void handle(ActionEvent event) {
+	String masterErrorMessage = "";
+	String issueFrom = "";
+	String budgetLessErrorMessage = model.doublePresentIsOptionalValidation(view.getBudgetFilterNoBudgetLessThan());
+	String budgetMoreErrorMessage = model.doublePresentIsOptionalValidation(view.getBudgetFilterNoBudgetMoreThan());
+	String startsBeforeErrorMessage = model.dateValidationPresentIsOptional(view.getBudgetFilterStartsBeforeDateText(), view.getBudgetFilterStartsBeforeValuePresent());
+	String startsAfterErrorMessage = model.dateValidationPresentIsOptional(view.getBudgetFilterStartsAfterDateText(), view.getBudgetFilterStartsAfterValuePresent());
+	String endsBeforeErrorMessage = model.dateValidationPresentIsOptional(view.getBudgetFilterEndsBeforeDateText(), view.getBudgetFilterEndsBeforeValuePresent());
+	String endsAfterErrorMessage = model.dateValidationPresentIsOptional(view.getBudgetFilterEndsAfterDateText(), view.getBudgetFilterEndsAfterValuePresent());
+	
+	if(!budgetLessErrorMessage.equals("")) {	
+		masterErrorMessage = budgetLessErrorMessage;
+		issueFrom = " budget has more than";
+	} else if(!budgetMoreErrorMessage.equals("")) {	
+		masterErrorMessage = budgetMoreErrorMessage;
+		issueFrom = " budget has less than";
+	} else if(!startsBeforeErrorMessage.equals("")) {	
+		masterErrorMessage = startsBeforeErrorMessage;
+		issueFrom = " starts before";
+	}else if(!startsAfterErrorMessage.equals("")) {	
+		masterErrorMessage = startsAfterErrorMessage;
+		issueFrom = " starts after";
+	}else if(!endsBeforeErrorMessage.equals("")) {	
+		masterErrorMessage = endsBeforeErrorMessage;
+		issueFrom = " ends before";
+	}else if(!endsAfterErrorMessage.equals("")) {	
+		masterErrorMessage = endsAfterErrorMessage;
+		issueFrom = " ends after";
+	}
+	
+	
+	if(masterErrorMessage.equals("")) {
+		String whereClause = "";
+		
+		
+		
+		if(!view.getBudgetFilterNoBudgetLessThan().equals("")) {
+			whereClause = whereClause + "tbl_budget.amount >= \"" + view.getBudgetFilterNoBudgetLessThan() + "\" And ";
+		}
+		if(!view.getBudgetFilterNoBudgetMoreThan().equals("")) {
+			whereClause = whereClause + "tbl_budget.amount <= \"" + view.getBudgetFilterNoBudgetMoreThan() + "\" And ";
+		}
+		
+		if(!view.getBudgetFilterStartsBeforeDateText().equals("")) {
+			whereClause = whereClause + "tbl_budget.startDate <= \"" + view.getBudgetFilterStartsBeforeDateText() + "\" And ";
+		}
+		if(!view.getBudgetFilterStartsAfterDateText().equals("")) {
+			whereClause = whereClause + "tbl_budget.startDate >= \"" + view.getBudgetFilterStartsAfterDateText() + "\" And ";
+		}
+		if(!view.getBudgetFilterEndsBeforeDateText().equals("")) {
+			whereClause = whereClause + "tbl_budget.endDate <= \"" + view.getBudgetFilterEndsBeforeDateText() + "\" And ";
+		}
+		if(!view.getBudgetFilterEndsAfterDateText().equals("")) {
+			whereClause = whereClause + "tbl_budget.endDate >= \"" + view.getBudgetFilterEndsAfterDateText() + "\" And ";
+		}
+		//the final run, where it actually find them all
+		if (!whereClause.equals("")) {
+			whereClause = whereClause.substring(0, whereClause.length() - 5) + ";";
+			
+			
+		view.BudgetListLoad(model.getBudgetsThatMatchesWhere(whereClause));	
+		}else {
+			view.BudgetListLoad(model.getObservableListBudgetList());
+			
+		}
+		
+		}else {
+			Alert budgetErrorMessage = model.makeAlert(issueFrom, masterErrorMessage);
+			budgetErrorMessage.show();
+		}
+		
+		}
+	
+	}
 	private class EHStockListBtnEdit implements EventHandler<ActionEvent> {
 
 		@Override
@@ -650,11 +795,55 @@ model.createStock(model.getSelectedStockId(), view.getStorageLocation(), Double.
 
 		@Override
 		public void handle(ActionEvent event) {
-
-			model.addBudget(view.getBudgetDetailsInputtedName(), view.getBudgetDetailsInputtedAmount(),
-					view.getBudgetDetailsInputtedStartDate(), view.getBudgetDetailsInputtedEndDate());
+			String masterError = "";
+			String issueTitle = "";
+			
+			String nameErrorMessage = model.stringMustBePresetValidation(view.getBudgetDetailsInputtedName());
+			String amountErrorMessage = model.doubleMustBePresetValidation(view.getBudgetDetailsInputtedAmount().toString() );
+			
+			String startDateErrorMessage = model.dateValidation(view.getBudgetDetailsInputtedStartDate(), view.getBudgetDetailsInputtedStartDateAsLocalDate());
+			String endDateErrorMessage = model.dateValidation(view.getBudgetDetailsInputtedEndDate(), view.getBudgetDetailsInputtedEndDateAsLocalDate());
+			if(!nameErrorMessage.equals("")) {
+				masterError = nameErrorMessage;
+				issueTitle = "issue with name";
+			} else if(!amountErrorMessage.equals("")) {
+				masterError = amountErrorMessage;
+				issueTitle = "issue with amount";
+			} else if(!startDateErrorMessage.equals("")) {
+				masterError = startDateErrorMessage;
+				issueTitle = "issue with start date";
+			} else if(!endDateErrorMessage.equals("")) {
+				masterError = endDateErrorMessage;
+				issueTitle = "issue with end date";
+			} 
+			// need to check if it is the selected budget name so it doesn't error out if from edit
+			if (model.doesBudgetNameAlreadyExist(view.getBudgetDetailsInputtedName())&& model.getSelectedBudget() == null) {
+				masterError = "name already taken";
+				issueTitle = "issue with name";
+			}else if(model.doesBudgetNameAlreadyExistAndIsntId(view.getBudgetDetailsInputtedName())&&model.getSelectedBudget() != null) {
+				masterError = "name already taken";
+				issueTitle = "issue with name";
+			}
+			
+			if(masterError.equals("")) {
+			
+				if(model.getSelectedBudget() == null) {
+			model.addBudget(view.getBudgetDetailsInputtedName(), Double.parseDouble(view.getBudgetDetailsInputtedAmount()),
+					model.formatDate(view.getBudgetDetailsInputtedStartDate()), model.formatDate(view.getBudgetDetailsInputtedEndDate()));
+				}else {
+					model.updateBudget(view.getBudgetDetailsInputtedName(), Double.parseDouble(view.getBudgetDetailsInputtedAmount()),
+							model.formatDate(view.getBudgetDetailsInputtedStartDate()), model.formatDate(view.getBudgetDetailsInputtedEndDate()));
+					
+					
+				}
+				
+				
 			loadBudgetListPage();
-
+			
+			}else {
+				Alert budgetError = model.makeAlert(issueTitle, masterError);
+				budgetError.show();
+			}
 		}
 
 	}
@@ -664,12 +853,19 @@ model.createStock(model.getSelectedStockId(), view.getStorageLocation(), Double.
 		@Override
 		public void handle(ActionEvent event) {
 
+			String errorMessage = model.stringPresentIsOptionalValidation(view.getBudgetTfFind());
+			
+			/*
 			ObservableList<String> dataToBeDisplayed = FXCollections.observableArrayList(
 					model.getDatabase().getBudgetsThatsLike(view.getBudgetListPage().getTfFindValue()));
 
 			view.getBudgetListPage().setObservableList(dataToBeDisplayed);
+			*/
+			if (errorMessage.equals("")) {
 			view.BudgetListLoad(model.getBudgetThatsLike(view.getBudgetTfFind()));
-
+			}else {
+				view.setBudgetListErrorMessage(errorMessage);
+			}
 		}
 
 	}

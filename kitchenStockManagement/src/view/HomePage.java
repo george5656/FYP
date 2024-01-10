@@ -24,7 +24,7 @@ public class HomePage extends PaneMenu {
 	//constructor 
 	public HomePage() {
 	super.setCenter(layout);
-		layout.getChildren().addAll(btnStock,btnBudget,btnAccount,btnMenu,btnStorage);
+		layout.getChildren().addAll(btnStock,btnMenu,btnStorage,btnAccount,btnBudget);
 		layout.setAlignment(Pos.CENTER);
 		
 		layout.setVgrow(btnStock, Priority.ALWAYS);
@@ -64,6 +64,19 @@ public class HomePage extends PaneMenu {
 	}
 	public void setBtnAccountEventHandler(EventHandler<ActionEvent> Event) {
 		btnAccount.setOnAction(Event);
+	}
+	public void setHomePagetype(Boolean isAdmin) {
+		if(isAdmin && layout.getChildren().size()!=5) {
+			layout.getChildren().addAll(btnStorage,btnAccount,btnBudget);
+		}else if((!isAdmin) && layout.getChildren().size()!=2) {
+			//if alt way around get error as recounts list
+			layout.getChildren().remove(4);
+			layout.getChildren().remove(3);
+			layout.getChildren().remove(2);
+			
+			
+			
+		}
 	}
 
 }
