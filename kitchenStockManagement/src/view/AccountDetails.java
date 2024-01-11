@@ -63,7 +63,34 @@ public AccountDetails() {
 		rbYes.setAlignment(Pos.CENTER);
 		rbNo.setAlignment(Pos.CENTER);
 }
+public String getUsername() {
+	return tfUserName.getText();
+}
+public String getPassword() {
+	return pfPassword.getText();
+}
+public Boolean isAdminYesSelected() {
+	return rbYes.isSelected();
+}
+public Boolean isAdminNoSelected() {
+	return rbNo.isSelected();
+}
+public void setUsername(String username) {
+	tfUserName.setText(username);
+}
 
-
+public void setAdminStatus(Boolean adminStatus) {
+	if(adminStatus == true) {
+		rbYes.setSelected(true);
+	}else {
+		rbNo.setSelected(true);
+	}
+}
+public void resetPage() {
+	tfUserName.setText("");
+	pfPassword.setText("");
+	rbYes.setSelected(false);
+	rbNo.setSelected(false);
+}
 
 }

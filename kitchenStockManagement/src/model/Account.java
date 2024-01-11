@@ -21,6 +21,13 @@ public Account(String username,Boolean isAdmin){
 		return "username = " + username + ", account is admin = " + isAdmin.toString();
 	}
 
-
-
+public String getUsername() {
+	return username;
+}
+public String getPassword() {
+	return password;
+}
+public Boolean getAdminStatus() {
+	return isAdmin;
+}
 }

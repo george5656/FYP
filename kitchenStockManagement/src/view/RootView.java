@@ -9,6 +9,7 @@ import javafx.event.EventHandler;
 import javafx.geometry.Pos;
 import javafx.scene.layout.Priority;
 import javafx.scene.layout.VBox;
+import javafx.scene.control.TextField;
 import javafx.scene.layout.Pane;
 
 /**
@@ -320,9 +321,6 @@ public String getStockDetailsDateValue() {
 public LocalDate getStockDetailsDateValueAsLocalDate() {
 	
 	return sd.getExpiereDate().getValue();
-
-	
-	
 	}
 public String getStockDetailsDateText() {
 	if(sd.getExpiereDate().getEditor().getText() != null) {
@@ -627,6 +625,15 @@ public void setStorgaeLocationListBtnAddEventHandler(EventHandler<ActionEvent> e
 public void setStorgaeLocationListBtnFilterEventHandler(EventHandler<ActionEvent> event) {
 	storageLocationListPage.setBtnFilterEventHandler(event);
 }
+public void setStorgaeLocationListBtnEditEventHandler(EventHandler<ActionEvent> event) {
+	storageLocationListPage.setBtnEditEventHandler(event);
+}
+public void setStorgaeLocationListBtnDeleteEventHandler(EventHandler<ActionEvent> event) {
+	storageLocationListPage.setBtnDeleteEventHandler(event);
+}
+public void setStorgaeLocationListBtnFindEventHandler(EventHandler<ActionEvent> event) {
+	storageLocationListPage.setBtnFindEventHandler(event);
+}
 public void storgaeLocationListLoad(ObservableList<String> storageLocations) {
 	storageLocationListPage.getErrorLabel().setVisible(false);
 	storageLocationListPage.setObservableList(storageLocations);
@@ -634,6 +641,32 @@ public void storgaeLocationListLoad(ObservableList<String> storageLocations) {
 	this.getChildren().add(storageLocationListPage);
 	this.setVgrow(storageLocationListPage,Priority.ALWAYS);
 }
+public String getStorageLocationFindInput() {
+	return storageLocationListPage.getTfFindValue();
+}
+public void setStorageListErrorMessage(String error) {
+	storageLocationListPage.getErrorLabel().setVisible(true);
+	storageLocationListPage.getErrorLabel().setText(error);
+}
+public void hideStorageListErrorMessage() {
+	storageLocationListPage.getErrorLabel().setVisible(false);
+}
+public String getStorageListSelectedItem() {
+	
+	if(storageLocationListPage.getSelectionNode().getSelectionModel().getSelectedItem()!= null) {
+	return storageLocationListPage.getSelectionNode().getSelectionModel().getSelectedItem();
+	}else {
+		return "null";
+	}
+}
+public String getSelectedStorageId() {
+	String storageId = storageLocationListPage.getSelection();
+	int idStart = storageId.indexOf("=");
+	int typeStart = storageId.indexOf("type");
+	return storageId.substring(idStart + 2, typeStart -2);
+}
+
+
 
 //storageLocationDetails
 
@@ -643,14 +676,42 @@ public void StorgaeLocationDetailsLoad() {
 	this.setVgrow(ssld,Priority.ALWAYS);
 }
 
+public void setStorageDetailsBtnSaveEventHandler(EventHandler<ActionEvent> event) {
+	ssld.setBtnSaveEventHandler(event);
+}
+
+public String getStorageDetailsName() {
+	return ssld.getname();
+}
+public String getStorageDetailsType() {
+	return ssld.getType();
+}
+//yes = true, no = false
+public Boolean getStorageDetailsAvailbilty() {
+	return ssld.getAvailblity();
+}
+
 //storgae location filter 
 
-public void StorgaeLocationFilterLoad() {
+public void StorgaeLocationFilterLoad(ArrayList<String> type) {
+	sslf.setType(type);
 	this.getChildren().remove(0);
 	this.getChildren().add(sslf);
 	this.setVgrow(sslf,Priority.ALWAYS);
 }
+public void setStorageFilterBtnApplyEventHandler(EventHandler<ActionEvent> event) {
+	sslf.setBtnApply(event);
+}
 
+public Boolean getStorgaeFilterAvailbleStatus() {
+	return sslf.getAvailblityStatus();
+}
+public String getStorgeFilterType() {
+	return sslf.getSelectedType();
+}
+public Boolean StorageFilterHasATypeBeenSelected() {
+	return sslf.hasATypeBeenSelectec();
+}
 //accountListPage
 public void setAccountListBtnAddEventHandler(EventHandler<ActionEvent> event) {
 	accountListPage.setBtnAddEventHandler(event);
@@ -658,11 +719,42 @@ public void setAccountListBtnAddEventHandler(EventHandler<ActionEvent> event) {
 public void setAccountListBtnFilterEventHandler(EventHandler<ActionEvent> event) {
 	accountListPage.setBtnFilterEventHandler(event);
 }
+public void setAccountListBtnFindEventHandler(EventHandler<ActionEvent> event) {
+	accountListPage.setBtnFindEventHandler(event);
+}
+public void setAccountListBtnEditEventHandler(EventHandler<ActionEvent> event) {
+	accountListPage.setBtnEditEventHandler(event);
+}
+public void setAccountListBtnDeleteEventHandler(EventHandler<ActionEvent> event) {
+	accountListPage.setBtnDeleteEventHandler(event);
+}
+public String getAccountTfFindValue() {
+	return accountListPage.getTfFindValue();
+}
 public void accountDetailsLoad() {
 	this.getChildren().remove(0);
 	this.getChildren().add(ad);
 	this.setVgrow(ad, Priority.ALWAYS);
 }
+public void setAccountListError(String errorMessgae) {
+	accountListPage.getErrorLabel().setVisible(true);
+	accountListPage.getErrorLabel().setText(errorMessgae);
+}
+public String getAccountListSelectedItem() {
+	
+	if(accountListPage.getSelectionNode().getSelectionModel().getSelectedItem()!= null) {
+	return accountListPage.getSelectionNode().getSelectionModel().getSelectedItem();
+	}else {
+		return "null";
+	}
+}
+public String getSelectedAccountName() {
+	String accountId = accountListPage.getSelection();
+	int usernameStart = accountId.indexOf("=");
+	int accountStart = accountId.indexOf("account");
+	return accountId.substring(usernameStart + 2, accountStart -2);
+}
+
 //account details
 public void accountListLoad(ObservableList<String> data) {
 	accountListPage.getErrorLabel().setVisible(false);
@@ -671,15 +763,47 @@ public void accountListLoad(ObservableList<String> data) {
 	this.getChildren().add(accountListPage);
 	this.setVgrow(accountListPage, Priority.ALWAYS);
 }
-
+public String getAccountDetailsUserName() {
+	return ad.getUsername();
+}
+public String getAccountDetailsUserPassword() {
+	return ad.getPassword();
+}
+public Boolean getAccountDetailsIsAdminYesSelected() {
+	return ad.isAdminYesSelected();
+}
+public Boolean getAccontDetailsIsAdminNoSelected() {
+	return ad.isAdminNoSelected();
+}
+public void setAccountDetailsBtnSaveEventHandler(EventHandler<ActionEvent> event) {
+	ad.setBtnSaveEventHandler(event);
+}
+public void setAccountDetailsUsername(String username) {
+	ad.setUsername(username);
+}
+public void setAdminStatus(Boolean adminStatus) {
+	ad.setAdminStatus(adminStatus);
+}
+public void resetAccountDetailPage() {
+	ad.resetPage();
+}
 // account filter 
 
 public void accountFilterLoad() {
+	af.reset();
 	this.getChildren().remove(0);
 	this.getChildren().add(af);
 	this.setVgrow(af, Priority.ALWAYS);
 }
-
+public void setAccountFilterBtnApplyEventHandler(EventHandler<ActionEvent> event) {
+	af.setBtnApply(event);
+}
+public Boolean getIsAdminYes() {
+	return af.isYesSelected();
+}
+public Boolean getIsAdminNo() {
+	return af.isNoSelected();
+}
 //DeleteConfirmaitonPage
 
 public void setDeleteConfirmationBtnConfirmEventHandler(EventHandler<ActionEvent> event) {
