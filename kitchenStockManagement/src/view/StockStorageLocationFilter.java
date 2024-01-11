@@ -70,5 +70,26 @@ public StockStorageLocationFilter() {
 	}
 	
 }
+public void setType(ArrayList<String> type) {
+	cbType.getItems().clear();
+	cbType.getItems().addAll(type);
+}
+//false = no, true = yes
+public Boolean getAvailblityStatus() {
+	if(rbYes.isSelected()) {
+		return true;
+	}else if(rbNo.isSelected()){
+		return false;
+	}else {
+		return null;
+	}
+	
+}
+public String getSelectedType() {
+	return cbType.getSelectionModel().getSelectedItem();
+}
+public boolean hasATypeBeenSelectec() {
+	return cbType.getSelectionModel().isEmpty();
+}
 
 }

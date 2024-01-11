@@ -49,5 +49,15 @@ public AccountFilter() {
 	toggleGroupLayout.setAlignment(Pos.CENTER);
 	
 }
-
+public void reset() {
+	rbYes.setSelected(false);
+	rbNo.setSelected(false);
+	
+}
+public Boolean isYesSelected() {
+	return rbYes.isSelected();
+}
+public Boolean isNoSelected() {
+	return rbNo.isSelected();
+}
 }

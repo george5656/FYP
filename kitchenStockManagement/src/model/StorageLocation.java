@@ -22,4 +22,5 @@ public StorageLocation(String name, String type, boolean isAvailble) {
 public String getName() {
 	return name;
 }
+
 }

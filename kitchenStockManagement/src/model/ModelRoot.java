@@ -29,6 +29,9 @@ public class ModelRoot {
 	private StockType testStockType;
 	private CurrentStock selectedStock;
 	private Budget selectedBudget;
+	private Account logedInAccount;
+	private Account selectedAccount; 
+	private StorageLocation selectedStroage;
 	//used to determine which menu to use and is only set at login
 	private Boolean isAdmin;
 	//true = add, false = edit
@@ -231,6 +234,10 @@ public void deleteBudgetType() {
 	String id = selectedBudget.getBudgetId(); 
 	db.deleteSelectedBudgte(id);
 }
+public void deleteAccount() {
+	String id = selectedAccount.getUsername();
+	db.deleteSelectedAccount(id);
+}
 public ObservableList<String> getCurrentStockThatsLike(String value) {
 	return FXCollections.observableArrayList(db.getCurrentStockThatsLike(value));
 }
@@ -239,6 +246,9 @@ public ObservableList<String> getCurrentStockThatsMatchesWhere(String value) {
 }
 public ObservableList<String> getBudgetsThatMatchesWhere(String value) {
 	return FXCollections.observableArrayList(db.getBudgetsThatMatchesWhere(value));
+}
+public ObservableList<String> getAccountsThatMatchesWhere(String value) {
+	return FXCollections.observableArrayList(db.getAccountsThatMatchesWhere(value));
 }
 	//current stock 
 	public void selectAStock(String id) {
@@ -355,8 +365,15 @@ public Boolean getStockFrom() {
 	return stockFrom;
 }
 // basically so i know which type of menu to load, and is set at the login page. 
-public Boolean getAdminStatus() {
-	return isAdmin;
+public Boolean getLoggedInAccountAdminStatus() {
+	return isAdmin;	
+}
+
+public void setLogedInAccount(String id) {
+	logedInAccount = db.getSpecificAccount(id);
+}
+public String getLogedInAccountId() {
+	return logedInAccount.getUsername();
 }
 
 // true is admin, false isn't admin
@@ -389,5 +406,88 @@ public void setDeleteFrom(String delete) {
 }
 public String getDeleteFrom() {
 	return loadDeleteFrom;
+}
+
+
+// accounts
+public ObservableList<String> getAccountsThatsLike(String value) {
+	return FXCollections.observableArrayList(db.getAccountsThatsLike(value));
+}
+
+public void createAccount(String username, String password, Boolean isAdmin) {
+		selectedAccount = new Account (username, password, isAdmin);
+		
+}
+public void addSelectedAccount() {
+	db.addAccount(selectedAccount);
+}
+public String getSelectedAccountUsername() {
+	return selectedAccount.getUsername();
+}
+public Boolean getSelectedAccountAdminStatus() {
+	return selectedAccount.getAdminStatus();
+}
+public Boolean doesAccountNameAlreadyExist(String id) {
+	accounts = db.getAllAccounts();
+	Boolean exist = false;
+	int counter = 0;
+	while(accounts.size() !=  counter) {
+		 
+		if(accounts.get(counter).getUsername().toLowerCase().equals(id)) {
+			exist = true;
+			
+		}
+		counter = counter + 1; 
+	}
+	return exist;
+}
+public void selectAAccount(String id) {
+	selectedAccount = db.getSpecificAccount(id);
+}
+public void resetSelectedAccount() {
+	selectedAccount = null;
+}
+public Account getSelectedAccount() {
+	return selectedAccount;
+}
+public void updateAccount(String username, String password, Boolean adminStatus) {
+	
+	db.updateAAccount(new Account(username, password, adminStatus), selectedAccount.getUsername());
+}
+// storage
+public ObservableList<String> getStorageThatsLike(String value) {
+	return FXCollections.observableArrayList(db.getStorageThatsLike(value));
+}
+
+public ArrayList<String> getAllStorgaeType(){
+	return db.getAllStorageType();
+}
+public ObservableList<String> getStorageWhere(String where) {
+	return FXCollections.observableArrayList(db.getStorgeThatMatchesWhere(where));
+}
+
+public Boolean doesStorageAlreadyExist(String id) {
+	sl = db.getAllStorageLocations();
+	Boolean exist = false;
+	int counter = 0;
+	while(sl.size() !=  counter) {
+		 
+		if(sl.get(counter).getName().toLowerCase().equals(id)) {
+			exist = true;
+			
+		}
+		counter = counter + 1; 
+	}
+	return exist;
+}
+public void createStorage(String name, String type, Boolean isAvailble) {
+	db.addStorage(name, type, isAvailble);
+	
+}
+public void selectAStorageLocation(String id) {
+	selectedStroage = db.getSpecificStorageLocation(id);
+	}
+public String getSelectedStorageName() {
+	return selectedStroage.getName();
 }
 }

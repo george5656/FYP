@@ -64,7 +64,21 @@ userTextInput.setVgrow(radioButtonLayout,Priority.ALWAYS);
 
 }
 
-	
-
+	public String getname() {
+		return tfName.getText();
+	}
+	public String getType() {
+		return tfType.getText();
+	}
+	//yes = true, no = false
+	public Boolean getAvailblity() {
+		if(rbYes.isSelected()) {
+			return true;
+		}else if(rbNo.isSelected()) {
+			return false;
+		}else {
+			return null;
+		}
+	}
 
 }

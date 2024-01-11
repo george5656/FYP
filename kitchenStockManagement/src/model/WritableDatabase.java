@@ -448,6 +448,113 @@ public ArrayList<String> getCurrentStockThatsLike(String where) {
 		
 		return allAccounts;
 	}
+ public ArrayList<String> getAccountsThatsLike(String where) {
+		PreparedStatement statement;
+		ArrayList<String> account = new ArrayList<>();
+		try {
+			statement = mySqlDatabase.prepareStatement("select userName, isAdmin from stock_mangemnet.tbl_account_details where tbl_account_details.userName like \'%" + where +"%\' ;");
+			ResultSet result = statement.executeQuery();
+			//if(result.first()) {
+			while (result.next()) {
+				Account input = new Account(result.getString(1), result.getBoolean(2));
+				account.add(input.toString());
+			}
+			//}
+			} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		return account;
+	}
+ public ArrayList<String> getAccountsThatMatchesWhere(String where){
+		PreparedStatement statement;
+		ArrayList<String> Accounts = new ArrayList<>();
+		try {
+			statement = mySqlDatabase.prepareStatement("select userName, isAdmin from stock_mangemnet.tbl_account_details where " + where + ";");
+			ResultSet result = statement.executeQuery();
+			//if(result.first()) {
+			while (result.next()) {
+				Account input = new Account(result.getString(1), result.getBoolean(2));
+				Accounts.add(input.toString());
+			}
+			//}
+			} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		return Accounts;
+	}
+ 
+ public void addAccount(Account userInput) {
+		PreparedStatement statement;
+		int adminStatus= 0;
+		try {
+			if(userInput.getAdminStatus() == true) {
+				adminStatus = 1;
+			}
+			
+			statement = mySqlDatabase.prepareStatement("Insert into stock_mangemnet.tbl_account_details values (\'" + userInput.getUsername() + "\',\'" + userInput.getPassword() + "\',\'"+ adminStatus + "\');");
+			statement.execute();
+			
+			} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		
+	}
+ 
+ public Account getSpecificAccount(String id) {
+		PreparedStatement statement;
+		Account account = null;
+		try {
+			statement = mySqlDatabase.prepareStatement("select userName, isAdmin from stock_mangemnet.tbl_account_details where userName = \'" + id + "\';");
+			ResultSet result = statement.executeQuery();
+			//if(result.first()) {
+			if(result.next()) {
+				
+				account = new Account(result.getString(1), result.getBoolean(2));
+				
+			}
+			//}
+			} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		return account;
+	}
+ 
+ 
+ public void deleteSelectedAccount(String id) {
+		PreparedStatement statement;
+		try {
+			statement = mySqlDatabase.prepareStatement("Delete from stock_mangemnet.tbl_account_details where tbl_account_details.userName = \'" + id + "\';");
+			statement.execute();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+ 
+ public void updateAAccount(Account userInput, String orginalId){
+		PreparedStatement statement;
+		int adminStatus= 0;
+		try {
+			if(userInput.getAdminStatus() == true) {
+				adminStatus = 1;
+			}
+			statement = mySqlDatabase.prepareStatement("Update stock_mangemnet.tbl_account_details set userName = \"" + userInput.getUsername() + "\", password = \""+ userInput.getPassword() + "\", isAdmin = \""+ adminStatus + "\" where userName = \"" + orginalId + "\";" );
+			statement.execute();
+			
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+}
+ 
  public ArrayList<StorageLocation> getAllStorageLocations() {
 		PreparedStatement statement;
 		ArrayList<StorageLocation> allSl = new ArrayList<>();
@@ -485,7 +592,105 @@ public ArrayList<String> getCurrentStockThatsLike(String where) {
 	return false;
 	
 	}
+ 
+ public ArrayList<String> getStorageThatsLike(String where) {
+		PreparedStatement statement;
+		ArrayList<String> storage = new ArrayList<>();
+		try {
+			statement = mySqlDatabase.prepareStatement("select * from stock_mangemnet.tbl_storage_location where storageLocationId like \'%" + where +"%\' ;");
+			ResultSet result = statement.executeQuery();
+			//if(result.first()) {
+			while (result.next()) {
+				StorageLocation input = new StorageLocation (result.getString(1), result.getString(3), result.getBoolean(2));
+				storage.add(input.toString());
+			}
+			//}
+			} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		return storage;
+	}
+ 
+ public ArrayList<String> getAllStorageType() {
+		PreparedStatement statement;
+		ArrayList<String> storage = new ArrayList<>();
+		try {
+			statement = mySqlDatabase.prepareStatement("select type from stock_mangemnet.tbl_storage_location ");
+			ResultSet result = statement.executeQuery();
+			//if(result.first()) {
+			while (result.next()) {
+				if(!storage.contains(result.getString(1))) {
+				storage.add(result.getString(1));
+				}
+				}
+			//}
+			} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		return storage;
+	}
 
+ public ArrayList<String> getStorgeThatMatchesWhere(String where){
+		PreparedStatement statement;
+		ArrayList<String> storage = new ArrayList<>();
+		try {
+			statement = mySqlDatabase.prepareStatement("select * from stock_mangemnet.tbl_storage_location where " + where + ";");
+			ResultSet result = statement.executeQuery();
+			//if(result.first()) {
+			while (result.next()) {
+				StorageLocation input = new StorageLocation (result.getString(1), result.getString(3), result.getBoolean(2));
+				storage.add(input.toString());
+			}
+			//}
+			} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		return storage;
+	}
+
+ public void addStorage(String name, String type, Boolean isAvailble) {
+		PreparedStatement statement;
+		int adminStatus= 0;
+		try {
+			if(isAvailble == true) {
+				adminStatus = 1;
+			}
+			
+			statement = mySqlDatabase.prepareStatement("Insert into stock_mangemnet.tbl_storage_location values (\'" + name + "\',\'" + adminStatus + "\',\'"+ type + "\');");
+			statement.execute();
+			
+			} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		
+	}
+ public StorageLocation getSpecificStorageLocation(String Id) {
+		PreparedStatement statement;
+		StorageLocation storage = null;
+		try {
+			statement = mySqlDatabase.prepareStatement("select * from stock_mangemnet.tbl_storage_location where storageLocationId = \""+Id+"\";");
+			ResultSet result = statement.executeQuery();
+			//if(result.first()) {
+			if(result.next()) {
+			 storage = new StorageLocation (result.getString(1), result.getString(3), result.getBoolean(2));
+				
+			}
+			//}
+			} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		return storage;
+	}
  public Boolean isAccountAdmin(String id){
 		PreparedStatement statement;
 		try {

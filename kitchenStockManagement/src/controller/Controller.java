@@ -82,10 +82,25 @@ public class Controller {
 		
 		view.setStorgaeLocationListBtnAddEventHandler(new EHStorageBtnAdd());
 		view.setStorgaeLocationListBtnFilterEventHandler(new EHStorageBtnFilter());
-
+		view.setStorgaeLocationListBtnFindEventHandler(new EHStorageListBtnFind());
+		view.setStorgaeLocationListBtnDeleteEventHandler(new EHStorageListBtnDelete());
+		
+		view.setStorageFilterBtnApplyEventHandler(new EHStorageFilterBtnApply());
+		
+		view.setStorageDetailsBtnSaveEventHandler(new EHStorageDetailsBtnSave());
+		
 		view.setAccountListBtnAddEventHandler(new EHAccountBtnAdd());
 		view.setAccountListBtnFilterEventHandler(new EHAccountBtnFilter());
-
+		view.setAccountListBtnFindEventHandler(new EHAccountBtnFind());
+		view.setAccountListBtnDeleteEventHandler(new EHAccountListBtnDelete());
+		view.setAccountListBtnEditEventHandler(new EHAccountListBtnEdit());
+		
+		
+		view.setAccountDetailsBtnSaveEventHandler(new EHAccountDetailsBtnSave());
+		
+		view.setAccountFilterBtnApplyEventHandler(new EHAccountFilterBtnApply());
+		
+		
 		view.setDeleteConfirmationBtnConfirmEventHandler(new EHStockDeleteBtnConfirm());
 		view.setDeleteConfirmationBtnCancelEventHandler(new EHStockListLaod());
 
@@ -146,7 +161,8 @@ public class Controller {
 				} else {
 					model.checkAdminStatusInDb(view.getLoginUserUsernameInput());
 					
-					view.homePageMenuLoad(model.getAdminStatus());
+					view.homePageMenuLoad(model.getLoggedInAccountAdminStatus());
+					model.setLogedInAccount(view.getLoginUserUsernameInput());
 				}
 			}
 
@@ -215,7 +231,52 @@ public class Controller {
 		}
 
 	}
+	private class EHAccountListBtnDelete implements EventHandler<ActionEvent> {
 
+		@Override
+		public void handle(ActionEvent event) {
+
+			if (!view.getAccountListSelectedItem().equals("null")) {
+
+				model.selectAAccount(view.getSelectedAccountName());
+				
+				if((model.getSelectedAccountAdminStatus().equals(false) || model.getSelectedAccountUsername().equals(model.getLogedInAccountId()))) {
+
+				view.getDeleteConfirmationPage()
+						.setTxtConfirmMessage("Are you sure you wan to delete " + model.getSelectedAccountUsername() + "?");
+				model.setDeleteFrom("Account");
+				view.deleteConfirmationLoad();
+				}else {
+					view.setAccountListError("must be that admin to delete that account");
+				}
+				} else {
+				view.setAccountListError("No data selected");
+
+			}
+		}
+
+	}
+	
+	private class EHStorageListBtnDelete implements EventHandler<ActionEvent> {
+
+		@Override
+		public void handle(ActionEvent event) {
+
+			if (!view.getStorageListSelectedItem().equals("null")) {
+
+				model.selectAStorageLocation(view.getSelectedStorageId());
+
+				view.getDeleteConfirmationPage()
+						.setTxtConfirmMessage("Are you sure you wan to delete " + model.getSelectedStorageName() + "?");
+				model.setDeleteFrom("Storage");
+				view.deleteConfirmationLoad();
+			} else {
+				view.setStorageListErrorMessage("No data selected");
+
+			}
+		}
+	}
+	
 	private class EHMenudetailsBtnAdd implements EventHandler<ActionEvent> {
 
 		@Override
@@ -280,6 +341,31 @@ if (!view.getBudgetListSelectedItem().equals("null")) {
 		}
 
 	}
+	private class EHAccountListBtnEdit implements EventHandler<ActionEvent> {
+
+		@Override
+		public void handle(ActionEvent event) {
+			view.resetAccountDetailPage();
+			if (!view.getAccountListSelectedItem().equals("null")) {
+
+				model.selectAAccount(view.getSelectedAccountName());
+				
+				if((model.getSelectedAccountAdminStatus().equals(false) || model.getSelectedAccountUsername().equals(model.getLogedInAccountId()))) {
+					view.setAccountDetailsUsername(model.getSelectedAccountUsername());
+					view.setAdminStatus(model.getSelectedAccountAdminStatus());
+					view.accountDetailsLoad();
+				
+				}else {
+					view.setAccountListError("must be that admin to edit that account");
+				}
+				} else {
+				view.setAccountListError("No data selected");
+
+			}
+		}
+
+	}
+
 	private class EHStorageBtnAdd implements EventHandler<ActionEvent> {
 
 		@Override
@@ -294,6 +380,8 @@ if (!view.getBudgetListSelectedItem().equals("null")) {
 
 		@Override
 		public void handle(ActionEvent event) {
+			view.resetAccountDetailPage();
+			model.resetSelectedAccount();
 			view.accountDetailsLoad();
 
 		}
@@ -304,7 +392,7 @@ if (!view.getBudgetListSelectedItem().equals("null")) {
 
 		@Override
 		public void handle(ActionEvent event) {
-			view.getStockStorageLocationFilter();
+			view.StorgaeLocationFilterLoad(model.getAllStorgaeType());
 
 		}
 
@@ -344,6 +432,7 @@ if (!view.getBudgetListSelectedItem().equals("null")) {
 
 		@Override
 		public void handle(ActionEvent event) {
+			
 			view.accountFilterLoad();
 
 		}
@@ -374,7 +463,7 @@ if (!view.getBudgetListSelectedItem().equals("null")) {
 
 		@Override
 		public void handle(ActionEvent event) {
-			view.homePageMenuLoad(model.getAdminStatus());
+			view.homePageMenuLoad(model.getLoggedInAccountAdminStatus());
 
 		}
 
@@ -517,12 +606,21 @@ if(model.getDeleteFrom().equals("StockList")) {
 			model.deleteStockType();
 			view.stockListLoad(model.getObservableListStringStockList());
 }else if (model.getDeleteFrom().equals("BudgteList")) {
-	
-}
 model.selectABudget(view.getSelectedBudgetId());
 model.deleteBudgetType();
 view.BudgetListLoad(model.getObservableListBudgetList());
-
+} else if(model.getDeleteFrom().equals("Account")) {
+	model.selectAAccount(view.getSelectedAccountName());
+	
+	model.deleteAccount();
+	
+	if(model.getLogedInAccountId().equals(model.getSelectedAccountUsername())) {
+		//deletes own account 
+		view.loginLoad();
+	}else {
+		view.accountListLoad(model.getObservableListAccountList());
+	}
+} else if(model.getDeleteFrom().equals(anObject))
 
 		}
 	}
@@ -544,6 +642,42 @@ view.BudgetListLoad(model.getObservableListBudgetList());
 		}
 	}
 
+	private class EHAccountBtnFind implements EventHandler<ActionEvent> {
+
+		@Override
+		public void handle(ActionEvent event) {
+
+			String errorMessage = model.stringPresentIsOptionalValidation(view.getAccountTfFindValue());
+			if (errorMessage.equals("")) {
+
+				view.getAccountListPage().getErrorLabel().setVisible(false);
+				view.accountListLoad(model.getAccountsThatsLike(view.getAccountTfFindValue()));
+			} else {
+				view.setAccountListError(errorMessage);
+			}
+
+		}
+	}
+	private class EHStorageListBtnFind implements EventHandler<ActionEvent> {
+
+		@Override
+		public void handle(ActionEvent event) {
+
+			String errorMessage = model.stringPresentIsOptionalValidation(view.getStorageLocationFindInput());
+			if (errorMessage.equals("")) {
+
+				view.hideStorageListErrorMessage();
+			
+				view.storgaeLocationListLoad(model.getStorageThatsLike(view.getStorageLocationFindInput()));
+				
+				view.setStockListValues(model.getCurrentStockThatsLike(view.getStockListTfFindValue()));
+			} else {
+				view.setStorageListErrorMessage(errorMessage);
+			}
+
+		}
+	}
+	
 	private class EHStockFilterBtnApply implements EventHandler<ActionEvent> {
 
 		@Override
@@ -739,34 +873,66 @@ view.BudgetListLoad(model.getObservableListBudgetList());
 		}
 	
 	}
-	private class EHStockListBtnEdit implements EventHandler<ActionEvent> {
+	
+	
+	private class EHAccountFilterBtnApply implements EventHandler<ActionEvent> {
 
 		@Override
 		public void handle(ActionEvent event) {
-
-			resetStockDetailsPage();
-			if (!(view.getStockListSelectedItem().equals("null"))) {
-
-				model.selectAStock(view.getSelectedStockId());
-
-				// reformatting the text so the save isn't in a diffrente format
-
-				// populating the items
-				view.setStockDetailsName(model.getSelectedStockName());
-				view.setStockDetailsStorgeLocation(model.getSelectedStockStorgaeLocation());
-				view.setStockDetailsQuanity(model.getSelectedStockQuanity());
-				view.setStockDetailsQuanityType(model.getSelectedStockQuanityType());
-				view.setStockDetailsExpiereDate(model.deFormatDate(model.getSelectedStockExpierDate()));
-				view.setStockDetailsCost(model.getSelectedStockCost());
-
-				// selectedStockId = model.getSelectedStockId();
-				model.setStockFrom(false);
-				view.stockDetailsLoad(false);
-
-			} else {
-				view.setStockListError("No data selected");
-
+			String whereClause = "";
+			if(view.getIsAdminYes()) {
+				whereClause = whereClause + "tbl_account_details.isAdmin = \"" + 1 + "\" And ";
 			}
+			if(view.getIsAdminNo()) {
+				whereClause = whereClause + "tbl_account_details.isAdmin = \"" + 0 + "\" And ";
+			}
+			if (!whereClause.equals("")) {
+				whereClause = whereClause.substring(0, whereClause.length() - 5) + ";";
+				
+				
+			view.accountListLoad(model.getAccountsThatMatchesWhere(whereClause));	
+			}else {
+				view.accountListLoad(model.getObservableListAccountList());
+				
+			}
+			
+			
+		}
+
+	}
+	private class EHStorageFilterBtnApply implements EventHandler<ActionEvent> {
+
+		@Override
+		public void handle(ActionEvent event) {
+			String whereClause = "";
+			
+			
+			//in case the didn't select anything.
+			if(view.getStorgaeFilterAvailbleStatus()!=null) {
+			
+			if(view.getStorgaeFilterAvailbleStatus()) {
+				whereClause = whereClause + "tbl_storage_location.isAvailable = \"" + 1 + "\" And ";
+			}
+			if(!view.getStorgaeFilterAvailbleStatus()) {
+				whereClause = whereClause + "tbl_storage_location.isAvailable = \"" + 0 + "\" And ";
+			}
+			}
+			//as the is empty use true is no selected and false if they are selected
+			if(!view.StorageFilterHasATypeBeenSelected()) {
+				whereClause = whereClause + "tbl_storage_location.type = \"" + view.getStorgeFilterType() + "\" And ";
+			
+			}
+			if (!whereClause.equals("")) {
+				whereClause = whereClause.substring(0, whereClause.length() - 5) + ";";
+				
+				view.storgaeLocationListLoad(model.getStorageWhere(whereClause));
+			
+			}else {
+				view.storgaeLocationListLoad(model.getObservableListStringStorgaeLocationsList());
+				
+			}
+			
+			
 		}
 
 	}
@@ -847,7 +1013,96 @@ view.BudgetListLoad(model.getObservableListBudgetList());
 		}
 
 	}
+	
+	
+	private class EHAccountDetailsBtnSave implements EventHandler<ActionEvent> {
 
+		@Override
+		public void handle(ActionEvent event) {
+			String issueFrom = ""; 
+			String masterError = "";
+			String usernameError = model.stringMustBePresetValidation(view.getAccountDetailsUserName());
+			String passwordError = model.stringMustBePresetValidation(view.getAccountDetailsUserPassword());
+			
+			if(!usernameError.equals("")) {
+				issueFrom = "username";
+				masterError = usernameError;
+			}else if(!passwordError.equals("")) {
+				issueFrom = "password";
+				masterError = passwordError;
+			}else if((!view.getAccountDetailsIsAdminYesSelected())&&(!view.getAccontDetailsIsAdminNoSelected())) {
+				issueFrom = "is admin";
+				masterError = "need to select if admin or not";
+			}else if(model.doesAccountNameAlreadyExist(view.getAccountDetailsUserName())) {
+				issueFrom = "username";
+				masterError = "username is already taken";
+			}
+			
+			if(masterError.equals("")) {
+				Boolean adminStatus = false;
+				if(view.getAccountDetailsIsAdminYesSelected()) {
+					adminStatus = true;
+				}
+				
+				if(model.getSelectedAccount() == null ) {
+				
+				model.createAccount(view.getAccountDetailsUserName(), view.getAccountDetailsUserPassword(), adminStatus);
+				model.addSelectedAccount();
+				}else {
+					
+					model.updateAccount(view.getAccountDetailsUserName(), view.getAccountDetailsUserPassword(), adminStatus);
+				}
+				loadAccountListPage();
+			}else {
+			Alert accountErrorMessage = model.makeAlert(issueFrom, masterError);
+					accountErrorMessage.show();
+			}
+			
+		
+		}
+
+	}
+	
+	private class EHStorageDetailsBtnSave implements EventHandler<ActionEvent> {
+
+		@Override
+		public void handle(ActionEvent event) {
+			
+			String errorFrom = "";
+			String masterError = "";
+			
+			String nameError = model.stringMustBePresetValidation(view.getStorageDetailsName());
+			String typeError = model.stringMustBePresetValidation(view.getStorageDetailsType());
+			
+			if(!nameError.equals("")) {
+				errorFrom = "name";
+				masterError = nameError;
+			}else if(!typeError.equals("")) {
+				errorFrom = "type";
+				masterError = typeError;
+			}else if(view.getStorageDetailsAvailbilty() == null) {
+				errorFrom = "availability";
+				masterError = "need to select one of the options";
+						
+			} else if(model.doesStorageAlreadyExist(view.getStorageDetailsName())) {
+				errorFrom = "name";
+				masterError = "name already taken";
+			}
+			
+			if(masterError.equals("")) {
+				
+				model.createStorage(view.getStorageDetailsName(), view.getStorageDetailsType(), view.getStorageDetailsAvailbilty());
+			
+				loadStorgaeLocationListPage();
+			}else {
+				Alert storageErrorMessage = model.makeAlert(errorFrom, masterError);
+				storageErrorMessage.show();
+			}
+			
+		}
+
+	}
+	
 	private class EHBudgetListBtnFind implements EventHandler<ActionEvent> {
 
 		@Override
@@ -919,5 +1174,35 @@ view.BudgetListLoad(model.getObservableListBudgetList());
 		}
 
 	}
+	private class EHStockListBtnEdit implements EventHandler<ActionEvent> {
 
+		@Override
+		public void handle(ActionEvent event) {
+
+			resetStockDetailsPage();
+			if (!(view.getStockListSelectedItem().equals("null"))) {
+
+				model.selectAStock(view.getSelectedStockId());
+
+				// reformatting the text so the save isn't in a diffrente format
+
+				// populating the items
+				view.setStockDetailsName(model.getSelectedStockName());
+				view.setStockDetailsStorgeLocation(model.getSelectedStockStorgaeLocation());
+				view.setStockDetailsQuanity(model.getSelectedStockQuanity());
+				view.setStockDetailsQuanityType(model.getSelectedStockQuanityType());
+				view.setStockDetailsExpiereDate(model.deFormatDate(model.getSelectedStockExpierDate()));
+				view.setStockDetailsCost(model.getSelectedStockCost());
+
+				// selectedStockId = model.getSelectedStockId();
+				model.setStockFrom(false);
+				view.stockDetailsLoad(false);
+
+			} else {
+				view.setStockListError("No data selected");
+
+			}
+		}
+
+	}
 }
