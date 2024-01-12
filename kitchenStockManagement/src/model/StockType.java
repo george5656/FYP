@@ -41,4 +41,6 @@ public StockType(String name, String cost, String quanityType) {
 	public String toString() {
 		return "name = " + name + ", cost = " + cost + " quantityType = " + quanityType;
 	}
+
+ 
 }

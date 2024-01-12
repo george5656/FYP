@@ -1,5 +1,8 @@
 package view;
 
+import javafx.collections.ObservableList;
+import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.Button;
@@ -123,5 +126,50 @@ DishDetailsPage(){
 	tfUnit.setFont(new Font(20));
 	tfEstimatedCost.setFont(new Font(20));
  
+}
+
+public void setBtnSaveEventHandler(EventHandler<ActionEvent> event) {
+	btnSave.setOnAction(event);
+}
+public void setBtnAddEventHandler(EventHandler<ActionEvent> event) {
+	btnAdd.setOnAction(event);
+}
+public void setBtnDeleteEventHandler(EventHandler<ActionEvent> event) {
+	btnDelete.setOnAction(event);
+}
+public String getName() {
+	return tfDishName.getText();
+}
+public String getIngredientName() {
+	return tfIngredientName.getText();
+}
+public String getQuanity() {
+	return tfQuanity.getText();
+}
+public String getUnit() {
+	return tfUnit.getText();
+}
+public String getEstimatedCost() {
+	return tfEstimatedCost.getText();
+}
+public void setIngredentList(ObservableList<String> ingredents) {
+	lvIngredients.getItems().clear();
+	lvIngredients.getItems().addAll(ingredents);
+}
+public int getSelectedIndex() {
+	return lvIngredients.getSelectionModel().getSelectedIndex();
+}
+public String getSelectedId() {
+	String selection = lvIngredients.getSelectionModel().getSelectedItem();
+	int idStart = selection.indexOf("=");
+	int idEnd = selection.indexOf("cost");
+	return selection.substring(idStart + 2, idEnd -2);
+}
+public void addReset() {
+	tfIngredientName.clear();
+	tfQuanity.clear();
+	tfUnit.clear();
+	tfEstimatedCost.clear();
+
 }
 }
