@@ -1,5 +1,6 @@
 package view;
 
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.geometry.Insets;
@@ -114,5 +115,15 @@ public class MenuDetails extends PaneMenu {
 	}
 	public void setBtnOutputEventHandler(EventHandler<ActionEvent> event) {
 		btnOutput.setOnAction(event);
+	}
+	public void setBtnFindEventHandler(EventHandler<ActionEvent> event) {
+		btnFind.setOnAction(event);
+	}
+	public String getFindUserInput() {
+		return tfUserInput.getText();
+	}
+	public void setDishes(ObservableList<String> dishes) {
+		lvDishes.getItems().clear();
+		lvDishes.getItems().addAll(dishes);
 	}
 }

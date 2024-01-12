@@ -1,8 +1,6 @@
 package controller;
 
 import java.io.File;
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.scene.control.Alert;
@@ -64,12 +62,14 @@ public class Controller {
 
 		view.setMenuListBtnFilterEventHandler(new EHMenuBtnFilter());
 		view.setMenuListBtnAddEventHandler(new EHMenuListBtnAdd());
-
+		view.setMenuListBtnFindEventHandler(new EHMenuListBtnFind());
+		
 		view.setMenuDetailsBtnSettingEventHandler(new EHMenuDetailsBtnSetting());
 		view.setMenuDetailsBtnOutputEventHandler(new EHMenuDetailsBtnOutput());
 		view.setMenuDetailsBtnFilterEventHandler(new EHDishesBtnFilter());
 		view.setMenuDetailsBtnAddEventHandler(new EHMenudetailsBtnAdd());
-
+		view.setMenuDetailsBtnFindEventHandler(new EHMenuDetailsBtnFind());
+		
 		view.setBudgetListBtnAddEventHandler(new EHBudgetBtnAdd());
 		view.setBudgetListBtnFilterEventHandler(new EHBudgetBtnFilter());
 		view.setBudgetListBtnFindEventHandler(new EHBudgetListBtnFind());
@@ -84,6 +84,7 @@ public class Controller {
 		view.setStorgaeLocationListBtnFilterEventHandler(new EHStorageBtnFilter());
 		view.setStorgaeLocationListBtnFindEventHandler(new EHStorageListBtnFind());
 		view.setStorgaeLocationListBtnDeleteEventHandler(new EHStorageListBtnDelete());
+		view.setStorgaeLocationListBtnEditEventHandler(new EHStorageListBtnEdit());
 		
 		view.setStorageFilterBtnApplyEventHandler(new EHStorageFilterBtnApply());
 		
@@ -105,6 +106,22 @@ public class Controller {
 		view.setDeleteConfirmationBtnCancelEventHandler(new EHStockListLaod());
 
 		view.setAllPaneMenu(new EHHomeLoad(), new EHLogout());
+	
+	
+		view.setDishDetailsBtnAddEventHandler(new EHDishDetailsBtnAdd());
+		view.setDishDetailsBtnDeleteEventHandler(new EHDishDetailsBtnDelete());
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 	}
 
 	/**
@@ -173,7 +190,9 @@ public class Controller {
 
 		@Override
 		public void handle(ActionEvent event) {
-			view.menuListLoad();
+			
+			view.menuListLoad(model.getAllMenus());
+		
 		}
 
 	}
@@ -182,6 +201,9 @@ public class Controller {
 
 		@Override
 		public void handle(ActionEvent event) {
+	view.setMenuDetailsDishList(model.getAllDishes());
+			
+			
 			view.MenuDetailsLoad();
 		}
 
@@ -310,6 +332,26 @@ public class Controller {
 		}
 
 	}
+	
+	private class EHStorageListBtnEdit implements EventHandler<ActionEvent> {
+
+		@Override
+		public void handle(ActionEvent event) {
+
+			if (!view.getStorageListSelectedItem().equals("null")) {
+
+				model.selectAStorageLocation(view.getSelectedStorageId());
+view.setStorageLocationDetailsValues(model.getSelectedStorageName(), model.getSelectedStorageType(), model.getSelectedStorageAvailbilty());
+				view.StorgaeLocationDetailsLoad();
+				
+				
+			} else {
+				view.setStorageListErrorMessage("No data selected");
+
+			}
+		}
+	}
+	
 	private class EHBudgetBtnEdit implements EventHandler<ActionEvent> {
 
 		@Override
@@ -370,6 +412,8 @@ if (!view.getBudgetListSelectedItem().equals("null")) {
 
 		@Override
 		public void handle(ActionEvent event) {
+			model.resetSelectedStorage();
+			view.resetStorageLocationDetails();
 			view.StorgaeLocationDetailsLoad();
 
 		}
@@ -620,7 +664,12 @@ view.BudgetListLoad(model.getObservableListBudgetList());
 	}else {
 		view.accountListLoad(model.getObservableListAccountList());
 	}
-} else if(model.getDeleteFrom().equals(anObject))
+} else if(model.getDeleteFrom().equals("Storage")) {
+	model.selectAStorageLocation(view.getSelectedStorageId());
+	model.deleteSelectedStorage();
+	loadStorgaeLocationListPage();
+	
+}
 
 		}
 	}
@@ -1084,15 +1133,24 @@ view.BudgetListLoad(model.getObservableListBudgetList());
 				errorFrom = "availability";
 				masterError = "need to select one of the options";
 						
-			} else if(model.doesStorageAlreadyExist(view.getStorageDetailsName())) {
+			} 
+			if(model.getSelectedStorageLocation() == null) {
+			if(model.doesStorageAlreadyExist(view.getStorageDetailsName())) {
 				errorFrom = "name";
 				masterError = "name already taken";
 			}
-			
+			}else {
+				if(model.doesStorageAlreadyExist(view.getStorageDetailsName())&&!model.getSelectedStorageName().equals(view.getStorageDetailsName())) {
+					errorFrom = "name";
+					masterError = "name already taken";
+				}
+			}
 			if(masterError.equals("")) {
-				
+				if(model.getSelectedStorageLocation() == null) {
 				model.createStorage(view.getStorageDetailsName(), view.getStorageDetailsType(), view.getStorageDetailsAvailbilty());
-			
+				}else {
+					model.updateStorage(view.getStorageDetailsName(), view.getStorageDetailsType(), view.getStorageDetailsAvailbilty());
+				}
 				loadStorgaeLocationListPage();
 			}else {
 				Alert storageErrorMessage = model.makeAlert(errorFrom, masterError);
@@ -1205,4 +1263,147 @@ view.BudgetListLoad(model.getObservableListBudgetList());
 		}
 
 	}
+	
+	
+	
+	
+	private class EHDishDetailsBtnAdd implements EventHandler<ActionEvent> {
+
+		@Override
+		public void handle(ActionEvent event) {
+			String issueFrom = "";
+			String masterError = "";
+			
+			String nameError = model.stringMustBePresetValidation(view.getDishDetailsDishName());
+			String ingredientNameError = model.stringMustBePresetValidation(view.getDishDetailsIngrdeintName());
+			String quanityError = model.doubleMustBePresetValidation(view.getDishDetailsQuanity());
+			String unitError = model.stringMustBePresetValidation(view.getDishDetailsUnit());
+			String costError = model.doubleMustBePresetValidation(view.getDishDetailsEstimateCost());
+			
+			if(!nameError.equals("")) {
+				issueFrom = "dish name";
+				masterError = nameError;
+			} else if(!ingredientNameError.equals("")) {
+				issueFrom = "ingredeint name";
+				masterError = ingredientNameError;
+			}else if(!quanityError.equals("")) {
+				issueFrom = "quanity";
+				masterError = quanityError;
+			}else if(!unitError.equals("")) {
+				issueFrom = "unit";
+				masterError = unitError;
+			}else if(!costError.equals("")) {
+				issueFrom = "cost";
+				masterError = costError;
+			}
+			
+			
+			if(masterError.equals("")) {
+				model.resetStockType();
+				model.setTestStockType(view.getDishDetailsIngrdeintName());
+
+				
+				//make a new stock type if required
+				if (model.getTestStockName().equals("null")) {
+
+					model.addStockType(view.getDishDetailsIngrdeintName(), view.getDishDetailsEstimateCost(),
+							view.getDishDetailsUnit());
+
+				}else if (!model.getTestStockCost().equals(view.getDishDetailsEstimateCost())) {
+
+						model.updateStockTypeCost(view.getDishDetailsIngrdeintName(), view.getDishDetailsEstimateCost());
+						
+						model.updateStockTypeQuanityType(view.getDishDetailsIngrdeintName(),
+								view.getDishDetailsUnit());
+					} else if (!model.getTestStockQuanityType().equals(view.getDishDetailsUnit())) {
+						model.updateStockTypeQuanityType(view.getDishDetailsIngrdeintName(),
+								view.getDishDetailsUnit());
+					}
+					
+				
+				
+				//meant if to be used if first one
+				if(model.getSelectedDish() == null) {
+				model.createDish(view.getDishDetailsDishName(), view.getDishDetailsIngrdeintName(), view.getDishDetailsEstimateCost(), view.getDishDetailsQuanity());
+				
+				}else {
+					model.selectedDishIngrednitnAdd(view.getDishDetailsIngrdeintName(), view.getDishDetailsEstimateCost(), view.getDishDetailsQuanity());
+				}	
+				view.setDishDetailsList(model.getSelectedDishList());
+				view.dishDetailsAddReset();
+			}else {
+				Alert dishDetailsErrorMessage = model.makeAlert(issueFrom, masterError);
+				dishDetailsErrorMessage.show();
+			}
+			
+			
+			
+
+		}
+
+	}
+	
+	private class EHDishDetailsBtnDelete implements EventHandler<ActionEvent> {
+
+		@Override
+		public void handle(ActionEvent event) {
+			
+			String masterIssue = "";
+			if(view.getDishDetailsSelectedIndex() == -1) {
+				masterIssue = "no selection made";
+			}else if(view.getDishDetailsSelectedIndex() ==0 ) {
+				masterIssue = "cant delete dish name";
+			}
+			if(masterIssue.equals("")) {
+				 
+				model.selectedDishIngrednitnRemove(view.getDishDetailsSelectedIndex()-1);
+				view.setDishDetailsList(model.getSelectedDishList());
+			}else {
+				
+			
+				Alert dishDetailsErrorMessage = model.makeAlert("selection issue", masterIssue);
+				dishDetailsErrorMessage.show();
+			}
+		}
+
+	}
+	
+	
+	// menu / dish
+	private class EHMenuDetailsBtnFind implements EventHandler<ActionEvent> {
+
+		@Override
+		public void handle(ActionEvent event) {
+
+			String errorMessage = model.stringPresentIsOptionalValidation(view.getMenuDetailsFindUserInput());
+			if (errorMessage.equals("")) {
+				view.setMenuDetailsDishList(model.getAllDishesThatAreLike(view.getMenuDetailsFindUserInput()));
+				
+			} else {
+				Alert menuDetailsFindErrorMessage = model.makeAlert("issue with find", errorMessage);
+				menuDetailsFindErrorMessage.show();
+			}
+
+		}
+	}
+	 // menu
+	private class EHMenuListBtnFind implements EventHandler<ActionEvent> {
+
+		@Override
+		public void handle(ActionEvent event) {
+
+			String errorMessage = model.stringPresentIsOptionalValidation(view.getMenuListFindUserInput());
+			if (errorMessage.equals("")) {
+				view.menuListLoad(model.getAllMenusThatAreLike(view.getMenuListFindUserInput()));
+				view.hideMenuListErrorMessage();
+				
+			} else {
+				view.setMenuListErrorMessage(errorMessage);
+				
+			}
+
+		}
+	}
+	
+	
 }

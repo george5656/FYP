@@ -120,4 +120,11 @@ public String getTfFindValue() {
 public Label getErrorLabel() {
 	return txtErrorMessage;
 }
+public void hideErrorMessage() {
+	txtErrorMessage.setVisible(false);
+}
+public void setErrorMessage(String error) {
+	txtErrorMessage.setText(error);
+	txtErrorMessage.setVisible(true);
+}
 }

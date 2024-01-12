@@ -22,5 +22,10 @@ public StorageLocation(String name, String type, boolean isAvailble) {
 public String getName() {
 	return name;
 }
-
+public String getType() {
+	return type;
+}
+public Boolean getAvailbility() {
+	return isAvailble;
+}
 }

@@ -672,6 +672,24 @@ public ArrayList<String> getCurrentStockThatsLike(String where) {
 		
 		
 	}
+ public void updateStorage(String name, String type, Boolean isAvailble,String orginalId) {
+		PreparedStatement statement;
+		int adminStatus= 0;
+		try {
+			if(isAvailble == true) {
+				adminStatus = 1;
+			}
+			
+			statement = mySqlDatabase.prepareStatement("update stock_mangemnet.tbl_storage_location set storageLocationId = \"" + name + "\", isAvailable = \'" + adminStatus + "\', type = \'"+ type + "\' where storageLocationId = \'" + orginalId + "\';"); 
+			statement.execute();
+			 
+			} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		
+	}
  public StorageLocation getSpecificStorageLocation(String Id) {
 		PreparedStatement statement;
 		StorageLocation storage = null;
@@ -691,6 +709,19 @@ public ArrayList<String> getCurrentStockThatsLike(String where) {
 		
 		return storage;
 	}
+ 
+ 
+ public void deleteSelectedStorage(String id) {
+		PreparedStatement statement;
+		try {
+			statement = mySqlDatabase.prepareStatement("Delete from stock_mangemnet.tbl_storage_location where tbl_storage_location.storageLocationId = \'" + id + "\';");
+			statement.execute();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+ 
  public Boolean isAccountAdmin(String id){
 		PreparedStatement statement;
 		try {
@@ -708,8 +739,155 @@ public ArrayList<String> getCurrentStockThatsLike(String where) {
 	}
 
 
-
-
-
-
+//dish 
+ 
+ public ArrayList<Dish> getAllCurrentDishes() {
+		PreparedStatement statement;
+		PreparedStatement statement2;
+		ArrayList<Dish> dish  = new ArrayList<>();
+		ArrayList<StockType> stockType = new ArrayList<>();
+		try {
+			
+			
+			statement = mySqlDatabase.prepareStatement("SELECT * FROM stock_mangemnet.tbl_dish");
+			
+			ResultSet result = statement.executeQuery();
+			
+			
+			
+			while (result.next()) {
+				statement2 = mySqlDatabase.prepareStatement("SELECT * FROM stock_mangemnet.tbl_dish_stock, stock_mangemnet.tbl_stock_type where (tbl_dish_stock.dishId = \'" + result.getString(1) + "\') and ( tbl_dish_stock.stockTypeId = tbl_stock_type.stockTypeId);" );
+				ResultSet result2 = statement2.executeQuery();
+				stockType = new ArrayList<>();
+				while(result2.next()) {
+					stockType.add(new StockType(result2.getString(6),result2.getString(7),result2.getString(8)));
+				}
+				dish.add(new Dish(result.getString(1),stockType));
+							}
+			
+			} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		return dish;
+	}
+ public ArrayList<Dish> getAllCurrentDishesThatLike(String like) {
+		PreparedStatement statement;
+		PreparedStatement statement2;
+		ArrayList<Dish> dish  = new ArrayList<>();
+		ArrayList<StockType> stockType = new ArrayList<>();
+		try {
+			
+			
+			statement = mySqlDatabase.prepareStatement("SELECT * FROM stock_mangemnet.tbl_dish where dishId like \'%" + like +"%\'");
+			
+			ResultSet result = statement.executeQuery();
+			
+			
+			
+			while (result.next()) {
+				statement2 = mySqlDatabase.prepareStatement("SELECT * FROM stock_mangemnet.tbl_dish_stock, stock_mangemnet.tbl_stock_type where (tbl_dish_stock.dishId = \'" + result.getString(1) + "\') and ( tbl_dish_stock.stockTypeId = tbl_stock_type.stockTypeId);" );
+				ResultSet result2 = statement2.executeQuery();
+				stockType = new ArrayList<>();
+				while(result2.next()) {
+					stockType.add(new StockType(result2.getString(6),result2.getString(7),result2.getString(8)));
+				}
+				dish.add(new Dish(result.getString(1),stockType));
+							}
+			
+			} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		return dish;
+	}
+ 
+ public ArrayList<Menu> getAllMenu() {
+		PreparedStatement statementMenu;
+	 	PreparedStatement statementDish;
+		PreparedStatement statementStockType;
+		ArrayList<Menu> menu = new ArrayList<>();
+		ArrayList<Dish> dish  = new ArrayList<>();
+		ArrayList<StockType> stockType = new ArrayList<>();
+		try {
+			
+			
+			
+			statementMenu = mySqlDatabase.prepareStatement("select * From stock_mangemnet.tbl_menu");
+			ResultSet resultMenu = statementMenu.executeQuery();
+			
+			while(resultMenu.next()) {
+			statementDish = mySqlDatabase.prepareStatement("SELECT * FROM stock_mangemnet.tbl_dish, stock_mangemnet.tbl_menu_dishes where (tbl_dish.dishId = tbl_menu_dishes.dishId) and tbl_menu_dishes.menuDishId = \'" + resultMenu.getString(2) + "\';");
+			//statementDish = mySqlDatabase.prepareStatement("SELECT * FROM stock_mangemnet.tbl_dish");
+			
+			ResultSet resultDish = statementDish.executeQuery();
+			
+			
+			dish = new ArrayList<>();
+			while (resultDish.next()) {
+				statementStockType = mySqlDatabase.prepareStatement("SELECT * FROM stock_mangemnet.tbl_dish_stock, stock_mangemnet.tbl_stock_type where (tbl_dish_stock.dishId = \'" + resultDish.getString(1) + "\') and ( tbl_dish_stock.stockTypeId = tbl_stock_type.stockTypeId);" );
+				ResultSet resultStockType = statementStockType.executeQuery();
+				stockType = new ArrayList<>();
+				while(resultStockType.next()) {
+					stockType.add(new StockType(resultStockType.getString(6),resultStockType.getString(7),resultStockType.getString(8)));
+				}
+				dish.add(new Dish(resultDish.getString(1),stockType));
+							}
+			//top one ends here
+			
+			menu.add(new Menu(resultMenu.getString(2),getSpecificBudget(resultMenu.getString(1)),dish));
+			
+			}
+			} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		return menu;
+	}
+ public ArrayList<Menu> getAllMenuThatAreLike(String like) {
+		PreparedStatement statementMenu;
+	 	PreparedStatement statementDish;
+		PreparedStatement statementStockType;
+		ArrayList<Menu> menu = new ArrayList<>();
+		ArrayList<Dish> dish  = new ArrayList<>();
+		ArrayList<StockType> stockType = new ArrayList<>();
+		try {
+			
+			
+			
+			statementMenu = mySqlDatabase.prepareStatement("select * From stock_mangemnet.tbl_menu where menuId = \'%" + like + "%\';" );
+			ResultSet resultMenu = statementMenu.executeQuery();
+			
+			while(resultMenu.next()) {
+			statementDish = mySqlDatabase.prepareStatement("SELECT * FROM stock_mangemnet.tbl_dish, stock_mangemnet.tbl_menu_dishes where (tbl_dish.dishId = tbl_menu_dishes.dishId) and tbl_menu_dishes.menuDishId = \'" + resultMenu.getString(2) + "\';");
+			//statementDish = mySqlDatabase.prepareStatement("SELECT * FROM stock_mangemnet.tbl_dish");
+			
+			ResultSet resultDish = statementDish.executeQuery();
+			
+			
+			dish = new ArrayList<>();
+			while (resultDish.next()) {
+				statementStockType = mySqlDatabase.prepareStatement("SELECT * FROM stock_mangemnet.tbl_dish_stock, stock_mangemnet.tbl_stock_type where (tbl_dish_stock.dishId = \'" + resultDish.getString(1) + "\') and ( tbl_dish_stock.stockTypeId = tbl_stock_type.stockTypeId);" );
+				ResultSet resultStockType = statementStockType.executeQuery();
+				stockType = new ArrayList<>();
+				while(resultStockType.next()) {
+					stockType.add(new StockType(resultStockType.getString(6),resultStockType.getString(7),resultStockType.getString(8)));
+				}
+				dish.add(new Dish(resultDish.getString(1),stockType));
+							}
+			//top one ends here
+			
+			menu.add(new Menu(resultMenu.getString(2),getSpecificBudget(resultMenu.getString(1)),dish));
+			
+			}
+			} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		return menu;
+	}
 }

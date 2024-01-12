@@ -26,12 +26,14 @@ public class ModelRoot {
 	private ArrayList<StorageLocation> sl = new ArrayList<>();
 	private ArrayList<Budget> budget = new ArrayList<>();
 	private ArrayList<CurrentStock> currentStock = new ArrayList<>();
+	private ArrayList<Dish> currentDish = new ArrayList<>();
 	private StockType testStockType;
 	private CurrentStock selectedStock;
 	private Budget selectedBudget;
 	private Account logedInAccount;
 	private Account selectedAccount; 
 	private StorageLocation selectedStroage;
+	private Dish selectedDish;
 	//used to determine which menu to use and is only set at login
 	private Boolean isAdmin;
 	//true = add, false = edit
@@ -42,6 +44,7 @@ public class ModelRoot {
 		sl = getDatabase().getAllStorageLocations();
 		budget = getDatabase().getAllBudgets();
 		currentStock = getDatabase().getAllCurrentStock();
+		currentDish = db.getAllCurrentDishes();
 	}
 	
 	
@@ -205,7 +208,9 @@ public void updateBudget(String name, Double amount,String startDate, String end
 	public void setTestStockType(String stockTypeId) {
 		testStockType = db.StockTypeExists(stockTypeId);
 	}
-	
+	public void resetStockType() {
+		testStockType = null;
+	}
 	public String getTestStockName() {
 		return testStockType.getStockName();
 	}
@@ -484,10 +489,84 @@ public void createStorage(String name, String type, Boolean isAvailble) {
 	db.addStorage(name, type, isAvailble);
 	
 }
+public void updateStorage(String name, String type, Boolean isAvailble) {
+	db.updateStorage(name, type, isAvailble,selectedStroage.getName());
+	
+}
 public void selectAStorageLocation(String id) {
 	selectedStroage = db.getSpecificStorageLocation(id);
 	}
 public String getSelectedStorageName() {
 	return selectedStroage.getName();
+}
+public String getSelectedStorageType() {
+	return selectedStroage.getType();
+}
+public Boolean getSelectedStorageAvailbilty() {
+	return selectedStroage.getAvailbility();
+}
+public StorageLocation getSelectedStorageLocation() {
+	return selectedStroage;
+}
+public void deleteSelectedStorage() {
+	db.deleteSelectedStorage(selectedStroage.getName());
+}
+public void resetSelectedStorage() {
+	selectedStroage = null;
+}
+//dish 
+
+public ObservableList<String> getAllDishes() {
+	currentDish = db.getAllCurrentDishes();
+	ArrayList<String> dishAsString = new ArrayList<>();
+	currentDish.forEach((Dish i) -> { dishAsString.add(i.toString());
+		});
+	
+	return FXCollections.observableArrayList(dishAsString);
+}
+public void createDish(String name, String ingrdeantName,String cost, String quantity) {
+	ArrayList<StockType> st = new ArrayList<>();
+	st.add(new StockType(ingrdeantName,cost,quantity));
+	selectedDish = new Dish(name, st);
+}
+public ObservableList<String> getSelectedDishList(){
+	
+	ObservableList<String> dishDetails = FXCollections.observableArrayList();
+	dishDetails.add(selectedDish.getName());
+	dishDetails.addAll(selectedDish.getStockTypeAsString());
+	return dishDetails;
+}
+public Dish getSelectedDish() {
+	return selectedDish;
+}
+public void selectedDishIngrednitnAdd(String name, String cost, String quanityType) {
+	StockType st = new StockType(name,cost,quanityType);
+	selectedDish.addStockType(st);
+	
+}
+public void selectedDishIngrednitnRemove(int index) {
+	selectedDish.removeIngredent(index);
+}
+
+// menu details
+public ObservableList<String> getAllDishesThatAreLike(String like){
+	ArrayList<String> dishAsString = new ArrayList<>();
+	db.getAllCurrentDishesThatLike(like).forEach((Dish i) -> { dishAsString.add(i.toString());
+	});
+	return FXCollections.observableArrayList(dishAsString);
+}
+
+//menu list 
+public ObservableList<String> getAllMenus(){
+	ArrayList<String> menuAsString = new ArrayList<>();
+	db.getAllMenu().forEach((Menu i) -> { menuAsString.add(i.toString());
+	});
+	return FXCollections.observableArrayList(menuAsString);
+}
+public ObservableList<String> getAllMenusThatAreLike(String like){
+	ArrayList<String> menuAsString = new ArrayList<>();
+	db.getAllMenuThatAreLike(like).forEach((Menu i) -> { menuAsString.add(i.toString());
+	});
+	return FXCollections.observableArrayList(menuAsString);
 }
 }

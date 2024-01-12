@@ -432,10 +432,25 @@ public void setMenuListBtnFilterEventHandler(EventHandler<ActionEvent> event) {
 public void setMenuListBtnAddEventHandler(EventHandler<ActionEvent> event) {
 	menuListPage.setBtnAddEventHandler(event);
 }
-public void menuListLoad() {
+public void setMenuListBtnFindEventHandler(EventHandler<ActionEvent> event) {
+	menuListPage.setBtnFindEventHandler(event);
+}
+public String getMenuListFindUserInput() {
+	return menuListPage.getTfFindValue();
+	
+}
+public void hideMenuListErrorMessage() {
+	menuListPage.hideErrorMessage();
+}
+public void setMenuListErrorMessage(String error) {
+	menuListPage.setErrorMessage(error);
+}
+public void menuListLoad(ObservableList<String> data) {
+	menuListPage.setObservableList(data);
 	this.getChildren().remove(0);
 	this.getChildren().add(menuListPage);
 	this.setVgrow(menuListPage, Priority.ALWAYS);
+	
 }
 
 
@@ -454,11 +469,26 @@ public void setMenuDetailsBtnFilterEventHandler(EventHandler<ActionEvent> event)
 public void setMenuDetailsBtnAddEventHandler(EventHandler<ActionEvent> event) {
 	menuDetails.setBtnAddEventHandler(event);
 }
+public void setMenuDetailsBtnFindEventHandler(EventHandler<ActionEvent> event) {
+	menuDetails.setBtnFindEventHandler(event);
+}
 public void MenuDetailsLoad() {
 	this.getChildren().remove(0);
 	this.getChildren().add(menuDetails);
 	this.setVgrow(menuDetails, Priority.ALWAYS);
 }
+public void setMenuDetailsDishList(ObservableList<String> dishes) {
+	menuDetails.setDishes(dishes);
+}
+public String getMenuDetailsFindUserInput() {
+	return menuDetails.getFindUserInput();
+}
+
+
+
+
+
+
 public String getBudgetListSelectedItem() {
 	
 	if(budgetListPage.getSelectionNode().getSelectionModel().getSelectedItem()!= null) {
@@ -467,6 +497,9 @@ public String getBudgetListSelectedItem() {
 		return "null";
 	}
 }
+
+
+
 //menu filter
 public void menuFilterLoad() {
 	this.getChildren().remove(0);
@@ -681,7 +714,7 @@ public void setStorageDetailsBtnSaveEventHandler(EventHandler<ActionEvent> event
 }
 
 public String getStorageDetailsName() {
-	return ssld.getname();
+	return ssld.getName();
 }
 public String getStorageDetailsType() {
 	return ssld.getType();
@@ -690,7 +723,15 @@ public String getStorageDetailsType() {
 public Boolean getStorageDetailsAvailbilty() {
 	return ssld.getAvailblity();
 }
-
+public void resetStorageLocationDetails() {
+	ssld.reset();
+}
+public void setStorageLocationDetailsValues(String name, String type, Boolean isAvaible) {
+	resetStorageLocationDetails();
+	ssld.setDetailsValues(name, type, isAvaible);
+	
+	
+}
 //storgae location filter 
 
 public void StorgaeLocationFilterLoad(ArrayList<String> type) {
@@ -837,6 +878,46 @@ public void dishDetailsLoad() {
 	this.getChildren().add(ddp);
 	this.setVgrow(ddp, Priority.ALWAYS);
 }
+
+public void setDishDetailsBtnSaveEventHandler(EventHandler<ActionEvent> event) {
+	ddp.setBtnSaveEventHandler(event);
+}
+public void setDishDetailsBtnAddEventHandler(EventHandler<ActionEvent> event) {
+	ddp.setBtnAddEventHandler(event);
+}
+public void setDishDetailsBtnDeleteEventHandler(EventHandler<ActionEvent> event) {
+	ddp.setBtnDeleteEventHandler(event);
+}
+public String getDishDetailsDishName() {
+	return ddp.getName();
+}
+public String getDishDetailsIngrdeintName() {
+	return ddp.getIngredientName();
+}
+public String getDishDetailsQuanity() {
+	return ddp.getQuanity();
+}
+public String getDishDetailsUnit() {
+	return ddp.getUnit();
+}
+public String getDishDetailsEstimateCost() {
+	return ddp.getEstimatedCost();
+}
+
+public void setDishDetailsList(ObservableList<String> ingredents) {
+	ddp.setIngredentList(ingredents);
+}
+public int getDishDetailsSelectedIndex() {
+	return ddp.getSelectedIndex();
+			
+}
+public String getDishDetaulsSelectedId() {
+	return ddp.getSelectedId();
+}
+public void dishDetailsAddReset() {
+	ddp.addReset();
+}
+
 
 //filter dishes
 public void dishFilterLoad() {

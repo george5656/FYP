@@ -64,7 +64,7 @@ userTextInput.setVgrow(radioButtonLayout,Priority.ALWAYS);
 
 }
 
-	public String getname() {
+	public String getName() {
 		return tfName.getText();
 	}
 	public String getType() {
@@ -81,4 +81,19 @@ userTextInput.setVgrow(radioButtonLayout,Priority.ALWAYS);
 		}
 	}
 
+	public void reset() {
+		tfName.clear();
+		tfType.clear();
+		rbYes.setSelected(false);
+		rbNo.setSelected(false);
+	}
+	public void setDetailsValues(String name, String type, Boolean isAvaible) {
+		tfName.setText(name);
+		tfType.setText(type);
+		if(isAvaible == true) {
+		rbYes.setSelected(true);
+		}else if(isAvaible == false) {
+		rbNo.setSelected(true);
+		}
+	}
 }
