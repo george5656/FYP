@@ -13,6 +13,7 @@ import javafx.collections.ObservableList;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 
+
 /**
  * class represent the root of the M from MVC.
  * @author George
@@ -27,6 +28,13 @@ public class ModelRoot {
 	private ArrayList<Budget> budget = new ArrayList<>();
 	private ArrayList<CurrentStock> currentStock = new ArrayList<>();
 	private ArrayList<Dish> currentDish = new ArrayList<>();
+	private ArrayList<Menu> currentMenus = new ArrayList<>();
+	//idea being this is menu details list of dish that keeps track of what has been added and what hasn't been
+	//added.
+	private ArrayList<Dish> notSelectedDishes = new ArrayList<>();
+	
+	
+	
 	private StockType testStockType;
 	private CurrentStock selectedStock;
 	private Budget selectedBudget;
@@ -34,17 +42,21 @@ public class ModelRoot {
 	private Account selectedAccount; 
 	private StorageLocation selectedStroage;
 	private Dish selectedDish;
+	//ideas is this is one manipulated and used, through out the items list. 
+	private Menu selectedMenu;
 	//used to determine which menu to use and is only set at login
 	private Boolean isAdmin;
 	//true = add, false = edit
 	private Boolean stockFrom;
 	private String loadDeleteFrom;
+	
 	public ModelRoot(){
 		accounts = getDatabase().getAllAccounts();
 		sl = getDatabase().getAllStorageLocations();
 		budget = getDatabase().getAllBudgets();
 		currentStock = getDatabase().getAllCurrentStock();
 		currentDish = db.getAllCurrentDishes();
+		currentMenus = db.getAllMenu();
 	}
 	
 	
@@ -181,6 +193,14 @@ public void updateBudget(String name, Double amount,String startDate, String end
 	public ObservableList<String> getBudgetThatsLike(String value) {
 		return FXCollections.observableArrayList(db.getBudgetsThatsLike(value));
 	}
+	public ObservableList<String> getAllBudgetsButJustTheId(){
+		ArrayList<String> budgetName = new ArrayList<>();
+		db.getAllBudgets().forEach((Budget i) -> budgetName.add(i.getBudgetId()));
+		return FXCollections.observableArrayList(budgetName);
+		
+		
+	}
+	
 	public void selectABudget(String id) {
 		selectedBudget =	db.getSpecificBudget(id);
 		}
@@ -524,9 +544,9 @@ public ObservableList<String> getAllDishes() {
 	
 	return FXCollections.observableArrayList(dishAsString);
 }
-public void createDish(String name, String ingrdeantName,String cost, String quantity) {
+public void createDish(String name, String ingrdeantName,String cost, String quantityType,String quanity) {
 	ArrayList<StockType> st = new ArrayList<>();
-	st.add(new StockType(ingrdeantName,cost,quantity));
+	st.add(new StockType(ingrdeantName,cost,quantityType,quanity));
 	selectedDish = new Dish(name, st);
 }
 public ObservableList<String> getSelectedDishList(){
@@ -539,8 +559,8 @@ public ObservableList<String> getSelectedDishList(){
 public Dish getSelectedDish() {
 	return selectedDish;
 }
-public void selectedDishIngrednitnAdd(String name, String cost, String quanityType) {
-	StockType st = new StockType(name,cost,quanityType);
+public void selectedDishIngrednitnAdd(String name, String cost, String quanityType, String quanity) {
+	StockType st = new StockType(name,cost,quanityType,quanity);
 	selectedDish.addStockType(st);
 	
 }
@@ -548,12 +568,117 @@ public void selectedDishIngrednitnRemove(int index) {
 	selectedDish.removeIngredent(index);
 }
 
+public Dish getASpecificDish(String dishId) {
+	return db.getASpecificDishes(dishId);
+}
+//false = no match, true = match, doesnt count if self
+public Boolean doseDishNameAlreadyExist(String id) {
+	
+	Boolean output = false;
+	currentDish = db.getAllCurrentDishes();
+	
+	//if swap break as the null hit false so doesnt try the other side so dont get null pointer exception.
+	if(selectedDish != null && selectedDish.getName().equals(id)) {
+		//so are just self so no issue 
+	}else {
+		int counter = 0;
+		while (counter != currentDish.size()) {
+			
+			if(currentDish.get(counter).getName().equals(id)) {
+				output = true;
+			}
+			counter = counter + 1;
+			
+		}
+		
+		
+	}
+	return output;
+}
+//so know if need to update it.
+//false means no chnage true means there is a change.
+public Boolean hasDishDetailsChangedTheDishName(String name) {
+	Boolean output = false;
+	if(!selectedDish.getName().equals(name)) {
+		output = true;
+	}
+	return output;
+}
+
+public void setSelectedDishName(String name) {
+	selectedDish.setName(name);
+}
+
+
+
 // menu details
 public ObservableList<String> getAllDishesThatAreLike(String like){
 	ArrayList<String> dishAsString = new ArrayList<>();
 	db.getAllCurrentDishesThatLike(like).forEach((Dish i) -> { dishAsString.add(i.toString());
 	});
 	return FXCollections.observableArrayList(dishAsString);
+}
+
+public void setSelectedMenu(String name, String budgetId) {
+selectABudget(budgetId);
+	selectedMenu = new Menu(name, selectedBudget, new ArrayList<>());
+}
+public void resetSelectedMenu() {
+	selectedMenu = null;
+}
+public Menu getSelectedMenu() {
+	return selectedMenu;
+}
+public void resetMenuDetailList() {
+notSelectedDishes.clear();
+
+//notSelectedDishes 
+if(selectedMenu != null) {
+db.getAllCurrentDishes().forEach((Dish i) -> {
+	
+	if(!selectedMenu.doesItHoldDish(i.toString())) {
+		notSelectedDishes.add(i);
+		 
+		
+	}
+	
+});
+
+} else {
+	notSelectedDishes.addAll(db.getAllCurrentDishes());
+}
+}
+
+public ArrayList<Dish> getMenuDetailsHeldDishes(){
+	return selectedMenu.getHeldDishes();
+}
+
+
+public  ObservableList<String>  getNotSelectedDishesAsString(){
+ArrayList<String> dishAsString = new ArrayList<>();
+notSelectedDishes.forEach((Dish i) -> { dishAsString.add(i.toString());
+});
+
+return FXCollections.observableArrayList(dishAsString);
+}
+public ArrayList<String> getSelectedMenuDishsAsString(){
+	return selectedMenu.getHeldDishesNames();
+}
+public void addDishToSelectedMenu(String dishId) {
+	
+	selectedMenu.addItemToDishList(db.getASpecificDishes(dishId));
+}
+
+public ObservableList<String> getSelectedMenuDishes(){
+	
+	return selectedMenu.getDishesAsObservableListOFString();
+	
+	
+}
+
+public void removeADishFromSelectedMenuDishes(int place) {
+	
+	selectedMenu.removeADish(place);
 }
 
 //menu list 
@@ -569,4 +694,74 @@ public ObservableList<String> getAllMenusThatAreLike(String like){
 	});
 	return FXCollections.observableArrayList(menuAsString);
 }
+
+//menu settings 
+//false = no match, true = match
+public Boolean doesMenuNameAlreadyExist(String name) {
+	
+	currentMenus = db.getAllMenu();
+	Boolean output = false;
+	Integer count = 0; 
+	//so can still use own name
+	if(!selectedMenu.getName().equals(name)) {
+		
+		
+		while(currentMenus.size() != count) {
+			if(currentMenus.get(count).getName().equals(name)) {
+				output = true;
+			}
+			count = count +1;
+		}
+	}
+		
+	return output;
+}
+
+public void saveDishDetails() {
+	
+	
+	
+	db.saveDish(selectedDish.getName());
+	
+	ArrayList<StockType> st = selectedDish.getHeldStock();
+	
+	int counter = 0;
+	
+		while (counter != st.size()) {
+			
+			String value = st.get(counter).toString();
+
+			int equals1 = value.indexOf("=");
+			int equals2 = value.indexOf("=", equals1 +1);
+			int equals3 = value.indexOf("=", equals2 +1);
+			
+			
+			//so know where they end
+			int comma1 = value.indexOf(",");
+			int comma2 = value.indexOf(",",comma1+1);
+			
+		
+			
+			String name = value.substring(equals1 + 2,comma1);
+			
+			String quanity = value.substring(equals2 + 2,comma2);
+		
+			String quanityType = value.substring(equals3 + 2); 
+			
+			
+			
+			
+			db.saveDishStockConnection(name, selectedDish.getName(), quanity, quanityType);	
+			counter = counter + 1;
+		}
+	
+	
+	
+}
+
+public void deleteADish(String id) {
+	db.deleteSelectedDish(id);
+}
+
+
 }

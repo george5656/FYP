@@ -103,6 +103,14 @@ public class MenuDetails extends PaneMenu {
 	txtErrorMessage.setFont(new Font(20));
 	
 	tfUserInput.setFont(new Font(20));
+	
+	
+	lvDishes.setPlaceholder(new Label("empty dish list"));
+	lvMenu.setPlaceholder(new Label("empty menu items list"));
+	lvShopping.setPlaceholder(new Label("empty shopping list"));
+	
+	
+	
 	}
 	public void setBtnAddEventHandler(EventHandler<ActionEvent> event) {
 		btnAdd.setOnAction(event);
@@ -119,6 +127,15 @@ public class MenuDetails extends PaneMenu {
 	public void setBtnFindEventHandler(EventHandler<ActionEvent> event) {
 		btnFind.setOnAction(event);
 	}
+	public void setBtnNewDishEventHandler(EventHandler<ActionEvent> event) {
+		btnNewDish.setOnAction(event);
+	}
+	public void setBtnRemoveFromListEventHandler(EventHandler<ActionEvent> event) {
+		btnRemoveFromList.setOnAction(event);
+	}
+	public void setBtnDeleteDishPermenetlyFromListEventHandler(EventHandler<ActionEvent> event) {
+		btnDeleteDishPeremently.setOnAction(event);
+	}
 	public String getFindUserInput() {
 		return tfUserInput.getText();
 	}
@@ -126,4 +143,29 @@ public class MenuDetails extends PaneMenu {
 		lvDishes.getItems().clear();
 		lvDishes.getItems().addAll(dishes);
 	}
+	public int getDishListSelectedIndex() {
+		return lvDishes.getSelectionModel().getSelectedIndex();
+	}
+	public String getDishListSelectedValue() {
+		return lvDishes.getSelectionModel().getSelectedItem();	
+	}
+	public void setMenuDishList(ObservableList<String> items) {
+		lvMenu.getItems().clear();
+		lvMenu.getItems().addAll(items);
+	}
+	public int getMenuListSelectedIndex() {
+		return lvMenu.getSelectionModel().getSelectedIndex();
+	}
+	public String getMenuListSelectedValueAsId() {
+		return lvMenu.getSelectionModel().getSelectedItem().substring(lvMenu.getSelectionModel().getSelectedItem().indexOf("=")+2);
+	}
+	//so for output know if anything there to output or not
+	public int getMenuListSize() {
+		return lvMenu.getItems().size();
+	}
+	public void setInputValues() {
+		
+	}
+	
+	
 }

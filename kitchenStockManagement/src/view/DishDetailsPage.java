@@ -137,6 +137,9 @@ public void setBtnAddEventHandler(EventHandler<ActionEvent> event) {
 public void setBtnDeleteEventHandler(EventHandler<ActionEvent> event) {
 	btnDelete.setOnAction(event);
 }
+public void setBtnEditEventHandler(EventHandler<ActionEvent> event) {
+	btnEdit.setOnAction(event);
+}
 public String getName() {
 	return tfDishName.getText();
 }
@@ -172,4 +175,20 @@ public void addReset() {
 	tfEstimatedCost.clear();
 
 }
+
+public String getSelectedValue() {
+	return lvIngredients.getSelectionModel().getSelectedItem();
+}
+public void setUserInputValues(String name, String quanity, String quanityType, String cost) {
+	addReset();
+	tfIngredientName.setText(name);
+	tfQuanity.setText(quanity);
+	tfUnit.setText(quanityType);
+	tfEstimatedCost.setText(cost);
+}
+
+public int getIngredientListSize() {
+	return lvIngredients.getItems().size();
+}
+
 }

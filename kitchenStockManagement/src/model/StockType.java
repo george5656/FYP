@@ -6,7 +6,7 @@ public class StockType {
 private String name;
 private String cost;
 private String quanityType;
-
+private String quanity;
 
 public StockType(String name, String cost, String quanityType) {
 	
@@ -15,7 +15,13 @@ public StockType(String name, String cost, String quanityType) {
 	this.quanityType = quanityType;
 	
 }
- 
+public StockType(String name, String cost, String quanityType,String quanity) {
+	
+	this.name = name;
+	this.cost = cost;
+	this.quanityType = quanityType;
+	this.quanity = quanity;
+}
  public String getStockName() {
 	 return name;
  }
@@ -39,8 +45,10 @@ public StockType(String name, String cost, String quanityType) {
   */
  @Override
 	public String toString() {
-		return "name = " + name + ", cost = " + cost + " quantityType = " + quanityType;
+		return "name = " + name + ", cost = " + cost + ", quantityType = " + quanityType;
 	}
-
+ public String toStringDishDetails() {
+		return "name = " + name + ", cost = " + cost + ", quantityType = " + quanityType + ", quanity = " + quanity;
+	}
  
 }

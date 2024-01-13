@@ -1,6 +1,8 @@
 package controller;
 
 import java.io.File;
+import java.io.IOException;
+import java.io.PrintWriter;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.scene.control.Alert;
@@ -50,7 +52,7 @@ public class Controller {
 		view.setStockListBtnDeleteEventHandler(new EHStockListBtnDelete());
 		view.setStockListBtnAddEventHandler(new EHStockBtnAdd());
 		view.setStockListBtnFilterEventHandler(new EHStockBtnFilter());
-		// view.getStockListPage().setObservableList(setStockListContent());
+		//view.getStockListPage().setObservableList(setStockListContent());
 		view.setStockListBtnFindEventHandler(new EHStockListBtnFind());
 		view.setStockListBtnEditEventHandler(new EHStockListBtnEdit());
 
@@ -67,8 +69,13 @@ public class Controller {
 		view.setMenuDetailsBtnSettingEventHandler(new EHMenuDetailsBtnSetting());
 		view.setMenuDetailsBtnOutputEventHandler(new EHMenuDetailsBtnOutput());
 		view.setMenuDetailsBtnFilterEventHandler(new EHDishesBtnFilter());
-		view.setMenuDetailsBtnAddEventHandler(new EHMenudetailsBtnAdd());
+		view.setMenuDetailsBtnAddEventHandler(new EHMenuDetailsBtnAdd());
 		view.setMenuDetailsBtnFindEventHandler(new EHMenuDetailsBtnFind());
+		view.setMenuDetailsBtnNewDishEventHandler(new EHMenuDetailsBtnAddNewDish());
+		view.setMenuDetailsBtnRemoveFromListEventHandler(new EHMenuDetailsBtnRemoveFromList());
+		view.setMenuDetailsBtnDeleteDishPermentlyFromListEventHandler(new EHMenuDetailsBtnDeleteDishPermentlyFromList());
+		
+		view.setMenuSettingBtnSaveEventHandler(new EHMenuSettingBtnSave());
 		
 		view.setBudgetListBtnAddEventHandler(new EHBudgetBtnAdd());
 		view.setBudgetListBtnFilterEventHandler(new EHBudgetBtnFilter());
@@ -110,10 +117,10 @@ public class Controller {
 	
 		view.setDishDetailsBtnAddEventHandler(new EHDishDetailsBtnAdd());
 		view.setDishDetailsBtnDeleteEventHandler(new EHDishDetailsBtnDelete());
-	
-	
-	
-	
+		view.setDishDetailsBtnEditEventHandler(new EHDishDetailsBtnEdit());
+		view.setDishDetailsBtnSaveEventHandler(new EHDishDetailsBtnSave());
+		
+		view.setOutputBtnMenuEventHandler(new EHOutputBtnMenuFromList());
 	
 	
 	
@@ -201,8 +208,9 @@ public class Controller {
 
 		@Override
 		public void handle(ActionEvent event) {
+			model.resetMenuDetailList();
 	view.setMenuDetailsDishList(model.getAllDishes());
-			
+			model.resetSelectedMenu();
 			
 			view.MenuDetailsLoad();
 		}
@@ -299,7 +307,7 @@ public class Controller {
 		}
 	}
 	
-	private class EHMenudetailsBtnAdd implements EventHandler<ActionEvent> {
+	private class EHMenuDetailsBtnAddNewDish implements EventHandler<ActionEvent> {
 
 		@Override
 		public void handle(ActionEvent event) {
@@ -497,6 +505,9 @@ if (!view.getBudgetListSelectedItem().equals("null")) {
 
 		@Override
 		public void handle(ActionEvent event) {
+			
+			view.setMenuSettingBudgetOptions(model.getAllBudgetsButJustTheId());
+			
 			view.menuSettingsLoad();
 
 		}
@@ -668,6 +679,14 @@ view.BudgetListLoad(model.getObservableListBudgetList());
 	model.selectAStorageLocation(view.getSelectedStorageId());
 	model.deleteSelectedStorage();
 	loadStorgaeLocationListPage();
+	
+} else if(model.getDeleteFrom().equals("MenuDetails")) {
+	
+	//need to also remove from the temporary hold
+	model.deleteADish(view.getMenuDetailsDishListSelectedItemValueIdOnly());
+	
+	view.MenuDetailsLoad();
+	
 	
 }
 
@@ -1271,6 +1290,9 @@ view.BudgetListLoad(model.getObservableListBudgetList());
 
 		@Override
 		public void handle(ActionEvent event) {
+			
+		
+			
 			String issueFrom = "";
 			String masterError = "";
 			
@@ -1279,6 +1301,9 @@ view.BudgetListLoad(model.getObservableListBudgetList());
 			String quanityError = model.doubleMustBePresetValidation(view.getDishDetailsQuanity());
 			String unitError = model.stringMustBePresetValidation(view.getDishDetailsUnit());
 			String costError = model.doubleMustBePresetValidation(view.getDishDetailsEstimateCost());
+			 
+			
+			
 			
 			if(!nameError.equals("")) {
 				issueFrom = "dish name";
@@ -1295,11 +1320,16 @@ view.BudgetListLoad(model.getObservableListBudgetList());
 			}else if(!costError.equals("")) {
 				issueFrom = "cost";
 				masterError = costError;
+			} else if(model.doseDishNameAlreadyExist(view.getDishDetailsDishName())) {
+				
+				
+				issueFrom = "dish name";
+				masterError = "name already taken";
 			}
 			
 			
 			if(masterError.equals("")) {
-				model.resetStockType();
+			
 				model.setTestStockType(view.getDishDetailsIngrdeintName());
 
 				
@@ -1324,11 +1354,25 @@ view.BudgetListLoad(model.getObservableListBudgetList());
 				
 				//meant if to be used if first one
 				if(model.getSelectedDish() == null) {
-				model.createDish(view.getDishDetailsDishName(), view.getDishDetailsIngrdeintName(), view.getDishDetailsEstimateCost(), view.getDishDetailsQuanity());
+				model.createDish(view.getDishDetailsDishName(), view.getDishDetailsIngrdeintName(), view.getDishDetailsEstimateCost(), view.getDishDetailsUnit(),view.getDishDetailsQuanity());
 				
 				}else {
-					model.selectedDishIngrednitnAdd(view.getDishDetailsIngrdeintName(), view.getDishDetailsEstimateCost(), view.getDishDetailsQuanity());
+					// if the dish already exists it does this one
+					
+					if(model.hasDishDetailsChangedTheDishName(view.getDishDetailsDishName())) {
+						//if it has been changed it does this 
+						model.setSelectedDishName(view.getDishDetailsDishName());
+					}
+					
+					model.selectedDishIngrednitnAdd(view.getDishDetailsIngrdeintName(), view.getDishDetailsEstimateCost(), view.getDishDetailsUnit(),view.getDishDetailsQuanity());
+				
+				
+				
 				}	
+				
+				
+				
+				
 				view.setDishDetailsList(model.getSelectedDishList());
 				view.dishDetailsAddReset();
 			}else {
@@ -1368,6 +1412,52 @@ view.BudgetListLoad(model.getObservableListBudgetList());
 
 	}
 	
+	private class EHDishDetailsBtnEdit implements EventHandler<ActionEvent> {
+
+		@Override
+		public void handle(ActionEvent event) {
+			
+			String masterIssue = "";
+			if(view.getDishDetailsSelectedIndex() == -1) {
+				masterIssue = "no selection made";
+			}else if(view.getDishDetailsSelectedIndex() ==0 ) {
+				masterIssue = "add a ingredent with new dish name to chnage the dish name";
+			}
+			if(masterIssue.equals("")) {
+				 
+				//done a head so can get the equal sign so know that all values are jus two place behind them
+				String value = view.getDishDetailsSelectedItem();
+
+				
+				int equals1 = value.indexOf("=");
+				int equals2 = value.indexOf("=", equals1 +1);
+				int equals3 = value.indexOf("=", equals2 +1);
+				int equals4 = value.indexOf("=", equals3 +1);
+				
+				//so know where they end
+				int comma1 = value.indexOf(",");
+				int comma2 = value.indexOf(",",comma1+1);
+				int comma3 = value.indexOf(",",comma2+1);
+				
+				
+				String name = value.substring(equals1 + 2,comma1);
+				String quanity = value.substring(equals2 + 2,comma2);
+				String quanityType = value.substring(equals3 + 2,comma3); 
+				String cost  = value.substring(equals4 + 2);
+				
+				view.setDishDetailsUserInput(name, quanity, quanityType, cost);
+				
+				model.selectedDishIngrednitnRemove(view.getDishDetailsSelectedIndex()-1);
+				view.setDishDetailsList(model.getSelectedDishList());
+			}else {
+				
+			
+				Alert dishDetailsErrorMessage = model.makeAlert("selection issue", masterIssue);
+				dishDetailsErrorMessage.show();
+			}
+		}
+
+	}
 	
 	// menu / dish
 	private class EHMenuDetailsBtnFind implements EventHandler<ActionEvent> {
@@ -1393,6 +1483,7 @@ view.BudgetListLoad(model.getObservableListBudgetList());
 		public void handle(ActionEvent event) {
 
 			String errorMessage = model.stringPresentIsOptionalValidation(view.getMenuListFindUserInput());
+			
 			if (errorMessage.equals("")) {
 				view.menuListLoad(model.getAllMenusThatAreLike(view.getMenuListFindUserInput()));
 				view.hideMenuListErrorMessage();
@@ -1404,6 +1495,212 @@ view.BudgetListLoad(model.getObservableListBudgetList());
 
 		}
 	}
+	
+	private class EHMenuSettingBtnSave implements EventHandler<ActionEvent> {
+
+		@Override
+		public void handle(ActionEvent event) {
+			String issueFrom = "";
+			String masterError = "";
+			
+			String nameErrorMessage = model.stringMustBePresetValidation(view.getMenuSettingName());
+			
+			if(!nameErrorMessage.equals("")) {
+				issueFrom = "name";
+				masterError = nameErrorMessage;
+			} else if(view.getMenuSettingBudgetIndex() == -1) {
+				issueFrom = "budget";
+				masterError = "no budget selected";
+			}else if(model.doesBudgetNameAlreadyExist(view.getMenuSettingName())) {
+				issueFrom = "name";
+				masterError = "name already taken";
+						
+			}
+			
+			
+			if(masterError.equals("")) {
+				model.setSelectedMenu(view.getMenuSettingName(), view.getMenuSettingSelectedBudgetOption());
+				view.MenuDetailsLoad();
+			}else {
+				Alert menuSettingErrorMessage = model.makeAlert(issueFrom, masterError);
+						menuSettingErrorMessage.show();
+			}
+
+		}
+	}
+	
+	private class EHMenuDetailsBtnAdd implements EventHandler<ActionEvent> {
+
+		@Override
+		public void handle(ActionEvent event) {
+			String issueFrom = "";
+			String masterErrorMessage = "";
+			
+			if(model.getSelectedMenu() == null) {
+				issueFrom = "missing data";
+				masterErrorMessage = "need to go to setting before can continue";
+			}else if(view.getMenuDetailsDishListSelectedItemIndex() == -1) {
+				issueFrom = "dish list";
+				masterErrorMessage = "no item selected";
+			}
+			
+			
+			if(masterErrorMessage.equals("")) {
+			//if no errors does this part
+				
+				
+				model.addDishToSelectedMenu(view.getMenuDetailsDishListSelectedItemValueIdOnly());
+				
+				
+				view.setMenuDetailsMenuListItems(model.getSelectedMenuDishes());
+				
+				model.resetMenuDetailList();
+				view.setMenuDetailsDishList(model.getNotSelectedDishesAsString());
+				
+				
+			}else {
+			
+				//so they have to give it a name, the selected menu is made in the seating save
+				Alert noMenuMadeError = model.makeAlert(issueFrom,masterErrorMessage);
+				noMenuMadeError.show();
+			}
+			
+
+		}
+	}
+	private class EHMenuDetailsBtnRemoveFromList implements EventHandler<ActionEvent> {
+
+		@Override
+		public void handle(ActionEvent event) {
+			if(view.getMenuDetailsMenuListSelectedIndex() == -1) {
+				Alert removeFromListError = model.makeAlert("menu list", "no item selected to be removed");
+				removeFromListError.show();
+			}else {
+				
+				
+				
+				model.removeADishFromSelectedMenuDishes(view.getMenuDetailsMenuListSelectedIndex());
+				model.resetMenuDetailList();
+				view.setMenuDetailsMenuListItems(model.getSelectedMenuDishes());
+				view.setMenuDetailsDishList(model.getNotSelectedDishesAsString());
+			}
+			
+
+		}
+	}
+	private class EHMenuDetailsBtnDeleteDishPermentlyFromList implements EventHandler<ActionEvent> {
+
+		@Override
+		public void handle(ActionEvent event) {
+			String issueFrom ="";
+			String masterErrorMessage ="";
+			if(view.getMenuDetailsDishListSelectedItemIndex() == -1) {
+				issueFrom = "dish list";
+				masterErrorMessage = "no item selected";
+			}
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			if (masterErrorMessage.equals("")) {
+
+				
+
+				view.getDeleteConfirmationPage()
+						.setTxtConfirmMessage("Are you sure you wan to delete " + view.getMenuDetailsDishListSelectedItemValueIdOnly() + "?");
+				model.setDeleteFrom("MenuDetails");
+				view.deleteConfirmationLoad();
+			} else {
+				model.makeAlert(issueFrom, masterErrorMessage).show();
+
+			}
+			
+			
+			
+			
+			
+			
+		}
+	}
+	// need a way to know if update or add
+	private class EHDishDetailsBtnSave implements EventHandler<ActionEvent> {
+
+		@Override
+		public void handle(ActionEvent event) {
+		
+			if(view.getDishDetailsListSize() < 2) {
+				model.makeAlert("data to be saved", "not enough to be saved").show();
+			}else {
+				// if have data to be save it does this part.
+				
+				
+				
+				
+				
+				model.saveDishDetails();
+				view.MenuDetailsLoad();
+				
+				
+			}
+			
+
+		}
+	}
+	
+	
+	private class EHOutputBtnMenuFromList implements EventHandler<ActionEvent> {
+
+		@Override
+		public void handle(ActionEvent event)  {
+			String issueFrom = "";
+			String masterErrorMessage = "";
+			if(view.getMenuDetailsMenuListSize() == 0) {
+				issueFrom = "menu list";
+				masterErrorMessage = "no data to output";
+			}
+		
+			if(masterErrorMessage.equals("")) {
+			
+				File chosenLocation = new FileChooser().showSaveDialog(null);
+				try {
+					PrintWriter pw = new PrintWriter(chosenLocation);
+					
+					pw.write("menu name = " + model.getSelectedMenu().getName() + "\n");
+					
+					model.getSelectedMenuDishsAsString().forEach((String i) -> {
+						
+						pw.print("dish name = " + i + "\n");
+						
+					});
+					//need else it wont write it
+					 pw.flush();
+					
+				
+					
+					
+					
+				} catch (IOException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+				
+			} 
+			
+			
+			
+			
+			
+		}
+	}
+	
+	
+	
+	
 	
 	
 }

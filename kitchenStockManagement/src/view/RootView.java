@@ -472,6 +472,15 @@ public void setMenuDetailsBtnAddEventHandler(EventHandler<ActionEvent> event) {
 public void setMenuDetailsBtnFindEventHandler(EventHandler<ActionEvent> event) {
 	menuDetails.setBtnFindEventHandler(event);
 }
+public void setMenuDetailsBtnNewDishEventHandler(EventHandler<ActionEvent> event) {
+	menuDetails.setBtnNewDishEventHandler(event);
+}
+public void setMenuDetailsBtnRemoveFromListEventHandler(EventHandler<ActionEvent> event) {
+	menuDetails.setBtnRemoveFromListEventHandler(event);
+}
+public void setMenuDetailsBtnDeleteDishPermentlyFromListEventHandler(EventHandler<ActionEvent> event) {
+	menuDetails.setBtnDeleteDishPermenetlyFromListEventHandler(event);
+}
 public void MenuDetailsLoad() {
 	this.getChildren().remove(0);
 	this.getChildren().add(menuDetails);
@@ -484,9 +493,25 @@ public String getMenuDetailsFindUserInput() {
 	return menuDetails.getFindUserInput();
 }
 
-
-
-
+public String getMenuDetailsDishListSelectedItemValueIdOnly() {
+	
+	return menuDetails.getDishListSelectedValue().substring(menuDetails.getDishListSelectedValue().indexOf("=")+2);
+}
+public Integer getMenuDetailsDishListSelectedItemIndex() {
+	return menuDetails.getDishListSelectedIndex();
+}
+public void setMenuDetailsMenuListItems(ObservableList<String> items) {
+	menuDetails.setMenuDishList(items);
+}
+public int getMenuDetailsMenuListSelectedIndex() {
+	return menuDetails.getMenuListSelectedIndex();
+}
+public String getMenuDetailsMenuListSelectedValueName() {
+	return menuDetails.getMenuListSelectedValueAsId();
+}
+public int getMenuDetailsMenuListSize() {
+	return menuDetails.getMenuListSize(); 
+}
 
 
 public String getBudgetListSelectedItem() {
@@ -513,6 +538,21 @@ public void menuSettingsLoad() {
 	this.getChildren().add(msp);
 	this.setVgrow(msp, Priority.ALWAYS);
 }
+public void setMenuSettingBtnSaveEventHandler(EventHandler<ActionEvent> event) {
+	msp.setBtnSaveEventHandler(event);
+}
+public String getMenuSettingName() {
+	return msp.getName();
+}
+public int getMenuSettingBudgetIndex() {
+	return msp.getBudgetIndex();
+}
+public void setMenuSettingBudgetOptions(ObservableList<String> options) {
+	msp.setBudgetOptions(options);
+}
+public String getMenuSettingSelectedBudgetOption() {
+	return msp.getSelectedBudgetValue();
+}
 //outputPage
 public void outputPageLoad() {
 	this.getChildren().remove(0);
@@ -520,6 +560,9 @@ public void outputPageLoad() {
 	this.setVgrow(output, Priority.ALWAYS);
 }
 
+public void setOutputBtnMenuEventHandler(EventHandler<ActionEvent> event) {
+	output.setBtnMenuEventHandler(event);
+}
 //budgetList
 
 public void setBudgetListBtnAddEventHandler(EventHandler<ActionEvent> event) {
@@ -888,6 +931,9 @@ public void setDishDetailsBtnAddEventHandler(EventHandler<ActionEvent> event) {
 public void setDishDetailsBtnDeleteEventHandler(EventHandler<ActionEvent> event) {
 	ddp.setBtnDeleteEventHandler(event);
 }
+public void setDishDetailsBtnEditEventHandler(EventHandler<ActionEvent> event) {
+	ddp.setBtnEditEventHandler(event);
+}
 public String getDishDetailsDishName() {
 	return ddp.getName();
 }
@@ -917,6 +963,16 @@ public String getDishDetaulsSelectedId() {
 public void dishDetailsAddReset() {
 	ddp.addReset();
 }
+public String getDishDetailsSelectedItem() {
+	return ddp.getSelectedValue();
+}
+public void setDishDetailsUserInput(String name, String quanity, String quanityType, String cost) {
+	ddp.setUserInputValues(name, quanity, quanityType, cost);
+}
+public int getDishDetailsListSize() {
+	return ddp.getIngredientListSize();
+}
+
 
 
 //filter dishes

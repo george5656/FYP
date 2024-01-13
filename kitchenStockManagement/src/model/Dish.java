@@ -24,7 +24,7 @@ public String getName() {
 }
 public ArrayList<String> getStockTypeAsString() {
 	ArrayList<String> stockType = new ArrayList<>();
-	ingrdents.forEach((StockType i) -> { stockType.add(i.toString());
+	ingrdents.forEach((StockType i) -> { stockType.add(i.toStringDishDetails());
 	});
 	return stockType;
 }
@@ -35,5 +35,13 @@ public void removeIngredent(int index) {
 	System.out.println(ingrdents.size());
 	ingrdents.remove(index);
 	
+}
+
+public void setName(String name) {
+	dishName = name;
+}
+
+public ArrayList<StockType> getHeldStock(){
+	return ingrdents;
 }
 }

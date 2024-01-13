@@ -1,5 +1,6 @@
 package view;
 
+import javafx.collections.ObservableList;
 import javafx.geometry.Pos;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
@@ -52,5 +53,16 @@ public MenuSettingPage() {
 	txtName.setAlignment(Pos.CENTER);
 	txtBudget.setAlignment(Pos.CENTER);
 }
-
+public String getName() {
+	return tfName.getText();
+}
+public Integer getBudgetIndex() {
+	return cbBudget.getSelectionModel().getSelectedIndex();
+}
+public void setBudgetOptions(ObservableList<String> options){
+	cbBudget.getItems().addAll(options);
+}
+public String getSelectedBudgetValue() {
+	return cbBudget.getSelectionModel().getSelectedItem();
+}
 }
