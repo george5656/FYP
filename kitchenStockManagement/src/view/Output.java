@@ -2,6 +2,8 @@ package view;
 
 import java.util.ArrayList;
 
+import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.Button;
@@ -41,5 +43,7 @@ public class Output extends PaneMenu {
 			layout.setVgrow(i, Priority.ALWAYS);
 		}
 	}
-	
+	public void setBtnMenuEventHandler(EventHandler<ActionEvent> event) {
+		btnMenu.setOnAction(event);
+	}
 }
