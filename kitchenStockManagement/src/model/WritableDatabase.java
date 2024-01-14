@@ -815,7 +815,7 @@ public ArrayList<String> getCurrentStockThatsLike(String where) {
 			statement = mySqlDatabase.prepareStatement("SELECT * FROM stock_mangemnet.tbl_dish where dishId = \'" + dishId + "\';");
 			
 			ResultSet result = statement.executeQuery();
-			
+			 
 			
 			
 			while (result.next()) {
@@ -823,7 +823,7 @@ public ArrayList<String> getCurrentStockThatsLike(String where) {
 				ResultSet result2 = statement2.executeQuery();
 				stockType = new ArrayList<>();
 				while(result2.next()) {
-					stockType.add(new StockType(result2.getString(6),result2.getString(7),result2.getString(8)));
+					stockType.add(new StockType(result2.getString(6),result2.getString(7),result2.getString(8),result2.getString(4)));
 				}
 				dish = new Dish(result.getString(1),stockType);
 							}
@@ -864,6 +864,265 @@ public ArrayList<String> getCurrentStockThatsLike(String where) {
 	 
 	 
  }
+ public void updateDish(String newDishName, String orginalDishName) {
+		
+	 PreparedStatement statement;
+		try {
+			
+			statement = mySqlDatabase.prepareStatement("update stock_mangemnet.tbl_dish set dishId = \'"+ newDishName + "\' where dishId = \'"+ orginalDishName + "\';");
+			statement.execute();
+			
+			} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	 
+	 
+ }
+ public void deleteDishConnection( String orginalDishName) {
+		
+	 PreparedStatement statement;
+		try {
+			
+			statement = mySqlDatabase.prepareStatement("Delete From stock_mangemnet.tbl_dish where dishId = \'"+ orginalDishName + "\';");
+			statement.execute();
+			
+			} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	 
+	 
+ }
+ public ArrayList<Integer> getDishStockIdsForADish(String dishId) {
+		PreparedStatement statement;
+		
+		
+		ArrayList<Integer> ids = new ArrayList<>();
+		try {
+			
+			
+			statement = mySqlDatabase.prepareStatement("SELECT * FROM stock_mangemnet.tbl_dish_stock where dishId = \'" + dishId + "\';");
+			
+			ResultSet result = statement.executeQuery();
+			 while(result.next()) {
+				 ids.add(result.getInt(1));
+			 }
+			
+			
+		
+			
+			} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		return ids;
+	}
+
+
+
+ public ArrayList<Dish> getDishWithLessThanSetItems(int numberOfMaxItems) {
+		
+	 
+	 PreparedStatement statement;
+		PreparedStatement statement2;
+		PreparedStatement statement3;
+		ArrayList<Dish> dish  = new ArrayList<>();
+		ArrayList<StockType> stockType = new ArrayList<>();
+		try {
+			
+			
+			statement = mySqlDatabase.prepareStatement("SELECT * FROM stock_mangemnet.tbl_dish");
+			
+			ResultSet result = statement.executeQuery();
+			
+			
+			
+			while (result.next()) {
+				
+				
+				statement2 = mySqlDatabase.prepareStatement("select COUNT(stockTypeId) As number from stock_mangemnet.tbl_dish_stock where dishId = \'" + result.getString(1) + "\'");
+				ResultSet result2 = statement2.executeQuery();
+			
+				result2.next();
+				if(Integer.parseInt(result2.getString(1)) <= numberOfMaxItems) {
+				
+					statement3= mySqlDatabase.prepareStatement("SELECT * FROM stock_mangemnet.tbl_dish_stock, stock_mangemnet.tbl_stock_type where (tbl_dish_stock.dishId = \'" + result.getString(1) + "\') and ( tbl_dish_stock.stockTypeId = tbl_stock_type.stockTypeId);" );
+				ResultSet result3 = statement3.executeQuery();
+				
+				stockType = new ArrayList<>();
+				while(result3.next()) {
+					stockType.add(new StockType(result3.getString(6),result3.getString(7),result3.getString(8)));
+				}
+				dish.add(new Dish(result.getString(1),stockType));
+			
+							}
+			
+			
+			}
+			
+			} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		return dish;
+	 
+ }
+ 
+public ArrayList<Dish> getDishWithMoreThanSetItems(int numberOfMaxItems) {
+		
+	 
+	 PreparedStatement statement;
+		PreparedStatement statement2;
+		PreparedStatement statement3;
+		ArrayList<Dish> dish  = new ArrayList<>();
+		ArrayList<StockType> stockType = new ArrayList<>();
+		try {
+			
+			
+			statement = mySqlDatabase.prepareStatement("SELECT * FROM stock_mangemnet.tbl_dish");
+			
+			ResultSet result = statement.executeQuery();
+			
+			
+			
+			while (result.next()) {
+				
+				
+				statement2 = mySqlDatabase.prepareStatement("select COUNT(stockTypeId) As number from stock_mangemnet.tbl_dish_stock where dishId = \'" + result.getString(1) + "\'");
+				ResultSet result2 = statement2.executeQuery();
+			
+				result2.next();
+				if(Integer.parseInt(result2.getString(1)) >= numberOfMaxItems) {
+				
+					statement3= mySqlDatabase.prepareStatement("SELECT * FROM stock_mangemnet.tbl_dish_stock, stock_mangemnet.tbl_stock_type where (tbl_dish_stock.dishId = \'" + result.getString(1) + "\') and ( tbl_dish_stock.stockTypeId = tbl_stock_type.stockTypeId);" );
+				ResultSet result3 = statement3.executeQuery();
+				
+				stockType = new ArrayList<>();
+				while(result3.next()) {
+					stockType.add(new StockType(result3.getString(6),result3.getString(7),result3.getString(8)));
+				}
+				dish.add(new Dish(result.getString(1),stockType));
+			
+							}
+			
+			
+			}
+			
+			} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		return dish;
+	 
+ }
+ 
+ 
+public ArrayList<Dish> getDishThatCostNotAbove(Double numberOfMaxItems) {
+	
+	 
+	 PreparedStatement statement;
+		PreparedStatement statement2;
+		PreparedStatement statement3;
+		ArrayList<Dish> dish  = new ArrayList<>();
+		ArrayList<StockType> stockType = new ArrayList<>();
+		try {
+			
+			
+			statement = mySqlDatabase.prepareStatement("SELECT * FROM stock_mangemnet.tbl_dish");
+			
+			ResultSet result = statement.executeQuery();
+			
+			
+			
+			while (result.next()) {
+				
+				
+				
+					statement3= mySqlDatabase.prepareStatement("SELECT * FROM stock_mangemnet.tbl_dish_stock, stock_mangemnet.tbl_stock_type where (tbl_dish_stock.dishId = \'" + result.getString(1) + "\') and ( tbl_dish_stock.stockTypeId = tbl_stock_type.stockTypeId);" );
+				ResultSet result3 = statement3.executeQuery();
+				
+				stockType = new ArrayList<>();
+				while(result3.next()) {
+					stockType.add(new StockType(result3.getString(6),result3.getString(7),result3.getString(8)));
+				}
+				Dish input = new Dish(result.getString(1),stockType);
+				
+				
+				//where it is deiced if they are added or not. 
+						if(input.getDishCost()<=numberOfMaxItems) {
+				dish.add(input);
+						}
+							
+			
+			
+			}
+			
+			} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		return dish;
+	 
+}
+
+ 
+public ArrayList<Dish> getDishThatCostNotBellow(Double numberOfMaxItems) {
+	
+	 
+	 PreparedStatement statement;
+		PreparedStatement statement2;
+		PreparedStatement statement3;
+		ArrayList<Dish> dish  = new ArrayList<>();
+		ArrayList<StockType> stockType = new ArrayList<>();
+		try {
+			
+			
+			statement = mySqlDatabase.prepareStatement("SELECT * FROM stock_mangemnet.tbl_dish");
+			
+			ResultSet result = statement.executeQuery();
+			
+			
+			
+			while (result.next()) {
+				
+				
+				
+					statement3= mySqlDatabase.prepareStatement("SELECT * FROM stock_mangemnet.tbl_dish_stock, stock_mangemnet.tbl_stock_type where (tbl_dish_stock.dishId = \'" + result.getString(1) + "\') and ( tbl_dish_stock.stockTypeId = tbl_stock_type.stockTypeId);" );
+				ResultSet result3 = statement3.executeQuery();
+				
+				stockType = new ArrayList<>();
+				while(result3.next()) {
+					stockType.add(new StockType(result3.getString(6),result3.getString(7),result3.getString(8)));
+				}
+				Dish input = new Dish(result.getString(1),stockType);
+				
+				
+				//where it is deiced if they are added or not. 
+						if(input.getDishCost()>=numberOfMaxItems) {
+				dish.add(input);
+						}
+							
+			
+			
+			}
+			
+			} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		return dish;
+	 
+}
+ 
+ 
+ 
+ 
  
  public ArrayList<Menu> getAllMenu() {
 		PreparedStatement statementMenu;
@@ -940,7 +1199,7 @@ public ArrayList<String> getCurrentStockThatsLike(String where) {
 				while(resultStockType.next()) {
 					stockType.add(new StockType(resultStockType.getString(6),resultStockType.getString(7),resultStockType.getString(8)));
 				}
-				System.out.println(new Dish(resultDish.getString(1),stockType).toString());
+				
 				
 				dish.add(new Dish(resultDish.getString(1),stockType));
 							}

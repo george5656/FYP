@@ -14,7 +14,7 @@ public StockType(String name, String cost, String quanityType) {
 	this.cost = cost;
 	this.quanityType = quanityType;
 	
-}
+} 
 public StockType(String name, String cost, String quanityType,String quanity) {
 	
 	this.name = name;

@@ -28,7 +28,7 @@ public class Controller {
 	 * @param view.  the root of the v from MVC
 	 */
 	public Controller(ModelRoot model, RootView view) {
-
+ 
 		// shadowing
 		this.model = model;
 		this.view = view;
@@ -74,6 +74,7 @@ public class Controller {
 		view.setMenuDetailsBtnNewDishEventHandler(new EHMenuDetailsBtnAddNewDish());
 		view.setMenuDetailsBtnRemoveFromListEventHandler(new EHMenuDetailsBtnRemoveFromList());
 		view.setMenuDetailsBtnDeleteDishPermentlyFromListEventHandler(new EHMenuDetailsBtnDeleteDishPermentlyFromList());
+		view.setMenuDetailsBtnEditEventHandler(new EHMenuDetailsBtnEdit());
 		
 		view.setMenuSettingBtnSaveEventHandler(new EHMenuSettingBtnSave());
 		
@@ -119,6 +120,10 @@ public class Controller {
 		view.setDishDetailsBtnDeleteEventHandler(new EHDishDetailsBtnDelete());
 		view.setDishDetailsBtnEditEventHandler(new EHDishDetailsBtnEdit());
 		view.setDishDetailsBtnSaveEventHandler(new EHDishDetailsBtnSave());
+		
+		view.setDishFilterBtnApplyEventHandler(new EHDishFilterBtnApply());
+		
+		
 		
 		view.setOutputBtnMenuEventHandler(new EHOutputBtnMenuFromList());
 	
@@ -311,12 +316,51 @@ public class Controller {
 
 		@Override
 		public void handle(ActionEvent event) {
+			model.setDishDetailsCameFromEdit(false);
+			model.setDishDetailsOrginalId(null);
 			view.dishDetailsLoad();
 
 		}
 
 	}
+	
+	
+	private class EHMenuDetailsBtnEdit implements EventHandler<ActionEvent> {
 
+		@Override
+		public void handle(ActionEvent event) {
+			
+			
+			String issueFrom ="";
+			String masterErrorMessage ="";
+			if(view.getMenuDetailsDishListSelectedItemIndex() == -1) {
+				issueFrom = "dish list";
+				masterErrorMessage = "no item selected";
+			}
+			
+			
+			if (masterErrorMessage.equals("")) {
+
+				//gets the dish and stores it to be used later
+				
+				model.setDishDetailsCameFromEdit(true);
+				model.setDishDetailsOrginalId(view.getMenuDetailsDishListSelectedItemValueIdOnly());
+				model.setDishStockId(view.getMenuDetailsDishListSelectedItemValueIdOnly());
+				
+				model.setSelectedDish(model.getASpecificDish(view.getMenuDetailsDishListSelectedItemValueIdOnly()));
+				view.setDishDetailsList(model.getSelectedDishList());
+				view.dishDetailsLoad();
+				
+			} else {
+				model.makeAlert(issueFrom, masterErrorMessage).show();
+
+			}
+			
+		}
+
+	}
+	
+	
 	private class EHStockBtnAdd implements EventHandler<ActionEvent> {
 
 		@Override
@@ -683,7 +727,10 @@ view.BudgetListLoad(model.getObservableListBudgetList());
 } else if(model.getDeleteFrom().equals("MenuDetails")) {
 	
 	//need to also remove from the temporary hold
-	model.deleteADish(view.getMenuDetailsDishListSelectedItemValueIdOnly());
+	view.setMenuDetailsDishList(model.deleteADish(view.getMenuDetailsDishListSelectedItemValueIdOnly()));
+	
+	
+	
 	
 	view.MenuDetailsLoad();
 	
@@ -819,7 +866,7 @@ view.BudgetListLoad(model.getObservableListBudgetList());
 
 				}
 
-				System.out.println(view.getStockFilter().getTfMinQunaity().getText());
+				
 				if (view.getStockFilterDpAfterDateValuePresent() != null) {
 
 					whereClause = whereClause + "tbl_stock_iteration.expiereDate > \""
@@ -1399,7 +1446,7 @@ view.BudgetListLoad(model.getObservableListBudgetList());
 				masterIssue = "cant delete dish name";
 			}
 			if(masterIssue.equals("")) {
-				 
+				
 				model.selectedDishIngrednitnRemove(view.getDishDetailsSelectedIndex()-1);
 				view.setDishDetailsList(model.getSelectedDishList());
 			}else {
@@ -1467,8 +1514,17 @@ view.BudgetListLoad(model.getObservableListBudgetList());
 
 			String errorMessage = model.stringPresentIsOptionalValidation(view.getMenuDetailsFindUserInput());
 			if (errorMessage.equals("")) {
-				view.setMenuDetailsDishList(model.getAllDishesThatAreLike(view.getMenuDetailsFindUserInput()));
 				
+				//so if all need to present can do it the nomal way 
+				//top one else  if will only filter items not selected. 
+				if(model.getSelectedMenu() == null) {
+					
+				view.setMenuDetailsDishList(model.getAllDishesThatAreLike(view.getMenuDetailsFindUserInput()));
+				}else {
+					
+					
+					view.setMenuDetailsDishList(model.getNotSelectedDishesThatAreLikeMenuDetailsFind(view.getMenuDetailsFindUserInput()));
+				}
 			} else {
 				Alert menuDetailsFindErrorMessage = model.makeAlert("issue with find", errorMessage);
 				menuDetailsFindErrorMessage.show();
@@ -1600,13 +1656,6 @@ view.BudgetListLoad(model.getObservableListBudgetList());
 			}
 			
 			
-			
-			
-			
-			
-			
-			
-			
 			if (masterErrorMessage.equals("")) {
 
 				
@@ -1634,15 +1683,26 @@ view.BudgetListLoad(model.getObservableListBudgetList());
 		public void handle(ActionEvent event) {
 		
 			if(view.getDishDetailsListSize() < 2) {
+				
 				model.makeAlert("data to be saved", "not enough to be saved").show();
+			
 			}else {
 				// if have data to be save it does this part.
 				
 				
 				
+					//save it to the database
+					if(!model.getDishDetailsCameFromEdit()) {
+				view.setMenuDetailsDishList(model.saveDishDetails());	
+					}else {
+						view.setMenuDetailsDishList(model.updateDishDetails());
+					}
+						
+					
+
 				
 				
-				model.saveDishDetails();
+				//seperate as doesnt mess with the list so only need one
 				view.MenuDetailsLoad();
 				
 				
@@ -1652,7 +1712,88 @@ view.BudgetListLoad(model.getObservableListBudgetList());
 		}
 	}
 	
-	
+	private class EHDishFilterBtnApply implements EventHandler<ActionEvent> {
+
+		@Override
+		public void handle(ActionEvent event) {
+		
+		String issueFrom ="";
+		String masterError = "";
+		
+		//cmt = cost more than(the label for input)
+		String cmt = model.doublePresentIsOptionalValidation(view.getDishFilterCostMoreThan());
+		String clt = model.doublePresentIsOptionalValidation(view.getDishFilterCostLessThan());
+		String nib = model.intPresentIsOptionalValidation(view.getDishFilterNumberOfIngredeintsLessThan());
+		String nia = model.intPresentIsOptionalValidation(view.getDishFilterNumberOfIngredeintsMoreThan());
+		
+		//populating the master and from string so that can just be put in to an alert
+		if(!cmt.equals("")) {
+			issueFrom = "total cost more than";
+			masterError = cmt;
+					
+		} else if(!clt.equals("")) {
+			issueFrom = "total cost less than";
+			masterError = clt;
+					
+		} else if(!nib.equals("")) {
+			issueFrom = "number ingredeients below";
+			masterError = nib;
+					
+		} else if(!nia.equals("")) {
+			issueFrom = "number ingredeints above";
+			masterError = nia;
+					
+		}
+		
+			
+		if(masterError.equals("")) {
+			
+			String cmtInput = "null";
+			String cltInput ="null";
+			String nibInput ="null";
+			String niaInput ="null";
+			
+			if(!view.getDishFilterCostMoreThan().equals("")) {
+				cmtInput = view.getDishFilterCostMoreThan();
+				
+			}
+			if(!view.getDishFilterCostLessThan().equals("")) {
+				cltInput = view.getDishFilterCostLessThan();
+				
+			}
+			if(!view.getDishFilterNumberOfIngredeintsLessThan().equals("")) {
+				nibInput = view.getDishFilterNumberOfIngredeintsLessThan();
+				
+			}
+			if(!view.getDishFilterNumberOfIngredeintsMoreThan().equals("")) {
+				niaInput = view.getDishFilterNumberOfIngredeintsMoreThan();
+				
+			}
+			
+			
+			if(!niaInput.equals("null") || !nibInput.equals("null") || !cltInput.equals("null") || !cmtInput.equals("null")) {
+			
+			view.setMenuDetailsDishList(model.getDishFilterResults(niaInput, nibInput, cltInput, cmtInput));	
+			}else {
+				//just bascially removes any filters if none have been applied. 
+				view.setMenuDetailsDishList(model.getNotSelectedDishesAsString());
+			}
+			
+			
+
+			
+			
+			view.MenuDetailsLoad();
+		
+			
+		}else {
+			model.makeAlert(issueFrom, masterError).show();
+		}
+		
+		
+
+		}
+	}
 	private class EHOutputBtnMenuFromList implements EventHandler<ActionEvent> {
 
 		@Override

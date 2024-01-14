@@ -33,7 +33,15 @@ public class ModelRoot {
 	//added.
 	private ArrayList<Dish> notSelectedDishes = new ArrayList<>();
 	
+	//so know where dish details came from 
+	private Boolean cameFromEdit = false;
+	//so know which value to update 
+	private String orginalDishId = null;
 	
+	// i think these have been made redeunet
+	//ideas is store them here, so can just grab them when needed to. 
+	private ArrayList<Integer> dishStockId = new ArrayList<>();
+	private ArrayList<Integer> dishStockIdToDelete = new ArrayList<>();
 	
 	private StockType testStockType;
 	private CurrentStock selectedStock;
@@ -123,7 +131,9 @@ public class ModelRoot {
 	public String dateValidationPresentIsOptional(String input, LocalDate date) {
 		return validation.dateValidationPresentIsOptional(input, date);
 	}
-	
+	public String intPresentIsOptionalValidation(String input) {
+		return validation.intPresentIsOptionalValidation(input);
+	}
 	
 	// make alert
 	
@@ -317,7 +327,7 @@ public void updateCurrentStock() {
 
 public String saveStockTypeFromFile(URI uri) {
 	String errorMessage = "";
-	System.out.println("hit");
+	
 	
 		try {
 			//as wont identify text if not in format
@@ -565,6 +575,13 @@ public void selectedDishIngrednitnAdd(String name, String cost, String quanityTy
 	
 }
 public void selectedDishIngrednitnRemove(int index) {
+	System.out.println(index + ", ");
+	System.out.println( dishStockId.size()+ ", ");
+	
+	if(index+1 <= dishStockId.size()) {
+		dishStockIdToDelete.add(dishStockId.get(index));
+		dishStockId.remove(index);
+	}
 	selectedDish.removeIngredent(index);
 }
 
@@ -608,6 +625,26 @@ public Boolean hasDishDetailsChangedTheDishName(String name) {
 public void setSelectedDishName(String name) {
 	selectedDish.setName(name);
 }
+public void setSelectedDish(Dish dish) {
+	selectedDish = dish;
+}
+//true = from edit,
+//false = from add.
+//to be edit when they load the dish details page
+public void setDishDetailsCameFromEdit(Boolean from) {
+	cameFromEdit = from;
+}
+public Boolean getDishDetailsCameFromEdit() {
+	return cameFromEdit;
+}
+public void setDishDetailsOrginalId(String id) {
+	orginalDishId = id;
+}
+public void setDishStockId(String dishId) {
+	
+	dishStockId = db.getDishStockIdsForADish(dishId);
+	
+}
 
 
 
@@ -629,6 +666,8 @@ public void resetSelectedMenu() {
 public Menu getSelectedMenu() {
 	return selectedMenu;
 }
+
+//either just populate the list, or comapres against the picked one
 public void resetMenuDetailList() {
 notSelectedDishes.clear();
 
@@ -655,11 +694,9 @@ public ArrayList<Dish> getMenuDetailsHeldDishes(){
 
 
 public  ObservableList<String>  getNotSelectedDishesAsString(){
-ArrayList<String> dishAsString = new ArrayList<>();
-notSelectedDishes.forEach((Dish i) -> { dishAsString.add(i.toString());
-});
 
-return FXCollections.observableArrayList(dishAsString);
+
+return FXCollections.observableArrayList(getNotSelectedDishesAsArrayListString());
 }
 public ArrayList<String> getSelectedMenuDishsAsString(){
 	return selectedMenu.getHeldDishesNames();
@@ -676,10 +713,224 @@ public ObservableList<String> getSelectedMenuDishes(){
 	
 }
 
+public  ArrayList<String>  getNotSelectedDishesAsArrayListString(){
+	
+	ArrayList<String> dishAsString = new ArrayList<>();
+	notSelectedDishes.forEach((Dish i) -> { dishAsString.add(i.toString());
+	});
+	return dishAsString;
+}
+
+// bascailly the dish find, looking to see if it already held to not included it then 
+//looking to see if its like the data have
+public ObservableList<String>  getNotSelectedDishesThatAreLikeMenuDetailsFind(String userInput){
+	ArrayList<String> notSelectedDishes = getNotSelectedDishesAsArrayListString();
+	ArrayList<String> output = new ArrayList<String>();
+	notSelectedDishes.forEach((String i) -> {
+		
+		if(i.contains(userInput)) {
+			output.add(i);
+		}
+		
+	});
+	
+	
+	return FXCollections.observableArrayList(output);
+	
+}
+
 public void removeADishFromSelectedMenuDishes(int place) {
 	
 	selectedMenu.removeADish(place);
 }
+
+
+//dish filter
+
+
+
+
+
+public ObservableList<String> getDishFilterResults(String maxNumberOfItems, String minNumberOfItems, String maxCost, String minCost){
+	ArrayList<Dish> maxni = null;
+	ArrayList<Dish> minni= null;
+	ArrayList<Dish> maxc= null;
+	ArrayList<Dish> minc= null;
+	ArrayList<Dish> master = new ArrayList<>();
+	 ArrayList<String> output = new ArrayList<>();
+	
+	 
+	 
+	if(!maxNumberOfItems.equals("null")) {
+		// as first one dont need to worry about the others
+		maxni =  db.getDishWithLessThanSetItems(Integer.parseInt(maxNumberOfItems));
+		
+	}
+	
+if(!minNumberOfItems.equals("null")) {
+	minni = db.getDishWithMoreThanSetItems(Integer.parseInt(minNumberOfItems));
+	
+}
+if(!maxCost.equals("null")) {
+	maxc = db.getDishThatCostNotAbove(Double.parseDouble(maxCost));
+	
+	
+}
+if(!minCost.equals("null")) {
+	minc = db.getDishThatCostNotBellow(Double.parseDouble(minCost));
+	
+}
+
+int counter = 0;
+
+if(maxni != null ) {
+	counter = 0;
+	while(counter != maxni.size()) {
+		
+		if(!master.contains(maxni.get(counter))) {
+			master.add(maxni.get(counter));
+		}
+	counter = counter + 1;
+	}
+}
+if(minni != null ) {
+	counter = 0;
+	while(counter != minni.size()) {
+		
+		if(!master.contains(minni.get(counter))) {
+			master.add(minni.get(counter));
+		}
+	counter = counter + 1;
+	}
+}
+
+if(maxc != null ) {
+	counter = 0;
+	while(counter != maxc.size()) {
+		
+		if(!master.contains(maxc.get(counter))) {
+			master.add(maxc.get(counter));
+		}
+	counter = counter + 1;
+	}
+}
+
+if(minc != null ) {
+	counter = 0;
+	while(counter != minc.size()) {
+		
+		if(!master.contains(minc.get(counter))) {
+			master.add(minc.get(counter));
+		}
+	counter = counter + 1;
+	}
+}
+
+//now only get elemenst that pass all the filters
+if(maxni != null ) {
+	master.retainAll(maxni);
+}
+if(minni != null ) {
+	master.retainAll(minni);
+}
+if(maxc != null ) {
+	master.retainAll(maxc);;
+}
+if(minc != null ) {
+	master.retainAll(minc);
+}
+
+
+
+//combinig all output in to one list
+//master = getCommonOfTwoDishArrayList(getCommonOfTwoDishArrayList(getCommonOfTwoDishArrayList(maxni,minni),maxc),minc);
+
+
+
+
+//simply so if the user selects a dish and it pass the filter that dish isnt shown.
+if(selectedMenu != null) {
+	master.retainAll(notSelectedDishes);
+}
+	
+	
+	
+
+ master.forEach((Dish i) -> {
+	 
+	 output.add(i.toString());
+	 
+ });
+
+
+return FXCollections.observableArrayList(output);
+/*
+
+
+//bascially just reset the list so know got the most uptodate one
+notSelectedDishes.clear();
+
+//notSelectedDishes 
+if(selectedMenu != null) {
+db.getAllCurrentDishes().forEach((Dish i) -> {
+	
+	if(!selectedMenu.doesItHoldDish(i.toString())) {
+		notSelectedDishes.add(i); 
+	}
+});
+
+} else {
+	notSelectedDishes.addAll(db.getAllCurrentDishes());
+}
+
+
+//
+
+
+
+
+
+ArrayList<String> comparison = new ArrayList<>();
+
+
+//bascailly just getting the pk alone
+notSelectedDishes.forEach((Dish i) -> {
+	
+	comparison.add(i.getName());
+	
+});
+
+//will hold the actaull value that is outputted/ ones displayed 
+ArrayList<Dish> output = new ArrayList<>();
+//this is now just checking if the pk match and if they do 
+//i know i can output it.
+int counter3 = 0;
+while(counter3!= comparison.size()) {
+	
+	if(comparison.contains(master.get(counter3).getName())) {
+		output.add(master.get(counter3));
+	}
+	
+	counter3 = counter3 + 1;
+}
+
+
+
+resetMenuDetailList();
+
+//just save me having to manually convert to the output type i want
+if(output!=null) {
+notSelectedDishes = output;
+}
+//make the output from the var we assigned above.
+return getNotSelectedDishesAsString();
+
+
+
+
+*/
+	}
+
 
 //menu list 
 public ObservableList<String> getAllMenus(){
@@ -717,8 +968,52 @@ public Boolean doesMenuNameAlreadyExist(String name) {
 	return output;
 }
 
-public void saveDishDetails() {
+public ObservableList<String> saveDishDetails() {
 	
+	//selectedDish is the one making
+	
+	db.saveDish(selectedDish.getName());
+	
+	ArrayList<StockType> st = selectedDish.getHeldStock();
+	
+	int counter = 0;
+	
+		while (counter != st.size()) {
+			
+			String value = st.get(counter).toString();
+
+			int equals1 = value.indexOf("=");
+			int equals2 = value.indexOf("=", equals1 +1);
+			int equals3 = value.indexOf("=", equals2 +1);
+			
+			//so know where they end
+			int comma1 = value.indexOf(",");
+			int comma2 = value.indexOf(",",comma1+1);
+			
+			String name = value.substring(equals1 + 2,comma1);
+			String quanity = value.substring(equals2 + 2,comma2);
+			String quanityType = value.substring(equals3 + 2); 
+			
+			db.saveDishStockConnection(name, selectedDish.getName(), quanity, quanityType);	
+			counter = counter + 1;
+			//so is shown as soon goes back 
+			
+				
+				
+			
+					
+		}	
+		resetMenuDetailList();
+		return getNotSelectedDishesAsString();
+}
+public ObservableList<String> updateDishDetails() {
+	
+	//selectedDish is the one making
+	
+	//bascially just purge all the rgianl connections and put new ones in its place
+		db.deleteDishConnection(orginalDishId);
+	
+	db.updateDish(selectedDish.getName(), orginalDishId);
 	
 	
 	db.saveDish(selectedDish.getName());
@@ -735,32 +1030,31 @@ public void saveDishDetails() {
 			int equals2 = value.indexOf("=", equals1 +1);
 			int equals3 = value.indexOf("=", equals2 +1);
 			
-			
 			//so know where they end
 			int comma1 = value.indexOf(",");
 			int comma2 = value.indexOf(",",comma1+1);
 			
-		
-			
 			String name = value.substring(equals1 + 2,comma1);
-			
 			String quanity = value.substring(equals2 + 2,comma2);
-		
 			String quanityType = value.substring(equals3 + 2); 
-			
-			
-			
 			
 			db.saveDishStockConnection(name, selectedDish.getName(), quanity, quanityType);	
 			counter = counter + 1;
-		}
-	
-	
-	
+			//so is shown as soon goes back 
+			
+				
+				
+			
+					
+		}	
+		resetMenuDetailList();
+		return getNotSelectedDishesAsString();
 }
 
-public void deleteADish(String id) {
+public ObservableList<String> deleteADish(String id) {
 	db.deleteSelectedDish(id);
+	resetMenuDetailList();
+	return getNotSelectedDishesAsString();
 }
 
 
