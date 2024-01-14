@@ -2,6 +2,8 @@ package view;
 
 import java.util.ArrayList;
 
+import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.geometry.Pos;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
@@ -12,7 +14,7 @@ import javafx.scene.text.Font;
 
 public class FilterDishes extends BasicLayoutFilter {
 private Label txtTotalCostAbove = new Label("total cost more than");
-private Label txtTotalCostBelow = new Label("total cost more than");
+private Label txtTotalCostBelow = new Label("total cost less than");
 private Label txtNumberOfItemsBelow = new Label("number ingredieds below");
 private Label txtNumberOfItemsAbove = new Label("number ingredieds above");
 private TextField tfTotalCostAbove = new TextField();
@@ -56,4 +58,43 @@ public FilterDishes() {
 	
 	
 }
+
+public String getCostMoreThan() {
+	if(tfTotalCostAbove.getText() == null) {
+		return "null";
+	}else {
+	
+	return tfTotalCostAbove.getText();
+	}
+	}
+public String getCostLessThan() {
+	if(tfTotalCostBelow.getText() == null) {
+		return "null";
+	}else {
+	
+	return tfTotalCostBelow.getText();
+	}
+	
+}
+public String getNumberOfIngredientsLessThan() {
+	if(tfNumberOfItemsBelow.getText() == null) {
+		return "null";
+	}else {
+	
+	return tfNumberOfItemsBelow.getText();
+	}
+	
+	
+}
+public String getNumberOfIngredientsMoreThan() {
+	if(tfNumberOfItemsAbove.getText() == null) {
+		return "null";
+	}else {
+	
+	return tfNumberOfItemsAbove.getText();
+	}
+	
+}
+
+
 }

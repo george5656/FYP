@@ -481,12 +481,16 @@ public void setMenuDetailsBtnRemoveFromListEventHandler(EventHandler<ActionEvent
 public void setMenuDetailsBtnDeleteDishPermentlyFromListEventHandler(EventHandler<ActionEvent> event) {
 	menuDetails.setBtnDeleteDishPermenetlyFromListEventHandler(event);
 }
+public void setMenuDetailsBtnEditEventHandler(EventHandler<ActionEvent> event) {
+	menuDetails.setBtnEditEventHandler(event);
+}
 public void MenuDetailsLoad() {
 	this.getChildren().remove(0);
 	this.getChildren().add(menuDetails);
 	this.setVgrow(menuDetails, Priority.ALWAYS);
 }
 public void setMenuDetailsDishList(ObservableList<String> dishes) {
+	
 	menuDetails.setDishes(dishes);
 }
 public String getMenuDetailsFindUserInput() {
@@ -982,4 +986,20 @@ public void dishFilterLoad() {
 	this.setVgrow(fd, Priority.ALWAYS);
 }
 
+public void setDishFilterBtnApplyEventHandler(EventHandler<ActionEvent> event) {
+	fd.setBtnApply(event);
+}
+
+public String getDishFilterCostMoreThan() {
+	return fd.getCostMoreThan();
+}
+public String getDishFilterCostLessThan() {
+	return fd.getCostLessThan();
+}
+public String getDishFilterNumberOfIngredeintsLessThan() {
+	return fd.getNumberOfIngredientsLessThan();
+}
+public String getDishFilterNumberOfIngredeintsMoreThan() {
+	return fd.getNumberOfIngredientsMoreThan();
+}
 }

@@ -136,6 +136,9 @@ public class MenuDetails extends PaneMenu {
 	public void setBtnDeleteDishPermenetlyFromListEventHandler(EventHandler<ActionEvent> event) {
 		btnDeleteDishPeremently.setOnAction(event);
 	}
+	public void setBtnEditEventHandler(EventHandler<ActionEvent> event) {
+		btnEdit.setOnAction(event);
+	}
 	public String getFindUserInput() {
 		return tfUserInput.getText();
 	}

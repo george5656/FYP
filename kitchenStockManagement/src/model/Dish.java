@@ -44,4 +44,27 @@ public void setName(String name) {
 public ArrayList<StockType> getHeldStock(){
 	return ingrdents;
 }
+public Double getDishCost() {
+	double totalCost = 0.00;
+	int count = 0;
+	
+	while(count != ingrdents.size()) {
+		 
+		totalCost = totalCost + Double.parseDouble(ingrdents.get(count).getCost());
+		
+		count = count + 1;
+	}
+	 
+	
+	
+	
+	return totalCost;
+	
+	
+}
+
+@Override
+	public boolean equals(Object obj) {
+		return toString().equals(obj.toString());
+	}
 }
