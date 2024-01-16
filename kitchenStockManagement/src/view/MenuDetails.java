@@ -26,7 +26,7 @@ public class MenuDetails extends PaneMenu {
 	private Button btnFind = new Button("find");
 	private Button btnFilter = new Button("filter");
 	private Button btnOutput = new Button("output list");
-	private Label txtBudget = new Label("Budget =");
+	private Label txtBudget = new Label("Budget = not selected");
 	private Label txtErrorMessage = new Label("Error");
 	private TextField tfUserInput = new TextField();
 	private ListView<String> lvDishes = new ListView<>();
@@ -139,6 +139,9 @@ public class MenuDetails extends PaneMenu {
 	public void setBtnEditEventHandler(EventHandler<ActionEvent> event) {
 		btnEdit.setOnAction(event);
 	}
+	public void setBtnLoadFromFileChooserEventHandler(EventHandler<ActionEvent> event) {
+		btnLoadFromFileChooser.setOnAction(event);
+	}
 	public String getFindUserInput() {
 		return tfUserInput.getText();
 	}
@@ -173,9 +176,9 @@ public class MenuDetails extends PaneMenu {
 	public int getMenuListSize() {
 		return lvMenu.getItems().size();
 	}
-	public void setInputValues() {
-		
+	//for easy of use just add the semantics around it
+	public void setBudgetValue(String value) {
+		txtBudget.setText("Budget = " + value);
 	}
-	
 	
 }

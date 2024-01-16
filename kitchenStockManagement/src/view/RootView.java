@@ -484,6 +484,9 @@ public void setMenuDetailsBtnDeleteDishPermentlyFromListEventHandler(EventHandle
 public void setMenuDetailsBtnEditEventHandler(EventHandler<ActionEvent> event) {
 	menuDetails.setBtnEditEventHandler(event);
 }
+public void setMenuDetailsBtnLoadFromFileChooserEventHandler(EventHandler<ActionEvent> event) {
+	menuDetails.setBtnLoadFromFileChooserEventHandler(event);
+}
 public void MenuDetailsLoad() {
 	this.getChildren().remove(0);
 	this.getChildren().add(menuDetails);
@@ -511,6 +514,9 @@ public Integer getMenuDetailsDishListSelectedItemIndex() {
 }
 public void setMenuDetailsMenuListItems(ObservableList<String> items) {
 	menuDetails.setMenuDishList(items);
+}
+public void setMenuDetailsBudgetValue(String amount) {
+	menuDetails.setBudgetValue(amount);
 }
 public int getMenuDetailsMenuListSelectedIndex() {
 	return menuDetails.getMenuListSelectedIndex();
@@ -571,6 +577,12 @@ public void outputPageLoad() {
 
 public void setOutputBtnMenuEventHandler(EventHandler<ActionEvent> event) {
 	output.setBtnMenuEventHandler(event);
+}
+public void setOutputBtnShoppingEventHandler(EventHandler<ActionEvent> event) {
+	output.setBtnShoppingEventHandler(event);
+}
+public void setOutputBtnSaveEventHandler(EventHandler<ActionEvent> event) {
+	output.setBtnSaveEventHandler(event);
 }
 //budgetList
 

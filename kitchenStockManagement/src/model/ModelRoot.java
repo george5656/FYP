@@ -705,7 +705,31 @@ public void addDishToSelectedMenu(String dishId) {
 	
 	selectedMenu.addItemToDishList(db.getASpecificDishes(dishId));
 }
-
+//true if go over, false if dont.
+public Boolean doesDishGoOverBudget(String dishId){
+	ArrayList<StockType> selectedDishStockType = db.getASpecificDishes(dishId).getHeldStock();	
+	Double remainingBudget = getBudgetSizeMinusTheShoppingList();
+	int counter = 0;
+	Double dishTotalCost = 0.00;
+	while (counter != selectedDishStockType.size()) {
+		
+		dishTotalCost = dishTotalCost + Double.parseDouble(selectedDishStockType.get(counter).getQuanity())*Double.parseDouble(selectedDishStockType.get(counter).getCost());
+		
+		counter = counter +1;
+	}
+	
+	if((remainingBudget-dishTotalCost)<0) {
+		
+		return true;
+		
+	}else {
+		
+		return false;
+		
+	}
+	
+	
+}
 public ObservableList<String> getSelectedMenuDishes(){
 	
 	return selectedMenu.getDishesAsObservableListOFString();
@@ -767,7 +791,33 @@ public ObservableList<String> getSelectedMenuStockType(){
 	return FXCollections.observableArrayList(output);
 	
 }
-
+public Double getBudgetSizeMinusTheShoppingList() {
+	ArrayList<Dish> dishes = new ArrayList<>();
+	//so not sharing the same memoery locaition
+	selectedMenu.getHeldDishes().forEach((Dish i) -> dishes.add(i));
+	
+	Double BudgetAmount = selectedMenu.getBudget().getAmount();
+	Double totalCost = 0.00;
+	int counter = 0;
+	int counter2 = 0;
+	while (counter != dishes.size()) {
+		ArrayList<StockType> st = dishes.get(counter).getHeldStock();
+		while(counter2 != st.size()) {
+			
+			totalCost = totalCost + (Double.parseDouble(st.get(counter2).getQuanity()) * Double.parseDouble(st.get(counter2).getCost()));
+			counter2  = counter2 + 1;
+		
+		}
+		
+		
+		counter2 = 0;
+		counter = counter +1;
+		
+	}
+	
+	
+	return BudgetAmount - totalCost;
+}
 public  ArrayList<String>  getNotSelectedDishesAsArrayListString(){
 	
 	ArrayList<String> dishAsString = new ArrayList<>();
@@ -1023,6 +1073,17 @@ public Boolean doesMenuNameAlreadyExist(String name) {
 	return output;
 }
 
+public ArrayList<String> getAllCurrentDishName(){
+	ArrayList<String> output = new ArrayList<>();
+ db.getAllCurrentDishes().forEach((Dish i) ->{
+	 
+	 output.add(i.getName());
+	 
+ });
+	
+	return output;
+}
+
 public ObservableList<String> saveDishDetails() {
 	
 	//selectedDish is the one making
@@ -1112,5 +1173,7 @@ public ObservableList<String> deleteADish(String id) {
 	return getNotSelectedDishesAsString();
 }
 
-
+public void saveSelectedMenu() {
+	db.saveMenu(selectedMenu);
+}
 }

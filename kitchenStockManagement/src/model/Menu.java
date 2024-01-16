@@ -59,5 +59,7 @@ public ArrayList<String> getHeldDishesNames(){
 	});
 	return dishesNames;
 }
-
+public Budget getBudget() {
+	return budget;
+}
 }

@@ -15,9 +15,10 @@ import javafx.scene.text.Font;
 
 public class Output extends PaneMenu {
 	private Label txtTitle = new Label("Which menu to save");
-	private Button btnMenu = new Button("menu");
-	private Button btnShoppingList = new Button("shoing List");
+	private Button btnMenu = new Button("output menu");
+	private Button btnShoppingList = new Button("output shoing List");
 	private Button btnCancel = new Button("cancel");
+	private Button btnSave = new Button("save");
 	private ArrayList<Labeled> controls = new ArrayList<>();
 	private VBox layout =  new VBox(20);
 	
@@ -32,9 +33,10 @@ public class Output extends PaneMenu {
 		controls.add(txtTitle);
 		controls.add(btnMenu);
 		controls.add(btnShoppingList);
+		controls.add(btnSave);
 		controls.add(btnCancel);
 		
-		layout.getChildren().addAll(txtTitle,btnMenu,btnShoppingList,btnCancel);
+		layout.getChildren().addAll(txtTitle,btnMenu,btnShoppingList,btnSave,btnCancel);
 		
 		for(Labeled i : controls) {
 			i.setFont(new Font(20));
@@ -45,5 +47,11 @@ public class Output extends PaneMenu {
 	}
 	public void setBtnMenuEventHandler(EventHandler<ActionEvent> event) {
 		btnMenu.setOnAction(event);
+	}
+	public void setBtnShoppingEventHandler(EventHandler<ActionEvent> event) {
+		btnShoppingList.setOnAction(event);
+	}
+	public void setBtnSaveEventHandler(EventHandler<ActionEvent> event) {
+		btnSave.setOnAction(event);
 	}
 }

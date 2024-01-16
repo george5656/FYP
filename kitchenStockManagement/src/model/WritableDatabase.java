@@ -1229,7 +1229,30 @@ public ArrayList<Dish> getDishThatCostNotBellow(Double numberOfMaxItems) {
  
  
  
- 
+ public void saveMenu(Menu menu) {
+		PreparedStatement statement;
+		try {
+			statement = mySqlDatabase.prepareStatement("Insert Into stock_mangemnet.tbl_menu values (\'" +menu.getBudget().getBudgetId() + "\', \'" + menu.getName() + "\');");
+			statement.execute();
+			
+			menu.getHeldDishes().forEach((Dish i) -> {
+				
+				try {
+					mySqlDatabase.prepareStatement("Insert Into stock_mangemnet.tbl_menu_dishes (dishId, menuId) values ( \'" +i.getName() + "\', \'" + menu.getName() + "\');").execute();
+				
+				} catch (SQLException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+				
+				
+			});
+			
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
  
  
  

@@ -1,11 +1,16 @@
 package controller;
 
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.ArrayList;
+import java.util.Scanner;
+
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.scene.control.Alert;
+import javafx.scene.control.Alert.AlertType;
 import javafx.stage.FileChooser;
 import model.ModelRoot;
 import view.RootView;
@@ -75,6 +80,7 @@ public class Controller {
 		view.setMenuDetailsBtnRemoveFromListEventHandler(new EHMenuDetailsBtnRemoveFromList());
 		view.setMenuDetailsBtnDeleteDishPermentlyFromListEventHandler(new EHMenuDetailsBtnDeleteDishPermentlyFromList());
 		view.setMenuDetailsBtnEditEventHandler(new EHMenuDetailsBtnEdit());
+		view.setMenuDetailsBtnLoadFromFileChooserEventHandler(new EHMenuDetailsBtnLoadFromFileChooser());
 		
 		view.setMenuSettingBtnSaveEventHandler(new EHMenuSettingBtnSave());
 		
@@ -126,10 +132,10 @@ public class Controller {
 		
 		
 		view.setOutputBtnMenuEventHandler(new EHOutputBtnMenuFromList());
+		view.setOutputBtnShoppingEventHandler(new EHOutputBtnShoppingFromList());
+		view.setOutputBtnSaveEventHandler(new EHOutputBtnSave());
 	
-	
-	
-	
+		
 	
 	
 	
@@ -157,7 +163,7 @@ public class Controller {
 	 * class for the btnLogin from Login class. it take the input and validates it,
 	 * is an issue is present it shows an error message, if pass validation it check
 	 * the database to see if it matches and it if does it loads the next page, if
-	 * doesn't it again shows an error message. error message done by alert
+	 * doesn't it again shows an error message.  error message done by alert
 	 * 
 	 * dialog box.
 	 * 
@@ -214,9 +220,8 @@ public class Controller {
 		@Override
 		public void handle(ActionEvent event) {
 			model.resetMenuDetailList();
-	view.setMenuDetailsDishList(model.getAllDishes());
+			view.setMenuDetailsDishList(model.getAllDishes());
 			model.resetSelectedMenu();
-			
 			view.MenuDetailsLoad();
 		}
 
@@ -360,7 +365,93 @@ public class Controller {
 
 	}
 	
-	
+
+	private class EHMenuDetailsBtnLoadFromFileChooser implements EventHandler<ActionEvent> {
+
+		@Override
+		public void handle(ActionEvent event) {
+			String issueFrom="";
+			String masterErrorMessage = "";
+			File chosenLocation = null;
+			int dishNotRecognised = 0;
+			//used to know if they input a known dish or not
+			ArrayList<String> getAllCurrentdDishes = model.getAllCurrentDishName();
+			
+			if(model.getSelectedMenu() == null) {
+				issueFrom = "missing data";
+				masterErrorMessage = "need to go to setting before can continue";
+			}
+			// in here as want only alert message, but also dont want the user to have to
+			//do this of already have an error but can be in the one with the scanner as 
+			//also need to check the file they get
+			if(masterErrorMessage.equals("")) {
+			 chosenLocation = new FileChooser().showOpenDialog(null);	
+			}
+			
+			if(chosenLocation == null) {
+				issueFrom = "missing data";
+				masterErrorMessage = "no file selected";
+			}else if(!chosenLocation.toURI().toString().endsWith(".txt")) {
+				issueFrom = "file Selected";
+				masterErrorMessage = "only .txt files allowed";
+			}
+			
+			
+			if(masterErrorMessage.equals("")) {
+			
+			try {
+				Scanner sc = new Scanner(chosenLocation).useDelimiter("[\n\r]+");
+				
+				sc.next();
+				while(sc.hasNext()) {
+					String dishIdInStringFormat = sc.next();
+					//two as its "= "
+					String id ="";
+					if((dishIdInStringFormat.indexOf("=")+2) != -1) {
+					id = dishIdInStringFormat.substring(dishIdInStringFormat.indexOf("=")+2);
+					}
+					
+					
+					
+					if(getAllCurrentdDishes.contains(id)) {
+					
+					model.addDishToSelectedMenu(id);
+					view.setMenuDetailsMenuListItems(model.getSelectedMenuDishes());
+					model.resetMenuDetailList();
+					view.setMenuDetailsDishList(model.getNotSelectedDishesAsString());
+					view.setMenuDetailsShoppingList(model.getSelectedMenuStockType());
+					// +"" is simply to convert it to a string
+					view.setMenuDetailsBudgetValue(model.getBudgetSizeMinusTheShoppingList()+"");
+					}else {
+						dishNotRecognised = dishNotRecognised + 1;
+					}
+				}
+				sc.close();
+			
+			
+			
+			
+			} catch (FileNotFoundException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			
+			}else {
+				//if top error fail 
+				model.makeAlert(issueFrom, masterErrorMessage).show();
+			}
+			
+			
+			if(dishNotRecognised != 0) {
+				Alert missedDishes = new Alert(AlertType.INFORMATION);
+				missedDishes.setContentText(dishNotRecognised +" where not recognised");
+				missedDishes.setHeaderText("file input");
+				missedDishes.setTitle("warning");
+				missedDishes.show();
+			}
+		}
+
+	}
 	private class EHStockBtnAdd implements EventHandler<ActionEvent> {
 
 		@Override
@@ -1575,8 +1666,10 @@ view.BudgetListLoad(model.getObservableListBudgetList());
 			
 			
 			if(masterError.equals("")) {
+				//needs both as makes a menu object
 				model.setSelectedMenu(view.getMenuSettingName(), view.getMenuSettingSelectedBudgetOption());
 				view.MenuDetailsLoad();
+				view.setMenuDetailsBudgetValue(model.getBudgetSizeMinusTheShoppingList() +"");
 			}else {
 				Alert menuSettingErrorMessage = model.makeAlert(issueFrom, masterError);
 						menuSettingErrorMessage.show();
@@ -1600,6 +1693,9 @@ view.BudgetListLoad(model.getObservableListBudgetList());
 			}else if(view.getMenuDetailsDishListSelectedItemIndex() == -1) {
 				issueFrom = "dish list";
 				masterErrorMessage = "no item selected";
+			}else if (model.doesDishGoOverBudget(view.getMenuDetailsDishListSelectedItemValueIdOnly())) {
+				issueFrom = "dish list";
+				masterErrorMessage = "budget is to small to buy all the needed items";
 			}
 			
 			
@@ -1607,15 +1703,17 @@ view.BudgetListLoad(model.getObservableListBudgetList());
 			//if no errors does this part
 				
 				
+				
+				
+				
 				model.addDishToSelectedMenu(view.getMenuDetailsDishListSelectedItemValueIdOnly());
-				
-				
 				view.setMenuDetailsMenuListItems(model.getSelectedMenuDishes());
-				
 				model.resetMenuDetailList();
 				view.setMenuDetailsDishList(model.getNotSelectedDishesAsString());
-				
 				view.setMenuDetailsShoppingList(model.getSelectedMenuStockType());
+				// +"" is simply to convert it to a string
+				view.setMenuDetailsBudgetValue(model.getBudgetSizeMinusTheShoppingList()+"");
+				
 				
 				
 			}else {
@@ -1644,6 +1742,7 @@ view.BudgetListLoad(model.getObservableListBudgetList());
 				view.setMenuDetailsMenuListItems(model.getSelectedMenuDishes());
 				view.setMenuDetailsDishList(model.getNotSelectedDishesAsString());
 				view.setMenuDetailsShoppingList(model.getSelectedMenuStockType());
+				view.setMenuDetailsBudgetValue(model.getBudgetSizeMinusTheShoppingList()+"");
 			}
 			
 
@@ -1828,6 +1927,59 @@ view.BudgetListLoad(model.getObservableListBudgetList());
 					
 				
 					
+					pw.close();
+					
+				} catch (IOException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+				
+				
+				
+			} 
+			
+			
+			
+			
+			
+		}
+	}
+	
+	
+	private class EHOutputBtnShoppingFromList implements EventHandler<ActionEvent> {
+
+		@Override
+		public void handle(ActionEvent event)  {
+			String issueFrom = "";
+			String masterErrorMessage = "";
+			if(view.getMenuDetailsMenuListSize() == 0) {
+				issueFrom = "menu list";
+				masterErrorMessage = "no data to output";
+			}
+		
+			if(masterErrorMessage.equals("")) {
+			
+				File chosenLocation = new FileChooser().showSaveDialog(null);
+				
+						
+				try {
+					PrintWriter pw = new PrintWriter(chosenLocation);
+					
+					pw.write("shopping list for\n menu name = " + model.getSelectedMenu().getName() + "\n");
+					
+					
+					
+					
+					model.getSelectedMenuStockType().forEach((String i) -> {
+						
+						pw.print(i + "\n");
+						
+					});
+					//need else it wont write it
+					 pw.flush();
+					
+				
+					
 					
 					
 				} catch (IOException e) {
@@ -1843,10 +1995,38 @@ view.BudgetListLoad(model.getObservableListBudgetList());
 			
 		}
 	}
-	
-	
-	
-	
+	private class EHOutputBtnSave implements EventHandler<ActionEvent> {
+
+		@Override
+		public void handle(ActionEvent event)  {
+			
+			
+			String issueFrom = "";
+			String masterErrorMessage = "";
+			if(view.getMenuDetailsMenuListSize() == 0) {
+				issueFrom = "menu list";
+				masterErrorMessage = "no data to output";
+			}
+			
+			if(masterErrorMessage.equals("")) {
+				
+				
+				model.saveSelectedMenu();
+				
+				
+				view.menuListLoad(model.getAllMenus());
+			}else {
+				model.makeAlert(issueFrom, masterErrorMessage).show();
+			}
+		
+			
+			
+			
+			
+			
+			
+		}
+	}
 	
 	
 }
