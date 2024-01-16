@@ -712,6 +712,61 @@ public ObservableList<String> getSelectedMenuDishes(){
 	
 	
 }
+// done for remove and add as it just get its from the list so updates it all
+public ObservableList<String> getSelectedMenuStockType(){
+	
+	ArrayList<Dish> dishes = new ArrayList<>();
+	//so not sharing the same memoery locaition
+	selectedMenu.getHeldDishes().forEach((Dish i) -> dishes.add(i));
+	
+	ArrayList<StockType> currentlyHeldStockType = new ArrayList<>();
+	ArrayList<String> output = new ArrayList<>();
+	int counter = 0;
+	int counter2 = 0;
+	
+	while(counter != dishes.size()) {
+		
+		ArrayList<StockType> stockType = dishes.get(counter).getHeldStock();
+		while(counter2 != stockType.size()) {
+			//simply as the lambada is functional so wont let me get stocktype.get(counter2)
+			StockType comparison = stockType.get(counter2);
+			
+			if(currentlyHeldStockType.contains(stockType.get(counter2))) {
+				
+				
+				
+				currentlyHeldStockType.forEach((StockType i ) -> {
+					//so if the one that equals it, it does this
+					if(i.equals(comparison)) {
+						//so if its in we dont need to readd it we can just chnage the quanity value
+						//delete will be fine as will just run from begging without it in the list
+						
+						i.setQuanity((Double.parseDouble(i.getQuanity()) + Double.parseDouble(comparison.getQuanity()))+"" );
+					}
+				});
+				
+				
+				
+				
+			}else {
+				//if not in just a normal add
+				//need to be this way as have issue with memory location being the same so when remove the old one keeps the edit
+				currentlyHeldStockType.add(new StockType(stockType.get(counter2).getStockName(), stockType.get(counter2).getCost(), stockType.get(counter2).getQuanityType(), stockType.get(counter2).getQuanity()));
+			}
+			
+			counter2 = counter2 +1;
+		}
+		
+		//reset counter 2 and inc counter 1
+		counter2 = 0;
+		counter = counter + 1;
+	}
+	
+	//convert it all to a string to be outputed
+	currentlyHeldStockType.forEach((StockType i) -> output.add(i.toStringDishDetails()));
+	return FXCollections.observableArrayList(output);
+	
+}
 
 public  ArrayList<String>  getNotSelectedDishesAsArrayListString(){
 	

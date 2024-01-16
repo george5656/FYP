@@ -156,6 +156,13 @@ public class MenuDetails extends PaneMenu {
 		lvMenu.getItems().clear();
 		lvMenu.getItems().addAll(items);
 	}
+	public void setShoppingListList(ObservableList<String> items) {
+		lvShopping.getItems().clear();
+		lvShopping.getItems().addAll(items);
+	}
+	public ObservableList<String> getShoppingListList(){
+		return lvShopping.getItems();
+	}
 	public int getMenuListSelectedIndex() {
 		return lvMenu.getSelectionModel().getSelectedIndex();
 	}

@@ -31,6 +31,9 @@ public StockType(String name, String cost, String quanityType,String quanity) {
  public String getQuanityType() {
 	 return quanityType; 
  }
+ public String getQuanity() {
+	 return quanity; 
+ }
  public void setname(String name) {
 	 this.name = name;
  }
@@ -39,6 +42,9 @@ public StockType(String name, String cost, String quanityType,String quanity) {
  }
  public void setquanityType(String quanityType) {
 	 this.quanityType = quanityType;
+ }
+ public void setQuanity(String quanity) {
+	 this.quanity = quanity;
  }
  /**
   * not official format, this way for the listview
@@ -51,4 +57,11 @@ public StockType(String name, String cost, String quanityType,String quanity) {
 		return "name = " + name + ", cost = " + cost + ", quantityType = " + quanityType + ", quanity = " + quanity;
 	}
  
+ // so know when making the shopping list if it already exists
+ @Override
+	public boolean equals(Object obj) {
+	 //down cast as is only used in the inteneded area 
+	 StockType comparion = (StockType) obj;
+		return this.getStockName().equals(comparion.getStockName());
+	}
 }

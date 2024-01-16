@@ -1587,6 +1587,8 @@ view.BudgetListLoad(model.getObservableListBudgetList());
 	
 	private class EHMenuDetailsBtnAdd implements EventHandler<ActionEvent> {
 
+		
+		
 		@Override
 		public void handle(ActionEvent event) {
 			String issueFrom = "";
@@ -1612,6 +1614,8 @@ view.BudgetListLoad(model.getObservableListBudgetList());
 				
 				model.resetMenuDetailList();
 				view.setMenuDetailsDishList(model.getNotSelectedDishesAsString());
+				
+				view.setMenuDetailsShoppingList(model.getSelectedMenuStockType());
 				
 				
 			}else {
@@ -1639,6 +1643,7 @@ view.BudgetListLoad(model.getObservableListBudgetList());
 				model.resetMenuDetailList();
 				view.setMenuDetailsMenuListItems(model.getSelectedMenuDishes());
 				view.setMenuDetailsDishList(model.getNotSelectedDishesAsString());
+				view.setMenuDetailsShoppingList(model.getSelectedMenuStockType());
 			}
 			
 
