@@ -490,8 +490,13 @@ public void MenuDetailsLoad() {
 	this.setVgrow(menuDetails, Priority.ALWAYS);
 }
 public void setMenuDetailsDishList(ObservableList<String> dishes) {
-	
 	menuDetails.setDishes(dishes);
+}
+public void setMenuDetailsShoppingList(ObservableList<String> dishes) {	
+	menuDetails.setShoppingListList(dishes);
+}
+public ObservableList<String> getMenuDetailsShoppingList(){
+	return menuDetails.getShoppingListList();
 }
 public String getMenuDetailsFindUserInput() {
 	return menuDetails.getFindUserInput();
