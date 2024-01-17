@@ -32,7 +32,9 @@ public class ModelRoot {
 	//idea being this is menu details list of dish that keeps track of what has been added and what hasn't been
 	//added.
 	private ArrayList<Dish> notSelectedDishes = new ArrayList<>();
-	
+	//simply here so know the orginal menu if want to edit on the menu add and edit only
+	//time it is touched
+	private Menu fromMenu = null;
 	//so know where dish details came from 
 	private Boolean cameFromEdit = false;
 	//so know which value to update 
@@ -51,6 +53,7 @@ public class ModelRoot {
 	private StorageLocation selectedStroage;
 	private Dish selectedDish;
 	//ideas is this is one manipulated and used, through out the items list. 
+	//gence why i have another menu
 	private Menu selectedMenu;
 	//used to determine which menu to use and is only set at login
 	private Boolean isAdmin;
@@ -657,8 +660,18 @@ public ObservableList<String> getAllDishesThatAreLike(String like){
 }
 
 public void setSelectedMenu(String name, String budgetId) {
-selectABudget(budgetId);
+	selectABudget(budgetId);
 	selectedMenu = new Menu(name, selectedBudget, new ArrayList<>());
+}
+public void setSelectedMenuToBeAnExisitingMenu(String id) {
+
+	selectedMenu = db.getAMenuFromId(id);
+
+	
+	
+}
+public void deleteSelectedMenu() {
+	db.DeleteAMenu(selectedMenu);
 }
 public void resetSelectedMenu() {
 	selectedMenu = null;
@@ -795,15 +808,16 @@ public Double getBudgetSizeMinusTheShoppingList() {
 	ArrayList<Dish> dishes = new ArrayList<>();
 	//so not sharing the same memoery locaition
 	selectedMenu.getHeldDishes().forEach((Dish i) -> dishes.add(i));
-	
+
 	Double BudgetAmount = selectedMenu.getBudget().getAmount();
 	Double totalCost = 0.00;
 	int counter = 0;
 	int counter2 = 0;
+	
 	while (counter != dishes.size()) {
 		ArrayList<StockType> st = dishes.get(counter).getHeldStock();
 		while(counter2 != st.size()) {
-			
+		
 			totalCost = totalCost + (Double.parseDouble(st.get(counter2).getQuanity()) * Double.parseDouble(st.get(counter2).getCost()));
 			counter2  = counter2 + 1;
 		
@@ -862,7 +876,7 @@ public ObservableList<String> getDishFilterResults(String maxNumberOfItems, Stri
 	ArrayList<Dish> maxc= null;
 	ArrayList<Dish> minc= null;
 	ArrayList<Dish> master = new ArrayList<>();
-	 ArrayList<String> output = new ArrayList<>();
+	ArrayList<String> output = new ArrayList<>();
 	
 	 
 	 
@@ -887,7 +901,7 @@ if(!minCost.equals("null")) {
 }
 
 int counter = 0;
-
+//just add them all to the master, with no duplicates
 if(maxni != null ) {
 	counter = 0;
 	while(counter != maxni.size()) {
@@ -1036,7 +1050,160 @@ return getNotSelectedDishesAsString();
 */
 	}
 
+//tcb are just the first letter of the label correcdeing to its input
+public ObservableList<String> getMenuFilterResults(String tcb, String tca, String cd, String dcd){
+	
+	ArrayList<Menu> allMenus = db.getAllMenu();
+	
+	//need these so that i can make sure that the master value is 
+	//present in all of them.
+	ArrayList<Menu> tcbMatchingMenus = null;
+	ArrayList<Menu> tcaMatchingMenus = null;
+	ArrayList<Menu> cdMatchingMenus = null;
+	ArrayList<Menu> dcdMatchingMenus = null;
+	ArrayList<Menu> master = new ArrayList<>();
+	ArrayList<String> output = new ArrayList<>();
 
+	
+	if(tcb != null) {
+		
+		tcbMatchingMenus = new ArrayList<>();
+		int menuCounter = 0;
+		int dishCounter = 0;
+		
+		
+		while(menuCounter != allMenus.size()) {
+			Double menuCost = 0.00;
+			ArrayList<Dish> allMenuDishes = allMenus.get(menuCounter).getHeldDishes();
+			
+			
+			
+			
+			while(dishCounter != allMenuDishes.size() ) {
+				
+				menuCost = menuCost + (allMenuDishes.get(dishCounter).getDishCost());
+				
+				dishCounter = dishCounter + 1;
+			}
+			
+			//this is cheching if it actaull is bellow the amount
+			
+			
+			
+			if(Double.parseDouble(tcb) >  menuCost) {
+				master.add(allMenus.get(menuCounter));
+				tcbMatchingMenus.add(allMenus.get(menuCounter));
+			}
+			
+			//reset for the next menu
+			menuCost = 0.00;
+				dishCounter = 0;
+			menuCounter = menuCounter + 1;
+			
+		}
+		
+		
+	}
+	
+	if(tca != null) {
+		tcaMatchingMenus = new ArrayList<>();
+		int menuCounter = 0;
+		int dishCounter = 0;
+		while(menuCounter != allMenus.size()) {
+			Double menuCost = 0.00;
+			ArrayList<Dish> allMenuDishes = allMenus.get(menuCounter).getHeldDishes();
+			
+			while(dishCounter != allMenuDishes.size() ) {
+				
+				menuCost = menuCost + (allMenuDishes.get(dishCounter).getDishCost());
+				dishCounter = dishCounter + 1;
+			}
+			
+			//this is cheching if it actaull is bellow the amount
+			if(Integer.parseInt(tca) <  menuCost) {
+				master.add(allMenus.get(menuCounter));
+				tcaMatchingMenus.add(allMenus.get(menuCounter));
+			}
+			
+			//reset for the next menu
+			menuCost = 0.00;
+				dishCounter = 0;
+			menuCounter = menuCounter + 1;
+		}
+	}
+	
+	if(cd != null) {
+		cdMatchingMenus = new ArrayList<>();
+		int counter = 0;
+		
+		while(counter != allMenus.size()) {
+	
+			
+			
+			if(allMenus.get(counter).doesItHoldDish(cd)) {
+				master.add(allMenus.get(counter));
+				cdMatchingMenus.add(allMenus.get(counter));
+			}
+			
+			
+			counter = counter + 1;
+		}
+		
+	}
+	
+	if(dcd != null) {
+		dcdMatchingMenus = new ArrayList<>();
+		int counter = 0;
+		
+		while(counter != allMenus.size()) {
+			
+			
+			
+			if(!allMenus.get(counter).doesItHoldDish(dcd)) {
+				master.add(allMenus.get(counter));
+				dcdMatchingMenus.add(allMenus.get(counter));
+			}
+			
+			
+			counter = counter + 1;
+		}
+		
+	}
+	
+	
+	
+	
+	
+	//where remove it if they are not all present
+	if(tcbMatchingMenus != null) {
+		master.retainAll(tcbMatchingMenus);
+		
+	}
+	if(tcaMatchingMenus != null) {
+		master.retainAll(tcaMatchingMenus);
+		
+	}
+	if(cdMatchingMenus != null) {
+		master.retainAll(cdMatchingMenus);
+		
+	}
+	if(dcdMatchingMenus != null) {
+		master.retainAll(dcdMatchingMenus);
+		
+	}
+	
+	System.out.println("passes retain All");
+	master.forEach((Menu i) -> {
+		
+		output.add(i.toString());
+		
+	});
+	
+	
+	return FXCollections.observableArrayList(output);
+	
+	
+}
 //menu list 
 public ObservableList<String> getAllMenus(){
 	ArrayList<String> menuAsString = new ArrayList<>();
@@ -1176,4 +1343,32 @@ public ObservableList<String> deleteADish(String id) {
 public void saveSelectedMenu() {
 	db.saveMenu(selectedMenu);
 }
+public void updateMenuFromSelectedMenu() {
+	
+	db.DeleteAMenu(selectedMenu);
+	db.saveMenu(selectedMenu);
+	
+}
+public Menu getFromMenu() {
+	return fromMenu;
+}
+public void setFromMenu(String from) {
+	if(from == null) {
+	
+	fromMenu = null;
+	}else {
+		fromMenu = db.getAMenuFromId(from);
+
+	}
+}
+//for the about button
+	public Alert makeInfoAlert(String info) {
+		
+		Alert output = new Alert(AlertType.INFORMATION);
+		output.setTitle("Page Info");
+		output.setHeaderText("info about this page");
+		output.setContentText(info);
+		return output;
+		
+	}
 }

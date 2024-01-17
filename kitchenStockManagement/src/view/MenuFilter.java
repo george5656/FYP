@@ -54,6 +54,18 @@ labels.getChildren().addAll(labelList);
 
 }
 
+public String getTotalCostAbove() {
+	return tfTotalCostAbove.getText();
+}
+public String getTotalCostBelow() {
+	return tfTotalCostBelow.getText();
+}
+public String getContainsDish() {
+	return tfContainsDish.getText();
+}
+public String getDoesntContainDish() {
+	return tfDoesntContainDish.getText();
+}
 
 
 }

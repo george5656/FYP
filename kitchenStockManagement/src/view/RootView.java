@@ -194,6 +194,9 @@ public void loginLoad() {
 public void setHomeBtnStockEventHandler(EventHandler<ActionEvent> event) {
 	homePage.setBtnStockEventHandler(event);
 }
+public void setHomeBtnAboutEventHandler(EventHandler<ActionEvent> event) {
+	homePage.setAboutEventHandler(event);
+}
 public void setHomeBtnMenuEventHandler(EventHandler<ActionEvent> event) {
 	homePage.setBtnMenuEventHandler(event);
 }
@@ -218,6 +221,9 @@ public void homePageMenuLoad(Boolean isAdmin) {
 
 public void setStockListBtnDeleteEventHandler(EventHandler<ActionEvent> event) {
 	stockListPage.setBtnDeleteEventHandler(event);
+}
+public void setStockListBtnAboutEventHandler(EventHandler<ActionEvent> event) {
+	stockListPage.setAboutEventHandler(event);
 }
 public void setStockListBtnAddEventHandler(EventHandler<ActionEvent> event) {
 	stockListPage.setBtnAddEventHandler(event);
@@ -278,6 +284,9 @@ stockListPage.setObservableList(data);
 
 public void setStockDetailsBtnSaveEventHandler(EventHandler<ActionEvent> event) {
 	sd.setBtnSaveEventHandler(event);
+}
+public void setStockDetailsBtnAboutEventHandler(EventHandler<ActionEvent> event) {
+	sd.setAboutEventHandler(event);
 }
 public void setStockDetailsBtnCancelEventHandler(EventHandler<ActionEvent> event) {
 	sd.setBtnCancelEventHandler(event);
@@ -369,7 +378,12 @@ public void setStockDetailsCost(String Cost) {
 public void setStockFilterBtnApply(EventHandler<ActionEvent> event) {
 	sf.setBtnApply(event);
 }
-
+public void setStockFilterBtnAbout(EventHandler<ActionEvent> event) {
+	sf.setAboutEventHandler(event);
+}
+public void setStockFilterBtnCancel(EventHandler<ActionEvent> event) {
+	sf.setBtnCancelEventHandler(event);
+}
 public void stockFilterLoad(ArrayList<String> storageLocations, ArrayList<String> stockType) {
 	
 	sf.getCbStorageLocation().getItems().clear();
@@ -432,8 +446,33 @@ public void setMenuListBtnFilterEventHandler(EventHandler<ActionEvent> event) {
 public void setMenuListBtnAddEventHandler(EventHandler<ActionEvent> event) {
 	menuListPage.setBtnAddEventHandler(event);
 }
+public void setMenuListBtnDeleteEventHandler(EventHandler<ActionEvent> event) {
+	menuListPage.setBtnDeleteEventHandler(event);
+}
 public void setMenuListBtnFindEventHandler(EventHandler<ActionEvent> event) {
 	menuListPage.setBtnFindEventHandler(event);
+}
+public void setMenuListBtnEditEventHandler(EventHandler<ActionEvent> event) {
+	menuListPage.setBtnEditEventHandler(event);
+}
+public void setMenuListBtnAboutEventHandler(EventHandler<ActionEvent> event) {
+	menuListPage.setAboutEventHandler(event);
+}
+public String getMenuListSelectedMenu() {
+	if(menuListPage.getSelectionNode().getSelectionModel().getSelectedItem()!= null) {
+	return menuListPage.getSelectionNode().getSelectionModel().getSelectedItem();
+	}else {
+		return "null";
+	}
+}
+public String getMenuListSelectedMenuId() {
+	String selection = menuListPage.getSelectionNode().getSelectionModel().getSelectedItem();
+	return selection.substring(selection.indexOf("=")+2);
+	
+}
+public void setMenuListError(String errorMessage) {
+	menuListPage.getErrorLabel().setVisible(true);
+	menuListPage.getErrorLabel().setText(errorMessage);
 }
 public String getMenuListFindUserInput() {
 	return menuListPage.getTfFindValue();
@@ -486,6 +525,9 @@ public void setMenuDetailsBtnEditEventHandler(EventHandler<ActionEvent> event) {
 }
 public void setMenuDetailsBtnLoadFromFileChooserEventHandler(EventHandler<ActionEvent> event) {
 	menuDetails.setBtnLoadFromFileChooserEventHandler(event);
+}
+public void setMenuDetailsBtnAboutEventHandler(EventHandler<ActionEvent> event) {
+	menuDetails.setAboutEventHandler(event);
 }
 public void MenuDetailsLoad() {
 	this.getChildren().remove(0);
@@ -546,6 +588,31 @@ public void menuFilterLoad() {
 	this.getChildren().add(mf);
 	this.setVgrow(mf, Priority.ALWAYS);
 }
+
+public void setMenufilterBtnSaveEventHandler(EventHandler<ActionEvent> event) {
+	mf.setBtnSaveEventHandler(event);
+}
+
+public void setMenufilterBtnCancelEventHandler(EventHandler<ActionEvent> event) {
+	mf.setBtnCancelEventHandler(event);
+}
+public void setMenufilterBtnAboutEventHandler(EventHandler<ActionEvent> event) {
+	mf.setAboutEventHandler(event);
+}
+public String getMenuFilterTotalCostBelow() {
+	return mf.getTotalCostBelow();
+}
+public String getMenuFilterTotalCostAbove() {
+	return mf.getTotalCostAbove();
+}
+public String getMenuFilterContainsDish() {
+	return mf.getContainsDish();
+}
+public String getMenuFilterDoesntContainsDish() {
+	return mf.getDoesntContainDish();
+}
+
+
 // menu settings
 
 public void menuSettingsLoad() {
@@ -601,6 +668,9 @@ public void setBudgetListBtnDeleteEventHandler(EventHandler<ActionEvent> event) 
 public void setBudgetListBtnEditEventHandler(EventHandler<ActionEvent> event) {
 	budgetListPage.setBtnEditEventHandler(event);
 }
+public void setBudgetListBtnAboutEventHandler(EventHandler<ActionEvent> event) {
+	budgetListPage.setAboutEventHandler(event);
+}
 public void BudgetListLoad(ObservableList<String> data) {
 	budgetListPage.getErrorLabel().setVisible(false);
 	budgetListPage.setObservableList(data);
@@ -628,6 +698,13 @@ public String getSelectedBudgetId() {
 public void setBudgetDetailsBtnSaveEventHandler(EventHandler<ActionEvent> event) {
 	bdp.setBtnSaveEventHandler(event);
 }
+public void setBudgetDetailsBtnAboutEventHandler(EventHandler<ActionEvent> event) {
+	bdp.setAboutEventHandler(event);
+}
+public void setBudgetDetailsBtnCancelEventHandler(EventHandler<ActionEvent> event) {
+	bdp.setBtnCancelEventHandler(event);
+}
+
 public void budgetDetailsLoad() {
 	this.getChildren().remove(0);
 	this.getChildren().add(bdp);
@@ -684,6 +761,12 @@ public void setBudgetFilterBtnSaveEventHandler(EventHandler<ActionEvent> event) 
 	budgetFilter.setBtnSaveEventHandler(event);
 }
 
+public void setBudgetFilterBtnCancelEventHandler(EventHandler<ActionEvent> event) {
+	budgetFilter.setBtnCancelEventHandler(event);
+}
+public void setBudgetFilterBtnAboutEventHandler(EventHandler<ActionEvent> event) {
+	budgetFilter.setAboutEventHandler(event);
+}
 public String getBudgetFilterNoBudgetLessThan() {
 	return budgetFilter.getMinAmount().getText().toString();
 }
@@ -724,6 +807,9 @@ public void setStorgaeLocationListBtnFilterEventHandler(EventHandler<ActionEvent
 }
 public void setStorgaeLocationListBtnEditEventHandler(EventHandler<ActionEvent> event) {
 	storageLocationListPage.setBtnEditEventHandler(event);
+}
+public void setStorgaeLocationListBtnAboutEventHandler(EventHandler<ActionEvent> event) {
+	storageLocationListPage.setAboutEventHandler(event);
 }
 public void setStorgaeLocationListBtnDeleteEventHandler(EventHandler<ActionEvent> event) {
 	storageLocationListPage.setBtnDeleteEventHandler(event);
@@ -776,7 +862,12 @@ public void StorgaeLocationDetailsLoad() {
 public void setStorageDetailsBtnSaveEventHandler(EventHandler<ActionEvent> event) {
 	ssld.setBtnSaveEventHandler(event);
 }
-
+public void setStorageDetailsBtnCancelEventHandler(EventHandler<ActionEvent> event) {
+	ssld.setBtnCancelEventHandler(event);
+}
+public void setStorageDetailsBtnAbooutEventHandler(EventHandler<ActionEvent> event) {
+	ssld.setAboutEventHandler(event);
+}
 public String getStorageDetailsName() {
 	return ssld.getName();
 }
@@ -807,7 +898,12 @@ public void StorgaeLocationFilterLoad(ArrayList<String> type) {
 public void setStorageFilterBtnApplyEventHandler(EventHandler<ActionEvent> event) {
 	sslf.setBtnApply(event);
 }
-
+public void setStorageFilterBtnCancelEventHandler(EventHandler<ActionEvent> event) {
+	sslf.setBtnCancelEventHandler(event);
+}
+public void setStorageFilterBtnAboutEventHandler(EventHandler<ActionEvent> event) {
+	sslf.setAboutEventHandler(event);
+}
 public Boolean getStorgaeFilterAvailbleStatus() {
 	return sslf.getAvailblityStatus();
 }
@@ -829,6 +925,9 @@ public void setAccountListBtnFindEventHandler(EventHandler<ActionEvent> event) {
 }
 public void setAccountListBtnEditEventHandler(EventHandler<ActionEvent> event) {
 	accountListPage.setBtnEditEventHandler(event);
+}
+public void setAccountListBtnAboutEventHandler(EventHandler<ActionEvent> event) {
+	accountListPage.setAboutEventHandler(event);
 }
 public void setAccountListBtnDeleteEventHandler(EventHandler<ActionEvent> event) {
 	accountListPage.setBtnDeleteEventHandler(event);
@@ -883,6 +982,12 @@ public Boolean getAccontDetailsIsAdminNoSelected() {
 public void setAccountDetailsBtnSaveEventHandler(EventHandler<ActionEvent> event) {
 	ad.setBtnSaveEventHandler(event);
 }
+public void setAccountDetailsBtnCancelEventHandler(EventHandler<ActionEvent> event) {
+	ad.setBtnCancelEventHandler(event);
+}
+public void setAccountDetailsBtnAboutEventHandler(EventHandler<ActionEvent> event) {
+	ad.setAboutEventHandler(event);
+}
 public void setAccountDetailsUsername(String username) {
 	ad.setUsername(username);
 }
@@ -903,6 +1008,14 @@ public void accountFilterLoad() {
 public void setAccountFilterBtnApplyEventHandler(EventHandler<ActionEvent> event) {
 	af.setBtnApply(event);
 }
+
+public void setAccountFilterBtnCancelEventHandler(EventHandler<ActionEvent> event) {
+	af.setBtnCancelEventHandler(event);
+}
+public void setAccountFilterBtnAboutEventHandler(EventHandler<ActionEvent> event) {
+	af.setAboutEventHandler(event);
+}
+
 public Boolean getIsAdminYes() {
 	return af.isYesSelected();
 }
@@ -917,7 +1030,9 @@ public void setDeleteConfirmationBtnConfirmEventHandler(EventHandler<ActionEvent
 public void setDeleteConfirmationBtnCancelEventHandler(EventHandler<ActionEvent> event) {
 	dcp.setBtnCancelEventHandler(event);
 }
-
+public void setDeleteConfirmationBtnAboutEventHandler(EventHandler<ActionEvent> event) {
+	dcp.setAboutEventHandler(event);
+}
 
 public void deleteConfirmationLoad() {
 	this.getChildren().remove(0);

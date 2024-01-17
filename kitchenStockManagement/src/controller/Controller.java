@@ -49,27 +49,50 @@ public class Controller {
 		 * view.setVgrow(view.getStockListPage(),Priority.ALWAYS);} );
 		 */
 		view.setHomeBtnStockEventHandler(new EHStockListLaod());
-		view.setHomeBtnMenuEventHandler(new EHHomePageMenuLoad());
-		view.setHomeBtnAccountEventHandler(new EHHomeBtnAccount());
-		view.setHomeBtnBudgetEventHandler(new EHHomeBtnBudget());
-		view.setHomeBtnStorageEventHandler(new EHHomeBtnStorage());
-
+		view.setHomeBtnMenuEventHandler(new EHMenuListLoad());
+		view.setHomeBtnAccountEventHandler(new EHAccountListLoad());
+		view.setHomeBtnBudgetEventHandler(new EHBudgetListLoad());
+		view.setHomeBtnStorageEventHandler(new EHStorageListLoad());
+		view.setHomeBtnAboutEventHandler((ActionEvent event) -> {
+			model.makeInfoAlert("this is the main navigation page, click a button to go somewhere").show();
+		});
+		
 		view.setStockListBtnDeleteEventHandler(new EHStockListBtnDelete());
 		view.setStockListBtnAddEventHandler(new EHStockBtnAdd());
 		view.setStockListBtnFilterEventHandler(new EHStockBtnFilter());
 		//view.getStockListPage().setObservableList(setStockListContent());
 		view.setStockListBtnFindEventHandler(new EHStockListBtnFind());
 		view.setStockListBtnEditEventHandler(new EHStockListBtnEdit());
-
+		view.setStockListBtnAboutEventHandler((ActionEvent event) -> {
+			model.makeInfoAlert("this page displays all the current stock. it "
+					+ "also is used to navigate to pages that manipulate the stock").show();
+		});
+		
 		view.setStockDetailsBtnSaveEventHandler(new EHStockDetailsBtnSave());
 		view.setStockDetailsBtnCancelEventHandler(new EHStockListLaod());
 		view.setStockDetailsBtnLoadFromFileEventHandler(new EHStockDetailsBtnLoadFromFile());
-
+		view.setStockDetailsBtnAboutEventHandler((ActionEvent event) -> {
+			model.makeInfoAlert("this page is where you can add or"
+					+ " update a stock depeding on the button picked in the previous page").show();
+		});
+		
 		view.setStockFilterBtnApply(new EHStockFilterBtnApply());
-
+		view.setStockFilterBtnCancel(new EHStockFilterBtnCancel());
+		view.setStockFilterBtnAbout((ActionEvent event) -> {
+			model.makeInfoAlert("pick the filter to be applied to the list on the page just left").show();
+		});
+		
+		
 		view.setMenuListBtnFilterEventHandler(new EHMenuBtnFilter());
 		view.setMenuListBtnAddEventHandler(new EHMenuListBtnAdd());
 		view.setMenuListBtnFindEventHandler(new EHMenuListBtnFind());
+		view.setMenuListBtnDeleteEventHandler(new EHMenuListBtnDelete());
+		view.setMenuListBtnEditEventHandler(new EHMenuListBtnEdit());
+		view.setMenuListBtnAboutEventHandler((ActionEvent event) -> {
+			model.makeInfoAlert("this page displays all the current menus. it "
+					+ "also is used to navigate to pages that manipulate the menus").show();
+		});
+		
 		
 		view.setMenuDetailsBtnSettingEventHandler(new EHMenuDetailsBtnSetting());
 		view.setMenuDetailsBtnOutputEventHandler(new EHMenuDetailsBtnOutput());
@@ -81,44 +104,97 @@ public class Controller {
 		view.setMenuDetailsBtnDeleteDishPermentlyFromListEventHandler(new EHMenuDetailsBtnDeleteDishPermentlyFromList());
 		view.setMenuDetailsBtnEditEventHandler(new EHMenuDetailsBtnEdit());
 		view.setMenuDetailsBtnLoadFromFileChooserEventHandler(new EHMenuDetailsBtnLoadFromFileChooser());
+		view.setMenuDetailsBtnAboutEventHandler((ActionEvent event) -> {
+			model.makeInfoAlert("this page shows all the dish, is used to make or edit a menu "
+					+ "and is used to navaget to the dishes manipulation").show();
+		});
 		
 		view.setMenuSettingBtnSaveEventHandler(new EHMenuSettingBtnSave());
+		
+		view.setMenufilterBtnSaveEventHandler(new EHMenuFilterBtnSave());
+		view.setMenufilterBtnCancelEventHandler(new EHMenuListLoad());
+		view.setMenufilterBtnAboutEventHandler((ActionEvent event) -> {
+			model.makeInfoAlert("pick the filter to be applied to the list on the page just left").show();
+		});
 		
 		view.setBudgetListBtnAddEventHandler(new EHBudgetBtnAdd());
 		view.setBudgetListBtnFilterEventHandler(new EHBudgetBtnFilter());
 		view.setBudgetListBtnFindEventHandler(new EHBudgetListBtnFind());
 		view.setBudgetListBtnDeleteEventHandler(new EHBudgteListBtnDelete());
 		view.setBudgetListBtnEditEventHandler(new EHBudgetBtnEdit());
+		view.setBudgetListBtnAboutEventHandler((ActionEvent event) -> {
+			model.makeInfoAlert("this page displays all the current budgets. it "
+					+ "also is used to navigate to pages that manipulate the budgets").show();
+		});
+		
 		
 		view.setBudgetDetailsBtnSaveEventHandler(new EHBudgetDetailsBtnSave());
-
+		view.setBudgetDetailsBtnCancelEventHandler(new EHBudgetListLoad());
+		view.setBudgetDetailsBtnAboutEventHandler((ActionEvent event) -> {
+			model.makeInfoAlert("this page is where you can add or"
+					+ " update a budget depeding on the button picked in the previous page").show();
+		});
+		
+		
 		view.setBudgetFilterBtnSaveEventHandler(new EHBudgetFilterBtnApply());
+		view.setBudgetFilterBtnCancelEventHandler(new EHBudgetListLoad());
+		view.setBudgetFilterBtnAboutEventHandler((ActionEvent event) -> {
+			model.makeInfoAlert("pick the filter to be applied to the list on the page just left").show();
+		});
 		
 		view.setStorgaeLocationListBtnAddEventHandler(new EHStorageBtnAdd());
 		view.setStorgaeLocationListBtnFilterEventHandler(new EHStorageBtnFilter());
 		view.setStorgaeLocationListBtnFindEventHandler(new EHStorageListBtnFind());
 		view.setStorgaeLocationListBtnDeleteEventHandler(new EHStorageListBtnDelete());
 		view.setStorgaeLocationListBtnEditEventHandler(new EHStorageListBtnEdit());
+		view.setStorgaeLocationListBtnAboutEventHandler((ActionEvent event) -> {
+			model.makeInfoAlert("this page displays all the current storage locations. it "
+					+ "also is used to navigate to pages that manipulate the storage locations").show();
+		});
+		
 		
 		view.setStorageFilterBtnApplyEventHandler(new EHStorageFilterBtnApply());
+		view.setStorageFilterBtnCancelEventHandler(new EHStorageListLoad());
+		view.setStorageFilterBtnAboutEventHandler((ActionEvent event) -> {
+			model.makeInfoAlert("pick the filter to be applied to the list on the page just left").show();
+		});
 		
 		view.setStorageDetailsBtnSaveEventHandler(new EHStorageDetailsBtnSave());
+		view.setStorageDetailsBtnCancelEventHandler(new EHStorageListLoad());
+		view.setStorageDetailsBtnAbooutEventHandler((ActionEvent event) -> {
+			model.makeInfoAlert("this page is where you can add or"
+					+ " update a Storage location depeding on the button picked in the previous page").show();
+		});
 		
 		view.setAccountListBtnAddEventHandler(new EHAccountBtnAdd());
 		view.setAccountListBtnFilterEventHandler(new EHAccountBtnFilter());
 		view.setAccountListBtnFindEventHandler(new EHAccountBtnFind());
 		view.setAccountListBtnDeleteEventHandler(new EHAccountListBtnDelete());
 		view.setAccountListBtnEditEventHandler(new EHAccountListBtnEdit());
-		
+		view.setAccountListBtnAboutEventHandler((ActionEvent event) -> {
+			model.makeInfoAlert("this page displays all the current accounts. it "
+					+ "also is used to navigate to pages that manipulate the accounts").show();
+		});
 		
 		view.setAccountDetailsBtnSaveEventHandler(new EHAccountDetailsBtnSave());
+		view.setAccountDetailsBtnCancelEventHandler(new EHAccountListLoad());
+		view.setAccountDetailsBtnAboutEventHandler((ActionEvent event) -> {
+			model.makeInfoAlert("this page is where you can add or"
+					+ " update a account depeding on the button picked in the previous page").show();
+		});
 		
 		view.setAccountFilterBtnApplyEventHandler(new EHAccountFilterBtnApply());
+		view.setAccountFilterBtnCancelEventHandler(new EHAccountListLoad());
+		view.setAccountFilterBtnAboutEventHandler((ActionEvent event) -> {
+			model.makeInfoAlert("pick the filter to be applied to the list on the page just left").show();
+		});
 		
+		view.setDeleteConfirmationBtnConfirmEventHandler(new EHDeleteBtnConfirm());
+		view.setDeleteConfirmationBtnCancelEventHandler(new EHDeleteBtnCancel());
+		view.setDeleteConfirmationBtnAboutEventHandler((ActionEvent event) -> {
+			model.makeInfoAlert("select if you want the shown item to be delted").show();
+		});
 		
-		view.setDeleteConfirmationBtnConfirmEventHandler(new EHStockDeleteBtnConfirm());
-		view.setDeleteConfirmationBtnCancelEventHandler(new EHStockListLaod());
-
 		view.setAllPaneMenu(new EHHomeLoad(), new EHLogout());
 	
 	
@@ -204,7 +280,7 @@ public class Controller {
 		}
 	}
 
-	private class EHHomePageMenuLoad implements EventHandler<ActionEvent> {
+	private class EHMenuListLoad implements EventHandler<ActionEvent> {
 
 		@Override
 		public void handle(ActionEvent event) {
@@ -219,6 +295,7 @@ public class Controller {
 
 		@Override
 		public void handle(ActionEvent event) {
+			model.setFromMenu(null);
 			model.resetMenuDetailList();
 			view.setMenuDetailsDishList(model.getAllDishes());
 			model.resetSelectedMenu();
@@ -787,7 +864,7 @@ model.createStock(model.getSelectedStockId(), view.getStorageLocation(), Double.
 
 	}
 
-	private class EHStockDeleteBtnConfirm implements EventHandler<ActionEvent> {
+	private class EHDeleteBtnConfirm implements EventHandler<ActionEvent> {
 
 		@Override
 		public void handle(ActionEvent event) {
@@ -819,17 +896,40 @@ view.BudgetListLoad(model.getObservableListBudgetList());
 	
 	//need to also remove from the temporary hold
 	view.setMenuDetailsDishList(model.deleteADish(view.getMenuDetailsDishListSelectedItemValueIdOnly()));
-	
-	
-	
-	
 	view.MenuDetailsLoad();
+} else if (model.getDeleteFrom().equals("MenuList")) {
+	model.deleteSelectedMenu();
+	view.menuListLoad(model.getAllMenus());
+}
+
+		}
+	}
 	
+	
+	private class EHDeleteBtnCancel implements EventHandler<ActionEvent> {
+
+		@Override
+		public void handle(ActionEvent event) {
+if(model.getDeleteFrom().equals("StockList")) {
+		
+}else if (model.getDeleteFrom().equals("BudgteList")) {
+
+} else if(model.getDeleteFrom().equals("Account")) {
+	
+} else if(model.getDeleteFrom().equals("Storage")) {
+	
+	
+} else if(model.getDeleteFrom().equals("MenuDetails")) {
+	
+
+} else if (model.getDeleteFrom().equals("MenuList")) {
 	
 }
 
 		}
 	}
+	
+	
 
 	private class EHStockListBtnFind implements EventHandler<ActionEvent> {
 
@@ -1002,6 +1102,26 @@ view.BudgetListLoad(model.getObservableListBudgetList());
 		}
 	
 	}
+	
+	private class EHStockFilterBtnCancel implements EventHandler<ActionEvent> {
+
+		@Override
+		public void handle(ActionEvent event) {
+			
+			view.stockListLoad(model.getObservableListStringStockList());
+		
+		}
+	
+	}
+	
+	
+	
+	
+	
+	
+	
+	
+	
 	private class EHBudgetFilterBtnApply implements EventHandler<ActionEvent> {
 
 		@Override
@@ -1153,7 +1273,7 @@ view.BudgetListLoad(model.getObservableListBudgetList());
 
 	}
 
-	private class EHHomeBtnBudget implements EventHandler<ActionEvent> {
+	private class EHBudgetListLoad implements EventHandler<ActionEvent> {
 
 		@Override
 		public void handle(ActionEvent event) {
@@ -1318,6 +1438,8 @@ view.BudgetListLoad(model.getObservableListBudgetList());
 
 	}
 	
+	
+	
 	private class EHBudgetListBtnFind implements EventHandler<ActionEvent> {
 
 		@Override
@@ -1345,7 +1467,7 @@ view.BudgetListLoad(model.getObservableListBudgetList());
 
 	}
 
-	private class EHHomeBtnAccount implements EventHandler<ActionEvent> {
+	private class EHAccountListLoad implements EventHandler<ActionEvent> {
 
 		@Override
 		public void handle(ActionEvent event) {
@@ -1361,7 +1483,7 @@ view.BudgetListLoad(model.getObservableListBudgetList());
 
 	}
 
-	private class EHHomeBtnStorage implements EventHandler<ActionEvent> {
+	private class EHStorageListLoad implements EventHandler<ActionEvent> {
 
 		@Override
 		public void handle(ActionEvent event) {
@@ -1642,7 +1764,62 @@ view.BudgetListLoad(model.getObservableListBudgetList());
 
 		}
 	}
-	
+	private class EHMenuListBtnDelete implements EventHandler<ActionEvent> {
+
+		@Override
+		public void handle(ActionEvent event) {
+
+			if (!view.getMenuListSelectedMenu().equals("null")) {
+
+				
+				model.setSelectedMenu(view.getMenuListSelectedMenuId(), null);
+				
+				//model.selectAStock(view.getSelectedStockId());
+
+				view.getDeleteConfirmationPage()
+						.setTxtConfirmMessage("Are you sure you wan to delete " + view.getMenuListSelectedMenuId() + "?");
+				model.setDeleteFrom("MenuList");
+				view.deleteConfirmationLoad();
+			} else {
+				view.setMenuListError("No data selected");
+
+			}
+
+		}
+	}
+	private class EHMenuListBtnEdit implements EventHandler<ActionEvent> {
+
+		@Override
+		public void handle(ActionEvent event) {
+
+			if (!view.getMenuListSelectedMenu().equals("null")) {
+				
+				
+				model.setFromMenu(view.getMenuListSelectedMenuId());
+				
+				model.setSelectedMenuToBeAnExisitingMenu(view.getMenuListSelectedMenuId());
+				
+				
+				model.resetMenuDetailList();
+				
+				view.setMenuDetailsMenuListItems(model.getSelectedMenuDishes());
+				
+				view.setMenuDetailsDishList(model.getNotSelectedDishesAsString());
+				
+				view.setMenuDetailsShoppingList(model.getSelectedMenuStockType());
+				
+				// +"" is simply to convert it to a string
+				view.setMenuDetailsBudgetValue(model.getBudgetSizeMinusTheShoppingList()+"");
+				
+				view.MenuDetailsLoad();
+				
+			} else {
+				view.setMenuListError("No data selected");
+
+			}
+
+		}
+	}
 	private class EHMenuSettingBtnSave implements EventHandler<ActionEvent> {
 
 		@Override
@@ -1851,7 +2028,7 @@ view.BudgetListLoad(model.getObservableListBudgetList());
 		
 			
 		if(masterError.equals("")) {
-			
+			//ass need a way to run it if they dont put anything in
 			String cmtInput = "null";
 			String cltInput ="null";
 			String nibInput ="null";
@@ -1876,7 +2053,7 @@ view.BudgetListLoad(model.getObservableListBudgetList());
 			
 			
 			if(!niaInput.equals("null") || !nibInput.equals("null") || !cltInput.equals("null") || !cmtInput.equals("null")) {
-			
+			//actaully runs it and get results
 			view.setMenuDetailsDishList(model.getDishFilterResults(niaInput, nibInput, cltInput, cmtInput));	
 			}else {
 				//just bascially removes any filters if none have been applied. 
@@ -2010,9 +2187,11 @@ view.BudgetListLoad(model.getObservableListBudgetList());
 			
 			if(masterErrorMessage.equals("")) {
 				
-				
+				if(model.getFromMenu() == null) {
 				model.saveSelectedMenu();
-				
+				}else {
+					model.updateMenuFromSelectedMenu();
+				}
 				
 				view.menuListLoad(model.getAllMenus());
 			}else {
@@ -2028,5 +2207,95 @@ view.BudgetListLoad(model.getObservableListBudgetList());
 		}
 	}
 	
+	private class EHMenuFilterBtnSave implements EventHandler<ActionEvent> {
+
+		@Override
+		public void handle(ActionEvent event)  {
+			String issueFrom ="";
+			String masterErrorMessage = "";
+			
+			String tcbError = model.doublePresentIsOptionalValidation(view.getMenuFilterTotalCostBelow());
+			String tcaError = model.doublePresentIsOptionalValidation(view.getMenuFilterTotalCostAbove());
+			String cdError = model.stringPresentIsOptionalValidation(view.getMenuFilterContainsDish());
+			String dcdError = model.stringPresentIsOptionalValidation(view.getMenuFilterDoesntContainsDish());
+			
+			
+			if(!tcbError.equals("")) {
+				issueFrom = "total cost below";
+				masterErrorMessage = tcbError;
+			}else if(!tcaError.equals("")) {
+				issueFrom = "total cost above";
+				masterErrorMessage = tcaError;
+			}else if(!cdError.equals("")) {
+				issueFrom = "contians dish";
+				masterErrorMessage = cdError;
+			}else if(!dcdError.equals("")) {
+				issueFrom = "doesnt contain dish";
+				masterErrorMessage = dcdError;
+			}
+			
+			
+			
+			
+			if(masterErrorMessage.equals("")) {
+				
+				
+				
+				//set to null so can later check if the user has input anything in to them
+				String tcbInput = null;
+				String tcaInput = null;
+				String cdInput = null;
+				String dcdInput = null;
+				
+				if(!view.getMenuFilterTotalCostBelow().equals("")) {
+					tcbInput = view.getMenuFilterTotalCostBelow();
+					
+				}
+				if(!view.getMenuFilterTotalCostAbove().equals("")) {
+					tcaInput = view.getMenuFilterTotalCostAbove();
+					
+				}
+				if(!view.getMenuFilterContainsDish().equals("")) {
+					cdInput = view.getMenuFilterContainsDish();
+					
+				}
+				if(!view.getMenuFilterDoesntContainsDish().equals("")) {
+					dcdInput = view.getMenuFilterDoesntContainsDish();
+					
+				}
+				
+			if(tcbInput != null ||tcaInput != null || cdInput != null || dcdInput != null) {
+			//so if there is input does this one if not just simply does the other one.	
+				
+				view.menuListLoad(model.getMenuFilterResults(tcbInput, tcaInput, cdInput, dcdInput));
+				
+			}else {
+				
+				view.menuListLoad(model.getAllMenus());
+			}
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+			}else {
+				model.makeAlert(issueFrom, masterErrorMessage).show();
+			}
+			
+			
+			
+			
+			
+		}
+	}
 	
 }

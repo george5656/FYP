@@ -75,4 +75,7 @@ public void setHomeEventHandler(EventHandler<ActionEvent> event) {
 public void setLogoutEventHandler(EventHandler<ActionEvent> event) {
 	btnLogout.setOnAction(event);
 }
+public void setAboutEventHandler(EventHandler<ActionEvent> event) {
+	btnAbout.setOnAction(event);
+}
 }

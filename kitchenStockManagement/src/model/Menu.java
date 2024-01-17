@@ -32,6 +32,8 @@ public ObservableList<String> getDishesAsObservableListOFString(){
 	});
 	return FXCollections.observableArrayList(dishes);
 }
+
+
 public boolean doesItHoldDish(String item) {
 	
 	ArrayList<String> comparison = new ArrayList<>();
@@ -41,7 +43,8 @@ public boolean doesItHoldDish(String item) {
 		comparison.add(i.getName());
 		
 	});
-	return comparison.contains(item.substring(item.indexOf("=")+2));
+	
+	return comparison.contains(item);
 }
 public void removeADish(int place) {
 	heldDishes.remove(place);

@@ -1139,7 +1139,7 @@ public ArrayList<Dish> getDishThatCostNotBellow(Double numberOfMaxItems) {
 			ResultSet resultMenu = statementMenu.executeQuery();
 			
 			while(resultMenu.next()) {
-			statementDish = mySqlDatabase.prepareStatement("SELECT * FROM stock_mangemnet.tbl_dish, stock_mangemnet.tbl_menu_dishes where (tbl_dish.dishId = tbl_menu_dishes.dishId) and tbl_menu_dishes.menuDishId = \'" + resultMenu.getString(2) + "\';");
+			statementDish = mySqlDatabase.prepareStatement("SELECT * FROM stock_mangemnet.tbl_dish, stock_mangemnet.tbl_menu_dishes where (tbl_dish.dishId = tbl_menu_dishes.dishId) and tbl_menu_dishes.menuId = \'" + resultMenu.getString(2) + "\';");
 			//statementDish = mySqlDatabase.prepareStatement("SELECT * FROM stock_mangemnet.tbl_dish");
 			
 			ResultSet resultDish = statementDish.executeQuery();
@@ -1151,7 +1151,7 @@ public ArrayList<Dish> getDishThatCostNotBellow(Double numberOfMaxItems) {
 				ResultSet resultStockType = statementStockType.executeQuery();
 				stockType = new ArrayList<>();
 				while(resultStockType.next()) {
-					stockType.add(new StockType(resultStockType.getString(6),resultStockType.getString(7),resultStockType.getString(8)));
+					stockType.add(new StockType(resultStockType.getString(6),resultStockType.getString(7),resultStockType.getString(8),resultStockType.getDouble(4)+""));
 				}
 				dish.add(new Dish(resultDish.getString(1),stockType));
 							}
@@ -1254,8 +1254,71 @@ public ArrayList<Dish> getDishThatCostNotBellow(Double numberOfMaxItems) {
 		}
 	}
  
+ public void DeleteAMenu(Menu menu) {
+		PreparedStatement statement;
+		try {
+			//gets rid of all the menudishes that are for the menu
+			statement = mySqlDatabase.prepareStatement("delete from stock_mangemnet.tbl_menu_dishes where menuId = \'"+ menu.getName() + "\';");
+			statement.execute();
+			//gets rid of the menu its self
+			statement = mySqlDatabase.prepareStatement("delete from stock_mangemnet.tbl_menu where menuId = \'"+ menu.getName() + "\';");
+			statement.execute();
+			
+			
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
  
- 
+ public Menu getAMenuFromId(String id) {
+		
+	 PreparedStatement statementMenu;
+	 	PreparedStatement statementDish;
+		PreparedStatement statementStockType;
+		Menu menu = null;
+		ArrayList<Dish> dish  = new ArrayList<>();
+		ArrayList<StockType> stockType = new ArrayList<>();
+		try {
+			
+			
+			
+			statementMenu = mySqlDatabase.prepareStatement("SELECT * FROM stock_mangemnet.tbl_menu where tbl_menu.menuId = \"" + id + "\";" );
+			ResultSet resultMenu = statementMenu.executeQuery();
+			
+			while(resultMenu.next()) {
+				
+			statementDish = mySqlDatabase.prepareStatement("SELECT * FROM stock_mangemnet.tbl_dish, stock_mangemnet.tbl_menu_dishes where (tbl_dish.dishId = tbl_menu_dishes.dishId) and tbl_menu_dishes.menuId = \'" + resultMenu.getString(2) + "\';");
+			//statementDish = mySqlDatabase.prepareStatement("SELECT * FROM stock_mangemnet.tbl_dish");
+			
+			ResultSet resultDish = statementDish.executeQuery();
+			
+			
+			dish = new ArrayList<>();
+			while (resultDish.next()) {
+				
+				statementStockType = mySqlDatabase.prepareStatement("SELECT * FROM stock_mangemnet.tbl_dish_stock, stock_mangemnet.tbl_stock_type where (tbl_dish_stock.dishId = \'" + resultDish.getString(1) + "\') and ( tbl_dish_stock.stockTypeId = tbl_stock_type.stockTypeId);" );
+				ResultSet resultStockType = statementStockType.executeQuery();
+				stockType = new ArrayList<>();
+				while(resultStockType.next()) {
+					stockType.add(new StockType(resultStockType.getString(6),resultStockType.getString(7),resultStockType.getString(8),resultStockType.getDouble(4)+""));
+				}
+				
+				
+				dish.add(new Dish(resultDish.getString(1),stockType));
+							}
+			//top one ends here
+			
+			menu = new Menu(resultMenu.getString(2),getSpecificBudget(resultMenu.getString(1)),dish);
+			
+			}
+			} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		return menu;
+	}
  
  
 }
