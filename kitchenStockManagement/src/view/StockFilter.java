@@ -64,6 +64,7 @@ public StockFilter() {
 		userTextInput.setVgrow(i,Priority.ALWAYS);
 	}
 	
+	
 	cbStorageLocation.setMaxHeight(Double.MAX_VALUE);
 	cbStockType.setMaxHeight(Double.MAX_VALUE);
 	

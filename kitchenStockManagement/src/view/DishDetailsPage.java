@@ -18,7 +18,7 @@ public class DishDetailsPage extends PaneMenu {
 private Button btnAdd = new Button("Add");
 private Button btnEdit = new Button("Edit");
 private Button btnDelete = new Button("Delete");
-private Button btnCancle = new Button("Cancel");
+private Button btnCancel = new Button("Cancel");
 private Button btnSave = new Button("save");
 private Label txtErrorMessage = new Label("Error");
 private Label txtDishName = new Label("Dish Name");
@@ -51,7 +51,7 @@ DishDetailsPage(){
 	textFields.getChildren().addAll(tfDishName,tfIngredientName,tfQuanity,tfUnit,tfEstimatedCost);
 	
 	controllsTop.getChildren().addAll(btnAdd,btnEdit,btnDelete);
-	controllsBottom.getChildren().addAll(btnCancle,btnSave);
+	controllsBottom.getChildren().addAll(btnCancel,btnSave);
 	
 	mainLayout.setPadding(new Insets(20,20,20,20));
 	
@@ -78,14 +78,14 @@ DishDetailsPage(){
 	controllsTop.setHgrow(btnAdd, Priority.ALWAYS);
 	controllsTop.setHgrow(btnEdit, Priority.ALWAYS);
 	controllsTop.setHgrow(btnDelete, Priority.ALWAYS);
-	controllsBottom.setHgrow(btnCancle, Priority.ALWAYS);
+	controllsBottom.setHgrow(btnCancel, Priority.ALWAYS);
 	controllsBottom.setHgrow(btnSave, Priority.ALWAYS);
 	
 	
 	btnAdd.setMaxSize(Double.MAX_VALUE, Double.MAX_VALUE);
 	btnEdit.setMaxSize(Double.MAX_VALUE, Double.MAX_VALUE);
 	btnDelete.setMaxSize(Double.MAX_VALUE, Double.MAX_VALUE);
-	btnCancle.setMaxSize(Double.MAX_VALUE, Double.MAX_VALUE);
+	btnCancel.setMaxSize(Double.MAX_VALUE, Double.MAX_VALUE);
 	btnSave.setMaxSize(Double.MAX_VALUE, Double.MAX_VALUE);
 	txtDishName.setMaxSize(Double.MAX_VALUE,Double.MAX_VALUE);
 	txtIngredientName.setMaxSize(Double.MAX_VALUE,Double.MAX_VALUE);
@@ -117,7 +117,7 @@ DishDetailsPage(){
 	btnAdd.setFont(new Font(20));
 	btnEdit.setFont(new Font(20));
 	btnDelete.setFont(new Font(20));
-	btnCancle.setFont(new Font(20));
+	btnCancel.setFont(new Font(20));
 	btnSave.setFont(new Font(20));
 	
 	tfDishName.setFont(new Font(20));
@@ -139,6 +139,9 @@ public void setBtnDeleteEventHandler(EventHandler<ActionEvent> event) {
 }
 public void setBtnEditEventHandler(EventHandler<ActionEvent> event) {
 	btnEdit.setOnAction(event);
+}
+public void setBtnCancelEventHandler(EventHandler<ActionEvent> event) {
+	btnCancel.setOnAction(event);
 }
 public String getName() {
 	return tfDishName.getText();

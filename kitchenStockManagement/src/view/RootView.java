@@ -623,6 +623,12 @@ public void menuSettingsLoad() {
 public void setMenuSettingBtnSaveEventHandler(EventHandler<ActionEvent> event) {
 	msp.setBtnSaveEventHandler(event);
 }
+public void setMenuSettingBtnCancelEventHandler(EventHandler<ActionEvent> event) {
+	msp.setBtnCancelEventHandler(event);
+}
+public void setMenuSettingBtnAboutEventHandler(EventHandler<ActionEvent> event) {
+	msp.setAboutEventHandler(event);
+}
 public String getMenuSettingName() {
 	return msp.getName();
 }
@@ -650,6 +656,15 @@ public void setOutputBtnShoppingEventHandler(EventHandler<ActionEvent> event) {
 }
 public void setOutputBtnSaveEventHandler(EventHandler<ActionEvent> event) {
 	output.setBtnSaveEventHandler(event);
+}
+public void setOutputBtnBackToMenuDetailsEventHandler(EventHandler<ActionEvent> event) {
+	output.setBtnBackToMenuDetailsEventHandler(event);
+}
+public void setOutputBtnBackToMenuListEventHandler(EventHandler<ActionEvent> event) {
+	output.setBtnBackToMenuListEventHandler(event);
+}
+public void setOutputBtnAboutEventHandler(EventHandler<ActionEvent> event) {
+	output.setAboutEventHandler(event);
 }
 //budgetList
 
@@ -1061,6 +1076,9 @@ public void dishDetailsLoad() {
 public void setDishDetailsBtnSaveEventHandler(EventHandler<ActionEvent> event) {
 	ddp.setBtnSaveEventHandler(event);
 }
+public void setDishDetailsBtnAboutEventHandler(EventHandler<ActionEvent> event) {
+	ddp.setAboutEventHandler(event);
+}
 public void setDishDetailsBtnAddEventHandler(EventHandler<ActionEvent> event) {
 	ddp.setBtnAddEventHandler(event);
 }
@@ -1069,6 +1087,9 @@ public void setDishDetailsBtnDeleteEventHandler(EventHandler<ActionEvent> event)
 }
 public void setDishDetailsBtnEditEventHandler(EventHandler<ActionEvent> event) {
 	ddp.setBtnEditEventHandler(event);
+}
+public void setDishDetailsBtnEvenCanceltHandler(EventHandler<ActionEvent> event) {
+	ddp.setBtnCancelEventHandler(event);
 }
 public String getDishDetailsDishName() {
 	return ddp.getName();
@@ -1121,7 +1142,12 @@ public void dishFilterLoad() {
 public void setDishFilterBtnApplyEventHandler(EventHandler<ActionEvent> event) {
 	fd.setBtnApply(event);
 }
-
+public void setDishFilterBtnCancelEventHandler(EventHandler<ActionEvent> event) {
+	fd.setBtnCancelEventHandler(event);
+}
+public void setDishFilterBtnAboutEventHandler(EventHandler<ActionEvent> event) {
+	fd.setAboutEventHandler(event);
+}
 public String getDishFilterCostMoreThan() {
 	return fd.getCostMoreThan();
 }

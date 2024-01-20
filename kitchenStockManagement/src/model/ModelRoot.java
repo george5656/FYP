@@ -4,6 +4,8 @@ import java.io.File;
 
 import java.io.FileNotFoundException;
 import java.net.URI;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Scanner;
@@ -1371,4 +1373,46 @@ public void setFromMenu(String from) {
 		return output;
 		
 	}
+	
+	public String hash(String input) {
+		
+		//static method makes it with the type input
+		MessageDigest hashAlgorithm;
+		try {
+			hashAlgorithm = MessageDigest.getInstance("SHA-256");
+
+			//as only takes bytes
+			hashAlgorithm.update(input.getBytes());
+			
+			//converting it to hash but as byte
+			byte[] hashedResult = hashAlgorithm.digest();
+		
+		// i belive that the way the byte stored can very, how they get interepreted, so 
+		//putting in a string to try and stop it verying, 
+			
+			StringBuffer output = new StringBuffer();
+			
+			for(Byte i :hashedResult ) {
+				output.append(i);
+				
+			}
+		
+		return output.toString();
+		
+		
+		} catch (NoSuchAlgorithmException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return null;
+		
+	}
+	
+	
+	
+	
+	
+	
+	
+	
 }

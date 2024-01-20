@@ -17,7 +17,8 @@ public class Output extends PaneMenu {
 	private Label txtTitle = new Label("Which menu to save");
 	private Button btnMenu = new Button("output menu");
 	private Button btnShoppingList = new Button("output shoing List");
-	private Button btnCancel = new Button("cancel");
+	private Button btnBackToMenuDetails = new Button("back to menu details");
+	private Button btnBackToMenuList = new Button("back to menu list");
 	private Button btnSave = new Button("save");
 	private ArrayList<Labeled> controls = new ArrayList<>();
 	private VBox layout =  new VBox(20);
@@ -34,9 +35,9 @@ public class Output extends PaneMenu {
 		controls.add(btnMenu);
 		controls.add(btnShoppingList);
 		controls.add(btnSave);
-		controls.add(btnCancel);
-		
-		layout.getChildren().addAll(txtTitle,btnMenu,btnShoppingList,btnSave,btnCancel);
+		controls.add(btnBackToMenuDetails);
+		controls.add(btnBackToMenuList);
+		layout.getChildren().addAll(txtTitle,btnMenu,btnShoppingList,btnSave,btnBackToMenuDetails,btnBackToMenuList);
 		
 		for(Labeled i : controls) {
 			i.setFont(new Font(20));
@@ -53,5 +54,11 @@ public class Output extends PaneMenu {
 	}
 	public void setBtnSaveEventHandler(EventHandler<ActionEvent> event) {
 		btnSave.setOnAction(event);
+	}
+	public void setBtnBackToMenuDetailsEventHandler(EventHandler<ActionEvent> event) {
+		btnBackToMenuDetails.setOnAction(event);
+	}
+	public void setBtnBackToMenuListEventHandler(EventHandler<ActionEvent> event) {
+		btnBackToMenuList.setOnAction(event);
 	}
 }

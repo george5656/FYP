@@ -110,6 +110,10 @@ public class Controller {
 		});
 		
 		view.setMenuSettingBtnSaveEventHandler(new EHMenuSettingBtnSave());
+		view.setMenuSettingBtnCancelEventHandler(new EHMenuDetailsLoad());
+		view.setMenuSettingBtnAboutEventHandler((ActionEvent event) -> {
+			model.makeInfoAlert("this page is used to set the menu name and the budget the menu uses").show();
+		});
 		
 		view.setMenufilterBtnSaveEventHandler(new EHMenuFilterBtnSave());
 		view.setMenufilterBtnCancelEventHandler(new EHMenuListLoad());
@@ -202,15 +206,26 @@ public class Controller {
 		view.setDishDetailsBtnDeleteEventHandler(new EHDishDetailsBtnDelete());
 		view.setDishDetailsBtnEditEventHandler(new EHDishDetailsBtnEdit());
 		view.setDishDetailsBtnSaveEventHandler(new EHDishDetailsBtnSave());
+		view.setDishDetailsBtnEvenCanceltHandler(new EHMenuDetailsLoad());
+		view.setDishDetailsBtnAboutEventHandler((ActionEvent event) -> {
+			model.makeInfoAlert("This is the page where you can make a new dish which will be shown in the menu list page").show();
+		});
 		
 		view.setDishFilterBtnApplyEventHandler(new EHDishFilterBtnApply());
-		
+		view.setDishFilterBtnCancelEventHandler(new EHMenuDetailsLoad());
+		view.setDishFilterBtnAboutEventHandler((ActionEvent event) -> {
+			model.makeInfoAlert("pick the filter to be applied to the list on the page just left").show();
+		});
 		
 		
 		view.setOutputBtnMenuEventHandler(new EHOutputBtnMenuFromList());
 		view.setOutputBtnShoppingEventHandler(new EHOutputBtnShoppingFromList());
 		view.setOutputBtnSaveEventHandler(new EHOutputBtnSave());
-	
+		view.setOutputBtnBackToMenuDetailsEventHandler(new EHMenuDetailsLoad());
+		view.setOutputBtnBackToMenuListEventHandler(new EHMenuListLoad());
+		view.setOutputBtnAboutEventHandler((ActionEvent event) -> {
+			model.makeInfoAlert("pick if you would like to save to the database or to a text document").show();
+		});
 		
 	
 	
@@ -266,7 +281,7 @@ public class Controller {
 			if (passValidation == true) {
 
 				if (!model.passwordAndUsernameAreValid(view.getLoginUserUsernameInput(),
-						view.getLoginUserPasswordInput())) {
+						model.hash(view.getLoginUserPasswordInput()))) {
 					alert = model.makeAlert("input issue", "user name and password didn't match");
 					alert.show();
 				} else {
@@ -290,7 +305,16 @@ public class Controller {
 		}
 
 	}
+	private class EHMenuDetailsLoad implements EventHandler<ActionEvent> {
 
+		@Override
+		public void handle(ActionEvent event) {
+			
+			view.MenuDetailsLoad();
+		
+		}
+
+	}
 	private class EHMenuListBtnAdd implements EventHandler<ActionEvent> {
 
 		@Override
@@ -911,19 +935,19 @@ view.BudgetListLoad(model.getObservableListBudgetList());
 		@Override
 		public void handle(ActionEvent event) {
 if(model.getDeleteFrom().equals("StockList")) {
-		
+	view.stockListLoad(model.getObservableListStringStockList());
 }else if (model.getDeleteFrom().equals("BudgteList")) {
-
+	loadBudgetListPage();
 } else if(model.getDeleteFrom().equals("Account")) {
-	
+	loadAccountListPage();
 } else if(model.getDeleteFrom().equals("Storage")) {
-	
+	loadStorgaeLocationListPage();
 	
 } else if(model.getDeleteFrom().equals("MenuDetails")) {
-	
+	view.MenuDetailsLoad();
 
 } else if (model.getDeleteFrom().equals("MenuList")) {
-	
+	view.menuListLoad(model.getAllMenus());
 }
 
 		}
@@ -1000,9 +1024,9 @@ if(model.getDeleteFrom().equals("StockList")) {
 			// test for date to see if the userforgot to hit entere,
 			// one part test if the user input any info, part two is testing if that input
 			// got registeres
-			String expiresAfterErrorMessage = model.dateValidation(view.getStockFilterDpAfterDateText(),
+			String expiresAfterErrorMessage = model.dateValidationPresentIsOptional(view.getStockFilterDpAfterDateText(),
 					view.getStockFilterDpAfterDateValuePresent());
-			String expiresBeforeErrorMessage = model.dateValidation(view.getStockFilterDpBeforeDateText(),
+			String expiresBeforeErrorMessage = model.dateValidationPresentIsOptional(view.getStockFilterDpBeforeDateText(),
 					view.getStockFilterDpBeforeDateValuePresent());
 
 			String costMoreErrorMessage = model.doublePresentIsOptionalValidation(view.getStockFilterAboveCost());
@@ -1371,12 +1395,14 @@ if(model.getDeleteFrom().equals("StockList")) {
 				}
 				
 				if(model.getSelectedAccount() == null ) {
-				
-				model.createAccount(view.getAccountDetailsUserName(), view.getAccountDetailsUserPassword(), adminStatus);
+					
+				model.createAccount(view.getAccountDetailsUserName(), model.hash(view.getAccountDetailsUserPassword()), adminStatus);
 				model.addSelectedAccount();
+				
 				}else {
 					
-					model.updateAccount(view.getAccountDetailsUserName(), view.getAccountDetailsUserPassword(), adminStatus);
+					
+					model.updateAccount(view.getAccountDetailsUserName(), model.hash(view.getAccountDetailsUserPassword()), adminStatus);
 				}
 				loadAccountListPage();
 			}else {
