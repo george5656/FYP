@@ -63,6 +63,9 @@ public class ModelRoot {
 	private Boolean stockFrom;
 	private String loadDeleteFrom;
 	
+	/**
+	 * 
+	 */
 	public ModelRoot(){
 		accounts = getDatabase().getAllAccounts();
 		sl = getDatabase().getAllStorageLocations();
@@ -87,25 +90,40 @@ public class ModelRoot {
 	public WritableDatabase getDatabase() {
 		return db;
 	}
-	
+	/**
+	 * 
+	 * @return
+	 */
 	public ArrayList<String> getAccountsListAsString(){
 		accounts = getDatabase().getAllAccounts();
 		ArrayList<String> output = new ArrayList<>();
 		accounts.forEach((Account i) -> output.add(i.toString()));
 		return output;
 	}
+	/**
+	 * 
+	 * @return
+	 */
 	public ArrayList<String> getStorageLocationListAsString(){
 		sl = getDatabase().getAllStorageLocations();
 		ArrayList<String> output = new ArrayList<>();
 		sl.forEach((StorageLocation i) -> output.add(i.toString()));
 		return output;
 	}
+	/**
+	 * 
+	 * @return
+	 */
 	public ArrayList<String> getBudgetListAsString(){
 		budget = getDatabase().getAllBudgets();
 		ArrayList<String> output = new ArrayList<>();
 		budget.forEach((Budget i) -> output.add(i.toString()));
 		return output;
 	}
+	/**
+	 * 
+	 * @return
+	 */
 	public ArrayList<String> getObservableStorgaeLocationListNameOnlyArrayList(){
 		sl = getDatabase().getAllStorageLocations();
 		ArrayList<String> output = new ArrayList<>();
@@ -113,35 +131,81 @@ public class ModelRoot {
 		return output;
 		
 	}
+	/**
+	 * 
+	 * @return
+	 */
 	public ArrayList<String> getStockTypeListAsString(){
 		return db.getAllStockType();
 	}
+	/**
+	 * 
+	 * @param input
+	 * @return
+	 */
 	//input validation 
 	
 	public String stringMustBePresetValidation(String input) {
 		return validation.stringMustBePresetValidation(input);
 	}
+	/**
+	 * 
+	 * @param input
+	 * @return
+	 */
 	public String stringPresentIsOptionalValidation(String input) {
 		return validation.stringPresentIsOptionalValidation(input);
 	}
+	/**
+	 * 
+	 * @param input
+	 * @return
+	 */
 	public String doubleMustBePresetValidation(String input) {
 		return validation.doubleMustBePresetValidation(input);
 	}
+	/**
+	 * 
+	 * @param input
+	 * @return
+	 */
 	public String doublePresentIsOptionalValidation(String input) {
 		return validation.doublePresentIsOptionalValidation(input);
 	}
+	/**
+	 * 
+	 * @param input
+	 * @param date
+	 * @return
+	 */
 	public String dateValidation(String input, LocalDate date) {
 		return validation.dateValidation(input, date);
 	}
+	/**
+	 * 
+	 * @param input
+	 * @param date
+	 * @return
+	 */
 	public String dateValidationPresentIsOptional(String input, LocalDate date) {
 		return validation.dateValidationPresentIsOptional(input, date);
 	}
+	/**
+	 * 
+	 * @param input
+	 * @return
+	 */
 	public String intPresentIsOptionalValidation(String input) {
 		return validation.intPresentIsOptionalValidation(input);
 	}
 	
 	// make alert
-	
+	/**
+	 * 
+	 * @param headerText
+	 * @param content
+	 * @return
+	 */
 	public Alert makeAlert(String headerText, String content) {
 		Alert alert = new Alert(AlertType.ERROR);
 		alert.setHeaderText(headerText);
@@ -150,12 +214,20 @@ public class ModelRoot {
 	}
 
 	// database 
-	
+	/**
+	 * 
+	 * @param username
+	 * @param password
+	 * @return
+	 */
 	public Boolean passwordAndUsernameAreValid(String username, String password) {
 		return db.passwordAndUsernameAreValid(username, password);
 		
 	}
-	
+	/**
+	 * 
+	 * @return
+	 */
 	// list wrappers
 	
 	public ObservableList<String> getObservableListStringStockList(){
@@ -165,7 +237,10 @@ public class ModelRoot {
 		return FXCollections.observableArrayList(output);
 		
 	}
-	
+	/**
+	 * 
+	 * @return
+	 */
 	public ObservableList<String> getObservableListStringStorgaeLocationsList(){
 		sl = getDatabase().getAllStorageLocations();
 		ArrayList<String> output = new ArrayList<>();
@@ -173,6 +248,10 @@ public class ModelRoot {
 		return FXCollections.observableArrayList(output);
 		
 	}
+	/**
+	 * 
+	 * @return
+	 */
 	public ObservableList<String> getObservableListAccountList(){
 		accounts = getDatabase().getAllAccounts();
 		ArrayList<String> output = new ArrayList<>();
@@ -180,6 +259,10 @@ public class ModelRoot {
 		return FXCollections.observableArrayList(output);
 		
 	}
+	/**
+	 * 
+	 * @return
+	 */
 	public ObservableList<String> getObservableListBudgetList(){
 		budget = getDatabase().getAllBudgets();
 		ArrayList<String> output = new ArrayList<>();
@@ -187,12 +270,22 @@ public class ModelRoot {
 		return FXCollections.observableArrayList(output);
 		
 	}
+	/**
+	 * 
+	 * @return
+	 */
 	public ObservableList<String> getObservableStorgaeLocationListNameOnly(){
 		
 		return FXCollections.observableArrayList(getObservableStorgaeLocationListNameOnlyArrayList());
 		
 	}
-	
+	/**
+	 * 
+	 * @param name
+	 * @param amount
+	 * @param startDate
+	 * @param endDate
+	 */
 	
 	// budget
 	
@@ -201,13 +294,29 @@ public class ModelRoot {
 		
 		db.addBudget(new Budget(name,amount,startDate,endDate));
 	}
+	/**
+	 * 
+	 * @param name
+	 * @param amount
+	 * @param startDate
+	 * @param endDate
+	 */
 public void updateBudget(String name, Double amount,String startDate, String endDate) {
 		
 		db.updateABudget(new Budget(name,amount,startDate,endDate),selectedBudget.getBudgetId());
 	}
+/**
+ * 
+ * @param value
+ * @return
+ */
 	public ObservableList<String> getBudgetThatsLike(String value) {
 		return FXCollections.observableArrayList(db.getBudgetsThatsLike(value));
 	}
+	/**
+	 * 
+	 * @return
+	 */
 	public ObservableList<String> getAllBudgetsButJustTheId(){
 		ArrayList<String> budgetName = new ArrayList<>();
 		db.getAllBudgets().forEach((Budget i) -> budgetName.add(i.getBudgetId()));
@@ -215,52 +324,112 @@ public void updateBudget(String name, Double amount,String startDate, String end
 		
 		
 	}
-	
+	/**
+	 * 
+	 * @param id
+	 */
 	public void selectABudget(String id) {
 		selectedBudget =	db.getSpecificBudget(id);
 		}
+	/**
+	 * 
+	 */
 	public void resetABudget() {
 		selectedBudget = null;
 	}
+	/**
+	 * 
+	 * @return
+	 */
 	public Budget getSelectedBudget() {
 		return selectedBudget;
 	}
+	/**
+	 * 
+	 * @return
+	 */
 	public String getSelectedBudgetName() {
 		return selectedBudget.getBudgetId();
 	}
+	/**
+	 * 
+	 * @return
+	 */
 	public String getSelectedBudgetAmount() {
 		return selectedBudget.getAmount().toString();
 	}
+	/**
+	 * 
+	 * @return
+	 */
 	public String getSelectedBudgetStartDate() {
 		return selectedBudget.getStartDate();
 	}
+	/**
+	 * 
+	 * @return
+	 */
 	public String getSelectedBudgetEndDate() {
 		return selectedBudget.getEndDate();
 	}
 	
 	//stockType
-	
+	/**
+	 * 
+	 * @param stockTypeId
+	 */
 	public void setTestStockType(String stockTypeId) {
 		testStockType = db.StockTypeExists(stockTypeId);
 	}
+	/**
+	 * 
+	 */
 	public void resetStockType() {
 		testStockType = null;
 	}
+	/**
+	 * 
+	 * @return
+	 */
 	public String getTestStockName() {
 		return testStockType.getStockName();
 	}
+	/**
+	 * 
+	 * @return
+	 */
 	public String getTestStockCost() {
 		return testStockType.getCost();
 	}
+	/**
+	 * 
+	 * @return
+	 */
 	public String getTestStockQuanityType() {
 		return testStockType.getQuanityType();
 	}
+	/**
+	 * 
+	 * @param id
+	 * @param cost
+	 * @param quanityType
+	 */
 public void addStockType(String id, String cost, String quanityType) {
 	db.addStockType(id, cost, quanityType);
 }
+/**
+ * 
+ * @param stockTypeId
+ * @param cost
+ */
 public void updateStockTypeCost(String stockTypeId, String cost) {
 	db.updateStockTypeCost(stockTypeId, cost);
 }
+/**
+ * 
+ * @param stockTypeId
+ * @param quantityType
+ */
 public void updateStockTypeQuanityType(String stockTypeId, String quantityType) {
 	db.updateStockTypeQuanityType(stockTypeId, quantityType);
 }
@@ -985,74 +1154,19 @@ if(selectedMenu != null) {
 
 
 return FXCollections.observableArrayList(output);
-/*
-
-
-//bascially just reset the list so know got the most uptodate one
-notSelectedDishes.clear();
-
-//notSelectedDishes 
-if(selectedMenu != null) {
-db.getAllCurrentDishes().forEach((Dish i) -> {
-	
-	if(!selectedMenu.doesItHoldDish(i.toString())) {
-		notSelectedDishes.add(i); 
-	}
-});
-
-} else {
-	notSelectedDishes.addAll(db.getAllCurrentDishes());
-}
-
-
-//
-
-
-
-
-
-ArrayList<String> comparison = new ArrayList<>();
-
-
-//bascailly just getting the pk alone
-notSelectedDishes.forEach((Dish i) -> {
-	
-	comparison.add(i.getName());
-	
-});
-
-//will hold the actaull value that is outputted/ ones displayed 
-ArrayList<Dish> output = new ArrayList<>();
-//this is now just checking if the pk match and if they do 
-//i know i can output it.
-int counter3 = 0;
-while(counter3!= comparison.size()) {
-	
-	if(comparison.contains(master.get(counter3).getName())) {
-		output.add(master.get(counter3));
-	}
-	
-	counter3 = counter3 + 1;
-}
-
-
-
-resetMenuDetailList();
-
-//just save me having to manually convert to the output type i want
-if(output!=null) {
-notSelectedDishes = output;
-}
-//make the output from the var we assigned above.
-return getNotSelectedDishesAsString();
-
-
-
-
-*/
 	}
 
 //tcb are just the first letter of the label correcdeing to its input
+/**
+ * use the database to get a list of all the menus, the menu got are based of the inputs. the 
+ * output is a string represention in an observable list.
+ * 
+ * @param tcb String. Double in a string format, the min value the menu total will be
+ * @param tca String. Double in a string format, the max value the menu total will be
+ * @param cd String. a name of a dish type they want to be present in the menu
+ * @param dcd String. a name of a dish type they dont want to be present in the menu
+ * @return ObservableList Of the menu items that pass all the filters in there string format. 
+ */
 public ObservableList<String> getMenuFilterResults(String tcb, String tca, String cd, String dcd){
 	
 	ArrayList<Menu> allMenus = db.getAllMenu();
@@ -1172,10 +1286,7 @@ public ObservableList<String> getMenuFilterResults(String tcb, String tca, Strin
 		
 	}
 	
-	
-	
-	
-	
+
 	//where remove it if they are not all present
 	if(tcbMatchingMenus != null) {
 		master.retainAll(tcbMatchingMenus);
@@ -1354,6 +1465,7 @@ public void updateMenuFromSelectedMenu() {
 public Menu getFromMenu() {
 	return fromMenu;
 }
+
 public void setFromMenu(String from) {
 	if(from == null) {
 	
@@ -1364,6 +1476,13 @@ public void setFromMenu(String from) {
 	}
 }
 //for the about button
+/**
+ * makes a information alert and returns it.
+ * orginaly made for the  about button.
+ * 
+ * @param info. String text you want the alert to show. 
+ * @return an Alert object that holds the inputed info.
+ */
 	public Alert makeInfoAlert(String info) {
 		
 		Alert output = new Alert(AlertType.INFORMATION);
@@ -1373,7 +1492,13 @@ public void setFromMenu(String from) {
 		return output;
 		
 	}
-	
+	/**
+	 * hash the a inputed string in SHA-256 algorithm and returns 
+	 * the string represnetaion of it. 
+	 * 
+	 * @param input a string you want to be hash.
+	 * @return the inputed string but now hashed
+	 */
 	public String hash(String input) {
 		
 		//static method makes it with the type input
@@ -1407,12 +1532,5 @@ public void setFromMenu(String from) {
 		return null;
 		
 	}
-	
-	
-	
-	
-	
-	
-	
-	
+
 }

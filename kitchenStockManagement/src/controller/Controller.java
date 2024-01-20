@@ -21,7 +21,7 @@ import view.RootView;
  * @author George
  */
 public class Controller {
-// field 
+	// field 
 	private ModelRoot model;
 	private RootView view;
 	// private String stockId;
@@ -37,17 +37,12 @@ public class Controller {
 		// shadowing
 		this.model = model;
 		this.view = view;
-
+		
+		//login
 		view.setLoginBtnExit(new EHExit());
 		view.setLoginBtnLogin(new EHLogin());
-
-		// just tying out a lamabda to see if they still work as expected.
-		/*
-		 * view.getHomePage().setBtnStockEventHandler(event -> {
-		 * view.getChildren().remove(0);
-		 * view.getChildren().add(view.getStockListPage());
-		 * view.setVgrow(view.getStockListPage(),Priority.ALWAYS);} );
-		 */
+		
+		//home page
 		view.setHomeBtnStockEventHandler(new EHStockListLaod());
 		view.setHomeBtnMenuEventHandler(new EHMenuListLoad());
 		view.setHomeBtnAccountEventHandler(new EHAccountListLoad());
@@ -57,10 +52,10 @@ public class Controller {
 			model.makeInfoAlert("this is the main navigation page, click a button to go somewhere").show();
 		});
 		
+		//stockList page
 		view.setStockListBtnDeleteEventHandler(new EHStockListBtnDelete());
 		view.setStockListBtnAddEventHandler(new EHStockBtnAdd());
 		view.setStockListBtnFilterEventHandler(new EHStockBtnFilter());
-		//view.getStockListPage().setObservableList(setStockListContent());
 		view.setStockListBtnFindEventHandler(new EHStockListBtnFind());
 		view.setStockListBtnEditEventHandler(new EHStockListBtnEdit());
 		view.setStockListBtnAboutEventHandler((ActionEvent event) -> {
@@ -68,6 +63,7 @@ public class Controller {
 					+ "also is used to navigate to pages that manipulate the stock").show();
 		});
 		
+		//stock add/edit/details page
 		view.setStockDetailsBtnSaveEventHandler(new EHStockDetailsBtnSave());
 		view.setStockDetailsBtnCancelEventHandler(new EHStockListLaod());
 		view.setStockDetailsBtnLoadFromFileEventHandler(new EHStockDetailsBtnLoadFromFile());
@@ -76,13 +72,14 @@ public class Controller {
 					+ " update a stock depeding on the button picked in the previous page").show();
 		});
 		
+		//page to filter the stock seen in stock list page
 		view.setStockFilterBtnApply(new EHStockFilterBtnApply());
 		view.setStockFilterBtnCancel(new EHStockFilterBtnCancel());
 		view.setStockFilterBtnAbout((ActionEvent event) -> {
 			model.makeInfoAlert("pick the filter to be applied to the list on the page just left").show();
 		});
 		
-		
+		//menuList page
 		view.setMenuListBtnFilterEventHandler(new EHMenuBtnFilter());
 		view.setMenuListBtnAddEventHandler(new EHMenuListBtnAdd());
 		view.setMenuListBtnFindEventHandler(new EHMenuListBtnFind());
@@ -93,7 +90,7 @@ public class Controller {
 					+ "also is used to navigate to pages that manipulate the menus").show();
 		});
 		
-		
+		//page to make menu and manipulate the dishes
 		view.setMenuDetailsBtnSettingEventHandler(new EHMenuDetailsBtnSetting());
 		view.setMenuDetailsBtnOutputEventHandler(new EHMenuDetailsBtnOutput());
 		view.setMenuDetailsBtnFilterEventHandler(new EHDishesBtnFilter());
@@ -109,18 +106,21 @@ public class Controller {
 					+ "and is used to navaget to the dishes manipulation").show();
 		});
 		
+		//page to set the menu budget and name
 		view.setMenuSettingBtnSaveEventHandler(new EHMenuSettingBtnSave());
 		view.setMenuSettingBtnCancelEventHandler(new EHMenuDetailsLoad());
 		view.setMenuSettingBtnAboutEventHandler((ActionEvent event) -> {
 			model.makeInfoAlert("this page is used to set the menu name and the budget the menu uses").show();
 		});
 		
+		//page to filter menus on the menu list page
 		view.setMenufilterBtnSaveEventHandler(new EHMenuFilterBtnSave());
 		view.setMenufilterBtnCancelEventHandler(new EHMenuListLoad());
 		view.setMenufilterBtnAboutEventHandler((ActionEvent event) -> {
 			model.makeInfoAlert("pick the filter to be applied to the list on the page just left").show();
 		});
 		
+		//page to list the budgets
 		view.setBudgetListBtnAddEventHandler(new EHBudgetBtnAdd());
 		view.setBudgetListBtnFilterEventHandler(new EHBudgetBtnFilter());
 		view.setBudgetListBtnFindEventHandler(new EHBudgetListBtnFind());
@@ -131,7 +131,7 @@ public class Controller {
 					+ "also is used to navigate to pages that manipulate the budgets").show();
 		});
 		
-		
+		//page to create or edit a budget
 		view.setBudgetDetailsBtnSaveEventHandler(new EHBudgetDetailsBtnSave());
 		view.setBudgetDetailsBtnCancelEventHandler(new EHBudgetListLoad());
 		view.setBudgetDetailsBtnAboutEventHandler((ActionEvent event) -> {
@@ -139,13 +139,14 @@ public class Controller {
 					+ " update a budget depeding on the button picked in the previous page").show();
 		});
 		
-		
+		//page to filter the budgets on the budget list page
 		view.setBudgetFilterBtnSaveEventHandler(new EHBudgetFilterBtnApply());
 		view.setBudgetFilterBtnCancelEventHandler(new EHBudgetListLoad());
 		view.setBudgetFilterBtnAboutEventHandler((ActionEvent event) -> {
 			model.makeInfoAlert("pick the filter to be applied to the list on the page just left").show();
 		});
 		
+		//page list all the storage locations
 		view.setStorgaeLocationListBtnAddEventHandler(new EHStorageBtnAdd());
 		view.setStorgaeLocationListBtnFilterEventHandler(new EHStorageBtnFilter());
 		view.setStorgaeLocationListBtnFindEventHandler(new EHStorageListBtnFind());
@@ -156,13 +157,14 @@ public class Controller {
 					+ "also is used to navigate to pages that manipulate the storage locations").show();
 		});
 		
-		
+		//page filters the storage locations lists
 		view.setStorageFilterBtnApplyEventHandler(new EHStorageFilterBtnApply());
 		view.setStorageFilterBtnCancelEventHandler(new EHStorageListLoad());
 		view.setStorageFilterBtnAboutEventHandler((ActionEvent event) -> {
 			model.makeInfoAlert("pick the filter to be applied to the list on the page just left").show();
 		});
 		
+		//page to add or edit a stoarge locations details
 		view.setStorageDetailsBtnSaveEventHandler(new EHStorageDetailsBtnSave());
 		view.setStorageDetailsBtnCancelEventHandler(new EHStorageListLoad());
 		view.setStorageDetailsBtnAbooutEventHandler((ActionEvent event) -> {
@@ -170,6 +172,7 @@ public class Controller {
 					+ " update a Storage location depeding on the button picked in the previous page").show();
 		});
 		
+		//page to list all the accounts
 		view.setAccountListBtnAddEventHandler(new EHAccountBtnAdd());
 		view.setAccountListBtnFilterEventHandler(new EHAccountBtnFilter());
 		view.setAccountListBtnFindEventHandler(new EHAccountBtnFind());
@@ -180,6 +183,7 @@ public class Controller {
 					+ "also is used to navigate to pages that manipulate the accounts").show();
 		});
 		
+		//page to add or edit account details
 		view.setAccountDetailsBtnSaveEventHandler(new EHAccountDetailsBtnSave());
 		view.setAccountDetailsBtnCancelEventHandler(new EHAccountListLoad());
 		view.setAccountDetailsBtnAboutEventHandler((ActionEvent event) -> {
@@ -187,37 +191,41 @@ public class Controller {
 					+ " update a account depeding on the button picked in the previous page").show();
 		});
 		
+		//page to filter all the accounts listed
 		view.setAccountFilterBtnApplyEventHandler(new EHAccountFilterBtnApply());
 		view.setAccountFilterBtnCancelEventHandler(new EHAccountListLoad());
 		view.setAccountFilterBtnAboutEventHandler((ActionEvent event) -> {
 			model.makeInfoAlert("pick the filter to be applied to the list on the page just left").show();
 		});
 		
+		//page to delete data
 		view.setDeleteConfirmationBtnConfirmEventHandler(new EHDeleteBtnConfirm());
 		view.setDeleteConfirmationBtnCancelEventHandler(new EHDeleteBtnCancel());
 		view.setDeleteConfirmationBtnAboutEventHandler((ActionEvent event) -> {
 			model.makeInfoAlert("select if you want the shown item to be delted").show();
 		});
 		
+		//set the funcanality for the menu bar
 		view.setAllPaneMenu(new EHHomeLoad(), new EHLogout());
 	
-	
+		//page to create an edit a dish
 		view.setDishDetailsBtnAddEventHandler(new EHDishDetailsBtnAdd());
 		view.setDishDetailsBtnDeleteEventHandler(new EHDishDetailsBtnDelete());
 		view.setDishDetailsBtnEditEventHandler(new EHDishDetailsBtnEdit());
 		view.setDishDetailsBtnSaveEventHandler(new EHDishDetailsBtnSave());
-		view.setDishDetailsBtnEvenCanceltHandler(new EHMenuDetailsLoad());
+		view.setDishDetailsBtnCanceltHandler(new EHMenuDetailsLoad());
 		view.setDishDetailsBtnAboutEventHandler((ActionEvent event) -> {
 			model.makeInfoAlert("This is the page where you can make a new dish which will be shown in the menu list page").show();
 		});
 		
+		//page to filter all the dishes 
 		view.setDishFilterBtnApplyEventHandler(new EHDishFilterBtnApply());
 		view.setDishFilterBtnCancelEventHandler(new EHMenuDetailsLoad());
 		view.setDishFilterBtnAboutEventHandler((ActionEvent event) -> {
 			model.makeInfoAlert("pick the filter to be applied to the list on the page just left").show();
 		});
 		
-		
+		//page for outtpung the list in the menu details page
 		view.setOutputBtnMenuEventHandler(new EHOutputBtnMenuFromList());
 		view.setOutputBtnShoppingEventHandler(new EHOutputBtnShoppingFromList());
 		view.setOutputBtnSaveEventHandler(new EHOutputBtnSave());
@@ -226,17 +234,11 @@ public class Controller {
 		view.setOutputBtnAboutEventHandler((ActionEvent event) -> {
 			model.makeInfoAlert("pick if you would like to save to the database or to a text document").show();
 		});
-		
-	
-	
-	
-	
 	}
 
 	/**
-	 * this is simply a functional interface, to pass function in to the tbnExit
-	 * event handler in the login class
 	 * 
+	 * close the application.
 	 * @author Student EH = event handler
 	 */
 	private class EHExit implements EventHandler<ActionEvent> {
@@ -252,11 +254,10 @@ public class Controller {
 
 	/**
 	 * class for the btnLogin from Login class. it take the input and validates it,
-	 * is an issue is present it shows an error message, if pass validation it check
-	 * the database to see if it matches and it if does it loads the next page, if
-	 * doesn't it again shows an error message.  error message done by alert
-	 * 
-	 * dialog box.
+	 * if an issue is present it shows an error message, if pass validation the password is then 
+	 * hashed (SHA-256) and checked againstthe database to see if it matches it loads the home page, 
+	 * type load based on the the account that is logged in, if the password and user name doesn't match
+	 * it again shows an error message. error message done by alert dialog box.
 	 * 
 	 * @author Student
 	 *
@@ -295,6 +296,11 @@ public class Controller {
 		}
 	}
 
+	/**
+	 * class loads the menu list page and populate its list view with all the menus in the database.
+	 * @author Student
+	 *
+	 */
 	private class EHMenuListLoad implements EventHandler<ActionEvent> {
 
 		@Override
@@ -305,6 +311,11 @@ public class Controller {
 		}
 
 	}
+	/**
+	 * class loads the menu details page.
+	 * @author Student
+	 *
+	 */
 	private class EHMenuDetailsLoad implements EventHandler<ActionEvent> {
 
 		@Override
@@ -315,6 +326,13 @@ public class Controller {
 		}
 
 	}
+	/**
+	 * loads the menu details page.
+	 * it sets the from menu to null so that it know its an add and not an edit,
+	 * it also populates the combo box, with all the dishes the database has.
+	 * @author Student
+	 *
+	 */
 	private class EHMenuListBtnAdd implements EventHandler<ActionEvent> {
 
 		@Override
@@ -327,7 +345,17 @@ public class Controller {
 		}
 
 	}
-
+	/**
+	 * loads the delete page. 
+	 * it checks the user has selected an item from the list view
+	 * if no item has been selected it make the error message label visible saying the issue
+	 * if an item has been selected it loads the delete confirmation page
+	 * with the name of the item to be deleted in it. 
+	 * 
+	 * 
+	 * @author Student
+	 *
+	 */
 	private class EHStockListBtnDelete implements EventHandler<ActionEvent> {
 
 		@Override
@@ -348,6 +376,17 @@ public class Controller {
 		}
 
 	}
+	/**
+	 * loads the delete page. 
+	 * it checks the user has selected an item from the list view
+	 * if no item has been selected it make the error message label visible saying the issue
+	 * if an item has been selected it loads the delete confirmation page
+	 * with the name of the item to be deleted in it. 
+	 * 
+	 * 
+	 * @author Student
+	 *
+	 */
 	private class EHBudgteListBtnDelete implements EventHandler<ActionEvent> {
 
 		@Override
@@ -372,6 +411,17 @@ public class Controller {
 		}
 
 	}
+	/**
+	 * loads the delete page. 
+	 * it checks the user has selected an item from the list view
+	 * if no item has been selected it make the error message label visible saying the issue
+	 * if an item has been selected it loads the delete confirmation page
+	 * with the name of the item to be deleted in it. 
+	 * 
+	 * 
+	 * @author Student
+	 *
+	 */
 	private class EHAccountListBtnDelete implements EventHandler<ActionEvent> {
 
 		@Override
@@ -397,7 +447,17 @@ public class Controller {
 		}
 
 	}
-	
+	/**
+	 * loads the delete page. 
+	 * it checks the user has selected an item from the list view
+	 * if no item has been selected it make the error message label visible saying the issue
+	 * if an item has been selected it loads the delete confirmation page
+	 * with the name of the item to be deleted in it. 
+	 * 
+	 * 
+	 * @author Student
+	 *
+	 */
 	private class EHStorageListBtnDelete implements EventHandler<ActionEvent> {
 
 		@Override
@@ -417,7 +477,13 @@ public class Controller {
 			}
 		}
 	}
-	
+	/**
+	 * loads the dish details page.
+	 * sets the came from edit to false and details original id to null
+	 * so it knows that it is, adding not editing. 
+	 * @author Student
+	 *
+	 */
 	private class EHMenuDetailsBtnAddNewDish implements EventHandler<ActionEvent> {
 
 		@Override
@@ -429,7 +495,16 @@ public class Controller {
 		}
 
 	}
-	
+	/**
+	 * loads the DishDetails page.
+	 * check the user has selected a dish from the list view.
+	 * if no dish has been selected an error message is shown, 
+	 * if a dish has been shown it loads the dish details page,
+	 * with that dish details populating the dish details list view.
+	 * 
+	 * @author Student
+	 *
+	 */
 	
 	private class EHMenuDetailsBtnEdit implements EventHandler<ActionEvent> {
 
@@ -466,7 +541,11 @@ public class Controller {
 
 	}
 	
-
+/**
+ * 
+ * @author Student
+ *
+ */
 	private class EHMenuDetailsBtnLoadFromFileChooser implements EventHandler<ActionEvent> {
 
 		@Override
@@ -533,7 +612,7 @@ public class Controller {
 			
 			
 			} catch (FileNotFoundException e) {
-				// TODO Auto-generated catch block
+				
 				e.printStackTrace();
 			}
 			
@@ -553,6 +632,11 @@ public class Controller {
 		}
 
 	}
+	/**
+	 * 
+	 * @author Student
+	 *
+	 */
 	private class EHStockBtnAdd implements EventHandler<ActionEvent> {
 
 		@Override
@@ -564,7 +648,11 @@ public class Controller {
 		}
 
 	}
-
+/**
+ * 
+ * @author Student
+ *
+ */
 	private class EHBudgetBtnAdd implements EventHandler<ActionEvent> {
 
 		@Override
@@ -577,6 +665,15 @@ public class Controller {
 
 	}
 	
+	/**
+	 * loads the storage details page.
+	 * checks the user has selected an item from the list view
+	 * if no item has been selected it make the error label visible with info about the error
+	 * if an item has been selected it loads the storage details page with the selected items 
+	 * info populating it. 
+	 * @author Student
+	 *
+	 */
 	private class EHStorageListBtnEdit implements EventHandler<ActionEvent> {
 
 		@Override
@@ -595,15 +692,21 @@ view.setStorageLocationDetailsValues(model.getSelectedStorageName(), model.getSe
 			}
 		}
 	}
-	
+	/**
+	 * loads the budget details page.
+	 * checks the user has selected an item from the list view
+	 * if no item has been selected it make the error label visible with info about the error
+	 * if an item has been selected it loads the budget details page with the selected items 
+	 * info populating it. 
+	 * @author Student
+	 *
+	 */
 	private class EHBudgetBtnEdit implements EventHandler<ActionEvent> {
 
 		@Override
 		public void handle(ActionEvent event) {
 			
-			
-			
-			
+		
 if (!view.getBudgetListSelectedItem().equals("null")) {
 				
 		
@@ -627,6 +730,16 @@ if (!view.getBudgetListSelectedItem().equals("null")) {
 		}
 
 	}
+	/**
+	 * loads the account details page.
+	 * checks the user has selected an item from the list view
+	 * if no item has been selected it make the error label visible with info about the error
+	 * if the selected item is an admin and is not the logged in admin an error message is shown
+	 * if an item has been selected and isnt an admin account or is the logged in admin account it loads the account 
+	 * details page with the selected items info populating it. 
+	 * @author Student
+	 *
+	 */
 	private class EHAccountListBtnEdit implements EventHandler<ActionEvent> {
 
 		@Override
@@ -651,7 +764,11 @@ if (!view.getBudgetListSelectedItem().equals("null")) {
 		}
 
 	}
-
+/**
+ * 
+ * @author Student
+ *
+ */
 	private class EHStorageBtnAdd implements EventHandler<ActionEvent> {
 
 		@Override
@@ -663,7 +780,11 @@ if (!view.getBudgetListSelectedItem().equals("null")) {
 		}
 
 	}
-
+/**
+ * 
+ * @author Student
+ *
+ */
 	private class EHAccountBtnAdd implements EventHandler<ActionEvent> {
 
 		@Override
@@ -675,7 +796,11 @@ if (!view.getBudgetListSelectedItem().equals("null")) {
 		}
 
 	}
-
+/**
+ * 
+ * @author Student
+ *
+ */
 	private class EHStorageBtnFilter implements EventHandler<ActionEvent> {
 
 		@Override
@@ -685,7 +810,11 @@ if (!view.getBudgetListSelectedItem().equals("null")) {
 		}
 
 	}
-
+	/**
+	 * 
+	 * @author Student
+	 *
+	 */
 	private class EHStockBtnFilter implements EventHandler<ActionEvent> {
 
 		@Override
@@ -696,7 +825,11 @@ if (!view.getBudgetListSelectedItem().equals("null")) {
 		}
 
 	}
-
+/**
+ * 
+ * @author Student
+ *
+ */
 	private class EHBudgetBtnFilter implements EventHandler<ActionEvent> {
 
 		@Override
@@ -705,7 +838,11 @@ if (!view.getBudgetListSelectedItem().equals("null")) {
 		}
 
 	}
-
+/**
+ * 
+ * @author Student
+ *
+ */
 	private class EHDishesBtnFilter implements EventHandler<ActionEvent> {
 
 		@Override
@@ -715,7 +852,11 @@ if (!view.getBudgetListSelectedItem().equals("null")) {
 		}
 
 	}
-
+/**
+ * 
+ * @author Student
+ *
+ */
 	private class EHAccountBtnFilter implements EventHandler<ActionEvent> {
 
 		@Override
@@ -726,7 +867,11 @@ if (!view.getBudgetListSelectedItem().equals("null")) {
 		}
 
 	}
-
+/**
+ * 
+ * @author Student
+ *
+ */
 	private class EHMenuBtnFilter implements EventHandler<ActionEvent> {
 
 		@Override
@@ -736,7 +881,11 @@ if (!view.getBudgetListSelectedItem().equals("null")) {
 		}
 
 	}
-
+/**
+ * 
+ * @author Student
+ *
+ */
 	private class EHMenuDetailsBtnSetting implements EventHandler<ActionEvent> {
 
 		@Override
@@ -749,7 +898,11 @@ if (!view.getBudgetListSelectedItem().equals("null")) {
 		}
 
 	}
-
+/**
+ * 
+ * @author Student
+ *
+ */
 	private class EHHomeLoad implements EventHandler<ActionEvent> {
 
 		@Override
@@ -759,7 +912,11 @@ if (!view.getBudgetListSelectedItem().equals("null")) {
 		}
 
 	}
-
+/**
+ * 
+ * @author Student
+ *
+ */
 	private class EHLogout implements EventHandler<ActionEvent> {
 
 		@Override
@@ -769,7 +926,11 @@ if (!view.getBudgetListSelectedItem().equals("null")) {
 		}
 
 	}
-
+/**
+ * 
+ * @author Student
+ *
+ */
 	private class EHMenuDetailsBtnOutput implements EventHandler<ActionEvent> {
 
 		@Override
@@ -778,15 +939,12 @@ if (!view.getBudgetListSelectedItem().equals("null")) {
 
 		}
 	}
-
-	/*
-	 * private ObservableList<String> setStockListContent() {
-	 * 
-	 * ObservableList<String> dataToBeDisplayed =
-	 * FXCollections.observableArrayList(model.getDatabase().getCurrentStock());
-	 * 
-	 * return dataToBeDisplayed; }
-	 */
+/**
+ * 
+ * @author Student
+ *
+ */
+	
 	private class EHStockDetailsBtnSave implements EventHandler<ActionEvent> {
 
 		@Override
@@ -871,7 +1029,11 @@ model.createStock(model.getSelectedStockId(), view.getStorageLocation(), Double.
 			}
 		}
 	}
-	
+	/**
+	 * 
+	 * @author Student
+	 *
+	 */
 	private class EHStockListLaod implements EventHandler<ActionEvent> {
 
 		@Override
@@ -881,13 +1043,28 @@ model.createStock(model.getSelectedStockId(), view.getStorageLocation(), Double.
 
 		}
 	}
-
+/**
+ * 
+ */
 	private void loadStockListPage() {
 
 		view.stockListLoad(model.getObservableListStringStockList());
 
 	}
-
+/**
+ * 
+ * deletes a item from the database.
+ * deletes the item it hold which name it is showing in the list view, which it got from the delete buttons
+ * on the list pages. 
+ *it will then load the list page they original came from 
+ *the only time it wont do the above is if the user deletes there own account.
+ *if a user is deleting there own account that they are currently logged in as, it will then take the user
+ *to the log in page where there account will be removed and they will have to use another account
+ *if they want to use the application
+ * 
+ * @author Student
+ *
+ */
 	private class EHDeleteBtnConfirm implements EventHandler<ActionEvent> {
 
 		@Override
@@ -929,7 +1106,12 @@ view.BudgetListLoad(model.getObservableListBudgetList());
 		}
 	}
 	
-	
+	/**
+	 * loads the page where the user came from and
+	 * populates the corresponding list view with what the database holds.
+	 * @author Student
+	 *
+	 */
 	private class EHDeleteBtnCancel implements EventHandler<ActionEvent> {
 
 		@Override
@@ -954,7 +1136,11 @@ if(model.getDeleteFrom().equals("StockList")) {
 	}
 	
 	
-
+/**
+ * 
+ * @author Student
+ *
+ */
 	private class EHStockListBtnFind implements EventHandler<ActionEvent> {
 
 		@Override
@@ -971,7 +1157,11 @@ if(model.getDeleteFrom().equals("StockList")) {
 
 		}
 	}
-
+/**
+ * 
+ * @author Student
+ *
+ */
 	private class EHAccountBtnFind implements EventHandler<ActionEvent> {
 
 		@Override
@@ -988,6 +1178,11 @@ if(model.getDeleteFrom().equals("StockList")) {
 
 		}
 	}
+	/**
+	 * 
+	 * @author Student
+	 *
+	 */
 	private class EHStorageListBtnFind implements EventHandler<ActionEvent> {
 
 		@Override
@@ -1007,7 +1202,15 @@ if(model.getDeleteFrom().equals("StockList")) {
 
 		}
 	}
-	
+	/**
+	 * It displays a filtered list of the stock items that are in the database based of the inputed filters.
+	 * 
+	 * it will first validate the input, no input is accepted. if there is an issue will display the issue
+	 * in an alert dialog box. if there is no issue, it will display in the stock list page a list of 
+	 * all the menu that passed all the filters. the inputs are from the stock filter page.
+	 * @author Student
+	 *
+	 */
 	private class EHStockFilterBtnApply implements EventHandler<ActionEvent> {
 
 		@Override
@@ -1126,7 +1329,11 @@ if(model.getDeleteFrom().equals("StockList")) {
 		}
 	
 	}
-	
+	/**
+	 * 
+	 * @author Student
+	 *
+	 */
 	private class EHStockFilterBtnCancel implements EventHandler<ActionEvent> {
 
 		@Override
@@ -1138,14 +1345,15 @@ if(model.getDeleteFrom().equals("StockList")) {
 	
 	}
 	
-	
-	
-	
-	
-	
-	
-	
-	
+	/**
+	 * It displays a filtered list of the budgets that are in the database based of the inputed filters.
+	 * 
+	 * it will first validate the input, no input is accepted. if there is an issue will display the issue
+	 * in an alert dialog box. if there is no issue, it will display in the budget list page a list of 
+	 * all the menu that passed all the filters. the inputs are from the budget filter page.
+	 * @author Student
+	 *
+	 */
 	private class EHBudgetFilterBtnApply implements EventHandler<ActionEvent> {
 
 		@Override
@@ -1224,7 +1432,15 @@ if(model.getDeleteFrom().equals("StockList")) {
 	
 	}
 	
-	
+	/**
+	 * It displays a filtered list of the Accounts that are in the database based of the inputed filters.
+	 * 
+	 * it will first validate the input, no input is accepted. if there is an issue will display the issue
+	 * in an alert dialog box. if there is no issue, it will display in the accounts list page a list of 
+	 * all the accounts that passed all the filters. the inputs are from the menu filter page.
+	 * @author Student
+	 *
+	 */
 	private class EHAccountFilterBtnApply implements EventHandler<ActionEvent> {
 
 		@Override
@@ -1250,6 +1466,15 @@ if(model.getDeleteFrom().equals("StockList")) {
 		}
 
 	}
+	/**
+	 * It displays a filtered list of the storage locationss that are in the database based of the inputed filters.
+	 * 
+	 * it will first validate the input, no input is accepted. if there is an issue will display the issue
+	 * in an alert dialog box. if there is no issue, it will display in the storage location list page a list of 
+	 * all the storage locations that passed all the filters. the inputs are from the storage lcoation filter page.
+	 * @author Student
+	 *
+	 */
 	private class EHStorageFilterBtnApply implements EventHandler<ActionEvent> {
 
 		@Override
@@ -1286,17 +1511,25 @@ if(model.getDeleteFrom().equals("StockList")) {
 		}
 
 	}
-
+/**
+ * 
+ */
 	public void resetStockDetailsPage() {
 		view.resetStockDetailsPage(model.getObservableStorgaeLocationListNameOnly());
 
 	}
-
+/**
+ * 
+ */
 	private void loadBudgetListPage() {
 		view.BudgetListLoad(model.getObservableListBudgetList());
 
 	}
-
+/**
+ * 
+ * @author Student
+ *
+ */
 	private class EHBudgetListLoad implements EventHandler<ActionEvent> {
 
 		@Override
@@ -1306,7 +1539,11 @@ if(model.getDeleteFrom().equals("StockList")) {
 		}
 
 	}
-
+/**
+ * 
+ * @author Student
+ *
+ */
 	private class EHBudgetDetailsBtnSave implements EventHandler<ActionEvent> {
 
 		@Override
@@ -1364,7 +1601,11 @@ if(model.getDeleteFrom().equals("StockList")) {
 
 	}
 	
-	
+	/**
+	 * 
+	 * @author Student
+	 *
+	 */
 	private class EHAccountDetailsBtnSave implements EventHandler<ActionEvent> {
 
 		@Override
@@ -1414,7 +1655,11 @@ if(model.getDeleteFrom().equals("StockList")) {
 		}
 
 	}
-	
+	/**
+	 * 
+	 * @author Student
+	 *
+	 */
 	private class EHStorageDetailsBtnSave implements EventHandler<ActionEvent> {
 
 		@Override
@@ -1464,7 +1709,11 @@ if(model.getDeleteFrom().equals("StockList")) {
 
 	}
 	
-	
+	/**
+	 * 
+	 * @author Student
+	 *
+	 */
 	
 	private class EHBudgetListBtnFind implements EventHandler<ActionEvent> {
 
@@ -1487,12 +1736,18 @@ if(model.getDeleteFrom().equals("StockList")) {
 		}
 
 	}
-
+/**
+ * 
+ */
 	private void loadAccountListPage() {
 		view.accountListLoad(model.getObservableListAccountList());
 
 	}
-
+/**
+ * 
+ * @author Student
+ *
+ */
 	private class EHAccountListLoad implements EventHandler<ActionEvent> {
 
 		@Override
@@ -1502,13 +1757,19 @@ if(model.getDeleteFrom().equals("StockList")) {
 		}
 
 	}
-
+/**
+ * 
+ */
 	private void loadStorgaeLocationListPage() {
 
 		view.storgaeLocationListLoad(model.getObservableListStringStorgaeLocationsList());
 
 	}
-
+/**
+ * 
+ * @author Student
+ *
+ */
 	private class EHStorageListLoad implements EventHandler<ActionEvent> {
 
 		@Override
@@ -1518,7 +1779,11 @@ if(model.getDeleteFrom().equals("StockList")) {
 		}
 
 	}
-
+/**
+ * 
+ * @author Student
+ *
+ */
 	private class EHStockDetailsBtnLoadFromFile implements EventHandler<ActionEvent> {
 
 		@Override
@@ -1537,6 +1802,11 @@ if(model.getDeleteFrom().equals("StockList")) {
 		}
 
 	}
+	/**
+	 * 
+	 * @author Student
+	 *
+	 */
 	private class EHStockListBtnEdit implements EventHandler<ActionEvent> {
 
 		@Override
@@ -1570,7 +1840,11 @@ if(model.getDeleteFrom().equals("StockList")) {
 	}
 	
 	
-	
+	/**
+	 * 
+	 * @author Student
+	 *
+	 */
 	
 	private class EHDishDetailsBtnAdd implements EventHandler<ActionEvent> {
 
@@ -1672,7 +1946,17 @@ if(model.getDeleteFrom().equals("StockList")) {
 		}
 
 	}
-	
+	/**
+	 * loads the delete page. 
+	 * it checks the user has selected an item from the list view
+	 * if no item has been selected it make the error message label visible saying the issue
+	 * if an item has been selected it loads the delete confirmation page
+	 * with the name of the item to be deleted in it. 
+	 * 
+	 * 
+	 * @author Student
+	 *
+	 */
 	private class EHDishDetailsBtnDelete implements EventHandler<ActionEvent> {
 
 		@Override
@@ -1697,7 +1981,11 @@ if(model.getDeleteFrom().equals("StockList")) {
 		}
 
 	}
-	
+	/**
+	 * 
+	 * @author Student
+	 *
+	 */
 	private class EHDishDetailsBtnEdit implements EventHandler<ActionEvent> {
 
 		@Override
@@ -1744,7 +2032,11 @@ if(model.getDeleteFrom().equals("StockList")) {
 		}
 
 	}
-	
+	/**
+	 * 
+	 * @author Student
+	 *
+	 */
 	// menu / dish
 	private class EHMenuDetailsBtnFind implements EventHandler<ActionEvent> {
 
@@ -1771,6 +2063,11 @@ if(model.getDeleteFrom().equals("StockList")) {
 
 		}
 	}
+	/**
+	 * 
+	 * @author Student
+	 *
+	 */
 	 // menu
 	private class EHMenuListBtnFind implements EventHandler<ActionEvent> {
 
@@ -1790,6 +2087,17 @@ if(model.getDeleteFrom().equals("StockList")) {
 
 		}
 	}
+	/**
+	 * loads the delete page. 
+	 * it checks the user has selected an item from the list view
+	 * if no item has been selected it make the error message label visible saying the issue
+	 * if an item has been selected it loads the delete confirmation page
+	 * with the name of the item to be deleted in it. 
+	 * 
+	 * 
+	 * @author Student
+	 *
+	 */
 	private class EHMenuListBtnDelete implements EventHandler<ActionEvent> {
 
 		@Override
@@ -1813,6 +2121,11 @@ if(model.getDeleteFrom().equals("StockList")) {
 
 		}
 	}
+	/**
+	 * 
+	 * @author Student
+	 *
+	 */
 	private class EHMenuListBtnEdit implements EventHandler<ActionEvent> {
 
 		@Override
@@ -1846,6 +2159,11 @@ if(model.getDeleteFrom().equals("StockList")) {
 
 		}
 	}
+	/**
+	 * 
+	 * @author Student
+	 *
+	 */
 	private class EHMenuSettingBtnSave implements EventHandler<ActionEvent> {
 
 		@Override
@@ -1880,7 +2198,11 @@ if(model.getDeleteFrom().equals("StockList")) {
 
 		}
 	}
-	
+	/**
+	 * 
+	 * @author Student
+	 *
+	 */
 	private class EHMenuDetailsBtnAdd implements EventHandler<ActionEvent> {
 
 		
@@ -1929,6 +2251,11 @@ if(model.getDeleteFrom().equals("StockList")) {
 
 		}
 	}
+	/**
+	 * 
+	 * @author Student
+	 *
+	 */
 	private class EHMenuDetailsBtnRemoveFromList implements EventHandler<ActionEvent> {
 
 		@Override
@@ -1951,6 +2278,17 @@ if(model.getDeleteFrom().equals("StockList")) {
 
 		}
 	}
+	/**
+	 * loads the delete page. 
+	 * it checks the user has selected an item from the list view
+	 * if no item has been selected it make the error message label visible saying the issue
+	 * if an item has been selected it loads the delete confirmation page
+	 * with the name of the item to be deleted in it. 
+	 * 
+	 * 
+	 * @author Student
+	 *
+	 */
 	private class EHMenuDetailsBtnDeleteDishPermentlyFromList implements EventHandler<ActionEvent> {
 
 		@Override
@@ -1976,13 +2314,13 @@ if(model.getDeleteFrom().equals("StockList")) {
 
 			}
 			
-			
-			
-			
-			
-			
 		}
 	}
+	/**
+	 * 
+	 * @author Student
+	 *
+	 */
 	// need a way to know if update or add
 	private class EHDishDetailsBtnSave implements EventHandler<ActionEvent> {
 
@@ -2018,7 +2356,15 @@ if(model.getDeleteFrom().equals("StockList")) {
 
 		}
 	}
-	
+	/**
+	 * It displays a filtered list of the dish items that are in the database based of the inputed filters.
+	 * 
+	 * it will first validate the input, no input is accepted. if there is an issue will display the issue
+	 * in an alert dialog box. if there is no issue, it will display in the menu details page a list of 
+	 * all the dish that passed all the filters. the inputs are from the dish filter page.
+	 * @author Student
+	 *
+	 */
 	private class EHDishFilterBtnApply implements EventHandler<ActionEvent> {
 
 		@Override
@@ -2101,6 +2447,14 @@ if(model.getDeleteFrom().equals("StockList")) {
 
 		}
 	}
+	/**
+	 * is a functional interface for outputting the menu list.
+	 * it check if the menu details shopping list has items if not it show an error message,
+	 * if it does it then displace a file chooser to select the folder to save in before making the file 
+	 * and outputting it. its output is written English.
+	 * @author Student
+	 *
+	 */
 	private class EHOutputBtnMenuFromList implements EventHandler<ActionEvent> {
 
 		@Override
@@ -2133,7 +2487,7 @@ if(model.getDeleteFrom().equals("StockList")) {
 					pw.close();
 					
 				} catch (IOException e) {
-					// TODO Auto-generated catch block
+					
 					e.printStackTrace();
 				}
 				
@@ -2148,7 +2502,14 @@ if(model.getDeleteFrom().equals("StockList")) {
 		}
 	}
 	
-	
+	/**
+	 * is a functional interface for outputting the shopping list.
+	 * it check if the menu details shopping list has items if not it show an error message,
+	 * if it does it then displace a file chooser to select the folder to save in before making the file 
+	 * and outputting it. its output is written English.
+	 * @author Student
+	 *
+	 */
 	private class EHOutputBtnShoppingFromList implements EventHandler<ActionEvent> {
 
 		@Override
@@ -2186,7 +2547,7 @@ if(model.getDeleteFrom().equals("StockList")) {
 					
 					
 				} catch (IOException e) {
-					// TODO Auto-generated catch block
+					
 					e.printStackTrace();
 				}
 				
@@ -2198,6 +2559,16 @@ if(model.getDeleteFrom().equals("StockList")) {
 			
 		}
 	}
+	/**
+	 * save the menu made in menu details.
+	 * check there is a menu info to be saved,
+	 * if there isnt it show an error message 
+	 * if there is it checks to see if it should update the database 
+	 * or make a new entry and use the corresponding menu functions.
+	 * 
+	 * @author Student
+	 *
+	 */
 	private class EHOutputBtnSave implements EventHandler<ActionEvent> {
 
 		@Override
@@ -2232,7 +2603,15 @@ if(model.getDeleteFrom().equals("StockList")) {
 			
 		}
 	}
-	
+	/**
+	 * It displays a filtered list of the menu items that are in the database based of the inputed filters.
+	 * 
+	 * it will first validate the input, no input is accepted. if there is an issue will display the issue
+	 * in an alert dialog box. if there is no issue, it will display in the menu list page a list of 
+	 * all the menu that passed all the filters. the inputs are from the menu filter page.
+	 * @author Student
+	 *
+	 */
 	private class EHMenuFilterBtnSave implements EventHandler<ActionEvent> {
 
 		@Override
@@ -2300,18 +2679,7 @@ if(model.getDeleteFrom().equals("StockList")) {
 				view.menuListLoad(model.getAllMenus());
 			}
 				
-				
-				
-				
-				
-				
-				
-				
-				
-				
-				
-				
-				
+
 				
 			}else {
 				model.makeAlert(issueFrom, masterErrorMessage).show();

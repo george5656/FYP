@@ -2,15 +2,12 @@ package view;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
-
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.geometry.Pos;
 import javafx.scene.layout.Priority;
 import javafx.scene.layout.VBox;
-import javafx.scene.control.TextField;
-import javafx.scene.layout.Pane;
 
 /**
  * class is the root of the view in the MVC
@@ -133,6 +130,10 @@ public MenuFilter getMenuFilter() {
 public MenuSettingPage getMenuSettingPage() {
 	return msp;
 }
+/**
+ * 
+ * @return
+ */
 public ArrayList<PaneMenu> getAllView(){
 	ArrayList<PaneMenu> all = new ArrayList<>();
 	all.add(budgetFilter);
@@ -168,11 +169,17 @@ public Output getOutputPage() {
 
 
 //login 
-
+/**
+ * sets the exit button event handler 
+ * @param event = Event handler<ActionEvent> 
+ */
 public void setLoginBtnExit(EventHandler<ActionEvent> event) {
 	login.setBtnExitEventHandler(event);
 }
-
+/**
+ * sets the login button event handler 
+ * @param event = Event handler<ActionEvent> 
+ */
 public void setLoginBtnLogin(EventHandler<ActionEvent> event) {
 	login.setBtnLoginEventHandler(event);
 }
@@ -190,22 +197,45 @@ public void loginLoad() {
 	login.clearInput();
 }
 //home page
-
+/**
+ * sets the stock button event handler 
+ * @param event = Event handler<ActionEvent> 
+ */
 public void setHomeBtnStockEventHandler(EventHandler<ActionEvent> event) {
 	homePage.setBtnStockEventHandler(event);
 }
+/**
+ * sets the home page about button event handler 
+ * @param event = Event handler<ActionEvent> 
+ */
 public void setHomeBtnAboutEventHandler(EventHandler<ActionEvent> event) {
 	homePage.setAboutEventHandler(event);
 }
+/**
+ * sets the menu button event handler 
+ * @param event = Event handler<ActionEvent> 
+ */
 public void setHomeBtnMenuEventHandler(EventHandler<ActionEvent> event) {
 	homePage.setBtnMenuEventHandler(event);
 }
+/**
+ * sets the Account button event handler 
+ * @param event = Event handler<ActionEvent> 
+ */
 public void setHomeBtnAccountEventHandler(EventHandler<ActionEvent> event) {
 	homePage.setBtnAccountEventHandler(event);
 }
+/**
+ * sets the budget button event handler 
+ * @param event = Event handler<ActionEvent> 
+ */
 public void setHomeBtnBudgetEventHandler(EventHandler<ActionEvent> event) {
 	homePage.setBtnBudgetEventHandler(event);
 }
+/**
+ * sets the storage button event handler 
+ * @param event = Event handler<ActionEvent> 
+ */
 public void setHomeBtnStorageEventHandler(EventHandler<ActionEvent> event) {
 	homePage.setBtnStorageEventHandler(event);
 }
@@ -218,16 +248,31 @@ public void homePageMenuLoad(Boolean isAdmin) {
 }
 
 //stockListPage
-
+/**
+ * sets the stock delete button event handler 
+ * @param event = Event handler<ActionEvent> 
+ */
 public void setStockListBtnDeleteEventHandler(EventHandler<ActionEvent> event) {
 	stockListPage.setBtnDeleteEventHandler(event);
 }
+/**
+ * sets the stock list page about button event handler 
+ * @param event = Event handler<ActionEvent> 
+ */
 public void setStockListBtnAboutEventHandler(EventHandler<ActionEvent> event) {
 	stockListPage.setAboutEventHandler(event);
 }
+/**
+ * sets the stock add button event handler 
+ * @param event = Event handler<ActionEvent> 
+ */
 public void setStockListBtnAddEventHandler(EventHandler<ActionEvent> event) {
 	stockListPage.setBtnAddEventHandler(event);
 }
+/**
+ * sets the stock filter button event handler 
+ * @param event = Event handler<ActionEvent> 
+ */
 public void setStockListBtnFilterEventHandler(EventHandler<ActionEvent> event) {
 	stockListPage.setBtnFilterEventHandler(event);
 }
@@ -252,14 +297,17 @@ public void setStockListError(String errorMessgae) {
 	stockListPage.getErrorLabel().setText(errorMessgae);
 }
 
-/*
-public void setStockListObservableList(EventHandler<ActionEvent> event) {
-	stockListPage.setObservableList(event);
-}
-*/
+/**
+ * sets the stock list find button event handler 
+ * @param event = Event handler<ActionEvent> 
+ */
 public void setStockListBtnFindEventHandler(EventHandler<ActionEvent> event) {
 	stockListPage.setBtnFindEventHandler(event);
 }
+/**
+ * sets the stock list edit button event handler 
+ * @param event = Event handler<ActionEvent> 
+ */
 public void setStockListBtnEditEventHandler(EventHandler<ActionEvent> event) {
 	stockListPage.setBtnEditEventHandler(event);
 }
@@ -281,16 +329,31 @@ stockListPage.setObservableList(data);
 
 
 // stock details 
-
+/**
+ * sets the stock details save button event handler 
+ * @param event = Event handler<ActionEvent> 
+ */
 public void setStockDetailsBtnSaveEventHandler(EventHandler<ActionEvent> event) {
 	sd.setBtnSaveEventHandler(event);
 }
+/**
+ * sets the stock details about button event handler 
+ * @param event = Event handler<ActionEvent> 
+ */
 public void setStockDetailsBtnAboutEventHandler(EventHandler<ActionEvent> event) {
 	sd.setAboutEventHandler(event);
 }
+/**
+ * sets the stock details cancel button event handler 
+ * @param event = Event handler<ActionEvent> 
+ */
 public void setStockDetailsBtnCancelEventHandler(EventHandler<ActionEvent> event) {
 	sd.setBtnCancelEventHandler(event);
 }
+/**
+ * sets the stock details load from file button event handler 
+ * @param event = Event handler<ActionEvent> 
+ */
 public void setStockDetailsBtnLoadFromFileEventHandler(EventHandler<ActionEvent> event) {
 	sd.setBtnLoadFromFileEventHandler(event);
 }
@@ -374,13 +437,24 @@ public void setStockDetailsCost(String Cost) {
 }
 
 // stock filter 
-
+/**
+ * sets the stock filter apply button event handler 
+ * @param event = Event handler<ActionEvent> 
+ */
 public void setStockFilterBtnApply(EventHandler<ActionEvent> event) {
 	sf.setBtnApply(event);
 }
+/**
+ * sets the stock filter about button event handler 
+ * @param event = Event handler<ActionEvent> 
+ */
 public void setStockFilterBtnAbout(EventHandler<ActionEvent> event) {
 	sf.setAboutEventHandler(event);
 }
+/**
+ * sets the stock filter cancel button event handler 
+ * @param event = Event handler<ActionEvent> 
+ */
 public void setStockFilterBtnCancel(EventHandler<ActionEvent> event) {
 	sf.setBtnCancelEventHandler(event);
 }
@@ -439,22 +513,45 @@ public String getStockFilterStockType() {
 	}
 }
 //menuList
-
+/**
+ * sets the menu list apply filter button event handler 
+ * @param event = Event handler<ActionEvent> 
+ */
 public void setMenuListBtnFilterEventHandler(EventHandler<ActionEvent> event) {
 	menuListPage.setBtnFilterEventHandler(event);
 }
+/**
+ * sets the menu list apply add button event handler 
+ * @param event = Event handler<ActionEvent> 
+ */
 public void setMenuListBtnAddEventHandler(EventHandler<ActionEvent> event) {
 	menuListPage.setBtnAddEventHandler(event);
 }
+/**
+ * sets the menu list apply delete button event handler 
+ * @param event = Event handler<ActionEvent> 
+ */
 public void setMenuListBtnDeleteEventHandler(EventHandler<ActionEvent> event) {
 	menuListPage.setBtnDeleteEventHandler(event);
 }
+/**
+ * sets the menu list apply find button event handler 
+ * @param event = Event handler<ActionEvent> 
+ */
 public void setMenuListBtnFindEventHandler(EventHandler<ActionEvent> event) {
 	menuListPage.setBtnFindEventHandler(event);
 }
+/**
+ * sets the menu list apply edit button event handler 
+ * @param event = Event handler<ActionEvent> 
+ */
 public void setMenuListBtnEditEventHandler(EventHandler<ActionEvent> event) {
 	menuListPage.setBtnEditEventHandler(event);
 }
+/**
+ * sets the menu list apply about button event handler 
+ * @param event = Event handler<ActionEvent> 
+ */
 public void setMenuListBtnAboutEventHandler(EventHandler<ActionEvent> event) {
 	menuListPage.setAboutEventHandler(event);
 }
@@ -495,37 +592,80 @@ public void menuListLoad(ObservableList<String> data) {
 
 
 // menuDetails
-
+/**
+ * sets the menu Details settings button event handler 
+ * @param event = Event handler<ActionEvent> 
+ */
 public void setMenuDetailsBtnSettingEventHandler(EventHandler<ActionEvent> event) {
 	menuDetails.setBtnSettingEventHandler(event);
 }
+/**
+ * sets the menu Details output button event handler 
+ * @param event = Event handler<ActionEvent> 
+ */
 public void setMenuDetailsBtnOutputEventHandler(EventHandler<ActionEvent> event) {
 	menuDetails.setBtnOutputEventHandler(event);
 }
+/**
+ * sets the menu Details filter button event handler 
+ * @param event = Event handler<ActionEvent> 
+ */
 public void setMenuDetailsBtnFilterEventHandler(EventHandler<ActionEvent> event) {
 	menuDetails.setBtnFilterEventHandler(event);
 }
+/**
+ * sets the menu Details add button event handler 
+ * @param event = Event handler<ActionEvent> 
+ */
 public void setMenuDetailsBtnAddEventHandler(EventHandler<ActionEvent> event) {
 	menuDetails.setBtnAddEventHandler(event);
 }
+/**
+ * sets the menu Details find button event handler 
+ * @param event = Event handler<ActionEvent> 
+ */
 public void setMenuDetailsBtnFindEventHandler(EventHandler<ActionEvent> event) {
 	menuDetails.setBtnFindEventHandler(event);
 }
+/**
+ * sets the menu Details new dish button event handler 
+ * @param event = Event handler<ActionEvent> 
+ */
 public void setMenuDetailsBtnNewDishEventHandler(EventHandler<ActionEvent> event) {
 	menuDetails.setBtnNewDishEventHandler(event);
 }
+/**
+ * sets the menu Details Remove from list button event handler 
+ * @param event = Event handler<ActionEvent> 
+ */
 public void setMenuDetailsBtnRemoveFromListEventHandler(EventHandler<ActionEvent> event) {
 	menuDetails.setBtnRemoveFromListEventHandler(event);
 }
+/**
+ * sets the menu Details delete dish permently button event handler 
+ * @param event = Event handler<ActionEvent> 
+ */
 public void setMenuDetailsBtnDeleteDishPermentlyFromListEventHandler(EventHandler<ActionEvent> event) {
 	menuDetails.setBtnDeleteDishPermenetlyFromListEventHandler(event);
 }
+/**
+ * sets the menu Details edit button event handler 
+ * @param event = Event handler<ActionEvent> 
+ */
 public void setMenuDetailsBtnEditEventHandler(EventHandler<ActionEvent> event) {
 	menuDetails.setBtnEditEventHandler(event);
 }
+/**
+ * sets the menu Details load from file chooser button event handler 
+ * @param event = Event handler<ActionEvent> 
+ */
 public void setMenuDetailsBtnLoadFromFileChooserEventHandler(EventHandler<ActionEvent> event) {
 	menuDetails.setBtnLoadFromFileChooserEventHandler(event);
 }
+/**
+ * sets the menu Details about button event handler 
+ * @param event = Event handler<ActionEvent> 
+ */
 public void setMenuDetailsBtnAboutEventHandler(EventHandler<ActionEvent> event) {
 	menuDetails.setAboutEventHandler(event);
 }
@@ -588,14 +728,24 @@ public void menuFilterLoad() {
 	this.getChildren().add(mf);
 	this.setVgrow(mf, Priority.ALWAYS);
 }
-
+/**
+ * sets the menu filter save button event handler 
+ * @param event = Event handler<ActionEvent> 
+ */
 public void setMenufilterBtnSaveEventHandler(EventHandler<ActionEvent> event) {
 	mf.setBtnSaveEventHandler(event);
 }
-
+/**
+ * sets the menu filter cancel button event handler 
+ * @param event = Event handler<ActionEvent> 
+ */
 public void setMenufilterBtnCancelEventHandler(EventHandler<ActionEvent> event) {
 	mf.setBtnCancelEventHandler(event);
 }
+/**
+ * sets the menu filter about button event handler 
+ * @param event = Event handler<ActionEvent> 
+ */
 public void setMenufilterBtnAboutEventHandler(EventHandler<ActionEvent> event) {
 	mf.setAboutEventHandler(event);
 }
@@ -620,12 +770,24 @@ public void menuSettingsLoad() {
 	this.getChildren().add(msp);
 	this.setVgrow(msp, Priority.ALWAYS);
 }
+/**
+ * sets the menu settings save button event handler 
+ * @param event = Event handler<ActionEvent> 
+ */
 public void setMenuSettingBtnSaveEventHandler(EventHandler<ActionEvent> event) {
 	msp.setBtnSaveEventHandler(event);
 }
+/**
+ * sets the menu settings cancel button event handler 
+ * @param event = Event handler<ActionEvent> 
+ */
 public void setMenuSettingBtnCancelEventHandler(EventHandler<ActionEvent> event) {
 	msp.setBtnCancelEventHandler(event);
 }
+/**
+ * sets the menu settings about button event handler 
+ * @param event = Event handler<ActionEvent> 
+ */
 public void setMenuSettingBtnAboutEventHandler(EventHandler<ActionEvent> event) {
 	msp.setAboutEventHandler(event);
 }
@@ -647,42 +809,86 @@ public void outputPageLoad() {
 	this.getChildren().add(output);
 	this.setVgrow(output, Priority.ALWAYS);
 }
-
+/**
+ * sets the output menu button event handler 
+ * @param event = Event handler<ActionEvent> 
+ */
 public void setOutputBtnMenuEventHandler(EventHandler<ActionEvent> event) {
 	output.setBtnMenuEventHandler(event);
 }
+/**
+ * sets the output shopping button event handler 
+ * @param event = Event handler<ActionEvent> 
+ */
 public void setOutputBtnShoppingEventHandler(EventHandler<ActionEvent> event) {
 	output.setBtnShoppingEventHandler(event);
 }
+/**
+ * sets the output save button event handler 
+ * @param event = Event handler<ActionEvent> 
+ */
 public void setOutputBtnSaveEventHandler(EventHandler<ActionEvent> event) {
 	output.setBtnSaveEventHandler(event);
 }
+/**
+ * sets the output back to menu details button event handler 
+ * @param event = Event handler<ActionEvent> 
+ */
 public void setOutputBtnBackToMenuDetailsEventHandler(EventHandler<ActionEvent> event) {
 	output.setBtnBackToMenuDetailsEventHandler(event);
 }
+/**
+ * sets the output back to menu list button event handler 
+ * @param event = Event handler<ActionEvent> 
+ */
 public void setOutputBtnBackToMenuListEventHandler(EventHandler<ActionEvent> event) {
 	output.setBtnBackToMenuListEventHandler(event);
 }
+/**
+ * sets the output about button event handler 
+ * @param event = Event handler<ActionEvent> 
+ */
 public void setOutputBtnAboutEventHandler(EventHandler<ActionEvent> event) {
 	output.setAboutEventHandler(event);
 }
 //budgetList
-
+/**
+ * sets the budget list add button event handler 
+ * @param event = Event handler<ActionEvent> 
+ */
 public void setBudgetListBtnAddEventHandler(EventHandler<ActionEvent> event) {
-	budgetListPage.setBtnAddEventHandler(event);
-}
+	/**
+	 * sets the budget list filter button event handler 
+	 * @param event = Event handler<ActionEvent> 
+	 */}
 public void setBudgetListBtnFilterEventHandler(EventHandler<ActionEvent> event) {
 	budgetListPage.setBtnFilterEventHandler(event);
 }
+/**
+ * sets the budget list find button event handler 
+ * @param event = Event handler<ActionEvent> 
+ */
 public void setBudgetListBtnFindEventHandler(EventHandler<ActionEvent> event) {
 	budgetListPage.setBtnFindEventHandler(event);
 }
+/**
+ * sets the budget list delete button event handler 
+ * @param event = Event handler<ActionEvent> 
+ */
 public void setBudgetListBtnDeleteEventHandler(EventHandler<ActionEvent> event) {
 	budgetListPage.setBtnDeleteEventHandler(event);
 }
+/**
+ * sets the budget list edit button event handler 
+ * @param event = Event handler<ActionEvent> 
+ */
 public void setBudgetListBtnEditEventHandler(EventHandler<ActionEvent> event) {
 	budgetListPage.setBtnEditEventHandler(event);
 }
+/**
+ * sets the budget list about button event handler 
+ * @param event = Event handler<ActionEvent> 
+ */
 public void setBudgetListBtnAboutEventHandler(EventHandler<ActionEvent> event) {
 	budgetListPage.setAboutEventHandler(event);
 }
@@ -710,12 +916,24 @@ public String getSelectedBudgetId() {
 }
 
 //budgetDetailsPage
+/**
+ * sets the budget details save button event handler 
+ * @param event = Event handler<ActionEvent> 
+ */
 public void setBudgetDetailsBtnSaveEventHandler(EventHandler<ActionEvent> event) {
 	bdp.setBtnSaveEventHandler(event);
 }
+/**
+ * sets the budget details about button event handler 
+ * @param event = Event handler<ActionEvent> 
+ */
 public void setBudgetDetailsBtnAboutEventHandler(EventHandler<ActionEvent> event) {
 	bdp.setAboutEventHandler(event);
 }
+/**
+ * sets the budget details cancel button event handler 
+ * @param event = Event handler<ActionEvent> 
+ */
 public void setBudgetDetailsBtnCancelEventHandler(EventHandler<ActionEvent> event) {
 	bdp.setBtnCancelEventHandler(event);
 }
@@ -772,13 +990,24 @@ public void budgetfilterLoad() {
 	this.getChildren().add(budgetFilter);
 	this.setVgrow(budgetFilter, Priority.ALWAYS);
 }
+/**
+ * sets the budget filter save button event handler 
+ * @param event = Event handler<ActionEvent> 
+ */
 public void setBudgetFilterBtnSaveEventHandler(EventHandler<ActionEvent> event) {
 	budgetFilter.setBtnSaveEventHandler(event);
 }
-
+/**
+ * sets the budget filter cancel button event handler 
+ * @param event = Event handler<ActionEvent> 
+ */
 public void setBudgetFilterBtnCancelEventHandler(EventHandler<ActionEvent> event) {
 	budgetFilter.setBtnCancelEventHandler(event);
 }
+/**
+ * sets the budget filter about button event handler 
+ * @param event = Event handler<ActionEvent> 
+ */
 public void setBudgetFilterBtnAboutEventHandler(EventHandler<ActionEvent> event) {
 	budgetFilter.setAboutEventHandler(event);
 }
@@ -814,21 +1043,45 @@ public LocalDate getBudgetFilterEndsAfterValuePresent() {
 }
 
 //storagelocationlist
+/**
+ * sets the storage location add button event handler 
+ * @param event = Event handler<ActionEvent> 
+ */
 public void setStorgaeLocationListBtnAddEventHandler(EventHandler<ActionEvent> event) {
 	storageLocationListPage.setBtnAddEventHandler(event);
 }
+/**
+ * sets the storage location filter button event handler 
+ * @param event = Event handler<ActionEvent> 
+ */
 public void setStorgaeLocationListBtnFilterEventHandler(EventHandler<ActionEvent> event) {
 	storageLocationListPage.setBtnFilterEventHandler(event);
 }
+/**
+ * sets the storage location edit button event handler 
+ * @param event = Event handler<ActionEvent> 
+ */
 public void setStorgaeLocationListBtnEditEventHandler(EventHandler<ActionEvent> event) {
 	storageLocationListPage.setBtnEditEventHandler(event);
 }
+/**
+ * sets the storage location about button event handler 
+ * @param event = Event handler<ActionEvent> 
+ */
 public void setStorgaeLocationListBtnAboutEventHandler(EventHandler<ActionEvent> event) {
 	storageLocationListPage.setAboutEventHandler(event);
 }
+/**
+ * sets the storage location delete button event handler 
+ * @param event = Event handler<ActionEvent> 
+ */
 public void setStorgaeLocationListBtnDeleteEventHandler(EventHandler<ActionEvent> event) {
 	storageLocationListPage.setBtnDeleteEventHandler(event);
 }
+/**
+ * sets the storage location find button event handler 
+ * @param event = Event handler<ActionEvent> 
+ */
 public void setStorgaeLocationListBtnFindEventHandler(EventHandler<ActionEvent> event) {
 	storageLocationListPage.setBtnFindEventHandler(event);
 }
@@ -873,13 +1126,24 @@ public void StorgaeLocationDetailsLoad() {
 	this.getChildren().add(ssld);
 	this.setVgrow(ssld,Priority.ALWAYS);
 }
-
+/**
+ * sets the storage location details save button event handler 
+ * @param event = Event handler<ActionEvent> 
+ */
 public void setStorageDetailsBtnSaveEventHandler(EventHandler<ActionEvent> event) {
 	ssld.setBtnSaveEventHandler(event);
 }
+/**
+ * sets the storage location details cancel button event handler 
+ * @param event = Event handler<ActionEvent> 
+ */
 public void setStorageDetailsBtnCancelEventHandler(EventHandler<ActionEvent> event) {
 	ssld.setBtnCancelEventHandler(event);
 }
+/**
+ * sets the storage location details about button event handler 
+ * @param event = Event handler<ActionEvent> 
+ */
 public void setStorageDetailsBtnAbooutEventHandler(EventHandler<ActionEvent> event) {
 	ssld.setAboutEventHandler(event);
 }
@@ -910,12 +1174,24 @@ public void StorgaeLocationFilterLoad(ArrayList<String> type) {
 	this.getChildren().add(sslf);
 	this.setVgrow(sslf,Priority.ALWAYS);
 }
+/**
+ * sets the storage location filter apply button event handler 
+ * @param event = Event handler<ActionEvent> 
+ */
 public void setStorageFilterBtnApplyEventHandler(EventHandler<ActionEvent> event) {
 	sslf.setBtnApply(event);
 }
+/**
+ * sets the storage location filter cancel button event handler 
+ * @param event = Event handler<ActionEvent> 
+ */
 public void setStorageFilterBtnCancelEventHandler(EventHandler<ActionEvent> event) {
 	sslf.setBtnCancelEventHandler(event);
 }
+/**
+ * sets the storage location filter about button event handler 
+ * @param event = Event handler<ActionEvent> 
+ */
 public void setStorageFilterBtnAboutEventHandler(EventHandler<ActionEvent> event) {
 	sslf.setAboutEventHandler(event);
 }
@@ -929,21 +1205,45 @@ public Boolean StorageFilterHasATypeBeenSelected() {
 	return sslf.hasATypeBeenSelectec();
 }
 //accountListPage
+/**
+ * sets the account list add button event handler 
+ * @param event = Event handler<ActionEvent> 
+ */
 public void setAccountListBtnAddEventHandler(EventHandler<ActionEvent> event) {
 	accountListPage.setBtnAddEventHandler(event);
 }
+/**
+ * sets the account list filter button event handler 
+ * @param event = Event handler<ActionEvent> 
+ */
 public void setAccountListBtnFilterEventHandler(EventHandler<ActionEvent> event) {
 	accountListPage.setBtnFilterEventHandler(event);
 }
+/**
+ * sets the account list find button event handler 
+ * @param event = Event handler<ActionEvent> 
+ */
 public void setAccountListBtnFindEventHandler(EventHandler<ActionEvent> event) {
 	accountListPage.setBtnFindEventHandler(event);
 }
+/**
+ * sets the account list edit button event handler 
+ * @param event = Event handler<ActionEvent> 
+ */
 public void setAccountListBtnEditEventHandler(EventHandler<ActionEvent> event) {
 	accountListPage.setBtnEditEventHandler(event);
 }
+/**
+ * sets the account list about button event handler 
+ * @param event = Event handler<ActionEvent> 
+ */
 public void setAccountListBtnAboutEventHandler(EventHandler<ActionEvent> event) {
 	accountListPage.setAboutEventHandler(event);
 }
+/**
+ * sets the account list delete button event handler 
+ * @param event = Event handler<ActionEvent> 
+ */
 public void setAccountListBtnDeleteEventHandler(EventHandler<ActionEvent> event) {
 	accountListPage.setBtnDeleteEventHandler(event);
 }
@@ -994,12 +1294,24 @@ public Boolean getAccountDetailsIsAdminYesSelected() {
 public Boolean getAccontDetailsIsAdminNoSelected() {
 	return ad.isAdminNoSelected();
 }
+/**
+ * sets the account details save button event handler 
+ * @param event = Event handler<ActionEvent> 
+ */
 public void setAccountDetailsBtnSaveEventHandler(EventHandler<ActionEvent> event) {
 	ad.setBtnSaveEventHandler(event);
 }
+/**
+ * sets the account details cancel button event handler 
+ * @param event = Event handler<ActionEvent> 
+ */
 public void setAccountDetailsBtnCancelEventHandler(EventHandler<ActionEvent> event) {
 	ad.setBtnCancelEventHandler(event);
 }
+/**
+ * sets the account details about button event handler 
+ * @param event = Event handler<ActionEvent> 
+ */
 public void setAccountDetailsBtnAboutEventHandler(EventHandler<ActionEvent> event) {
 	ad.setAboutEventHandler(event);
 }
@@ -1020,13 +1332,24 @@ public void accountFilterLoad() {
 	this.getChildren().add(af);
 	this.setVgrow(af, Priority.ALWAYS);
 }
+/**
+ * sets the account filter apply button event handler 
+ * @param event = Event handler<ActionEvent> 
+ */
 public void setAccountFilterBtnApplyEventHandler(EventHandler<ActionEvent> event) {
 	af.setBtnApply(event);
 }
-
+/**
+ * sets the account filter cancel button event handler 
+ * @param event = Event handler<ActionEvent> 
+ */
 public void setAccountFilterBtnCancelEventHandler(EventHandler<ActionEvent> event) {
 	af.setBtnCancelEventHandler(event);
 }
+/**
+ * sets the account filter about button event handler 
+ * @param event = Event handler<ActionEvent> 
+ */
 public void setAccountFilterBtnAboutEventHandler(EventHandler<ActionEvent> event) {
 	af.setAboutEventHandler(event);
 }
@@ -1038,13 +1361,24 @@ public Boolean getIsAdminNo() {
 	return af.isNoSelected();
 }
 //DeleteConfirmaitonPage
-
+/**
+ * sets the delete confirm button event handler 
+ * @param event = Event handler<ActionEvent> 
+ */
 public void setDeleteConfirmationBtnConfirmEventHandler(EventHandler<ActionEvent> event) {
 	dcp.setBtnConfirmEventHandler(event);
 }
+/**
+ * sets the delete cancel button event handler 
+ * @param event = Event handler<ActionEvent> 
+ */
 public void setDeleteConfirmationBtnCancelEventHandler(EventHandler<ActionEvent> event) {
 	dcp.setBtnCancelEventHandler(event);
 }
+/**
+ * sets the delete confirm about event handler 
+ * @param event = Event handler<ActionEvent> 
+ */
 public void setDeleteConfirmationBtnAboutEventHandler(EventHandler<ActionEvent> event) {
 	dcp.setAboutEventHandler(event);
 }
@@ -1072,23 +1406,46 @@ public void dishDetailsLoad() {
 	this.getChildren().add(ddp);
 	this.setVgrow(ddp, Priority.ALWAYS);
 }
-
+/**
+ * sets the dish details save button event handler 
+ * @param event = Event handler<ActionEvent> 
+ */
 public void setDishDetailsBtnSaveEventHandler(EventHandler<ActionEvent> event) {
 	ddp.setBtnSaveEventHandler(event);
 }
+/**
+ * sets the dish details about button event handler 
+ * @param event = Event handler<ActionEvent> 
+ */
 public void setDishDetailsBtnAboutEventHandler(EventHandler<ActionEvent> event) {
 	ddp.setAboutEventHandler(event);
 }
+/**
+ * sets the dish details add button event handler 
+ * @param event = Event handler<ActionEvent> 
+ */
 public void setDishDetailsBtnAddEventHandler(EventHandler<ActionEvent> event) {
 	ddp.setBtnAddEventHandler(event);
 }
+/**
+ * sets the dish details delete button event handler 
+ * @param event = Event handler<ActionEvent> 
+ */
 public void setDishDetailsBtnDeleteEventHandler(EventHandler<ActionEvent> event) {
 	ddp.setBtnDeleteEventHandler(event);
 }
+/**
+ * sets the dish details edit button event handler 
+ * @param event = Event handler<ActionEvent> 
+ */
 public void setDishDetailsBtnEditEventHandler(EventHandler<ActionEvent> event) {
 	ddp.setBtnEditEventHandler(event);
 }
-public void setDishDetailsBtnEvenCanceltHandler(EventHandler<ActionEvent> event) {
+/**
+ * sets the dish details cancel button event handler 
+ * @param event = Event handler<ActionEvent> 
+ */
+public void setDishDetailsBtnCanceltHandler(EventHandler<ActionEvent> event) {
 	ddp.setBtnCancelEventHandler(event);
 }
 public String getDishDetailsDishName() {
@@ -1131,20 +1488,30 @@ public int getDishDetailsListSize() {
 }
 
 
-
+ 
 //filter dishes
 public void dishFilterLoad() {
 	this.getChildren().remove(0);
 	this.getChildren().add(fd);
 	this.setVgrow(fd, Priority.ALWAYS);
 }
-
+/**
+ * sets the filter dishes apply button event handler 
+ * @param event = Event handler<ActionEvent> 
+ */
 public void setDishFilterBtnApplyEventHandler(EventHandler<ActionEvent> event) {
 	fd.setBtnApply(event);
 }
+/**
+ * sets the filter dishes cancel button event handler 
+ * @param event = Event handler<ActionEvent> 
+ */
 public void setDishFilterBtnCancelEventHandler(EventHandler<ActionEvent> event) {
 	fd.setBtnCancelEventHandler(event);
-}
+}/**
+ * sets the filter dishes about button event handler 
+ * @param event = Event handler<ActionEvent> 
+ */
 public void setDishFilterBtnAboutEventHandler(EventHandler<ActionEvent> event) {
 	fd.setAboutEventHandler(event);
 }
