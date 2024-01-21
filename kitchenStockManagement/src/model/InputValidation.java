@@ -11,7 +11,9 @@ public class InputValidation {
 //fields
 	private String errorMessage = ""; 
 	/**
-	 * function checks if the user input is valdiad and ok to use
+	 * function checks if the user input is validate and ok to use.
+	 * it checks if there is an input, if the input size is below 50,
+	 * if it only contains [a-zA-Z0-9 ]+
 	 * @param userInput = a string of the user data want to check
 	 * @return String that says the error
 	 */
@@ -59,7 +61,15 @@ public class InputValidation {
 		}
 		return errorMessage;
 	}
-	
+	/**
+	 * validate a string. 
+	 * checks that the string is present, that it only contains [0-9.]+ and has only one . and 
+	 * two values after the dot, and that the length of the string is less that 50 characters.
+	 * 
+	 * 
+	 * @param userInput =  a double in a string format, that you want to validate.
+	 * @return string that says what the error is, if none get ""
+	 */
 	public String doubleMustBePresetValidation(String userInput) {
 		errorMessage =doublePresentIsOptionalValidation(userInput);
 		

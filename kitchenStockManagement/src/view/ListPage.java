@@ -90,18 +90,38 @@ public class ListPage extends PaneMenu {
 		tfFind.setFont(new Font(20)); 
 
 	}
+	/**
+	 * sets the add button event handler 
+	 * @param event = Event handler<ActionEvent> 
+	 */
 public void setBtnAddEventHandler(EventHandler<ActionEvent> event) {
 	btnAdd.setOnAction(event);
 }
+/**
+ * sets the delete button event handler 
+ * @param event = Event handler<ActionEvent> 
+ */
 public void setBtnDeleteEventHandler(EventHandler<ActionEvent> event) {
 	btnDelete.setOnAction(event);
 }
+/**
+ * sets the filter button event handler 
+ * @param event = Event handler<ActionEvent> 
+ */
 public void setBtnFilterEventHandler(EventHandler<ActionEvent> event) {
 	btnFilter.setOnAction(event);
 }
+/**
+ * sets the find button event handler 
+ * @param event = Event handler<ActionEvent> 
+ */
 public void setBtnFindEventHandler(EventHandler<ActionEvent> event) {
 	btnFind.setOnAction(event);
 }
+/**
+ * sets the edit button event handler 
+ * @param event = Event handler<ActionEvent> 
+ */
 public void setBtnEditEventHandler(EventHandler<ActionEvent> event) {
 	btnEdit.setOnAction(event);
 }

@@ -50,18 +50,38 @@ public class HomePage extends PaneMenu {
 	btnStorage.setFont(new Font(30));
 	
 	}
+	/**
+	 * sets the stock button event handler 
+	 * @param event = Event handler<ActionEvent> 
+	 */
 	public void setBtnStockEventHandler(EventHandler<ActionEvent> Event) {
 		btnStock.setOnAction(Event);
 	}
+	/**
+	 * sets the menu button event handler 
+	 * @param event = Event handler<ActionEvent> 
+	 */
 	public void setBtnMenuEventHandler(EventHandler<ActionEvent> Event) {
 		btnMenu.setOnAction(Event);
 	}
+	/**
+	 * sets the budget button event handler 
+	 * @param event = Event handler<ActionEvent> 
+	 */
 	public void setBtnBudgetEventHandler(EventHandler<ActionEvent> Event) {
 		btnBudget.setOnAction(Event);
 	}
+	/**
+	 * sets the storage button event handler 
+	 * @param event = Event handler<ActionEvent> 
+	 */
 	public void setBtnStorageEventHandler(EventHandler<ActionEvent> Event) {
 		btnStorage.setOnAction(Event);
 	}
+	/**
+	 * sets the account button event handler 
+	 * @param event = Event handler<ActionEvent> 
+	 */
 	public void setBtnAccountEventHandler(EventHandler<ActionEvent> Event) {
 		btnAccount.setOnAction(Event);
 	}

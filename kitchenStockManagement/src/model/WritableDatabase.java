@@ -1025,7 +1025,7 @@ public ArrayList<Dish> getDishThatCostNotAbove(Double numberOfMaxItems) {
 	
 	 
 	 PreparedStatement statement;
-		PreparedStatement statement2;
+		
 		PreparedStatement statement3;
 		ArrayList<Dish> dish  = new ArrayList<>();
 		ArrayList<StockType> stockType = new ArrayList<>();
@@ -1075,7 +1075,7 @@ public ArrayList<Dish> getDishThatCostNotBellow(Double numberOfMaxItems) {
 	
 	 
 	 PreparedStatement statement;
-		PreparedStatement statement2;
+		
 		PreparedStatement statement3;
 		ArrayList<Dish> dish  = new ArrayList<>();
 		ArrayList<StockType> stockType = new ArrayList<>();

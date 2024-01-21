@@ -112,33 +112,73 @@ public class MenuDetails extends PaneMenu {
 	
 	
 	}
+	/**
+	 * sets the add button event handler 
+	 * @param event = Event handler<ActionEvent> 
+	 */
 	public void setBtnAddEventHandler(EventHandler<ActionEvent> event) {
 		btnAdd.setOnAction(event);
 	}
+	/**
+	 * sets the filter button event handler 
+	 * @param event = Event handler<ActionEvent> 
+	 */
 	public void setBtnFilterEventHandler(EventHandler<ActionEvent> event) {
 		btnFilter.setOnAction(event);
 	}
+	/**
+	 * sets the setting button event handler 
+	 * @param event = Event handler<ActionEvent> 
+	 */
 	public void setBtnSettingEventHandler(EventHandler<ActionEvent> event) {
 		btnSettings.setOnAction(event);
 	}
+	/**
+	 * sets the output button event handler 
+	 * @param event = Event handler<ActionEvent> 
+	 */
 	public void setBtnOutputEventHandler(EventHandler<ActionEvent> event) {
 		btnOutput.setOnAction(event);
 	}
+	/**
+	 * sets the find button event handler 
+	 * @param event = Event handler<ActionEvent> 
+	 */
 	public void setBtnFindEventHandler(EventHandler<ActionEvent> event) {
 		btnFind.setOnAction(event);
 	}
+	/**
+	 * sets the new dish button event handler 
+	 * @param event = Event handler<ActionEvent> 
+	 */
 	public void setBtnNewDishEventHandler(EventHandler<ActionEvent> event) {
 		btnNewDish.setOnAction(event);
 	}
+	/**
+	 * sets the remove from list button event handler 
+	 * @param event = Event handler<ActionEvent> 
+	 */
 	public void setBtnRemoveFromListEventHandler(EventHandler<ActionEvent> event) {
 		btnRemoveFromList.setOnAction(event);
 	}
+	/**
+	 * sets the delete dish peremently button event handler 
+	 * @param event = Event handler<ActionEvent> 
+	 */
 	public void setBtnDeleteDishPermenetlyFromListEventHandler(EventHandler<ActionEvent> event) {
 		btnDeleteDishPeremently.setOnAction(event);
 	}
+	/**
+	 * sets the edit button event handler 
+	 * @param event = Event handler<ActionEvent> 
+	 */
 	public void setBtnEditEventHandler(EventHandler<ActionEvent> event) {
 		btnEdit.setOnAction(event);
 	}
+	/**
+	 * sets the load from file chooser button event handler 
+	 * @param event = Event handler<ActionEvent> 
+	 */
 	public void setBtnLoadFromFileChooserEventHandler(EventHandler<ActionEvent> event) {
 		btnLoadFromFileChooser.setOnAction(event);
 	}

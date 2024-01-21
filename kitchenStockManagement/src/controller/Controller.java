@@ -16,7 +16,7 @@ import model.ModelRoot;
 import view.RootView;
 
 /**
- * is the controller class of the MVC for the kitchen management system.
+ * the controller class of the MVC for the kitchen management system.
  * 
  * @author George
  */
@@ -74,7 +74,7 @@ public class Controller {
 		
 		//page to filter the stock seen in stock list page
 		view.setStockFilterBtnApply(new EHStockFilterBtnApply());
-		view.setStockFilterBtnCancel(new EHStockFilterBtnCancel());
+		view.setStockFilterBtnCancel(new EHStockListLaod());
 		view.setStockFilterBtnAbout((ActionEvent event) -> {
 			model.makeInfoAlert("pick the filter to be applied to the list on the page just left").show();
 		});
@@ -255,7 +255,7 @@ public class Controller {
 	/**
 	 * class for the btnLogin from Login class. it take the input and validates it,
 	 * if an issue is present it shows an error message, if pass validation the password is then 
-	 * hashed (SHA-256) and checked againstthe database to see if it matches it loads the home page, 
+	 * hashed (SHA-256) and checked against the database to see if it matches it loads the home page, 
 	 * type load based on the the account that is logged in, if the password and user name doesn't match
 	 * it again shows an error message. error message done by alert dialog box.
 	 * 
@@ -542,6 +542,13 @@ public class Controller {
 	}
 	
 /**
+ * loads a menu from a text file which the user picks form the file chooser.
+ * first it checks if the use has inputed in a menu name and a budget in the settings page
+ * if not it shows an alert error message
+ * if they have it loads a file chooser.
+ * if the user inputs a file that isnt the correct file type it will show an error message
+ * if the file has unrecognisable dishes, it will show a information alert box that dishes where not readable.
+ * if no issue happen it will populate the menu details page with the info in the file.
  * 
  * @author Student
  *
@@ -633,7 +640,8 @@ public class Controller {
 
 	}
 	/**
-	 * 
+	 * loads the stock detail page.
+	 * the input fields in the stock details page are empty and ready for new input.
 	 * @author Student
 	 *
 	 */
@@ -649,7 +657,8 @@ public class Controller {
 
 	}
 /**
- * 
+ * loads the budget detail page.
+ * the input fields in the budget details page are empty and ready for new input.
  * @author Student
  *
  */
@@ -682,7 +691,7 @@ public class Controller {
 			if (!view.getStorageListSelectedItem().equals("null")) {
 
 				model.selectAStorageLocation(view.getSelectedStorageId());
-view.setStorageLocationDetailsValues(model.getSelectedStorageName(), model.getSelectedStorageType(), model.getSelectedStorageAvailbilty());
+				view.setStorageLocationDetailsValues(model.getSelectedStorageName(), model.getSelectedStorageType(), model.getSelectedStorageAvailbilty());
 				view.StorgaeLocationDetailsLoad();
 				
 				
@@ -765,7 +774,8 @@ if (!view.getBudgetListSelectedItem().equals("null")) {
 
 	}
 /**
- * 
+ * loads the storage location details page. 
+ * it clears any info that is the storage location details page and then loads it.
  * @author Student
  *
  */
@@ -780,11 +790,12 @@ if (!view.getBudgetListSelectedItem().equals("null")) {
 		}
 
 	}
-/**
- * 
- * @author Student
- *
- */
+	/**
+	 * loads the account details page. 
+	 * it clears any info that is the account details page and then loads it.
+	 * @author Student
+	 *
+	 */
 	private class EHAccountBtnAdd implements EventHandler<ActionEvent> {
 
 		@Override
@@ -797,7 +808,8 @@ if (!view.getBudgetListSelectedItem().equals("null")) {
 
 	}
 /**
- * 
+ * loads the stock storage location filter class/ page.
+ * loads the page and populates the combo box with all the storage types the database has. 
  * @author Student
  *
  */
@@ -811,7 +823,9 @@ if (!view.getBudgetListSelectedItem().equals("null")) {
 
 	}
 	/**
-	 * 
+	 * loads the stock filter class/ page.
+	 * loads the page and populates the corresponding combo boxes with either 
+	 * all the stock types or storage locations the database has depending on which combo box it is. 
 	 * @author Student
 	 *
 	 */
@@ -825,11 +839,11 @@ if (!view.getBudgetListSelectedItem().equals("null")) {
 		}
 
 	}
-/**
- * 
- * @author Student
- *
- */
+	/**
+	 * loads the budget filter class/ page
+	 * @author Student
+	 *
+	 */
 	private class EHBudgetBtnFilter implements EventHandler<ActionEvent> {
 
 		@Override
@@ -838,11 +852,11 @@ if (!view.getBudgetListSelectedItem().equals("null")) {
 		}
 
 	}
-/**
- * 
- * @author Student
- *
- */
+	/**
+	 * loads the filter dishes class/ page
+	 * @author Student
+	 *
+	 */
 	private class EHDishesBtnFilter implements EventHandler<ActionEvent> {
 
 		@Override
@@ -852,11 +866,11 @@ if (!view.getBudgetListSelectedItem().equals("null")) {
 		}
 
 	}
-/**
- * 
- * @author Student
- *
- */
+	/**
+	 * loads the account filter class/ page
+	 * @author Student
+	 *
+	 */
 	private class EHAccountBtnFilter implements EventHandler<ActionEvent> {
 
 		@Override
@@ -867,11 +881,11 @@ if (!view.getBudgetListSelectedItem().equals("null")) {
 		}
 
 	}
-/**
- * 
- * @author Student
- *
- */
+	/**
+	 * loads the menu filter class/ page
+	 * @author Student
+	 *
+	 */
 	private class EHMenuBtnFilter implements EventHandler<ActionEvent> {
 
 		@Override
@@ -882,7 +896,9 @@ if (!view.getBudgetListSelectedItem().equals("null")) {
 
 	}
 /**
- * 
+ * loads the settings page.
+ * loads the menu details setting pages and populate the combo box
+ * with all the budget that the database holds.
  * @author Student
  *
  */
@@ -899,7 +915,9 @@ if (!view.getBudgetListSelectedItem().equals("null")) {
 
 	}
 /**
- * 
+ * loads the home page.
+ * loads the home page and sets the admin status, which determines 
+ * the type of home page loaded, eg admin or none admin one.
  * @author Student
  *
  */
@@ -913,6 +931,9 @@ if (!view.getBudgetListSelectedItem().equals("null")) {
 
 	}
 /**
+ * loads the login page.
+ * take the user from what ever page they are on to the login page which input has been cleared from 
+ * the last user input.
  * 
  * @author Student
  *
@@ -927,7 +948,8 @@ if (!view.getBudgetListSelectedItem().equals("null")) {
 
 	}
 /**
- * 
+ * loads the output page.
+ * button found in the menu details page.
  * @author Student
  *
  */
@@ -940,7 +962,20 @@ if (!view.getBudgetListSelectedItem().equals("null")) {
 		}
 	}
 /**
- * 
+ * saves the stock details in the database. 
+ *it check the user input,
+ *if there is an issue with it show this issue in an alert dialog box
+
+ *if there is no issue it will look to see if there is a stored stock name/id
+ *this is done as if they come from add there will be null but if from edit there will be an id/name
+ *if there isnt one it will simply insert/ make a new one in the database,
+ *if there is one it will update that stock type but only bits that very 
+ *using the info provided. 
+ *
+ *it then check the get stock from, if true it makes a new stock, if false it updates the stock
+ *this is set when the button eg add and edit is pressed, button in the stock list page.
+ *it then loads the stock list page.
+ *
  * @author Student
  *
  */
@@ -1030,7 +1065,9 @@ model.createStock(model.getSelectedStockId(), view.getStorageLocation(), Double.
 		}
 	}
 	/**
-	 * 
+	 * loads the stock list page.
+	 * the stock list page is loaded and the list view is populated with all the stock that the database
+	 * has in a string format.
 	 * @author Student
 	 *
 	 */
@@ -1039,17 +1076,20 @@ model.createStock(model.getSelectedStockId(), view.getStorageLocation(), Double.
 		@Override
 		public void handle(ActionEvent event) {
 
-			view.stockListLoad(model.getObservableListStringStockList());
+			loadStockListPage();
 
 		}
 	}
-/**
- * 
- */
+	/**
+	 * loads the stock list page.
+	 * the stock list page is loaded and the list view is populated with all the stock that the database
+	 * has in a string format.
+	 *
+	 */
 	private void loadStockListPage() {
 
 		view.stockListLoad(model.getObservableListStringStockList());
-
+		
 	}
 /**
  * 
@@ -1138,6 +1178,12 @@ if(model.getDeleteFrom().equals("StockList")) {
 	
 /**
  * 
+ * makes the list view show just the stock that is like the find value input.
+ * check the user input
+ * if there is an issue the label is made visible and show the error
+ * if there is no issue the list view is populates with all the stock the database has that is like
+ * the user input. like in mysql is % user input %.
+ * 
  * @author Student
  *
  */
@@ -1157,11 +1203,17 @@ if(model.getDeleteFrom().equals("StockList")) {
 
 		}
 	}
-/**
- * 
- * @author Student
- *
- */
+	/**
+	 * 
+	 * makes the list view show just the accounts that are like the find value input.
+	 * check the user input
+	 * if there is an issue the label is made visible and show the error
+	 * if there is no issue the list view is populates with all the accounts in the database has that are 
+	 * like the user input. like in mysql is % user input %.
+	 * 
+	 * @author Student
+	 *
+	 */
 	private class EHAccountBtnFind implements EventHandler<ActionEvent> {
 
 		@Override
@@ -1179,6 +1231,12 @@ if(model.getDeleteFrom().equals("StockList")) {
 		}
 	}
 	/**
+	 * 
+	 * makes the list view show just the storage locations that are like the find value input.
+	 * check the user input
+	 * if there is an issue the label is made visible and show the error
+	 * if there is no issue the list view is populates with all the storage locations that the
+	 * database has that is like the user input. like in mysql is % user input %.
 	 * 
 	 * @author Student
 	 *
@@ -1325,21 +1383,6 @@ if(model.getDeleteFrom().equals("StockList")) {
 				Alert errorMessagePopup = model.makeAlert(issueFrom, masterErrorMessage);
 				errorMessagePopup.show();
 			}
-		
-		}
-	
-	}
-	/**
-	 * 
-	 * @author Student
-	 *
-	 */
-	private class EHStockFilterBtnCancel implements EventHandler<ActionEvent> {
-
-		@Override
-		public void handle(ActionEvent event) {
-			
-			view.stockListLoad(model.getObservableListStringStockList());
 		
 		}
 	
@@ -1512,14 +1555,18 @@ if(model.getDeleteFrom().equals("StockList")) {
 
 	}
 /**
- * 
+ * resets the stock details page
+ * it clears all the text feilds gives the combo box all the storage locations 
+ * the database has
  */
 	public void resetStockDetailsPage() {
 		view.resetStockDetailsPage(model.getObservableStorgaeLocationListNameOnly());
 
 	}
 /**
- * 
+ * loads the budget list page.
+ * loads the budget list page and populate it list view with all the
+ * budgets the database has in string format
  */
 	private void loadBudgetListPage() {
 		view.BudgetListLoad(model.getObservableListBudgetList());
@@ -1527,6 +1574,9 @@ if(model.getDeleteFrom().equals("StockList")) {
 	}
 /**
  * 
+ * loads the budget list page.
+ * loads the budget list page and populate it list view with all the
+ * budgets the database has in string format
  * @author Student
  *
  */
@@ -1540,6 +1590,13 @@ if(model.getDeleteFrom().equals("StockList")) {
 
 	}
 /**
+ * saves / updates the inputed budget details.
+ * validates all the user input.
+ * if there is an issue it make an alert dialog box of the user issues
+ * if there isnt an issues, it see when the page loaded 
+ * was a selected budget populated, if it is null it know came from add 
+ * so just inserts the info, if there is one it updates that selected budget.
+ * it then loads the budget list page.
  * 
  * @author Student
  *
@@ -1602,6 +1659,15 @@ if(model.getDeleteFrom().equals("StockList")) {
 	}
 	
 	/**
+	 * saves / updates the account details.
+	 * validates all the user input.
+	 * if there is an issue it make an alert dialog box of the user issues
+	 * if there isnt an issues, it see when the page loaded 
+	 * was a selected account populated, if it is null it know came from add 
+	 * so just inserts the info, if there is one it updates that account details.
+	 * it then loads the account list page.
+	 * 
+	 * the password is saved using the hash algorithm(SHA-256)
 	 * 
 	 * @author Student
 	 *
@@ -1656,6 +1722,13 @@ if(model.getDeleteFrom().equals("StockList")) {
 
 	}
 	/**
+	 * saves / updates the storage details.
+	 * validates all the user input.
+	 * if there is an issue it make an alert dialog box of the user issues
+	 * if there isnt an issues, it see when the page loaded 
+	 * was a selected storage location populated, if it is null it know came from add 
+	 * so just inserts the info, if there is one it updates that selected storage location.
+	 * it then loads the storage location list page.
 	 * 
 	 * @author Student
 	 *
@@ -1711,6 +1784,12 @@ if(model.getDeleteFrom().equals("StockList")) {
 	
 	/**
 	 * 
+	 * makes the list view show just the budgets that are like the find value input.
+	 * check the user input
+	 * if there is an issue the label is made visible and show the error
+	 * if there is no issue the list view is populates with all the budgets that the
+	 * database has that is like the user input. like in mysql is % user input %.
+	 * 
 	 * @author Student
 	 *
 	 */
@@ -1737,7 +1816,9 @@ if(model.getDeleteFrom().equals("StockList")) {
 
 	}
 /**
- * 
+ * loads the account list page.
+ * loads the account list page and populates its list view with 
+ * all the accounts the database holds in string format
  */
 	private void loadAccountListPage() {
 		view.accountListLoad(model.getObservableListAccountList());
@@ -1745,6 +1826,10 @@ if(model.getDeleteFrom().equals("StockList")) {
 	}
 /**
  * 
+ * loads the account list page.
+ * loads the account list page and populates its list view with 
+ * all the accounts the database holds in string format
+ *
  * @author Student
  *
  */
@@ -1758,7 +1843,9 @@ if(model.getDeleteFrom().equals("StockList")) {
 
 	}
 /**
- * 
+ * loads the storage location list page.
+ * loads the storage location list page and populates
+ * its list view with all the storage location the database has.
  */
 	private void loadStorgaeLocationListPage() {
 
@@ -1767,6 +1854,10 @@ if(model.getDeleteFrom().equals("StockList")) {
 	}
 /**
  * 
+ * loads the storage location list page.
+ * loads the storage location list page and populates
+ * its list view with all the storage location the database has.
+ *
  * @author Student
  *
  */
@@ -1780,7 +1871,10 @@ if(model.getDeleteFrom().equals("StockList")) {
 
 	}
 /**
- * 
+ * save stock details that is on a text file. 
+ * loads a file chooser, if there is an issue with it eg wrong file type
+ * it will show an error message through alert dialog box, if there is no issue it will save
+ * the stock info.
  * @author Student
  *
  */
@@ -1803,7 +1897,12 @@ if(model.getDeleteFrom().equals("StockList")) {
 
 	}
 	/**
-	 * 
+	 * loads the stock details page.
+	 * check the user has selected an item from the list view
+	 * if no item has been selected the error label is made visible with 
+	 * info about the error 
+	 * if an item has been selected the stock details page is loaded and the 
+	 * the pages input areas are populated with the selected stock info.
 	 * @author Student
 	 *
 	 */
@@ -1841,6 +1940,14 @@ if(model.getDeleteFrom().equals("StockList")) {
 	
 	
 	/**
+	 * adds a ingredient to the dish details list view.
+	 * it first validates the user input.
+	 * if there is an issue it shown in an alert dialog box.
+	 * if there is no issue, it first sees if the stock type exists if not it
+	 * makes it and if it does exist it see if it needs to update its info.
+	 * it next will then add then see if it if the dish name has been changed
+	 * if it has it updates it, if it hasn't it simply add the stock info to the dish list 
+	 * it then reset the fields and updates the listview.
 	 * 
 	 * @author Student
 	 *
@@ -1931,8 +2038,6 @@ if(model.getDeleteFrom().equals("StockList")) {
 				}	
 				
 				
-				
-				
 				view.setDishDetailsList(model.getSelectedDishList());
 				view.dishDetailsAddReset();
 			}else {
@@ -1982,7 +2087,11 @@ if(model.getDeleteFrom().equals("StockList")) {
 
 	}
 	/**
-	 * 
+	 * loads the selected stock info into the dish details input fields.
+	 * checks the user has selected stock from the list view.
+	 * if no stock has been selected an alert dialog box is shown with an error message.
+	 * if an item has been selected, the item is removed from the listview and its info is populated
+	 * in to the user input areas.
 	 * @author Student
 	 *
 	 */
@@ -2031,13 +2140,17 @@ if(model.getDeleteFrom().equals("StockList")) {
 			}
 		}
 
-	}
+	} 
 	/**
+	 * makes the list view show just the dishes that are like the find value input.
+	 * check the user input
+	 * if there is an issue a alert dialog box with the error message is shown.
+	 * if there is no issue the list view is populates with all the dishes that the
+	 * database has that is like the user input. like in mysql is % user input %.
 	 * 
 	 * @author Student
 	 *
 	 */
-	// menu / dish
 	private class EHMenuDetailsBtnFind implements EventHandler<ActionEvent> {
 
 		@Override
@@ -2065,10 +2178,15 @@ if(model.getDeleteFrom().equals("StockList")) {
 	}
 	/**
 	 * 
+	 * makes the list view show just the menus that are like the find value input.
+	 * check the user input
+	 * if there is an issue the label is made visible and show the error
+	 * if there is no issue the list view is populates with all the menus that the
+	 * database has that is like the user input. like in mysql is % user input %.
+	 * 
 	 * @author Student
 	 *
 	 */
-	 // menu
 	private class EHMenuListBtnFind implements EventHandler<ActionEvent> {
 
 		@Override
@@ -2122,7 +2240,12 @@ if(model.getDeleteFrom().equals("StockList")) {
 		}
 	}
 	/**
-	 * 
+	 * loads the menu details page.
+	 * check the user has selected an item from the list view
+	 * if no item has been selected the error label is made visible with 
+	 * info about the error 
+	 * if an item has been selected the menu details page is loaded and the 
+	 * the pages input areas are populated with the selected menu info.
 	 * @author Student
 	 *
 	 */
@@ -2160,7 +2283,10 @@ if(model.getDeleteFrom().equals("StockList")) {
 		}
 	}
 	/**
-	 * 
+	 * sets the menu name and budget used for the menu.
+	 * check the user input.
+	 * if there is an issue it show an alert dialog box with the error message.
+	 * if there is no issue it loads the menu details page. 
 	 * @author Student
 	 *
 	 */
@@ -2199,14 +2325,20 @@ if(model.getDeleteFrom().equals("StockList")) {
 		}
 	}
 	/**
+	 * adds a dish from the dish list to the menu list and potentially the shopping list.
+	 * check the user has selected a budget and given the menu a name, checks that the user has
+	 * selected an item from the dish list and the dish total cost doesnt go over the budget.
+	 * if it fails any of the before mentioned things, it shows an alert dialog box with the error message
+	 * if it passes it will add the dish to the menu list, it will then depending on if the item stock
+	 * is in add the item that stock needs to be order to the shopping list. and finaly remove the dish
+	 * from the dish list and decreasing the budget 
 	 * 
+	 *  
 	 * @author Student
 	 *
 	 */
 	private class EHMenuDetailsBtnAdd implements EventHandler<ActionEvent> {
 
-		
-		
 		@Override
 		public void handle(ActionEvent event) {
 			String issueFrom = "";
@@ -2226,10 +2358,6 @@ if(model.getDeleteFrom().equals("StockList")) {
 			
 			if(masterErrorMessage.equals("")) {
 			//if no errors does this part
-				
-				
-				
-				
 				
 				model.addDishToSelectedMenu(view.getMenuDetailsDishListSelectedItemValueIdOnly());
 				view.setMenuDetailsMenuListItems(model.getSelectedMenuDishes());
@@ -2252,7 +2380,11 @@ if(model.getDeleteFrom().equals("StockList")) {
 		}
 	}
 	/**
-	 * 
+	 * removed a dish from the menu list. 
+	 * check the user has seletced a dish in the menu list.
+	 * if no dish has been selected an alert dialog box is shown with the error message inside.
+	 * it then removed the dish from the menu list and add it to the dish list, while also 
+	 * removeing any of its ingredients from the shopping list and increaing the budget but the dish cost.
 	 * @author Student
 	 *
 	 */
@@ -2317,7 +2449,12 @@ if(model.getDeleteFrom().equals("StockList")) {
 		}
 	}
 	/**
-	 * 
+	 * save the dish made in the dish details. 
+	 * check that the dish has item in it. 
+	 * if no items an alert dialog box is shown with the error message in it.
+	 * it then add the dish to the database or update dish depending on where
+	 * the user came from. 
+	 * it adds the dish or the updates info the list views and the menu details page is then loaded.
 	 * @author Student
 	 *
 	 */
@@ -2334,18 +2471,12 @@ if(model.getDeleteFrom().equals("StockList")) {
 			}else {
 				// if have data to be save it does this part.
 				
-				
-				
 					//save it to the database
 					if(!model.getDishDetailsCameFromEdit()) {
 				view.setMenuDetailsDishList(model.saveDishDetails());	
 					}else {
 						view.setMenuDetailsDishList(model.updateDishDetails());
 					}
-						
-					
-
-				
 				
 				//seperate as doesnt mess with the list so only need one
 				view.MenuDetailsLoad();
@@ -2433,11 +2564,7 @@ if(model.getDeleteFrom().equals("StockList")) {
 			}
 			
 			
-
-			
-			
 			view.MenuDetailsLoad();
-		
 			
 		}else {
 			model.makeAlert(issueFrom, masterError).show();
@@ -2481,23 +2608,14 @@ if(model.getDeleteFrom().equals("StockList")) {
 					});
 					//need else it wont write it
 					 pw.flush();
-					
-				
-					
 					pw.close();
 					
 				} catch (IOException e) {
 					
 					e.printStackTrace();
 				}
-				
-				
-				
+					
 			} 
-			
-			
-			
-			
 			
 		}
 	}
@@ -2524,15 +2642,11 @@ if(model.getDeleteFrom().equals("StockList")) {
 			if(masterErrorMessage.equals("")) {
 			
 				File chosenLocation = new FileChooser().showSaveDialog(null);
-				
 						
 				try {
 					PrintWriter pw = new PrintWriter(chosenLocation);
 					
 					pw.write("shopping list for\n menu name = " + model.getSelectedMenu().getName() + "\n");
-					
-					
-					
 					
 					model.getSelectedMenuStockType().forEach((String i) -> {
 						
@@ -2541,22 +2655,14 @@ if(model.getDeleteFrom().equals("StockList")) {
 					});
 					//need else it wont write it
 					 pw.flush();
-					
-				
-					
-					
-					
+						
 				} catch (IOException e) {
 					
 					e.printStackTrace();
 				}
 				
 			} 
-			
-			
-			
-			
-			
+
 		}
 	}
 	/**
@@ -2573,7 +2679,6 @@ if(model.getDeleteFrom().equals("StockList")) {
 
 		@Override
 		public void handle(ActionEvent event)  {
-			
 			
 			String issueFrom = "";
 			String masterErrorMessage = "";
@@ -2595,12 +2700,6 @@ if(model.getDeleteFrom().equals("StockList")) {
 				model.makeAlert(issueFrom, masterErrorMessage).show();
 			}
 		
-			
-			
-			
-			
-			
-			
 		}
 	}
 	/**
@@ -2639,13 +2738,8 @@ if(model.getDeleteFrom().equals("StockList")) {
 				masterErrorMessage = dcdError;
 			}
 			
-			
-			
-			
 			if(masterErrorMessage.equals("")) {
-				
-				
-				
+			
 				//set to null so can later check if the user has input anything in to them
 				String tcbInput = null;
 				String tcaInput = null;
@@ -2678,17 +2772,11 @@ if(model.getDeleteFrom().equals("StockList")) {
 				
 				view.menuListLoad(model.getAllMenus());
 			}
-				
-
-				
+		
 			}else {
 				model.makeAlert(issueFrom, masterErrorMessage).show();
 			}
-			
-			
-			
-			
-			
+		
 		}
 	}
 	
