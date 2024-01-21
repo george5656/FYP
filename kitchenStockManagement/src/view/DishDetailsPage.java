@@ -127,19 +127,37 @@ DishDetailsPage(){
 	tfEstimatedCost.setFont(new Font(20));
  
 }
-
+/**
+ * sets the save button event handler 
+ * @param event = Event handler<ActionEvent> 
+ */
 public void setBtnSaveEventHandler(EventHandler<ActionEvent> event) {
 	btnSave.setOnAction(event);
 }
+/**
+ * sets the add button event handler 
+ * @param event = Event handler<ActionEvent> 
+ */
 public void setBtnAddEventHandler(EventHandler<ActionEvent> event) {
-	btnAdd.setOnAction(event);
 }
+/**
+ * sets the delete button event handler 
+ * @param event = Event handler<ActionEvent> 
+ */
 public void setBtnDeleteEventHandler(EventHandler<ActionEvent> event) {
 	btnDelete.setOnAction(event);
 }
+/**
+ * sets the edit button event handler 
+ * @param event = Event handler<ActionEvent> 
+ */
 public void setBtnEditEventHandler(EventHandler<ActionEvent> event) {
 	btnEdit.setOnAction(event);
 }
+/**
+ * sets the cancel button event handler 
+ * @param event = Event handler<ActionEvent> 
+ */
 public void setBtnCancelEventHandler(EventHandler<ActionEvent> event) {
 	btnCancel.setOnAction(event);
 }

@@ -19,7 +19,8 @@ public class Main extends Application {
 	private RootView view;
 	private Scene scene ;
 	/**
-	 * where the root V,M and C are made
+	 * where the root V,M,c and scene are made
+	 * and the css file is connected to teh scene.
 	 */
 	@Override
 	public void init() {
@@ -47,7 +48,7 @@ public class Main extends Application {
 		
 	}
 	/**
-	 * where the scene is made and the stage is shown
+	 * setting the stage up.
 	 */
 	@Override
 	public void start(Stage primaryStage) throws Exception {

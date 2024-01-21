@@ -45,10 +45,17 @@ public class DeleteConfirmationPage extends PaneMenu {
 		controls.setHgrow(confirm, Priority.ALWAYS);
 	}
 	
-	
+	/**
+	 * sets the cancel button event handler 
+	 * @param event = Event handler<ActionEvent> 
+	 */
 	public void setBtnCancelEventHandler(EventHandler<ActionEvent> event) {
 		cancel.setOnAction(event);
 	}
+	/**
+	 * sets the confirm button event handler 
+	 * @param event = Event handler<ActionEvent> 
+	 */
 	public void setBtnConfirmEventHandler(EventHandler<ActionEvent> event) {
 		confirm.setOnAction(event);
 	}

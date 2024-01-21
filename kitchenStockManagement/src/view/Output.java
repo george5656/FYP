@@ -46,18 +46,38 @@ public class Output extends PaneMenu {
 			layout.setVgrow(i, Priority.ALWAYS);
 		}
 	}
+	/**
+	 * sets the menu button event handler 
+	 * @param event = Event handler<ActionEvent> 
+	 */
 	public void setBtnMenuEventHandler(EventHandler<ActionEvent> event) {
 		btnMenu.setOnAction(event);
 	}
+	/**
+	 * sets the shopping button event handler 
+	 * @param event = Event handler<ActionEvent> 
+	 */
 	public void setBtnShoppingEventHandler(EventHandler<ActionEvent> event) {
 		btnShoppingList.setOnAction(event);
 	}
+	/**
+	 * sets the save button event handler 
+	 * @param event = Event handler<ActionEvent> 
+	 */
 	public void setBtnSaveEventHandler(EventHandler<ActionEvent> event) {
 		btnSave.setOnAction(event);
 	}
+	/**
+	 * sets the back to menu details button event handler 
+	 * @param event = Event handler<ActionEvent> 
+	 */
 	public void setBtnBackToMenuDetailsEventHandler(EventHandler<ActionEvent> event) {
 		btnBackToMenuDetails.setOnAction(event);
 	}
+	/**
+	 * sets the back to menu list button event handler 
+	 * @param event = Event handler<ActionEvent> 
+	 */
 	public void setBtnBackToMenuListEventHandler(EventHandler<ActionEvent> event) {
 		btnBackToMenuList.setOnAction(event);
 	}

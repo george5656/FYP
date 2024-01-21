@@ -10,6 +10,10 @@ public class BasicLayoutFilter extends BasicLayoutDetails {
 	public BasicLayoutFilter() {
 		 btnApply.setText("apply");
 	}
+	/**
+	 * sets the apply button event handler 
+	 * @param event = Event handler<ActionEvent> 
+	 */
 	public void setBtnApply(EventHandler<ActionEvent> event) {
 		btnApply.setOnAction(event);
 	}

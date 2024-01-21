@@ -64,84 +64,44 @@ public class ModelRoot {
 	private String loadDeleteFrom;
 	
 	/**
-	 * 
+	 * default constructor
+	 * get all the values from the database
 	 */
 	public ModelRoot(){
-		accounts = getDatabase().getAllAccounts();
-		sl = getDatabase().getAllStorageLocations();
-		budget = getDatabase().getAllBudgets();
-		currentStock = getDatabase().getAllCurrentStock();
+		accounts =db.getAllAccounts();
+		sl = db.getAllStorageLocations();
+		budget = db.getAllBudgets();
+		currentStock = db.getAllCurrentStock();
 		currentDish = db.getAllCurrentDishes();
 		currentMenus = db.getAllMenu();
 	}
-	
-	
-/**
- * simply gets the validation class
- * @return InputValdiation class
- */
-	public InputValidation getValidation() {
-		return validation;
-	}
 	/**
-	 * simply gets the database
-	 * @returnWritableDatabase
-	 */
-	public WritableDatabase getDatabase() {
-		return db;
-	}
-	/**
-	 * 
-	 * @return
-	 */
-	public ArrayList<String> getAccountsListAsString(){
-		accounts = getDatabase().getAllAccounts();
-		ArrayList<String> output = new ArrayList<>();
-		accounts.forEach((Account i) -> output.add(i.toString()));
-		return output;
-	}
-	/**
-	 * 
-	 * @return
-	 */
-	public ArrayList<String> getStorageLocationListAsString(){
-		sl = getDatabase().getAllStorageLocations();
-		ArrayList<String> output = new ArrayList<>();
-		sl.forEach((StorageLocation i) -> output.add(i.toString()));
-		return output;
-	}
-	/**
-	 * 
-	 * @return
-	 */
-	public ArrayList<String> getBudgetListAsString(){
-		budget = getDatabase().getAllBudgets();
-		ArrayList<String> output = new ArrayList<>();
-		budget.forEach((Budget i) -> output.add(i.toString()));
-		return output;
-	}
-	/**
-	 * 
-	 * @return
+	 * get an arrayList of the all the storage location.
+	 * return an arrayList of the storage locations in a string format
+	 * @return ArrayList<String> = the storage location with just there name.
 	 */
 	public ArrayList<String> getObservableStorgaeLocationListNameOnlyArrayList(){
-		sl = getDatabase().getAllStorageLocations();
+		sl = db.getAllStorageLocations();
 		ArrayList<String> output = new ArrayList<>();
 		sl.forEach((StorageLocation i) -> output.add(i.getName()));
 		return output;
 		
 	}
 	/**
-	 * 
-	 * @return
+	 * get an arrayList of the all the stock type.
+	 * return an arrayList of the stocktype in a string format
+	 * @return ArrayList<String> = the stock type with just there name.
 	 */
 	public ArrayList<String> getStockTypeListAsString(){
 		return db.getAllStockType();
 	}
 	/**
-	 * 
-	 * @param input
-	 * @return
+	 * validated the inputed string.
+	 * validates the inputed string and return an error message of the issues with it. 
+	 * it checks if there is an input, if the input size is below 50,
+	 * if it only contains [a-zA-Z0-9 ]+
+	 * @param input = string that you want to get validated
+	 * @return  a string =  no issues "", is there is an issue the string will contain one of the issues.
 	 */
 	//input validation 
 	
@@ -149,51 +109,69 @@ public class ModelRoot {
 		return validation.stringMustBePresetValidation(input);
 	}
 	/**
-	 * 
-	 * @param input
-	 * @return
+	 * validated the inputed string.
+	 * validates the inputed string and return an error message of the issues with it. 
+	 * it checks if the input size is below 50,
+	 * if it only contains [a-zA-Z0-9 ]+
+	 * @param input = string that you want to get validated
+	 * @return  a string =  no issues "", is there is an issue the string will contain one of the issues.
 	 */
 	public String stringPresentIsOptionalValidation(String input) {
 		return validation.stringPresentIsOptionalValidation(input);
 	}
 	/**
-	 * 
-	 * @param input
-	 * @return
+	 * validated the inputed string.
+	 * validates the inputed string and return an error message of the issues with it. 
+	 * it checks that the string is present, that it only contains [0-9.]+ and has only one '.' and 
+	 * two values after the dot, and that the length of the string is less that 50 characters.
+	 * @param input = double in string that you want to get validated.
+	 * @return  a string =  no issues "", is there is an issue the string will contain one of the issues.
 	 */
 	public String doubleMustBePresetValidation(String input) {
 		return validation.doubleMustBePresetValidation(input);
 	}
 	/**
-	 * 
-	 * @param input
-	 * @return
+	 * validated the inputed string.
+	 * validates the inputed string and return an error message of the issues with it. 
+	 * it checks that it only contains [0-9.]+ and has only one '.' and 
+	 * two values after the dot, and that the length of the string is less that 50 characters.
+	 * @param input = double in string that you want to get validated.
+	 * @return  a string =  no issues "", is there is an issue the string will contain one of the issues.
 	 */
 	public String doublePresentIsOptionalValidation(String input) {
 		return validation.doublePresentIsOptionalValidation(input);
 	}
 	/**
+	 * Validates the inputs and return an error message if something is wrong.
+	 * checks that there is a value present and check if the date and input have data 
+	 * if one does but the other doesnt that impels they have inputed into a datePicker
+	 * info manually but not hit enter so its not actually in the date picker. 
 	 * 
-	 * @param input
-	 * @param date
-	 * @return
+	 * @param input = String 
+	 * @param date = LocalDate
+	 * @return String that say what error is, if no error get "";
 	 */
 	public String dateValidation(String input, LocalDate date) {
 		return validation.dateValidation(input, date);
 	}
 	/**
+	 * Validates the inputs and returns an error message if something is wrong.
+	 * check if the date and input have data 
+	 * if one does but the other doesnt that impels they have inputed into a datePicker
+	 * info manually but not hit enter so its not actually in the date picker. 
 	 * 
-	 * @param input
-	 * @param date
-	 * @return
+	 * @param input = String 
+	 * @param date = LocalDate
+	 * @return String that say what error is, if no error get "";
 	 */
 	public String dateValidationPresentIsOptional(String input, LocalDate date) {
 		return validation.dateValidationPresentIsOptional(input, date);
 	}
 	/**
-	 * 
-	 * @param input
-	 * @return
+	 * validates the inputed string
+	 * it checks the length so not over 50 characters and makes sure its only [0-9]+
+	 * @param input = String which will be checked to see if is an int
+	 * @returnString that say what error is, if no error get "";
 	 */
 	public String intPresentIsOptionalValidation(String input) {
 		return validation.intPresentIsOptionalValidation(input);
@@ -201,10 +179,12 @@ public class ModelRoot {
 	
 	// make alert
 	/**
+	 * makes an Alert object that displays the passed in information.
+	 * the alert object type is an Error.
 	 * 
-	 * @param headerText
-	 * @param content
-	 * @return
+	 * @param headerText = String, the string you want the header of the alert dialog box to be.
+	 * @param content = String, the info you want the dialog box content to contain.
+	 * @return Alert object with the passed in String added to it. 
 	 */
 	public Alert makeAlert(String headerText, String content) {
 		Alert alert = new Alert(AlertType.ERROR);
@@ -215,64 +195,66 @@ public class ModelRoot {
 
 	// database 
 	/**
-	 * 
-	 * @param username
-	 * @param password
-	 * @return
+	 * checks to see if there is an account in teh database where the user name has that password.
+	 * @param username = String
+	 * @param password = String which should have been hashed using (SHA-256) algorthm
+	 * @return Boolean = true =  match, false = no match 
 	 */
 	public Boolean passwordAndUsernameAreValid(String username, String password) {
 		return db.passwordAndUsernameAreValid(username, password);
 		
 	}
 	/**
-	 * 
-	 * @return
+	 * gets all the stock that are in the database, each one is returned as there 
+	 * output of the toString function
+	 * @return ObservableList<String> = all the stock toString outputs. 
 	 */
-	// list wrappers
-	
 	public ObservableList<String> getObservableListStringStockList(){
-		currentStock = getDatabase().getAllCurrentStock();
+		currentStock = db.getAllCurrentStock();
 		ArrayList<String> output = new ArrayList<>();
 		currentStock.forEach((CurrentStock i) -> output.add(i.toString()));
 		return FXCollections.observableArrayList(output);
 		
 	}
 	/**
-	 * 
-	 * @return
+	 * gets all the storage locations that are in the database, each one is returned as there 
+	 * output of the toString function
+	 * @return ObservableList<String> = all the storage location toString outputs. 
 	 */
 	public ObservableList<String> getObservableListStringStorgaeLocationsList(){
-		sl = getDatabase().getAllStorageLocations();
+		sl = db.getAllStorageLocations();
 		ArrayList<String> output = new ArrayList<>();
 		sl.forEach((StorageLocation i) -> output.add(i.toString()));
 		return FXCollections.observableArrayList(output);
 		
 	}
 	/**
-	 * 
-	 * @return
+	 * gets all the accounts that are in the database, each one is returned as there 
+	 * output of the toString function
+	 * @return ObservableList<String> = all the accounts toString outputs. 
 	 */
 	public ObservableList<String> getObservableListAccountList(){
-		accounts = getDatabase().getAllAccounts();
+		accounts = db.getAllAccounts();
 		ArrayList<String> output = new ArrayList<>();
 		accounts.forEach((Account i) -> output.add(i.toString()));
 		return FXCollections.observableArrayList(output);
 		
 	}
 	/**
-	 * 
-	 * @return
+	 * gets all the budgets that are in the database, each one is returned as there 
+	 * output of the toString function
+	 * @return ObservableList<String> = all the budgets toString outputs. 
 	 */
 	public ObservableList<String> getObservableListBudgetList(){
-		budget = getDatabase().getAllBudgets();
+		budget = db.getAllBudgets();
 		ArrayList<String> output = new ArrayList<>();
 		budget.forEach((Budget i) -> output.add(i.toString()));
 		return FXCollections.observableArrayList(output);
 		
 	}
 	/**
-	 * 
-	 * @return
+	 * 	gets all the storage locations names, and output them in an observableList<String>
+	 * @return ObservableList<String> = all the storage location names that are in the database
 	 */
 	public ObservableList<String> getObservableStorgaeLocationListNameOnly(){
 		
@@ -280,11 +262,13 @@ public class ModelRoot {
 		
 	}
 	/**
+	 * adds a budget to the database.
+	 * budget object is made by te paremters passed in and then passed to the database.
 	 * 
-	 * @param name
-	 * @param amount
-	 * @param startDate
-	 * @param endDate
+	 * @param name = string, which is the name of the budget
+	 * @param amount = Double, the amount of budget(money) the budget has
+	 * @param startDate = String in the MySQL date format, for when the budget starts
+	 * @param endDate = String in the MySQL date format, for when the budget starts
 	 */
 	
 	// budget
@@ -295,20 +279,26 @@ public class ModelRoot {
 		db.addBudget(new Budget(name,amount,startDate,endDate));
 	}
 	/**
-	 * 
-	 * @param name
-	 * @param amount
-	 * @param startDate
-	 * @param endDate
+	 * updates a database budget. 
+	 * it updates the budget that it held in selected budget.
+	 * the info it use to update are the passed in parameters
+	 * @param name = String that you want the budget name to now be
+	 * @param amount = Double that is the budget(amount of money) the budget will have
+	 * @param startDate = String in the MySQL format for when the budget starts
+	 * @param endDate = String in the MySQL format for the budget ends
 	 */
 public void updateBudget(String name, Double amount,String startDate, String endDate) {
 		
 		db.updateABudget(new Budget(name,amount,startDate,endDate),selectedBudget.getBudgetId());
 	}
+
 /**
+ * gets all the budgets that are like the input. 
+ * gets all the budgets that are like the inputed string and 
+ * turn it in to an observable list. the value in it are the budgets but after it has done the toString method.
  * 
- * @param value
- * @return
+ * @param value = String that is what you want the budgets to be like
+ * @return ObservableList<String> = the string is the budgets but after it has gone through the toString method. 
  */
 	public ObservableList<String> getBudgetThatsLike(String value) {
 		return FXCollections.observableArrayList(db.getBudgetsThatsLike(value));
@@ -332,42 +322,43 @@ public void updateBudget(String name, Double amount,String startDate, String end
 		selectedBudget =	db.getSpecificBudget(id);
 		}
 	/**
-	 * 
+	 * turns the held budget in selected budget to null
 	 */
 	public void resetABudget() {
 		selectedBudget = null;
 	}
 	/**
+	 * get the budget that is in the selectedBudget vairbale. 
 	 * 
-	 * @return
+	 * @return Budget object which is the budget in the selected budget variable. 
 	 */
 	public Budget getSelectedBudget() {
 		return selectedBudget;
 	}
 	/**
-	 * 
-	 * @return
+	 * gets the budget id of the budget in the selectedBudget variable
+	 * @return String which represent the budget id of the budget in the selected budget variable.
 	 */
 	public String getSelectedBudgetName() {
 		return selectedBudget.getBudgetId();
 	}
 	/**
-	 * 
-	 * @return
+	 * gets the budget amount of the budget in the selectedBudget variable
+	 * @return String which represent the budget amount of the budget in the selected budget variable.
 	 */
 	public String getSelectedBudgetAmount() {
 		return selectedBudget.getAmount().toString();
 	}
 	/**
-	 * 
-	 * @return
+	 * gets the start date of the budget in the selectedBudget variable
+	 * @return String which represent the start date of the budget in the selected budget variable.
 	 */
 	public String getSelectedBudgetStartDate() {
 		return selectedBudget.getStartDate();
 	}
 	/**
-	 * 
-	 * @return
+	 * gets the end date of the budget in the selectedBudget variable
+	 * @return String which represent the end date of the budget in the selected budget variable.
 	 */
 	public String getSelectedBudgetEndDate() {
 		return selectedBudget.getEndDate();
@@ -382,28 +373,28 @@ public void updateBudget(String name, Double amount,String startDate, String end
 		testStockType = db.StockTypeExists(stockTypeId);
 	}
 	/**
-	 * 
+	 * turns the held stockType in testStockType to null
 	 */
 	public void resetStockType() {
 		testStockType = null;
 	}
 	/**
-	 * 
-	 * @return
+	 * gets the stock type name of the stockType in the testStockType variable
+	 * @return String which represent the stock type name of the stockType in the testStockType variable.
 	 */
 	public String getTestStockName() {
 		return testStockType.getStockName();
 	}
 	/**
-	 * 
-	 * @return
+	 * gets the stock type cost of the stockType in the testStockType variable
+	 * @return String which represent the stock type cost of the stockType in the testStockType variable.
 	 */
 	public String getTestStockCost() {
 		return testStockType.getCost();
 	}
 	/**
-	 * 
-	 * @return
+	 * gets the stock type quantity type of the stockType in the testStockType variable
+	 * @return String which represent the stock type quantity type of the stockType in the testStockType variable.
 	 */
 	public String getTestStockQuanityType() {
 		return testStockType.getQuanityType();
@@ -435,52 +426,119 @@ public void updateStockTypeQuanityType(String stockTypeId, String quantityType) 
 }
 
 //delete 
+/**
+ * deletes the stock that is the selectedStock variable from the database
+ */
 public void deleteStockType() {
 	Integer id = selectedStock.getId(); 
 	db.deleteSelectedStock(id.toString());
 }
+/**
+ * deletes the budge that is in the selectedBudget var from the database
+ */
 public void deleteBudgetType() {
 	String id = selectedBudget.getBudgetId(); 
 	db.deleteSelectedBudgte(id);
 }
+/**
+ * deletes the account that is in the selected account var from the database
+ */
 public void deleteAccount() {
 	String id = selectedAccount.getUsername();
 	db.deleteSelectedAccount(id);
 }
+/**
+ * gets all the stock that is like an input. 
+ * gets all the stock that is like the inputed string and 
+ * turn it in to an observable list. the value in it are the stock but after it has done the toString method.
+ * 
+ * @param value = String that is what you want the stock to be like
+ * @return ObservableList<String> = the string is the stock but after it has gone through the toString method. 
+ */
 public ObservableList<String> getCurrentStockThatsLike(String value) {
 	return FXCollections.observableArrayList(db.getCurrentStockThatsLike(value));
 }
+/**
+ * get all the stock that matches the where statements. 
+ * 
+ * @param value = String that is the where statements for the sql.
+ * @return ObservableList<String> = the string is the stock but after it has gone through the toString method.
+ */
 public ObservableList<String> getCurrentStockThatsMatchesWhere(String value) {
 	return FXCollections.observableArrayList(db.getCurrentStockThatMatchesWhere(value));
 }
+/**
+ * get all the budget that matches the where statements. 
+ * 
+ * @param value = String that is the where statements for the sql.
+ * @return ObservableList<String> = the string is the budget but after it has gone through the toString method.
+ */
 public ObservableList<String> getBudgetsThatMatchesWhere(String value) {
 	return FXCollections.observableArrayList(db.getBudgetsThatMatchesWhere(value));
 }
+/**
+ * get all the accounts that matches the where statements. 
+ * 
+ * @param value = String that is the where statements for the sql.
+ * @return ObservableList<String> = the string is the accounts but after it has gone through the toString method.
+ */
 public ObservableList<String> getAccountsThatMatchesWhere(String value) {
 	return FXCollections.observableArrayList(db.getAccountsThatMatchesWhere(value));
 }
 	//current stock 
+/**
+ *makes the modelRoot hold the stock that matches the id you inputted
+ * @param id =  a string which is the id of the stock you want to select
+ */
 	public void selectAStock(String id) {
 	selectedStock =	db.getSpecificCurrentStock(id);
 	}
+	/**
+	 * gets the name of the stock object that is held in the model root.
+	 * @return String that is the name of the stock that the model root holds 
+	 */
 	public String getSelectedStockName() {
 		return selectedStock.getStockName();
 		}
+	/**
+	 * gets the storage location of the stock object that is held in the model root.
+	 * @return String that is the storage location of the stock that the model root holds 
+	 */
 	public String getSelectedStockStorgaeLocation() {
 		return selectedStock.getstorageLocationId();
 		}
+	/**
+	 * gets the expire date of the stock object that is held in the model root.
+	 * @return String that is the expire of the stock that the model root holds 
+	 */
 	public String getSelectedStockExpierDate() {
 		return selectedStock.getExpiereDate();
 		}
+	/**
+	 * gets the stock quantity of the stock object that is held in the model root.
+	 * @return String that is the stock quantity of the stock that the model root holds 
+	 */
 	public String getSelectedStockQuanity() {
 		return selectedStock.getQuantity().toString();
 		}
+	/**
+	 * gets the stock quantity type of the stock object that is held in the model root.
+	 * @return String that is the stock quantity type of the stock that the model root holds 
+	 */
 	public String getSelectedStockQuanityType() {
 		return selectedStock.getQuanityType();
 		}
+	/**
+	 * gets the cost of the stock object that is held in the model root.
+	 * @return String that is the stock cost of the stock that the model root holds 
+	 */
 	public String getSelectedStockCost() {
 		return selectedStock.getCost();
 		}
+	/**
+	 * gets the stock id of the stock object that is held in the model root.
+	 * @return String that is the stock id of the stock that the model root holds 
+	 */
 	public int getSelectedStockId() {
 		return selectedStock.getId();
 	}
@@ -490,10 +548,15 @@ public ObservableList<String> getAccountsThatMatchesWhere(String value) {
 	}
 	
 
-	
+	/**
+	 * adds the stock that is held in the selected stock varaible to the database
+	 */
 	public void addCurrentStock() {
 		db.addCurrentStock(selectedStock);
 	}
+	/**
+	 * updates the database for the stock that is held in the selected stock varaible 
+	 */
 public void updateCurrentStock() {
 		db.updateStockIteration(selectedStock, selectedStock.getId());
 	}
@@ -553,6 +616,11 @@ public String saveStockTypeFromFile(URI uri) {
 
 //format date
 //nfd = not formatted date
+/**
+ * format the date so that it can be saved in the database
+ * @param nfd =  string of the date from the date picker.
+ * @return String = the nfd but now in a format the database will allow it to be saved.
+ */
 public String formatDate(String nfd) {
 	String date = nfd;
 	String year = date.substring(6,10);
@@ -560,6 +628,13 @@ public String formatDate(String nfd) {
 	String day = date.substring(0,2);
 	return year + "-"+month+"-"+day;
 }
+/**
+ * format a string to be the data picker format. 
+ * take a MySQL string output that represent the date and format it to be the same 
+ * format as the data picker.
+ * @param nfd = string that is in the MySQL date format 
+ * @return String = the nfd but now in the date picker format (yyyy/mm/dd)
+ */
 public String deFormatDate(String nfd) {
 	String date = nfd;
 	String year = date.substring(0,4);
@@ -567,29 +642,68 @@ public String deFormatDate(String nfd) {
 	String day = date.substring(8,10);
 	return year + "/"+month+"/"+day;
 }
+//true = add, false = edit
+/**
+ * set the variable stock from with a boolean value.
+ * idea is it tells the stock details if came from the add button or the edit button.
+ * @param from = Boolean, true = came from add, false = came from edit.
+ */
 public void setStockFrom(Boolean from) {
 	stockFrom = from;
 }
+/**
+ * get the value in the stockFrom. 
+ * idea is it say where the stock detail originally came from,
+ * either the add button or the edit button
+ * 
+ * @return boolean = true is from the add button, false = from the edit button
+ */
 public Boolean getStockFrom() {
 	return stockFrom;
 }
-// basically so i know which type of menu to load, and is set at the login page. 
+// basically so i know which type of menu to load, and is set at the login page. true is admin, false isn't admin
+/**
+ * return the value that is in the variable isAdmin.
+ * used to indicate if the account is an admin account or not.
+ * 
+ * @return boolean = true = is admin, false = isnt admin
+ */
 public Boolean getLoggedInAccountAdminStatus() {
 	return isAdmin;	
 }
-
+/**
+ * sets the LogedInAccount variable object to be the one that matches the id passed in.
+ * @param id = String which is the id of an account.
+ */
 public void setLogedInAccount(String id) {
 	logedInAccount = db.getSpecificAccount(id);
 }
+/**
+ * gets the user name of the Account in variable logedInAccount
+ * @return String = the user name associated with the Account in the variable logedInAccount
+ */
 public String getLogedInAccountId() {
 	return logedInAccount.getUsername();
 }
 
 // true is admin, false isn't admin
+/**
+ * set the isAdmin var based on the inputed id.
+ * takes the inputed id, it then pass it to the database which will return true or false
+ * if its true that means the account is an admin one and if not it will give false.
+ * 
+ * @param id = String, that represents an account id in the database.
+ */
 public void checkAdminStatusInDb(String id) {
 	isAdmin = db.isAccountAdmin(id);
 }
 //true is exist, false is doesn't exist 
+/**
+ * check to see if the inputed string matches any budget id that are in the database. 
+ * 
+ * @param id = String, that is an id of a budget in the database
+ * @return Boolean = true = it already exists, false = it doesnt exists in the database.
+ */
 public Boolean doesBudgetNameAlreadyExist(String id) {
 	Boolean exist = false;
 	int counter = 0;
@@ -602,6 +716,14 @@ public Boolean doesBudgetNameAlreadyExist(String id) {
 	}
 	return exist;
 }
+/**
+ * check to see if the inputed string matches any budget id that are in the database.
+ * note this method unlike doesBudgetNameAlreadyExist will give false if it matches
+ * the budget object id that is in the selectedBudget var (as is its own id)
+ * 
+ * @param id = String, that is an id of a budget in the database
+ * @return Boolean = true = it already exists, false = it doesnt exists in the database.
+ */
 public Boolean doesBudgetNameAlreadyExistAndIsntId(String id) {
 	if(!id.equals( selectedBudget.getBudgetId())) {
 	return doesBudgetNameAlreadyExist(id);
@@ -609,27 +731,55 @@ public Boolean doesBudgetNameAlreadyExistAndIsntId(String id) {
 		return false;
 	}
 	}
-
+/**
+ * Sets the variable loadDeleteFrom with a string that represents where it came from.
+ * @param delete = String which say what list page it left
+ */
 public void setDeleteFrom(String delete) {
 	loadDeleteFrom = delete;
 }
+/**
+ * says where the delete page was loaded from.
+ * this is used so it know what type of delete to do and where to return the user to if they cancel the delete. 
+ * @return String that says where they came from, was set when they clicked the delete button on a list page.
+ */
 public String getDeleteFrom() {
 	return loadDeleteFrom;
 }
 
 
 // accounts
+/**
+ * gets all the accounts that are like the input. 
+ * gets all the accounts that are like the inputed string and 
+ * turn it in to an observable list. the value in it are the accounts but after it has done the toString method.
+ * 
+ * @param value = String that is what you want the accounts to be like
+ * @return ObservableList<String> = the string is the account but after it has gone through the toString method. 
+ */
 public ObservableList<String> getAccountsThatsLike(String value) {
 	return FXCollections.observableArrayList(db.getAccountsThatsLike(value));
 }
-
+/**
+ * makes a new account using the passed in parameters and stores it in the selectedAccount(not database)
+ * @param username = String 
+ * @param password = String (Should have already been hashed using SHA-256 algorithm)
+ * @param isAdmin = Boolean = true -> is admin, false -> is not admin.
+ */
 public void createAccount(String username, String password, Boolean isAdmin) {
 		selectedAccount = new Account (username, password, isAdmin);
 		
 }
+/**
+ * inserts the account in the selectedAccount variable into the database.
+ */
 public void addSelectedAccount() {
 	db.addAccount(selectedAccount);
 }
+/**
+ * gets the user name from the account object that is in selected account var
+ * @return String which is the user name that selectedAccount var object holds.
+ */
 public String getSelectedAccountUsername() {
 	return selectedAccount.getUsername();
 }
@@ -653,9 +803,16 @@ public Boolean doesAccountNameAlreadyExist(String id) {
 public void selectAAccount(String id) {
 	selectedAccount = db.getSpecificAccount(id);
 }
+/**
+ * sets the selectedAccount variable to null
+ */
 public void resetSelectedAccount() {
 	selectedAccount = null;
 }
+/**
+ * get the Account object that is in the selectedAccount variable.
+ * @return Account object or null
+ */
 public Account getSelectedAccount() {
 	return selectedAccount;
 }
@@ -664,10 +821,21 @@ public void updateAccount(String username, String password, Boolean adminStatus)
 	db.updateAAccount(new Account(username, password, adminStatus), selectedAccount.getUsername());
 }
 // storage
+/**
+ * gets all the storage locations that are like the input. 
+ * gets all the storage locations that are like the inputed string and 
+ * turn it in to an observable list. the value in it are the storage location but after it has done the toString method.
+ * 
+ * @param value = String that is what you want the storage location to be like
+ * @return ObservableList<String> = the string is the storage location but after it has gone through the toString method. 
+ */
 public ObservableList<String> getStorageThatsLike(String value) {
 	return FXCollections.observableArrayList(db.getStorageThatsLike(value));
 }
-
+/**
+ * get all the storage types the database hold. 
+ * @return ArrayList<String> the string is just the output of a stock type toString method
+ */
 public ArrayList<String> getAllStorgaeType(){
 	return db.getAllStorageType();
 }
@@ -689,37 +857,81 @@ public Boolean doesStorageAlreadyExist(String id) {
 	}
 	return exist;
 }
+/**
+ * adds a storage location to the database.
+ * passes in th parameter to the database, where it then addeds them to teh database as needed.
+ * 
+ * @param name = String, name of the storage location.
+ * @param type = String, type of storage location eg, cold, dry ect.
+ * @param isAvailble = Boolean, true = it is available, false =  it isnt available. available means it can be used.
+ */
 public void createStorage(String name, String type, Boolean isAvailble) {
 	db.addStorage(name, type, isAvailble);
 	
 }
+/**
+ * updates the row in the database that relate to storage that is the selected storage var.
+ * @param name = String, name of the storage
+ * @param type = String, represents the type of storage, eg cold, dry ect
+ * @param isAvailble = Boolean true = is available, false= isnt available, available means it can be used
+ */
 public void updateStorage(String name, String type, Boolean isAvailble) {
 	db.updateStorage(name, type, isAvailble,selectedStroage.getName());
 	
 }
+/**
+ * sets the selectedStorage variable to be the storage location object that the database has which matches the id passed in.
+ * @param id = String which is an id of a storage location that is in the database.
+ */
 public void selectAStorageLocation(String id) {
 	selectedStroage = db.getSpecificStorageLocation(id);
 	}
+/**
+ * get the name of the storageLocation object that is held in selectedStorage variable
+ * @return String that is the name of the storage location held in the selected storage variable
+ */
 public String getSelectedStorageName() {
 	return selectedStroage.getName();
 }
+/**
+ * get the type of the storageLocation object that is held in selectedStorage variable
+ * @return String that is the type of the storage location held in the selected storage variable
+ */
 public String getSelectedStorageType() {
 	return selectedStroage.getType();
 }
+/**
+ * get the availability of the storageLocation object that is held in selectedStorage variable
+ * @return Boolean true = available, false = not available.
+ */
 public Boolean getSelectedStorageAvailbilty() {
 	return selectedStroage.getAvailbility();
 }
+/**
+ * get the storage location object in the selectedStorage variable
+ * @return StorageLocation object.
+ */
 public StorageLocation getSelectedStorageLocation() {
 	return selectedStroage;
 }
+/**
+ * deletes the storage location thats in the selectedStroage from the database.
+ */
 public void deleteSelectedStorage() {
 	db.deleteSelectedStorage(selectedStroage.getName());
 }
+/**
+ * sets the selectedStorage variable to null
+ */
 public void resetSelectedStorage() {
 	selectedStroage = null;
 }
 //dish 
-
+/**
+ * gets all the dish the database has. 
+ * 
+ * @return ObservableList<String>, each value is the output of a dish using its toString method. 
+ */
 public ObservableList<String> getAllDishes() {
 	currentDish = db.getAllCurrentDishes();
 	ArrayList<String> dishAsString = new ArrayList<>();
@@ -740,6 +952,10 @@ public ObservableList<String> getSelectedDishList(){
 	dishDetails.addAll(selectedDish.getStockTypeAsString());
 	return dishDetails;
 }
+/**
+ * get the Dish object in the selectedDish variable
+ * @return Dish object in the selectedDish variable
+ */
 public Dish getSelectedDish() {
 	return selectedDish;
 }
@@ -758,7 +974,11 @@ public void selectedDishIngrednitnRemove(int index) {
 	}
 	selectedDish.removeIngredent(index);
 }
-
+/**
+ * gets a dish object from the database that id matches the inputed id
+ * @param dishId = String which is the id of a dish in the database 
+ * @return Dish object thats id matches the inputed id.
+ */
 public Dish getASpecificDish(String dishId) {
 	return db.getASpecificDishes(dishId);
 }
@@ -795,10 +1015,17 @@ public Boolean hasDishDetailsChangedTheDishName(String name) {
 	}
 	return output;
 }
-
+/**
+ * set the Dish name that in the selected Dish to the inputed name(not variable name but dish member variable called name vale to)
+ * @param name = String which represent the name dish in selectedDish to have 
+ */
 public void setSelectedDishName(String name) {
 	selectedDish.setName(name);
 }
+/**
+ * sets the selectedDish variable to be the passed in dish object.
+ * @param dish = Dish object.
+ */
 public void setSelectedDish(Dish dish) {
 	selectedDish = dish;
 }
@@ -834,6 +1061,11 @@ public void setSelectedMenu(String name, String budgetId) {
 	selectABudget(budgetId);
 	selectedMenu = new Menu(name, selectedBudget, new ArrayList<>());
 }
+/**
+ * sets selectedMenu variable to a menu object that is already in the database.
+ * does this by taking the passed in id and setting the selected Menu to the corresponding menu.
+ * @param id = String which represent an id of a menu already in the database
+ */
 public void setSelectedMenuToBeAnExisitingMenu(String id) {
 
 	selectedMenu = db.getAMenuFromId(id);
@@ -841,12 +1073,22 @@ public void setSelectedMenuToBeAnExisitingMenu(String id) {
 	
 	
 }
+/**
+ * deletes the menu that is in the selectedMenu variable from the database.
+ */
 public void deleteSelectedMenu() {
 	db.DeleteAMenu(selectedMenu);
 }
+/**
+ * sets the selected menu variable to null
+ */
 public void resetSelectedMenu() {
 	selectedMenu = null;
 }
+/**
+ * get the menu that is in the selected menu variable
+ * @return Menu object or null.
+ */
 public Menu getSelectedMenu() {
 	return selectedMenu;
 }
@@ -871,22 +1113,34 @@ db.getAllCurrentDishes().forEach((Dish i) -> {
 	notSelectedDishes.addAll(db.getAllCurrentDishes());
 }
 }
-
+/**
+ * get the ArrayLisy<Dish> that the menu object in selectedMenu var  holds.
+ * @return ArrayList<Dish> that the menu object in selectedMenu var  holds.
+ */
 public ArrayList<Dish> getMenuDetailsHeldDishes(){
 	return selectedMenu.getHeldDishes();
 }
 
-
+/**
+ * get all the dish that are not part of the selectedMenu ArrayList<Dish>.
+ * @return ObservableList<String>,  the string is just the dish output from the toString method.
+ */
 public  ObservableList<String>  getNotSelectedDishesAsString(){
-
-
 return FXCollections.observableArrayList(getNotSelectedDishesAsArrayListString());
 }
+/**
+ * get the selectedMenu arrayList<Dish> but each dish is just its name as a string.
+ * @return ArrayList<String> each entry represent a dish name.
+ */
 public ArrayList<String> getSelectedMenuDishsAsString(){
 	return selectedMenu.getHeldDishesNames();
 }
+/**
+ * adds an item to the ArrayList<Dish> that is held in the menu object which is in the variable selectedMenu.
+ * the dish added is the one thats id in the database matches the passed in id.
+ * @param dishId = string that is a dish id that is in the database.
+ */
 public void addDishToSelectedMenu(String dishId) {
-	
 	selectedMenu.addItemToDishList(db.getASpecificDishes(dishId));
 }
 //true if go over, false if dont.
@@ -914,6 +1168,10 @@ public Boolean doesDishGoOverBudget(String dishId){
 	
 	
 }
+/**
+ * get all the dishes that the selectedMenu object holds.
+ * @return ObservableList<String>, string as each iteration is the output of the dish toString method.
+ */
 public ObservableList<String> getSelectedMenuDishes(){
 	
 	return selectedMenu.getDishesAsObservableListOFString();
@@ -975,6 +1233,11 @@ public ObservableList<String> getSelectedMenuStockType(){
 	return FXCollections.observableArrayList(output);
 	
 }
+/**
+ * get how much of the budget is remain after the cost of the dish that are associated with the menu has been removed
+ * from the budget.
+ * @return Double = how much the budget is left after the dish cost have been taken out
+ */
 public Double getBudgetSizeMinusTheShoppingList() {
 	ArrayList<Dish> dishes = new ArrayList<>();
 	//so not sharing the same memoery locaition
@@ -1003,6 +1266,11 @@ public Double getBudgetSizeMinusTheShoppingList() {
 	
 	return BudgetAmount - totalCost;
 }
+/**
+ * converts all the dishes in the not selectedDishes variable to string.
+ * @return ArrayList<String> = all the dish that are not part of the menu, the dish object are strings by using there
+ * toString methods and there output is what is in the ArrayList 
+ */
 public  ArrayList<String>  getNotSelectedDishesAsArrayListString(){
 	
 	ArrayList<String> dishAsString = new ArrayList<>();
@@ -1013,6 +1281,16 @@ public  ArrayList<String>  getNotSelectedDishesAsArrayListString(){
 
 // bascailly the dish find, looking to see if it already held to not included it then 
 //looking to see if its like the data have
+
+
+/**
+ * 
+ * @param userInput
+ * @return
+ */
+
+
+
 public ObservableList<String>  getNotSelectedDishesThatAreLikeMenuDetailsFind(String userInput){
 	ArrayList<String> notSelectedDishes = getNotSelectedDishesAsArrayListString();
 	ArrayList<String> output = new ArrayList<String>();
@@ -1028,7 +1306,12 @@ public ObservableList<String>  getNotSelectedDishesThatAreLikeMenuDetailsFind(St
 	return FXCollections.observableArrayList(output);
 	
 }
-
+/**
+ * removes a dish object from the menu object dish arrayList that is in the selectedMenu var.
+ * 
+ * @param place = int, is the index of the item you want removed from the arrayLict<Dish> in the menu object that is in
+ * selectedMenu
+ */
 public void removeADishFromSelectedMenuDishes(int place) {
 	
 	selectedMenu.removeADish(place);
@@ -1036,10 +1319,16 @@ public void removeADishFromSelectedMenuDishes(int place) {
 
 
 //dish filter
-
-
-
-
+/**
+ * filter all the dishes in the database. 
+ * return all the dishes in the database that match the filters 
+ * 
+ * @param maxNumberOfItems = String which is an int in a string format, note can be "null"(string not special data type) if dont want to filter it
+ * @param minNumberOfItems = String which is an int in a string format, note can be "null"(string not special data type) if dont want to filter it
+ * @param maxCost = String which is a Double in a string format, note can be "null"(string not special data type) if dont want to filter it
+ * @param minCost = String which is a Double in a string format, note can be "null"(string not special data type) if dont want to filter it
+ * @return ObservaleList<String> =  all the dishes that pass all the filters, the dish are respreented by there toString output.
+ */
 
 public ObservableList<String> getDishFilterResults(String maxNumberOfItems, String minNumberOfItems, String maxCost, String minCost){
 	ArrayList<Dish> maxni = null;
@@ -1318,12 +1607,22 @@ public ObservableList<String> getMenuFilterResults(String tcb, String tca, Strin
 	
 }
 //menu list 
+/**
+ * get all the menu that the database holds.
+ * the menu are represented as the output of there toString method
+ * @return ObservableList<String> = each entity is a menu, its represented by its output of the toString method.
+ */
 public ObservableList<String> getAllMenus(){
 	ArrayList<String> menuAsString = new ArrayList<>();
 	db.getAllMenu().forEach((Menu i) -> { menuAsString.add(i.toString());
 	});
 	return FXCollections.observableArrayList(menuAsString);
 }
+/**
+ * 
+ * @param like
+ * @return
+ */
 public ObservableList<String> getAllMenusThatAreLike(String like){
 	ArrayList<String> menuAsString = new ArrayList<>();
 	db.getAllMenuThatAreLike(like).forEach((Menu i) -> { menuAsString.add(i.toString());
@@ -1333,6 +1632,11 @@ public ObservableList<String> getAllMenusThatAreLike(String like){
 
 //menu settings 
 //false = no match, true = match
+/**
+ * 
+ * @param name
+ * @return
+ */
 public Boolean doesMenuNameAlreadyExist(String name) {
 	
 	currentMenus = db.getAllMenu();
@@ -1352,7 +1656,10 @@ public Boolean doesMenuNameAlreadyExist(String name) {
 		
 	return output;
 }
-
+/**
+ * get all the dishes that are in the database.
+ * @return arrayList<String>, each iteration is just the output from the dish calling its toString method.
+ */
 public ArrayList<String> getAllCurrentDishName(){
 	ArrayList<String> output = new ArrayList<>();
  db.getAllCurrentDishes().forEach((Dish i) ->{
@@ -1452,20 +1759,35 @@ public ObservableList<String> deleteADish(String id) {
 	resetMenuDetailList();
 	return getNotSelectedDishesAsString();
 }
-
+/**
+ * save a menu.
+ * insert into the database the menu that is in the selectedMenu variable.
+ */
 public void saveSelectedMenu() {
 	db.saveMenu(selectedMenu);
 }
+/**
+ * update the a menu in the database.
+ * the menu that gets update is the menu in the selectedMenu
+ */
 public void updateMenuFromSelectedMenu() {
 	
 	db.DeleteAMenu(selectedMenu);
 	db.saveMenu(selectedMenu);
 	
 }
+/**
+ * returns the fromMenu variable.
+ * @return menu object, can be null
+ */
 public Menu getFromMenu() {
 	return fromMenu;
 }
-
+/**
+ * sets the  from menu variable.
+ * sets the from menu variable so the menu details page knows if it needs to update or insert a menu.
+ * @param from = sting where null is for the add and any menu id for the edit.
+ */
 public void setFromMenu(String from) {
 	if(from == null) {
 	

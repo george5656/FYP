@@ -68,13 +68,24 @@ public PaneMenu() {
 	
  */
 	
-}
+}/**
+ * sets the home button event handler 
+ * @param event = Event handler<ActionEvent> 
+ */
 public void setHomeEventHandler(EventHandler<ActionEvent> event) {
 	btnHome.setOnAction(event);
 }
+/**
+ * sets the logout button event handler 
+ * @param event = Event handler<ActionEvent> 
+ */
 public void setLogoutEventHandler(EventHandler<ActionEvent> event) {
 	btnLogout.setOnAction(event);
 }
+/**
+ * sets the about button event handler 
+ * @param event = Event handler<ActionEvent> 
+ */
 public void setAboutEventHandler(EventHandler<ActionEvent> event) {
 	btnAbout.setOnAction(event);
 }

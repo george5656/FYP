@@ -67,9 +67,17 @@ public class BasicLayoutDetails extends PaneMenu {
 	public HBox getLabelsAndUserTextInput() {
 		return labelsAndUserTextInput;
 	}
+	/**
+	 * sets the save button event handler 
+	 * @param event = Event handler<ActionEvent> 
+	 */
 	public void setBtnSaveEventHandler(EventHandler<ActionEvent> event) {
 		btnSave.setOnAction(event);
 	}
+	/**
+	 * sets the  cancel event handler 
+	 * @param event = Event handler<ActionEvent> 
+	 */
 	public void setBtnCancelEventHandler(EventHandler<ActionEvent> event) {
 		btnCancel.setOnAction(event);
 	}
