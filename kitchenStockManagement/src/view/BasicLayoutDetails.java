@@ -10,7 +10,8 @@ import javafx.scene.layout.Priority;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Font;
 /**
- * intened to be extened class, so the genrci functions can be made once and not multiple times 
+ * Intend to be extend class, so the generic functions can be made once and not multiple times 
+ * the class provides, two button at the bottom a cancle and save, as well as two VBox next to each other.
  * @author Student
  *
  */
@@ -22,7 +23,9 @@ public class BasicLayoutDetails extends PaneMenu {
 	private VBox labels = new VBox(20);
 	private VBox userTextInput = new VBox(20);
 	private HBox buttons = new HBox(20);
-
+/**
+ * default constructor
+ */
 	public BasicLayoutDetails() {
 		super.setCenter(mainLayout);
 		mainLayout.getChildren().addAll(labelsAndUserTextInput,buttons);
@@ -54,18 +57,26 @@ public class BasicLayoutDetails extends PaneMenu {
 		
 		
 	}
+	/**
+	 * gets the object in the the variable btnSave
+	 * @return Button object which is the one on btnSave
+	 */
 	public Button getbtnSave() {
 		return btnSave;
 	}
+	/**
+	 * get the VBox which is the label var.
+	 * @return VBox
+	 */
 	public VBox getLabels() {
 		return labels; 
 	}
-	
+	/**
+	 * get the VBox which is the userTextInput var.
+	 * @return VBox
+	 */
 	public VBox getUserTextInput() {
 		return userTextInput; 
-	}
-	public HBox getLabelsAndUserTextInput() {
-		return labelsAndUserTextInput;
 	}
 	/**
 	 * sets the save button event handler 
@@ -81,6 +92,10 @@ public class BasicLayoutDetails extends PaneMenu {
 	public void setBtnCancelEventHandler(EventHandler<ActionEvent> event) {
 		btnCancel.setOnAction(event);
 	}
+	/**
+	 * gets the HBox which holds the buttons controllers
+	 * @return HBox
+	 */
 	public HBox getButtonPane() {
 		return buttons;
 	}
