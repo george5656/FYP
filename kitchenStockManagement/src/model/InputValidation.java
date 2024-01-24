@@ -15,7 +15,7 @@ public class InputValidation {
 	 * it checks if there is an input, if the input size is below 50,
 	 * if it only contains [a-zA-Z0-9 ]+
 	 * @param userInput = a string of the user data want to check
-	 * @return String that says the error
+	 * @return String that says the error or just "" if no error
 	 */
 	public String stringMustBePresetValidation(String userInput) {
 		errorMessage = stringPresentIsOptionalValidation(userInput);
@@ -26,7 +26,13 @@ public class InputValidation {
 	
 	
 }
-	
+	/**
+	 * function checks if the user input is validate and ok to use.
+	 * if the input size is below 50 and
+	 * if it only contains [a-zA-Z0-9 ]+
+	 * @param userInput = a string of the user data want to check
+	 * @return String that says the error or just "" if no error 
+	 */
 	public String stringPresentIsOptionalValidation(String userInput) {
 		errorMessage = "";
 		if(userInput.length()>50) {
@@ -39,7 +45,14 @@ public class InputValidation {
 	
 	
 }
-	
+	/**
+	 * checks the following areas, 
+	 * that is has an input, that it only contains [0-9]+ and
+	 * that its length is less than 50 characters
+	 * 
+	 * @param userInput = a string of the user data want to check
+	 * @return String that says the error or just "" if no error 
+	 */
 	public String intMustBePresetValidation(String userInput) {
 		errorMessage =intPresentIsOptionalValidation(userInput);
 				
@@ -50,6 +63,14 @@ public class InputValidation {
 		
 		return errorMessage;
 	}
+	/**
+	 * checks the following areas, 
+	 * that it only contains [0-9]+ and
+	 * that its length is less than 50 characters
+	 * 
+	 * @param userInput = a string of the user data want to check
+	 * @return String that says the error or just "" if no error 
+	 */
 	public String intPresentIsOptionalValidation(String userInput) {
 		errorMessage ="";
 				
@@ -80,6 +101,15 @@ public class InputValidation {
 		
 		return errorMessage;
 	}
+	/**
+	 * validate a string. 
+	 * checks that it only contains [0-9.]+ and has only one . and 
+	 * two values after the dot, and that the length of the string is less that 50 characters.
+	 * 
+	 * 
+	 * @param userInput =  a double in a string format, that you want to validate.
+	 * @return string that says what the error is, if none get ""
+	 */
 	public String doublePresentIsOptionalValidation(String userInput) {
 		errorMessage ="";
 		
@@ -105,36 +135,20 @@ public class InputValidation {
 		}
 		return errorMessage;
 	}
+	
+	/**
+	 * this is designed to work with a datePicker. 
+	 * this check that there is date present, as done by seeing if the input is present,
+	 * it also checks that the datepicker has registered the input. this is done 
+	 * by making sure that the locaclDate and input have input, as if the user just 
+	 * types in the datepicker it wont make a local date.
+	 * 
+	 * @param input = String =  from datePicker textField
+	 * @param valuePresent = localDate = from datePicker
+	 * @return String that says the error or just "" if no error 
+	 */
 	public String dateValidation(String input, LocalDate valuePresent) {
 		errorMessage ="";
-		//int indexOfFirstSlash = userInput.indexOf('/');
-		//int indexOfSecondSlash = -1;
-		
-		/*
-		if(!userInput.matches("[0-9/-]+")&&!userInput.equals("")) {
-			errorMessage = "only 0-9 and \'/\' characters allowed";
-		}
-		if(userInput.length()!=10) {
-			errorMessage = "date must be in the format, dd/mm/yyyy";
-		}
-		*/
-		
-		/*
-		if(indexOfFirstSlash == -1) {
-			errorMessage = "date must be in the format, dd/mm/yyyy";
-		}else {
-		indexOfSecondSlash = userInput.indexOf('/',indexOfFirstSlash+1); 
-	
-		}
-		*
-		 * not needed as the dataPicker does this all for me	
-		if(indexOfSecondSlash == -1) {
-			errorMessage = "date must be in the format, dd/mm/yyyy";
-		}else if(userInput.indexOf('/',indexOfSecondSlash +1 ) != -1) {
-			errorMessage = "to many /";
-			System.out.println(indexOfSecondSlash);
-		}
-		*/
 		
 		if (!input.equals("")&&valuePresent == null) {
 			errorMessage = "no data found, if some does exists try selecting it and preesing enter";
@@ -145,6 +159,16 @@ public class InputValidation {
 		}
 		return errorMessage;
 	}
+	/**
+	 * this is designed to work with a datePicker. 
+	 * this checks that the datepicker has registered the input. this is done 
+	 * by making sure that the locaclDate and input have input, as if the user just 
+	 * types in the datepicker it wont make a local date.
+	 * 
+	 * @param input = String =  from datePicker textField
+	 * @param valuePresent = localDate = from datePicker
+	 * @return String that says the error or just "" if no error 
+	 */
 	public String dateValidationPresentIsOptional(String input, LocalDate valuePresent) {
 		errorMessage ="";
 		

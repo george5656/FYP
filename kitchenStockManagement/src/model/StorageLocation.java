@@ -1,31 +1,53 @@
 package model;
-
-public class StorageLocation {
-private String name;
-private boolean isAvailble;
-private String type;
-
-public StorageLocation(String name, String type, boolean isAvailble) {
-	this.name = name;
-	this.type = type;
-	this.isAvailble = isAvailble;
-}
-
-
 /**
- * no stand format as need for the listview, StorgaeLcoationList. 
+ * 
+ * storage location object is used to represent of a storage location while using the stock management system
+ * @author Student
+ *
  */
-@Override
+public class StorageLocation {
+	private String name;
+	private boolean isAvailble;
+	private String type;
+/**
+ * constructor
+ * @param name = String
+ * @param type = String
+ * @param isAvailble = Boolean, true = is admin, false = isnt admin
+ */
+	public StorageLocation(String name, String type, boolean isAvailble) {
+		this.name = name;
+		this.type = type;
+		this.isAvailble = isAvailble;
+	}
+
+	/**
+	 * not in stand format as need for the listview in the StorgaeLcoationListPage
+	 * @return String
+	 */
+	@Override
 	public String toString() {
 		return "name = " + name + ", type = " + type + ", storage is available = " + isAvailble;
 	}
-public String getName() {
-	return name;
-}
-public String getType() {
-	return type;
-}
-public Boolean getAvailbility() {
-	return isAvailble;
-}
+/**
+ * get the value in the name var
+ * @return String
+ */
+	public String getName() {
+		return name;
+	}
+	/**
+	 * get the value in the type var
+	 * @return String
+	 */
+	public String getType() {
+		return type;
+	}
+/**
+ * gets the value in isAvailble var
+ * @return Boolean, true = is admin, false = isnt admin 
+ */
+	public Boolean getAvailbility() {
+		return isAvailble;
+	}
 }

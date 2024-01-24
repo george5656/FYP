@@ -55,13 +55,7 @@ public Double getDishCost() {
 		
 		count = count + 1;
 	}
-	 
-	
-	
-	
-	return totalCost;
-	
-	
+	return totalCost;	
 }
 
 
