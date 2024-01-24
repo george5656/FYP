@@ -10,13 +10,20 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.Priority;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Font;
-
+/**
+ * the page that is shown, when the use clicks, delete on any list pages.
+ * @author Student
+ *
+ */
 public class DeleteConfirmationPage extends PaneMenu {
 	private Button cancel = new Button("cancel");
 	private Button confirm = new Button("confirm");
 	private Label txtConfirmMessage = new Label("are you sure want to delete ");
 	private VBox mainLayout = new VBox(20);
 	private HBox controls = new HBox(20);
+	/**
+	 * default constructor
+	 */
 	public DeleteConfirmationPage() {
 		super.setCenter(mainLayout);
 		 
@@ -60,7 +67,8 @@ public class DeleteConfirmationPage extends PaneMenu {
 		confirm.setOnAction(event);
 	}
 	/**
-	 *  to be able to edit the label so ask if they want to delete the item they have selected
+	 * set the text that is shown in the centre of the pane. 
+	 * @param message = string =  add in the item you are wanting to delete
 	 */
 	public void setTxtConfirmMessage(String message) {
 		txtConfirmMessage.setText(message);

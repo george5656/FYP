@@ -8,7 +8,11 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.Priority;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Font;
-
+/**
+ * a page of the application, that is used for the user to input info to filter accounts.
+ * @author Student
+ *
+ */
 public class AccountFilter extends BasicLayoutFilter {
 private Label txtIsAdmin = new Label("is admin");
 private RadioButton rbYes = new RadioButton("yes");
@@ -17,7 +21,9 @@ private ToggleGroup tgYesAndNo = new ToggleGroup();
 private HBox toggleGroupLayout = new HBox();
 private VBox labels;
 private VBox userTextInput;
-
+/**
+ * default constructor
+ */
 public AccountFilter() {
 	labels = getLabels();
 	userTextInput = getUserTextInput();
@@ -49,14 +55,25 @@ public AccountFilter() {
 	toggleGroupLayout.setAlignment(Pos.CENTER);
 	
 }
+/**
+ * reset the page
+ */
 public void reset() {
 	rbYes.setSelected(false);
 	rbNo.setSelected(false);
 	
 }
+/**
+ * gets if rbYes has been selected or not.
+ * @return boolean, true = it is selected, false = it isnt selected.
+ */
 public Boolean isYesSelected() {
 	return rbYes.isSelected();
 }
+/**
+ * gets if rbNo has been selected or not.
+ * @return boolean, true = it is selected, false = it isnt selected.
+ */
 public Boolean isNoSelected() {
 	return rbNo.isSelected();
 }

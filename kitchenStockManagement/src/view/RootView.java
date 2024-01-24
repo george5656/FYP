@@ -49,90 +49,80 @@ public class RootView extends VBox {
 		this.setAlignment(Pos.CENTER);
 		this.setFillWidth(true);
 	}
-
-	/**
-	 * get the Login view
-	 * 
-	 * @return Login view
-	 */
-	public Login getLoginPage() {
-		return login;
-	}
-
-	/**
-	 * get the budget filter
-	 * 
-	 * @return BudgetFilter view
-	 */
-	public BudgetFilter getBudgetFilter() {
-		return budgetFilter;
-	}
-	/**
-	 * get the Home page view
-	 * @return HomePage view
-	 */
-public HomePage getHomePage(Boolean isAdmin) {
-	homePage.setHomePagetype(isAdmin);
-	return homePage;
-}
+/**
+ * get the stock list page 
+ * @return ListPage
+ */
 public ListPage getStockListPage() {
 	return stockListPage;
 }
-
-public ListPage getMenuListPage() {
-	return menuListPage;
-}
-public MenuDetails getMenuDetails() {
-return menuDetails;
-}
+/**
+ *  gets the deleteCOnfirmationPage object
+ * @return DeleteConfirmationPage
+ */
 public DeleteConfirmationPage getDeleteConfirmationPage() {
 	return dcp;
 }
-public DishDetailsPage getDishDetailsPage() {
-	return ddp;
-}
+/**
+ * gets the stockDetails page
+ * @return StockDetails object
+ */
 public StockDetails getStockDetails() {
 	return sd;
 }
-public ListPage getBudgetListPage() {
-	return budgetListPage;
-}
-public BudgetDetailsPage getBudgetDetailsPage() {
-	return bdp;
-}
-public ListPage getStorageLocationListPage() {
-	return storageLocationListPage;
-}
-public StockStorageLocationDetails getStockStorageLoctionDetailsPage() {
-	return ssld;
-}
-public AccountDetails getAccountDetails() {
-	return ad;
-}
+/**
+ * get the account list page 
+ * @return ListPage
+ */
 public ListPage getAccountListPage() {
 	return accountListPage;
 }
+/**
+ * get the filter page for the storage locations
+ * @return StockStorageLocationFilter object.
+ */
 public StockStorageLocationFilter getStockStorageLocationFilter() {
 	return sslf;
 }
+/**
+ * get the filter page for the stock
+ * @return StockFilter object.
+ */
 public StockFilter getStockFilter() {
 	return sf;
 }
+/**
+ * get the filter page for the dishes
+ * @return FilterDishes object.
+ */
 public FilterDishes getFilterDishes() {
 	return fd;
 }
+/**
+ * get the filter page for the accounts
+ * @return AccountFilter object.
+ */
 public AccountFilter getAccountFilter() {
 	return af;
 }
+/**
+ * get the filter page for the menus
+ * @return MenuFilter object.
+ */
 public MenuFilter getMenuFilter() {
 	return mf;
 }
+/**
+ * gets the menu setting page
+ * @return MenuSettingPage object.
+ */
 public MenuSettingPage getMenuSettingPage() {
 	return msp;
 }
 /**
- * 
- * @return
+ * gets all the views that have instance in the RootView.
+ * get all the views the application has. 
+ * @return ArrayList<PaneMenu> All views downcast to the pane menu.
  */
 public ArrayList<PaneMenu> getAllView(){
 	ArrayList<PaneMenu> all = new ArrayList<>();
@@ -160,14 +150,6 @@ public ArrayList<PaneMenu> getAllView(){
 	
 	return all;
 }
-public Output getOutputPage() {
-	return output;
-}
-
-
-
-
-
 //login 
 /**
  * sets the exit button event handler 
@@ -183,13 +165,27 @@ public void setLoginBtnExit(EventHandler<ActionEvent> event) {
 public void setLoginBtnLogin(EventHandler<ActionEvent> event) {
 	login.setBtnLoginEventHandler(event);
 }
-
+/**
+ * get the user input from the login page for the user name input
+ * @return String which represent the user input in to the user name area
+ */
 public String getLoginUserUsernameInput() {
 	return login.getUserUsernameInput();
 }
+/**
+ * get what the user input on the login page for the password.
+ * the input isn't hashed yet
+ * @return String which is the user input for the password section in the login page.
+ */
 public String getLoginUserPasswordInput() {
 	return login.getUserPasswordInput();
 }
+
+/**
+ * loads the login page. 
+ * it removes any children from the root view VBox, and add self in place so is visible
+ * it also clears all the user input.
+ */
 public void loginLoad() {
 	this.getChildren().remove(0);
 	this.getChildren().add(login);
@@ -239,7 +235,13 @@ public void setHomeBtnBudgetEventHandler(EventHandler<ActionEvent> event) {
 public void setHomeBtnStorageEventHandler(EventHandler<ActionEvent> event) {
 	homePage.setBtnStorageEventHandler(event);
 }
-
+/**
+ * loads the home page
+ * it removes any children from the root view VBox, and add self in place so is visible
+ * the controls it shows are based of the input, if it is admin then it shows all,
+ * if it isnt admin it then shows a reduced set of options.
+ * @param isAdmin = boolean, true = is admin, false = isnt admin
+ */
 public void homePageMenuLoad(Boolean isAdmin) {
 	homePage.setHomePagetype(isAdmin);
 	this.getChildren().remove(0);
@@ -276,6 +278,13 @@ public void setStockListBtnAddEventHandler(EventHandler<ActionEvent> event) {
 public void setStockListBtnFilterEventHandler(EventHandler<ActionEvent> event) {
 	stockListPage.setBtnFilterEventHandler(event);
 }
+/**
+ * loads the stock list page
+ * it removes any children from the root view VBox, and add self in place so is visible
+ * it reset the stock list page
+ * the inputed data is then shown in the list view. 
+ * @param data = ObservableList<String> each iteration is a string representation of stock
+ */
 public void stockListLoad(ObservableList<String> data) {
 	stockListPage.getErrorLabel().setVisible(false);
 	stockListPage.setObservableList(data);
@@ -283,6 +292,10 @@ public void stockListLoad(ObservableList<String> data) {
 	this.getChildren().add(stockListPage);
 	this.setVgrow(stockListPage, Priority.ALWAYS);
 }
+/**
+ * gets the item that is selected in the listview in the stock list page. 
+ * @return String or null. if no item is selected null is returned, else it is the string that is selected.
+ */
 public String getStockListSelectedItem() {
 	
 	if(stockListPage.getSelectionNode().getSelectionModel().getSelectedItem()!= null) {
@@ -291,7 +304,10 @@ public String getStockListSelectedItem() {
 		return "null";
 	}
 }
-
+/**
+ * shows the user an error message on the stock list page.
+ * @param errorMessgae = String which is an error message you want the user to be shown
+ */
 public void setStockListError(String errorMessgae) {
 	stockListPage.getErrorLabel().setVisible(true);
 	stockListPage.getErrorLabel().setText(errorMessgae);
@@ -311,23 +327,31 @@ public void setStockListBtnFindEventHandler(EventHandler<ActionEvent> event) {
 public void setStockListBtnEditEventHandler(EventHandler<ActionEvent> event) {
 	stockListPage.setBtnEditEventHandler(event);
 }
-
+/**
+ * gets selected value in the listView on the stock list page but only the id part.
+ * use id and storage to identify where the id values starts and ends.
+ * @return String which is the id of the stock selected in the listView
+ */
 public String getSelectedStockId() {
 	String stockId = stockListPage.getSelection();
 	int idStart = stockId.indexOf("id");
 	int storageStart = stockId.indexOf("storage");
 	return stockId.substring(idStart + 5, storageStart -2);
 }
-
+/**
+ * get the user input in the find section on the stock list page.
+ * @return String =  user input in find section on stock list page.
+ */
 public String getStockListTfFindValue() {
 	return stockListPage.getTfFindValue();
 }
+/**
+ * sets the list view in the stock list page 
+ * @param data = ObservableList<String> each iteration is a string representation of stock
+ */
 public void setStockListValues(ObservableList<String> data) {
 stockListPage.setObservableList(data);
 }
-
-
-
 // stock details 
 /**
  * sets the stock details save button event handler 
@@ -358,6 +382,12 @@ public void setStockDetailsBtnLoadFromFileEventHandler(EventHandler<ActionEvent>
 	sd.setBtnLoadFromFileEventHandler(event);
 }
 //true means go to add, false means go to edit
+/**
+ * loads the stock details page. 
+ * it removes any children from the root view VBox, and add self in place so is visible
+ * if add =  true, it loads the add version of it else it loads the edit version of it.
+ * @param add = boolean, true = from add, false =  from edit.
+ */
 public void stockDetailsLoad(Boolean add) {
 	this.getChildren().remove(0);
 	this.getChildren().add(sd);
@@ -370,18 +400,39 @@ public void stockDetailsLoad(Boolean add) {
 	}
 	
 }
+/**
+ * gets the user input for the stock name from the stock details page
+ * @return String = user input for the stock name from the stock details page
+ */
 public String getStockDetailsStockName() {
 	return sd.getStockName().getText();
 }
+/**
+ * gets the user input for the quantity from the stock details page
+ * @return String = user input for the quantity from the stock details page
+ */
 public String getStockDetailsQuantity() {
 	return sd.getQuanity().getText();
 }
+/**
+ * gets the user input for the quantity type from the stock details page
+ * @return String = user input for the quantity type from the stock details page
+ */
 public String getStockDetailsQuanitType() {
 	return sd.getQuantityType().getText();
 }
+/**
+ * gets the user input for the cost from the stock details page
+ * @return String = user input for the cost from the stock details page
+ */
 public String getStockDetailsCost() {
 	return sd.getCost().getText();
 }
+/**
+ * get the user input for the expire date from the stock details page. 
+ * if the input is null get back null in string format
+ * @return String or "null". represent the user input. 
+ */
 public String getStockDetailsDateValue() {
 	if(sd.getExpiereDate().getValue() != null) {
 	return sd.getExpiereDate().getValue().toString();
@@ -390,10 +441,21 @@ public String getStockDetailsDateValue() {
 	}
 	
 	}
+/**
+ * get the user input for the stock details expire date.
+ * get the user input from the stock details page
+ * @return LocalDate = the user input that the date picker has as a local date.
+ */
 public LocalDate getStockDetailsDateValueAsLocalDate() {
 	
 	return sd.getExpiereDate().getValue();
 	}
+/**
+ * get the stock details expire date.
+ * get the user input from the stock details page
+ * get the textFild associated with the datePicker.
+ * @return String or null, if no value found in date picker textField get null as a string, else get the value.
+ */
 public String getStockDetailsDateText() {
 	if(sd.getExpiereDate().getEditor().getText() != null) {
 	return sd.getExpiereDate().getEditor().getText();
@@ -402,11 +464,20 @@ public String getStockDetailsDateText() {
 	}
 	
 	}
+/**
+ * get the selected value from the storage location combo box.
+ * user input is from the stock details page. 
+ * @return String = Storage location Id that is selected. 
+ */
 public String getStorageLocation() {
 	return sd.getStorageLocation().getSelectionModel().getSelectedItem().toString();
 }
 
-
+/**
+ * resets the stock details page. 
+ * @param data = ObservableList<String> of all the storage location id so can be populated in the storage 
+ * Location combo box in the stock details page.
+ */
 public void resetStockDetailsPage(ObservableList<String> data) {
 	sd.getStorageLocation().getItems().clear();
 	sd.getStorageLocation().getItems().addAll(data);
@@ -416,22 +487,45 @@ public void resetStockDetailsPage(ObservableList<String> data) {
 	sd.getExpiereDate().getEditor().clear();
 	sd.getCost().clear();
 }
-
+/**
+ * set the stock details page, stock name to the inputed value
+ * @param name = String want the stock name to be.
+ */
 public void setStockDetailsName(String name) {
 	sd.getStockName().setText(name);
 }
+/**
+ * set the stock details page, Storage location to the inputed value
+ * @param StorgeLocation = String want the storage location to be set as.
+ */
 public void setStockDetailsStorgeLocation(String StorgeLocation) {
 	sd.getStorageLocation().setValue(StorgeLocation);
 }
+/**
+ * set the stock details page, quantity to the inputed value
+ * @param Quanity = String want the quantity to be.
+ */
 public void setStockDetailsQuanity(String Quanity) {
 	sd.getQuanity().setText(Quanity);
 }
+/**
+ * set the stock details page, stock quantity type to the inputed value
+ * @param QuanityType = String want the stock quantity type to be.
+ */
 public void setStockDetailsQuanityType(String QuanityType) {
 	sd.getQuantityType().setText(QuanityType);
 }
+/**
+ * set the stock details page, stock expire date to the inputed value
+ * @param ExpiereDate = String want the stock expire date to be.
+ */
 public void setStockDetailsExpiereDate(String ExpiereDate) {
 	sd.getExpiereDate().getEditor().setText(ExpiereDate);
 }
+/**
+ * set the stock details page, stock cost to the inputed value
+ * @param Cost = String want the stock cost to be.
+ */
 public void setStockDetailsCost(String Cost) {
 	sd.getCost().setText(Cost);
 }
@@ -458,6 +552,13 @@ public void setStockFilterBtnAbout(EventHandler<ActionEvent> event) {
 public void setStockFilterBtnCancel(EventHandler<ActionEvent> event) {
 	sf.setBtnCancelEventHandler(event);
 }
+/**
+ * loads the stock filter page.
+ * it removes any children from the root view VBox, and adds self in place so is visible
+ * the parameter are there to populate the combo boxes on the screen.
+ * @param storageLocations = ArrayList<String> for the combo box for storage location options to be
+ * @param stockType = ArrayList<String> for the combo box for stock type options to be
+ */
 public void stockFilterLoad(ArrayList<String> storageLocations, ArrayList<String> stockType) {
 	
 	sf.getCbStorageLocation().getItems().clear();
@@ -470,32 +571,80 @@ public void stockFilterLoad(ArrayList<String> storageLocations, ArrayList<String
 	this.getChildren().add(sf);
 	this.setVgrow(sf, Priority.ALWAYS);
 }
+/**
+ * get the user input, of min quantity input area.
+ * all input are from the stock filter page. 
+ * @return String = user input for the input area min quantity
+ */
 public String getStockFilterTfMinQunaity() {
 	return sf.getTfMinQunaity().getText();
 }
+/**
+ * get the user input, of max quantity input area.
+ * all input are from the stock filter page. 
+ * @return String = user input for the input area max quantity
+ */
 public String getStockFilterTfMaxQunaity() {
 	return sf.getTfMaxQuanity().getText();
 }
+/**
+ * gets the user inputed info from the expires after date.
+ * info it gets is from the datePicker associated textField.
+ * all inputs are from the stock filter page.
+ * @return String that is in the datePicker textField.
+ */
 public String getStockFilterDpAfterDateText() {
 	return sf.getDpAfterDate().getEditor().getText();
 }
+/**
+ * gets the user inputed info from the expires before date.
+ * info it gets is from the datePicker associated textField.
+ * all inputs are from the stock filter page.
+ * @return String that is in the datePicker textField.
+ */
 public String getStockFilterDpBeforeDateText() {
 	return sf.getDpBeforeDate().getEditor().getText();
 }
-
+/**
+ * gets the user inputed info from the expires after date.
+ * info it gets is from the datePicker held localDate.
+ * all inputs are from the stock filter page.
+ * @return LocalDate that the datePicker has.
+ */
 public LocalDate getStockFilterDpAfterDateValuePresent() {
 	return sf.getDpAfterDate().getValue();
 }
+/**
+ * gets the user inputed info from the expires before date.
+ * info it gets is from the datePicker held localDate.
+ * all inputs are from the stock filter page.
+ * @return LocalDate that the datePicker has.
+ */
 public LocalDate getStockFilterDpBeforeDateValuePresent() {
 	return sf.getDpBeforeDate().getValue();
 }
-
+/**
+ * get the user input, of above cost input area.
+ * all input are from the stock filter page. 
+ * @return String = user input for the input area above cost
+ */
 public String getStockFilterAboveCost() {
 	return sf.getTfAboveCost().getText();
 }
+/**
+ * get the user input, of below cost input area.
+ * all input are from the stock filter page. 
+ * @return String = user input for the input area below cost
+ */
 public String getStockFilterBelowCost() {
 	return sf.getTfBelowCost().getText();
 }
+/**
+ * gets the user input, of the selected storage location
+ * all input are from the stock filter page. 
+ * @return String or null. if nothing is selected null as string is returned else the selected storage location
+ * id/name is returned as a string.
+ */
 public String getStockFilterStorgaeLocation() {
 	
 	if(sf.getCbStorageLocation().getSelectionModel().getSelectedItem()!=null) {
@@ -504,6 +653,12 @@ public String getStockFilterStorgaeLocation() {
 		return "null";
 	}
 }
+/**
+ * gets the user input, of the selected stock type
+ * all input are from the stock filter page. 
+ * @return String or null. if nothing is selected null as string is returned else the selected stock type
+ * id/name is returned as a string.
+ */
 public String getStockFilterStockType() {
 	
 	if(sf.getCbStockType().getSelectionModel().getSelectedItem()!=null) {
@@ -555,6 +710,11 @@ public void setMenuListBtnEditEventHandler(EventHandler<ActionEvent> event) {
 public void setMenuListBtnAboutEventHandler(EventHandler<ActionEvent> event) {
 	menuListPage.setAboutEventHandler(event);
 }
+/**
+ * gets the menu which is selected from the list view in the menu list page.
+ * @return String or null. null as a string is returned if there is no selection, else 
+ * the menu in its string format is returned.
+ */
 public String getMenuListSelectedMenu() {
 	if(menuListPage.getSelectionNode().getSelectionModel().getSelectedItem()!= null) {
 	return menuListPage.getSelectionNode().getSelectionModel().getSelectedItem();
@@ -562,25 +722,51 @@ public String getMenuListSelectedMenu() {
 		return "null";
 	}
 }
+/**
+ * get the menu which has been selected from the list view in the menu list page, but only gives its id.
+ * 
+ * @return String = the selected menu id
+ */
 public String getMenuListSelectedMenuId() {
 	String selection = menuListPage.getSelectionNode().getSelectionModel().getSelectedItem();
 	return selection.substring(selection.indexOf("=")+2);
 	
 }
+/**
+ * shows the user an error message on the menu list page.
+ * @param errorMessgae = String which is an error message you want the user to be shown
+ */
 public void setMenuListError(String errorMessage) {
 	menuListPage.getErrorLabel().setVisible(true);
 	menuListPage.getErrorLabel().setText(errorMessage);
 }
+/**
+ * get the user input in the find section on the menu list page.
+ * @return String = user input in find section on menu list page.
+ */
 public String getMenuListFindUserInput() {
 	return menuListPage.getTfFindValue();
 	
 }
+/**
+ * hides the error message on the menu list page.
+ */
 public void hideMenuListErrorMessage() {
 	menuListPage.hideErrorMessage();
 }
+/**
+ * shows the user an error message on the menu list page.
+ * @param errorMessgae = String which is an error message you want the user to be shown
+ */
 public void setMenuListErrorMessage(String error) {
 	menuListPage.setErrorMessage(error);
 }
+/**
+ * loads the menu list page
+ * it removes any children from the root view VBox, and add self in place so is visible
+ * the inputed data is then shown in the list view. 
+ * @param data = ObservableList<String> each iteration is a string representation of menus
+ */
 public void menuListLoad(ObservableList<String> data) {
 	menuListPage.setObservableList(data);
 	this.getChildren().remove(0);
@@ -588,9 +774,6 @@ public void menuListLoad(ObservableList<String> data) {
 	this.setVgrow(menuListPage, Priority.ALWAYS);
 	
 }
-
-
-
 // menuDetails
 /**
  * sets the menu Details settings button event handler 
@@ -669,48 +852,99 @@ public void setMenuDetailsBtnLoadFromFileChooserEventHandler(EventHandler<Action
 public void setMenuDetailsBtnAboutEventHandler(EventHandler<ActionEvent> event) {
 	menuDetails.setAboutEventHandler(event);
 }
+/**
+ * loads the menu details page. 
+ * it removes any children from the root view VBox, and add self in place so is visible
+ */
 public void MenuDetailsLoad() {
 	this.getChildren().remove(0);
 	this.getChildren().add(menuDetails);
 	this.setVgrow(menuDetails, Priority.ALWAYS);
 }
+/**
+ * sets the menu details dish List view. 
+ * set the values to be the passed in value 
+ * @param dishes ObservableList<String> = values to be shown in the dish list.
+ */
 public void setMenuDetailsDishList(ObservableList<String> dishes) {
 	menuDetails.setDishes(dishes);
 }
+/**
+ * sets the menu details shopping list view. 
+ * set the values to be the passed in value 
+ * @param dishes ObservableList<String> = values to be shown in the shopping list.
+ */
 public void setMenuDetailsShoppingList(ObservableList<String> dishes) {	
 	menuDetails.setShoppingListList(dishes);
 }
-public ObservableList<String> getMenuDetailsShoppingList(){
-	return menuDetails.getShoppingListList();
-}
+/**
+ * gets the user input for the find input area. 
+ * input from the menu details page.
+ * @return String = the user input.
+ */
 public String getMenuDetailsFindUserInput() {
 	return menuDetails.getFindUserInput();
 }
-
+/**
+ * gets the selected item from the dish list, list view but only the items id. 
+ * selection from the menu details page. 
+ * @return String = selected items id.
+ */
 public String getMenuDetailsDishListSelectedItemValueIdOnly() {
-	
 	return menuDetails.getDishListSelectedValue().substring(menuDetails.getDishListSelectedValue().indexOf("=")+2);
 }
+/**
+ * gets the selected item index in list view from the dish list, list view. 
+ * selection from the menu details page. 
+ * @return Integer = selected items index.
+ */
 public Integer getMenuDetailsDishListSelectedItemIndex() {
 	return menuDetails.getDishListSelectedIndex();
 }
+/**
+ * sets the menu details menu list, list view. 
+ * set the values to be the passed in value 
+ * @param items ObservableList<String> = values to be shown in the menu list.
+ */
 public void setMenuDetailsMenuListItems(ObservableList<String> items) {
 	menuDetails.setMenuDishList(items);
 }
+/**
+ * sets the label in the menuDetails page.
+ * format is Budget = amount
+ * @param amount = String, which should be a double in a string format.
+ */
 public void setMenuDetailsBudgetValue(String amount) {
 	menuDetails.setBudgetValue(amount);
 }
+/**
+ * gets the selected item index in list view from the menu list, list view. 
+ * selection from the menu details page. 
+ * @return Int = selected items index.
+ */
 public int getMenuDetailsMenuListSelectedIndex() {
 	return menuDetails.getMenuListSelectedIndex();
 }
+/**
+ * gets the selected item from the menu list, list view but only the items name. 
+ * selection from the menu details page. 
+ * @return String = selected items name.
+ */
 public String getMenuDetailsMenuListSelectedValueName() {
 	return menuDetails.getMenuListSelectedValueAsId();
 }
+/**
+ * get the size of the menu list.
+ * list located on the menu details page.
+ * @return int = menu list size.
+ */
 public int getMenuDetailsMenuListSize() {
 	return menuDetails.getMenuListSize(); 
 }
-
-
+/**
+ * gets the item that is selected in the listview in the budget list page. 
+ * @return String or null. if no item is selected null is returned, else it is the string that is selected.
+ */
 public String getBudgetListSelectedItem() {
 	
 	if(budgetListPage.getSelectionNode().getSelectionModel().getSelectedItem()!= null) {
@@ -719,10 +953,11 @@ public String getBudgetListSelectedItem() {
 		return "null";
 	}
 }
-
-
-
 //menu filter
+/**
+ * loads the menu filter page 
+ * it removes any children from the root view VBox, and add self in place so is visible
+ */
 public void menuFilterLoad() {
 	this.getChildren().remove(0);
 	this.getChildren().add(mf);
@@ -749,22 +984,42 @@ public void setMenufilterBtnCancelEventHandler(EventHandler<ActionEvent> event) 
 public void setMenufilterBtnAboutEventHandler(EventHandler<ActionEvent> event) {
 	mf.setAboutEventHandler(event);
 }
+/**
+ * get the user input for total cost below input area.
+ * get the user input from the page, menu filter.
+ * @return String representing the total cost below user input
+ */
 public String getMenuFilterTotalCostBelow() {
 	return mf.getTotalCostBelow();
 }
+/**
+ * get the user input for total cost above input area.
+ * get the user input from the page, menu filter.
+ * @return String representing the total cost above user input
+ */
 public String getMenuFilterTotalCostAbove() {
 	return mf.getTotalCostAbove();
 }
+/**
+ * get the user input for contains dish input area.
+ * get the user input from the page, menu filter.
+ * @return String representing the contains dish user input
+ */
 public String getMenuFilterContainsDish() {
 	return mf.getContainsDish();
 }
+/**
+ * get the user input for doesnt contains dish input area.
+ * get the user input from the page, menu filter.
+ * @return String representing the doenst contains dish user input
+ */
 public String getMenuFilterDoesntContainsDish() {
 	return mf.getDoesntContainDish();
 }
-
-
-// menu settings
-
+/**
+ * loads the menu settings page. 
+ * it removes any children from the root view VBox, and add self in place so is visible
+ */
 public void menuSettingsLoad() {
 	this.getChildren().remove(0);
 	this.getChildren().add(msp);
@@ -791,19 +1046,43 @@ public void setMenuSettingBtnCancelEventHandler(EventHandler<ActionEvent> event)
 public void setMenuSettingBtnAboutEventHandler(EventHandler<ActionEvent> event) {
 	msp.setAboutEventHandler(event);
 }
+/**
+ * get user input for the menu name input.
+ * input from menu setting page
+ * @return String = user input in to menu name input area.
+ */
 public String getMenuSettingName() {
 	return msp.getName();
 }
+/**
+ * get the index of the budget selected in the combo box.
+ * combo box is in the menu setting page.
+ * @return Int = index of the item selected in the combo box.
+ */
 public int getMenuSettingBudgetIndex() {
 	return msp.getBudgetIndex();
 }
+/**
+ * sets the options for the combo box in the menu setting page.
+ * input meant to be, the budgets.
+ * @param options = ObservableList<String>
+ */
 public void setMenuSettingBudgetOptions(ObservableList<String> options) {
 	msp.setBudgetOptions(options);
 }
+/**
+ * gets the budget selected in the combo box.
+ * combo box is the budget one in the menu settings page.
+ * @return String = budget name/id as a string of the selected budget.
+ */
 public String getMenuSettingSelectedBudgetOption() {
 	return msp.getSelectedBudgetValue();
 }
 //outputPage
+/**
+ * loads the output page. 
+ * it removes any children from the root view VBox, and add self in place so is visible
+ */
 public void outputPageLoad() {
 	this.getChildren().remove(0);
 	this.getChildren().add(output);
@@ -892,6 +1171,13 @@ public void setBudgetListBtnEditEventHandler(EventHandler<ActionEvent> event) {
 public void setBudgetListBtnAboutEventHandler(EventHandler<ActionEvent> event) {
 	budgetListPage.setAboutEventHandler(event);
 }
+/**
+ * loads the budget list page
+ * it removes any children from the root view VBox, and add self in place so is visible
+ * it reset the budget list page
+ * the inputed data is then shown in the list view. 
+ * @param data = ObservableList<String> each iteration is a string representation of budget
+ */
 public void BudgetListLoad(ObservableList<String> data) {
 	budgetListPage.getErrorLabel().setVisible(false);
 	budgetListPage.setObservableList(data);
@@ -899,15 +1185,28 @@ public void BudgetListLoad(ObservableList<String> data) {
 	this.getChildren().add(budgetListPage);
 	this.setVgrow(budgetListPage, Priority.ALWAYS);
 }
-
+/**
+ * get the user input in the find section on the budget list page.
+ * @return String = the user input in find section on budget list page.
+ */
 public String getBudgetTfFind() {
 	return budgetListPage.getTfFindValue();
 }
+/**
+ * shows the user an error message on the budget list page.
+ * @param errorMessgae = String which is an error message you want the user to be shown
+ */
 public void setBudgetListErrorMessage(String error) {
 	budgetListPage.getErrorLabel().setText(error);
 	budgetListPage.getErrorLabel().setVisible(true);
 }
-
+/**
+ * get the selected  budget id.
+ * selection is made on the budget list view. 
+ * it use words "id" and "amount" to identify where id is
+ * 
+ * @return String which is the selected budget id.
+ */
 public String getSelectedBudgetId() {
 	String budgetId = budgetListPage.getSelection();
 	int idStart = budgetId.indexOf("id");
@@ -937,54 +1236,111 @@ public void setBudgetDetailsBtnAboutEventHandler(EventHandler<ActionEvent> event
 public void setBudgetDetailsBtnCancelEventHandler(EventHandler<ActionEvent> event) {
 	bdp.setBtnCancelEventHandler(event);
 }
-
+/**
+ * loads the budget details page. 
+ * it removes any children from the root view VBox, and add self in place so is visible.
+ */
 public void budgetDetailsLoad() {
 	this.getChildren().remove(0);
 	this.getChildren().add(bdp);
 	this.setVgrow(bdp, Priority.ALWAYS);
 }
-
+/**
+ * gets the user input for the budget name.
+ * user input comes form the budget details page.
+ * @return String = the user input for the budget name.
+ */
 public String getBudgetDetailsInputtedName() {
 	return bdp.getName().getText();
 }
+/**
+ * gets the user input for the budget amount
+ * user input comes form the budget details page.
+ * @return String = the user input for the budget amount.
+ */
 public String getBudgetDetailsInputtedAmount() {
 	return bdp.getAmount().getText();
-	
 }
+/**
+ * gets the user input for the start date.
+ * user input comes form the budget details page.
+ * get the value in the textField that is associated with the date picker
+ * @return String = the value in the textField.
+ */
 public String getBudgetDetailsInputtedStartDate() {
 	return bdp.getStartDate().getEditor().getText();
-			
 }
+/**
+ * gets the user input for the end date.
+ * user input comes form the budget details page.
+ * get the value in the textField that is associated with the date picker
+ * @return String = the value in the textField.
+ */
 public String getBudgetDetailsInputtedEndDate() {
 	return bdp.getEndDate().getEditor().getText();
 	//bdp.getEndDate().getEditor().
 }
+/**
+ * gets the user input for the start date.
+ * user input comes form the budget details page.
+ * gets the local date that the datePicker has
+ * @return LocalDate that the datePicker has
+ */
 public LocalDate getBudgetDetailsInputtedStartDateAsLocalDate() {
 	return bdp.getStartDate().getValue();
 }
+/**
+ * gets the user input for the end date.
+ * user input comes form the budget details page.
+ * gets the local date that the datePicker has
+ * @return LocalDate that the datePicker has
+ */
 public LocalDate getBudgetDetailsInputtedEndDateAsLocalDate() {
 	return bdp.getEndDate().getValue();
 }
+/**
+ * reset the budget details page.
+ * clears all the user input
+ */
 public void clearBudgetDetailsPage() {
 	bdp.getName().clear();
 	bdp.getAmount().clear();
 	bdp.getStartDate().getEditor().clear();
 	bdp.getEndDate().getEditor().clear();
 }
+/**
+ * sets the budget details page name input to the passed in parameter.
+ * @param name = String
+ */
 public void setBudgetDetailsName(String name) {
 	 bdp.getName().setText(name);
 }
+/**
+ * sets the budget details page amount input to the passed in parameter.
+ * @param amount = String that is a double in a string format
+ */
 public void setBudgetDetailsAmount(String amount) {
-	 bdp.getAmount().setText(amount);;
+	 bdp.getAmount().setText(amount);
 }
+/**
+ * sets the budget details page start date input to the passed in parameter.
+ * @param startDate = String
+ */
 public void setBudgetDetailsStartDate(String startDate) {
 	 bdp.getStartDate().getEditor().setText(startDate);
 }
+/**
+ * sets the budget details page end date input to the passed in parameter.
+ * @param endDate = String
+ */
 public void setBudgetDetailsEndDate(String endDate) {
 	 bdp.getEndDate().getEditor().setText(endDate);
 }
 //budget filter
-
+/**
+ * loads the budget filter page 
+ * it removes any children from the root view VBox, and add self in place so is visible
+ */
 public void budgetfilterLoad() {
 	this.getChildren().remove(0);
 	this.getChildren().add(budgetFilter);
@@ -1011,33 +1367,83 @@ public void setBudgetFilterBtnCancelEventHandler(EventHandler<ActionEvent> event
 public void setBudgetFilterBtnAboutEventHandler(EventHandler<ActionEvent> event) {
 	budgetFilter.setAboutEventHandler(event);
 }
+/**
+ * gets the user input for the no budget has less than user input
+ * get the user input from the budgetFilter page.
+ * @return String = the user input.
+ */
 public String getBudgetFilterNoBudgetLessThan() {
 	return budgetFilter.getMinAmount().getText().toString();
 }
+/**
+ * gets the user input for the no budget has more than user input
+ * get the user input from the budgetFilter page.
+ * @return String = the user input.
+ */
 public String getBudgetFilterNoBudgetMoreThan() {
 	return budgetFilter.getMaxAmount().getText().toString();
 }
+/**
+ * gets the user input for the starts before date.
+ * get the user input from the budgetFilter page. 
+ * @return String that is what the textFiled of starts before date user inputs holds.
+ */
 public String getBudgetFilterStartsBeforeDateText() {
 	return budgetFilter.getStartBefore().getEditor().getText();
 }
+/**
+ * gets the user input for the starts after date.
+ * get the user input from the budgetFilter page. 
+ * @return String that is what the textFiled of starts after date user inputs holds.
+ */
 public String getBudgetFilterStartsAfterDateText() {
 	return budgetFilter.getStartAfter().getEditor().getText();
 }
+/**
+ * gets the user input for the ends before date.
+ * get the user input from the budgetFilter page. 
+ * @return String that is what the textFiled of ends before date user inputs holds.
+ */
 public String getBudgetFilterEndsBeforeDateText() {
 	return budgetFilter.getEndsBefore().getEditor().getText();
 }
+/**
+ * gets the user input for the ends after date.
+ * get the user input from the budgetFilter page. 
+ * @return String that is what the textFiled of ends after date user inputs holds.
+ */
 public String getBudgetFilterEndsAfterDateText() {
 	return budgetFilter.getEndsAfter().getEditor().getText();
 }
+/**
+ * gets the user input for the starts before date.
+ * get the user input from the budgetFilter page. 
+ * @return LocalDate which the datePicker holds from the user input.
+ */
 public LocalDate getBudgetFilterStartsBeforeValuePresent() {
 	return budgetFilter.getStartBefore().getValue();
 }
+/**
+ * gets the user input for the starts after date.
+ * get the user input from the budgetFilter page. 
+ * @return LocalDate which the datePicker holds from the user input.
+ */
 public LocalDate getBudgetFilterStartsAfterValuePresent() {
 	return budgetFilter.getStartAfter().getValue();
 }
+/**
+ * gets the user input for the ends before date.
+ * get the user input from the budgetFilter page. 
+ * @return LocalDate which the datePicker holds from the user input.
+ */
 public LocalDate getBudgetFilterEndsBeforeValuePresent() {
 	return budgetFilter.getEndsBefore().getValue();
 }
+/**
+ * gets the user input for the ends after date.
+ * get the user input from the budgetFilter page. 
+ * @return LocalDate which the datePicker holds from the user input.
+ */
 public LocalDate getBudgetFilterEndsAfterValuePresent() {
 	return budgetFilter.getEndsAfter().getValue();
 }
@@ -1085,6 +1491,13 @@ public void setStorgaeLocationListBtnDeleteEventHandler(EventHandler<ActionEvent
 public void setStorgaeLocationListBtnFindEventHandler(EventHandler<ActionEvent> event) {
 	storageLocationListPage.setBtnFindEventHandler(event);
 }
+/**
+ * loads the storage location list page
+ * it removes any children from the root view VBox, and add self in place so is visible
+ * it reset the storage list page
+ * the inputed data is then shown in the list view. 
+ * @param storageLocations = ObservableList<String> each iteration is a string representation of a storage location.
+ */
 public void storgaeLocationListLoad(ObservableList<String> storageLocations) {
 	storageLocationListPage.getErrorLabel().setVisible(false);
 	storageLocationListPage.setObservableList(storageLocations);
@@ -1092,16 +1505,31 @@ public void storgaeLocationListLoad(ObservableList<String> storageLocations) {
 	this.getChildren().add(storageLocationListPage);
 	this.setVgrow(storageLocationListPage,Priority.ALWAYS);
 }
+/**
+ * get the user input in the find section on the storage location list page.
+ * @return String = the user input in find section on the storage location list page.
+ */
 public String getStorageLocationFindInput() {
 	return storageLocationListPage.getTfFindValue();
 }
+/**
+ * shows the user an error message on the storage location list page.
+ * @param errorMessgae = String which is an error message you want the user to be shown
+ */
 public void setStorageListErrorMessage(String error) {
 	storageLocationListPage.getErrorLabel().setVisible(true);
 	storageLocationListPage.getErrorLabel().setText(error);
 }
+/**
+ * hides the error message on the storage location list page.
+ */
 public void hideStorageListErrorMessage() {
 	storageLocationListPage.getErrorLabel().setVisible(false);
 }
+/**
+ * gets the item that is selected in the listview in the storage location list page. 
+ * @return String or null. if no item is selected null is returned, else it is the string that is selected.
+ */
 public String getStorageListSelectedItem() {
 	
 	if(storageLocationListPage.getSelectionNode().getSelectionModel().getSelectedItem()!= null) {
@@ -1110,17 +1538,22 @@ public String getStorageListSelectedItem() {
 		return "null";
 	}
 }
+/**
+ * gets the selected storage location id. 
+ * selection is made in the storage location list page. 
+ * the id that is given is not the index id, but the id that is shown in the list view/ what the string displays.
+ * @return String  = selected storage id
+ */
 public String getSelectedStorageId() {
 	String storageId = storageLocationListPage.getSelection();
 	int idStart = storageId.indexOf("=");
 	int typeStart = storageId.indexOf("type");
 	return storageId.substring(idStart + 2, typeStart -2);
 }
-
-
-
-//storageLocationDetails
-
+/**
+ * loads the Storage location details page. 
+ * it removes any children from the root view VBox, and add self in place so is visible
+ */
 public void StorgaeLocationDetailsLoad() {
 	this.getChildren().remove(0);
 	this.getChildren().add(ssld);
@@ -1147,19 +1580,44 @@ public void setStorageDetailsBtnCancelEventHandler(EventHandler<ActionEvent> eve
 public void setStorageDetailsBtnAbooutEventHandler(EventHandler<ActionEvent> event) {
 	ssld.setAboutEventHandler(event);
 }
+/**
+ * get the user input for the storage location name.
+ * input comes from the storage location details page.
+ * @return String = storage location name
+ */
 public String getStorageDetailsName() {
 	return ssld.getName();
 }
+/**
+ * get the user input for the storage location type
+ * input comes from the storage location details page.
+ * @return String = storage location type
+ */
 public String getStorageDetailsType() {
 	return ssld.getType();
 }
 //yes = true, no = false
+/**
+ * get the user input for the storage location is available.
+ * input comes from the storage location details page.
+ * @return Boolean = true =  yes, false = no
+ */
 public Boolean getStorageDetailsAvailbilty() {
 	return ssld.getAvailblity();
 }
+/**
+ * resets  the storage location details page.
+ * removes all the user input from the input areas.
+ */
 public void resetStorageLocationDetails() {
 	ssld.reset();
 }
+/**
+ * sets the storage location details page input areas to the passed in values
+ * @param name = String
+ * @param type = String
+ * @param isAvaible = boolean, true =yes, false = no
+ */
 public void setStorageLocationDetailsValues(String name, String type, Boolean isAvaible) {
 	resetStorageLocationDetails();
 	ssld.setDetailsValues(name, type, isAvaible);
@@ -1168,6 +1626,12 @@ public void setStorageLocationDetailsValues(String name, String type, Boolean is
 }
 //storgae location filter 
 
+/**
+ * loads the storage location filter page. 
+ * it removes any children from the root view VBox, and add self in place so is visible
+ * it also sets the the combo box values to be the passed in parameters
+ * @param type = ArrayList<String> of the values to be shown in the combo box.
+ */
 public void StorgaeLocationFilterLoad(ArrayList<String> type) {
 	sslf.setType(type);
 	this.getChildren().remove(0);
@@ -1195,12 +1659,24 @@ public void setStorageFilterBtnCancelEventHandler(EventHandler<ActionEvent> even
 public void setStorageFilterBtnAboutEventHandler(EventHandler<ActionEvent> event) {
 	sslf.setAboutEventHandler(event);
 }
+/**
+ * get the storage location filter page, is available user input.
+ * @return boolean = true = yes, false = no
+ */
 public Boolean getStorgaeFilterAvailbleStatus() {
 	return sslf.getAvailblityStatus();
 }
+/**
+ * get the storage location filter page, selected type.
+ * @return String = user input
+ */
 public String getStorgeFilterType() {
 	return sslf.getSelectedType();
 }
+/**
+ * says if the combo box on the stock storage location has had an item be selected. 
+ * @return boolean = true = yes, false = no.
+ */
 public Boolean StorageFilterHasATypeBeenSelected() {
 	return sslf.hasATypeBeenSelectec();
 }
@@ -1247,18 +1723,34 @@ public void setAccountListBtnAboutEventHandler(EventHandler<ActionEvent> event) 
 public void setAccountListBtnDeleteEventHandler(EventHandler<ActionEvent> event) {
 	accountListPage.setBtnDeleteEventHandler(event);
 }
+/**
+ * get the user input in the find section on the account list page.
+ * @return String = the user input in find section on account list page.
+ */
 public String getAccountTfFindValue() {
 	return accountListPage.getTfFindValue();
 }
+/**
+ * loads the account details page. 
+ * it removes any children from the root view VBox, and add self in place so is visible
+ */
 public void accountDetailsLoad() {
 	this.getChildren().remove(0);
 	this.getChildren().add(ad);
 	this.setVgrow(ad, Priority.ALWAYS);
 }
+/**
+ * shows the user an error message on the account list page.
+ * @param errorMessgae = String which is an error message you want the user to be shown
+ */
 public void setAccountListError(String errorMessgae) {
 	accountListPage.getErrorLabel().setVisible(true);
 	accountListPage.getErrorLabel().setText(errorMessgae);
 }
+/**
+ * gets the item that is selected in the listview in the accounts list page. 
+ * @return String or null. if no item is selected null is returned, else it is the string that is selected.
+ */
 public String getAccountListSelectedItem() {
 	
 	if(accountListPage.getSelectionNode().getSelectionModel().getSelectedItem()!= null) {
@@ -1267,6 +1759,14 @@ public String getAccountListSelectedItem() {
 		return "null";
 	}
 }
+/**
+ * 
+ * get the selected account name only
+ * account is selected on the account list page in the list view.
+ * it then take that value and get the account name it showed.
+ * 
+ * @return String = account name only.
+ */
 public String getSelectedAccountName() {
 	String accountId = accountListPage.getSelection();
 	int usernameStart = accountId.indexOf("=");
@@ -1275,6 +1775,13 @@ public String getSelectedAccountName() {
 }
 
 //account details
+/**
+ * loads the account list page
+ * it removes any children from the root view VBox, and add self in place so is visible
+ * it reset the account list page
+ * the inputed data is then shown in the list view. 
+ * @param data = ObservableList<String> each iteration is a string representation of a account
+ */
 public void accountListLoad(ObservableList<String> data) {
 	accountListPage.getErrorLabel().setVisible(false);
 	accountListPage.setObservableList(data);
@@ -1282,15 +1789,31 @@ public void accountListLoad(ObservableList<String> data) {
 	this.getChildren().add(accountListPage);
 	this.setVgrow(accountListPage, Priority.ALWAYS);
 }
+/**
+ * gets the account details page, user name user input
+ * @return String = user input in to the user name area.
+ */
 public String getAccountDetailsUserName() {
 	return ad.getUsername();
 }
+/**
+ * gets the account details page, password the user inputed
+ * @return String = user input in to the password area.
+ */
 public String getAccountDetailsUserPassword() {
 	return ad.getPassword();
 }
+/**
+ * if the radio button yes has been selected on the account details page.
+ * @return boolean = true = it is ticked.
+ */
 public Boolean getAccountDetailsIsAdminYesSelected() {
 	return ad.isAdminYesSelected();
 }
+/**
+ * if the radio button no has been selected on the account details page.
+ * @return boolean = true = it is ticked.
+ */
 public Boolean getAccontDetailsIsAdminNoSelected() {
 	return ad.isAdminNoSelected();
 }
@@ -1315,17 +1838,33 @@ public void setAccountDetailsBtnCancelEventHandler(EventHandler<ActionEvent> eve
 public void setAccountDetailsBtnAboutEventHandler(EventHandler<ActionEvent> event) {
 	ad.setAboutEventHandler(event);
 }
+/**
+ * sets the account details page user name input to the passed in parameter
+ * @param username = String
+ */
 public void setAccountDetailsUsername(String username) {
 	ad.setUsername(username);
 }
+/**
+ * sets the account details page, is admin radio group radio buttons.
+ * @param adminStatus = boolean, true = yes selected, false = no selected.
+ */
 public void setAdminStatus(Boolean adminStatus) {
 	ad.setAdminStatus(adminStatus);
 }
+/**
+ * resets the account detail page.
+ * all user input is removed.
+ */
 public void resetAccountDetailPage() {
 	ad.resetPage();
 }
 // account filter 
-
+/**
+ * loads the account filter page 
+ * it removes any children from the root view VBox, and add self in place so is visible
+ * and reset the account filter page
+ */
 public void accountFilterLoad() {
 	af.reset();
 	this.getChildren().remove(0);
@@ -1354,9 +1893,17 @@ public void setAccountFilterBtnAboutEventHandler(EventHandler<ActionEvent> event
 	af.setAboutEventHandler(event);
 }
 
+/**
+ * gets if the account filter page is admin yes is clicked.
+ * @return Boolean, true = it is selected, false = it isnt selected.
+ */
 public Boolean getIsAdminYes() {
 	return af.isYesSelected();
 }
+/**
+ * gets if the account filter page is admin no is clicked.
+ * @return Boolean, true = it is selected, false = it isnt selected.
+ */
 public Boolean getIsAdminNo() {
 	return af.isNoSelected();
 }
@@ -1382,14 +1929,21 @@ public void setDeleteConfirmationBtnCancelEventHandler(EventHandler<ActionEvent>
 public void setDeleteConfirmationBtnAboutEventHandler(EventHandler<ActionEvent> event) {
 	dcp.setAboutEventHandler(event);
 }
-
+/**
+ * loads the delete confirmation page. 
+ * it removes any children from the root view VBox, and add self in place so is visible
+ */
 public void deleteConfirmationLoad() {
 	this.getChildren().remove(0);
 	this.getChildren().add(dcp);
 	this.setVgrow(dcp, Priority.ALWAYS);
 }
 
-
+/**
+ * sets the menu bar, home and logout event handler
+ * @param home = Event handler<ActionEvent> 
+ * @param Logout = Event handler<ActionEvent> 
+ */
 public void setAllPaneMenu(EventHandler<ActionEvent> home,EventHandler<ActionEvent> Logout) {
 	ArrayList<PaneMenu> all = getAllView();
 	for(PaneMenu i : all) {
@@ -1401,6 +1955,10 @@ public void setAllPaneMenu(EventHandler<ActionEvent> home,EventHandler<ActionEve
 
 
 // dish 
+/**
+ * loads the dish details page. 
+ * it removes any children from the root view VBox, and add self in place so is visible
+ */
 public void dishDetailsLoad() {
 	this.getChildren().remove(0);
 	this.getChildren().add(ddp);
@@ -1448,48 +2006,102 @@ public void setDishDetailsBtnEditEventHandler(EventHandler<ActionEvent> event) {
 public void setDishDetailsBtnCanceltHandler(EventHandler<ActionEvent> event) {
 	ddp.setBtnCancelEventHandler(event);
 }
+/**
+ * get the user input for the dish name.
+ * all info come from the dish details page, user input
+ * @return String which represent the dish name user input
+ */
 public String getDishDetailsDishName() {
 	return ddp.getName();
 }
+/**
+ * get the user input for the ingredient name.
+ * all info come from the dish details page, user input
+ * @return String which represent the ingredient name user input
+ */
 public String getDishDetailsIngrdeintName() {
 	return ddp.getIngredientName();
 }
+/**
+ * get the user input for the quantity.
+ * all info come from the dish details page, user input
+ * @return String which represent the quantity user input
+ */
 public String getDishDetailsQuanity() {
 	return ddp.getQuanity();
 }
+/**
+ * get the user input for the unit/quantity type.
+ * all info come from the dish details page, user input
+ * @return String which represent the unit/quantity type user input
+ */
 public String getDishDetailsUnit() {
 	return ddp.getUnit();
 }
+/**
+ * get the user input for the estimate cost.
+ * all info come from the dish details page, user input
+ * @return String which represent the estimated cost user input
+ */
 public String getDishDetailsEstimateCost() {
 	return ddp.getEstimatedCost();
 }
-
+/**
+ * sets the dish details list view
+ * @param ingredents = ObservableList<String> = the elements wants the list view to show
+ */
 public void setDishDetailsList(ObservableList<String> ingredents) {
 	ddp.setIngredentList(ingredents);
 }
+/**
+ * get the index of the item selected in the list view which is in dish details page, 
+ * @return int =index of the selected item
+ */
 public int getDishDetailsSelectedIndex() {
-	return ddp.getSelectedIndex();
-			
+	return ddp.getSelectedIndex();	
 }
+/**
+ * get the id of the item selected in the list view which is in dish details page, 
+ * @return String =  the id of the selected item
+ */
 public String getDishDetaulsSelectedId() {
 	return ddp.getSelectedId();
 }
+/**
+ * clears all the input areas of the dish details page
+ */
 public void dishDetailsAddReset() {
 	ddp.addReset();
 }
+/**
+ * gets the item which has been selected in the list view.
+ * the list view is located in the dish details page
+ * @return String which is the string the user has selected.
+ */
 public String getDishDetailsSelectedItem() {
 	return ddp.getSelectedValue();
 }
+/**
+ * sets the dish details page user input areas with the provided info. 
+ * @param name = string, goes in the ingredient name section.
+ * @param quanity = String which is a double in a string format, goes in the quantity section.
+ * @param quanityType = string, goes in the unit section.
+ * @param cost = String which is a double in a string format, goes in the Estimated cost section.
+ */
 public void setDishDetailsUserInput(String name, String quanity, String quanityType, String cost) {
 	ddp.setUserInputValues(name, quanity, quanityType, cost);
 }
+/**
+ * gets the size of the list view in the dish details page.
+ * @return Int = size of the list in the dish details page.
+ */
 public int getDishDetailsListSize() {
 	return ddp.getIngredientListSize();
 }
-
-
- 
-//filter dishes
+/**
+ * loads the dish filter page 
+ * it removes any children from the root view VBox, and add self in place so is visible
+ */
 public void dishFilterLoad() {
 	this.getChildren().remove(0);
 	this.getChildren().add(fd);
@@ -1515,15 +2127,35 @@ public void setDishFilterBtnCancelEventHandler(EventHandler<ActionEvent> event) 
 public void setDishFilterBtnAboutEventHandler(EventHandler<ActionEvent> event) {
 	fd.setAboutEventHandler(event);
 }
+/**
+ * get the user input for cost more than.
+ * the info is from the dish filter page.
+ * @return String which represents the cost more than user input.
+ */
 public String getDishFilterCostMoreThan() {
 	return fd.getCostMoreThan();
 }
+/**
+ * get the user input for cost less than.
+ * the info is from the dish filter page.
+ * @return String which represents the cost less than user input.
+ */
 public String getDishFilterCostLessThan() {
 	return fd.getCostLessThan();
 }
+/**
+ * get the user input for number of ingredients less than.
+ * the info is from the dish filter page.
+ * @return String which represents the number of ingredients less than user input.
+ */
 public String getDishFilterNumberOfIngredeintsLessThan() {
 	return fd.getNumberOfIngredientsLessThan();
 }
+/**
+ * get the user input for number of ingredients more than.
+ * the info is from the dish filter page.
+ * @return String which represents the number of ingredients more than user input.
+ */
 public String getDishFilterNumberOfIngredeintsMoreThan() {
 	return fd.getNumberOfIngredientsMoreThan();
 }

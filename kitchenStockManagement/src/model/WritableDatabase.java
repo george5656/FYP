@@ -20,7 +20,7 @@ public class WritableDatabase {
 	//Constructor
 	/**
 	 * default constructor, 
-	 * is used to make the database mySqlDatabase
+	 * is used to make the connect to the mySqlDatabase
 	 */
 	public WritableDatabase() {
 	try {
@@ -31,11 +31,11 @@ public class WritableDatabase {
 		
 }
 /**
- * function used to check if the database hold said used name and if so if its password matches the inputted
- *password. 
+ * function used to check if the database hold said used name and if so if its password matches the inputed
+ * password. 
  * @param username =  string. the user name you want the database to look for.
  * @param password = password. the password you want the database to see if it matches the stored one 
- * for inputted user name
+ * for inputed user name
  * @return Boolean=  if true means the username exists and the password matches the password stored for the
  * user name else its false.
  */
@@ -54,7 +54,12 @@ public class WritableDatabase {
 		
 		return output;
 	}
-	
+	/**
+	 * gets all the current stock that the database holds.
+	 * it converts it to current stock objects before outputting it.
+	 * 
+	 * @return ArrayList<CurrentStock>
+	 */
 public ArrayList<CurrentStock> getAllCurrentStock() {
 	PreparedStatement statement;
 	ArrayList<CurrentStock> currentStock = new ArrayList<>();
@@ -109,6 +114,12 @@ public ArrayList<String> getCurrentStockThatsLike(String where) {
 				
 	}
 	
+	/**
+	 * deletes a row in the database.
+	 * deletes a stock iteration row where the row pk
+	 * is the same as passed in id
+	 * @param id = String that related to a pk in the database for stock iteration
+	 */
 	public void deleteSelectedStock(String id) {
 		PreparedStatement statement;
 		try {
@@ -119,6 +130,12 @@ public ArrayList<String> getCurrentStockThatsLike(String where) {
 			e.printStackTrace();
 		}
 	}
+	/**
+	 * deletes a row in the database.
+	 * deletes a budget row where the row pk
+	 * is the same as passed in id
+	 * @param id = String that related to a pk in the database for budget
+	 */
 	public void deleteSelectedBudgte(String id) {
 		PreparedStatement statement;
 		try {
@@ -129,10 +146,7 @@ public ArrayList<String> getCurrentStockThatsLike(String where) {
 			e.printStackTrace();
 		}
 	}
-/**
- * made for the combo box in the stock details
- * @return
- */
+
 	public ArrayList<String> getStorageLocations(){
 		PreparedStatement statement;
 		ArrayList<String> storageLocations = new ArrayList<>();
@@ -171,11 +185,7 @@ public ArrayList<String> getCurrentStockThatsLike(String where) {
 	return stockTypeIteration;
 	
 	}
-	/**
-	 * makes a new stock type if one doesn't exists in the database that the user has input
-	 * @param stockTypeId
-	 * @param cost
-	 */
+	
 	public void addStockType(String stockTypeId, String cost, String quanityType){
 		PreparedStatement statement;
 		
@@ -190,11 +200,8 @@ public ArrayList<String> getCurrentStockThatsLike(String where) {
 
 	
 	}
-	/**
-	 * update the cost of stock type if user intput in stock details vaires from stored value
-	 * @param stockTypeId
-	 * @param cost
-	 */
+	
+	
 	public void updateStockTypeCost(String stockTypeId ,String cost){
 		PreparedStatement statement;
 		
@@ -209,11 +216,7 @@ public ArrayList<String> getCurrentStockThatsLike(String where) {
 
 	
 	}
-	/**
-	 * to update the stock type qunaity type if it doesn't matc
-	 * @param stockTypeId
-	 * @param cost
-	 */
+	
 	public void updateStockTypeQuanityType(String stockTypeId ,String quantityType){
 		PreparedStatement statement;
 		
@@ -228,11 +231,7 @@ public ArrayList<String> getCurrentStockThatsLike(String where) {
 
 	
 	}
-	/**
-	 * mean for the filter to work in the stock page.
-	 * @param where
-	 * @return
-	 */
+	
 	public ArrayList<String> getCurrentStockThatMatchesWhere(String where){
 		PreparedStatement statement;
 		ArrayList<String> currentStock = new ArrayList<>();
@@ -254,9 +253,10 @@ public ArrayList<String> getCurrentStockThatsLike(String where) {
 	}
 	
 	/**
-	 * originally made fo the combo box, in stock filter
-	 * @param where
-	 * @return
+	 * gets all the stock type that the database holds.
+	 * it gets just the StockTypeID as a string
+	 * 
+	 * @return ArrayList<String>
 	 */
 	public ArrayList<String> getAllStockType(){
 		PreparedStatement statement;
@@ -276,10 +276,7 @@ public ArrayList<String> getCurrentStockThatsLike(String where) {
 		
 		return currentStock;
 	}
-	/**
-	 * used by the stock edit to populate the lists
-	 * @return
-	 */
+	
 	public CurrentStock getSpecificCurrentStock(String Id) {
 		PreparedStatement statement;
 		CurrentStock currentStock = new CurrentStock(-1,"null",-1.0,"null","null","null",-1.0);
@@ -299,10 +296,7 @@ public ArrayList<String> getCurrentStockThatsLike(String where) {
 		
 		return currentStock;
 	}
-	/**
-	 * used in the stock edit to updae the data
-	 * @param data
-	 */
+	
  public void updateStockIteration(CurrentStock data, int id) {
 	 PreparedStatement statement;
 	
@@ -316,10 +310,14 @@ public ArrayList<String> getCurrentStockThatsLike(String where) {
 			e.printStackTrace();
 		}
  }
+
  /**
-  * used to populate the budget ListView
-  * @return
-  */
+	 * gets all the budgets that the database holds.
+	 * it converts it to a budget objects before outputting it.
+	 * 
+	 * @return ArrayList<Budget>
+	 */
+ 
  public ArrayList<Budget> getAllBudgets() {
 		PreparedStatement statement;
 		ArrayList<Budget> allBudgets = new ArrayList<>();
@@ -358,10 +356,7 @@ public ArrayList<String> getCurrentStockThatsLike(String where) {
 		
 		return budgets;
 	}
- /**
-  * budget add
-  * @return
-  */
+ 
  public void addBudget(Budget userInput) {
 		PreparedStatement statement;
 		try {
@@ -429,6 +424,12 @@ public ArrayList<String> getCurrentStockThatsLike(String where) {
 			e.printStackTrace();
 		}
  }
+ /**
+	 * gets all the Accounts that the database holds.
+	 * it converts it to Account objects before outputting it.
+	 * 
+	 * @return ArrayList<Account>
+	 */
  public ArrayList<Account> getAllAccounts() {
 		PreparedStatement statement;
 		ArrayList<Account> allAccounts = new ArrayList<>();
@@ -486,7 +487,10 @@ public ArrayList<String> getCurrentStockThatsLike(String where) {
 		
 		return Accounts;
 	}
- 
+ /**
+  * create a new row in the database, gets the info for the row from the passed in account object. 
+  * @param userInput = Account object.
+  */
  public void addAccount(Account userInput) {
 		PreparedStatement statement;
 		int adminStatus= 0;
@@ -505,7 +509,11 @@ public ArrayList<String> getCurrentStockThatsLike(String where) {
 		
 		
 	}
- 
+ /**
+  * makes an account object from the database using the data that has a pk that matches the passed in param id.
+  * @param id = String which relates to a pk in the accounts details table
+  * @return = Account object, made from the data, in the row with the matching primary key to the inputed param id
+  */
  public Account getSpecificAccount(String id) {
 		PreparedStatement statement;
 		Account account = null;
@@ -527,7 +535,12 @@ public ArrayList<String> getCurrentStockThatsLike(String where) {
 		return account;
 	}
  
- 
+ /**
+	 * deletes a row in the database.
+	 * deletes a account row where the row pk
+	 * is the same as passed in id
+	 * @param id = String that related to a pk in the database for account table
+	 */
  public void deleteSelectedAccount(String id) {
 		PreparedStatement statement;
 		try {
@@ -554,7 +567,12 @@ public ArrayList<String> getCurrentStockThatsLike(String where) {
 			e.printStackTrace();
 		}
 }
- 
+ /**
+	 * gets all the storage locations that the database holds.
+	 * it converts it to storage location objects before outputting it.
+	 * 
+	 * @return ArrayList<storage location>
+	 */
  public ArrayList<StorageLocation> getAllStorageLocations() {
 		PreparedStatement statement;
 		ArrayList<StorageLocation> allSl = new ArrayList<>();
@@ -612,7 +630,12 @@ public ArrayList<String> getCurrentStockThatsLike(String where) {
 		
 		return storage;
 	}
- 
+ /**
+	 * gets all the storage types that the database holds.
+	 * it gets just the type of storage location and outputs it as a string.
+	 * 
+	 * @return ArrayList<String>
+	 */
  public ArrayList<String> getAllStorageType() {
 		PreparedStatement statement;
 		ArrayList<String> storage = new ArrayList<>();
@@ -740,7 +763,12 @@ public ArrayList<String> getCurrentStockThatsLike(String where) {
 
 
 //dish 
- 
+ /**
+	 * gets all the dishes that the database holds.
+	 * it converts it to dish objects before outputting it.
+	 * 
+	 * @return ArrayList<dish>
+	 */
  public ArrayList<Dish> getAllCurrentDishes() {
 		PreparedStatement statement;
 		PreparedStatement statement2;
@@ -1123,7 +1151,12 @@ public ArrayList<Dish> getDishThatCostNotBellow(Double numberOfMaxItems) {
  
  
  
- 
+/**
+ * gets all the menus that the database holds.
+ * it converts it to menu objects before outputting it.
+ * 
+ * @return ArrayList<Menu>
+ */
  public ArrayList<Menu> getAllMenu() {
 		PreparedStatement statementMenu;
 	 	PreparedStatement statementDish;
@@ -1253,7 +1286,11 @@ public ArrayList<Dish> getDishThatCostNotBellow(Double numberOfMaxItems) {
 			e.printStackTrace();
 		}
 	}
- 
+ /**
+  * deletes all the date the database has about the menu that is passed in.
+  * this includes the menu_dishes row as well that have the passed in menu
+  * @param menu = Menu that you want to delete. 
+  */
  public void DeleteAMenu(Menu menu) {
 		PreparedStatement statement;
 		try {
