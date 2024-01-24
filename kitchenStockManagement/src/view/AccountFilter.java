@@ -56,7 +56,7 @@ public AccountFilter() {
 	
 }
 /**
- * reset the page
+ * reset the page / controls for use input
  */
 public void reset() {
 	rbYes.setSelected(false);

@@ -1,18 +1,29 @@
 package model;
 
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.util.Scanner;
 
 
-
+/**
+ * 
+ * Current object is used to represent an stock iteration when using the stock management system
+ * @author Student
+ *
+ */
 public class CurrentStock extends StockType{
 private Integer id;
 private String storageLocationId;
 private Double quantity;
 private String expiereDate;
 
-
+/**
+ * main constructor
+ * @param id = Integer
+ * @param storageLocationId = String
+ * @param quantity = Double
+ * @param quantityType = String
+ * @param expiereDate = String
+ * @param name = string
+ * @param cost = Double
+ */
 public CurrentStock(Integer id, String storageLocationId, Double quantity, 
 		String quantityType, String expiereDate, String name, Double cost ) {
 super(name,cost.toString(),quantityType);
@@ -24,22 +35,38 @@ super(name,cost.toString(),quantityType);
 }
 
 /**
- * not official syntax but done this was for the listview, need a equals and proper to string syntax. 
- */
+* not official syntax but done this was for the listview, need a equals and proper to string syntax.
+* @return String
+*/
 @Override
 	public String toString() {
 		return super.toString() + ", id = " + id + ", storage location = "  +storageLocationId + ", quantity = " + quantity + ", expire date = " + expiereDate;
 	}
+/**
+ * gets the value in the quantity var
+ * @return Double
+ */
 public Double getQuantity() {
 	return quantity;
 }
-
+/**
+ * gets the value in the expiereDate var
+ * @return String
+ */
 public String getExpiereDate() {
 	return expiereDate;
 }
+/**
+ * gets the value in the storageLocationId var
+ * @return String
+ */
 public String getstorageLocationId() {
 	return storageLocationId;
 }
+/**
+ * gets the value in the id var
+ * @return int
+ */
 public int getId() {
 	return id;
 }
