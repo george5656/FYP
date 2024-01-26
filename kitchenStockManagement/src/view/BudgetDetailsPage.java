@@ -11,7 +11,11 @@ import javafx.scene.control.TextField;
 import javafx.scene.layout.Priority;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Font;
-
+/**
+ * the page that allows the adding and editing of budget details. 
+ * @author Student
+ *
+ */
 public class BudgetDetailsPage extends BasicLayoutDetails {
 	private Label txtBudgetName = new Label("Budget Name");
 	private Label txtAmount = new Label("Amount");
@@ -25,6 +29,9 @@ public class BudgetDetailsPage extends BasicLayoutDetails {
 	private ArrayList<TextField> textFieldList =new  ArrayList<>();
 	private VBox labels;
 	private VBox userTextInput;
+	/**
+	 * default constructor
+	 */
 	public BudgetDetailsPage() {
 		 labels = getLabels();
 		 userTextInput = getUserTextInput();
@@ -60,16 +67,31 @@ public class BudgetDetailsPage extends BasicLayoutDetails {
 		userTextInput.setVgrow(dpEndDate,Priority.ALWAYS);
 
 	}
-	
+	/**
+	 * gets the TextField associated with the budget name.
+	 * @return TextField
+	 */
 	public TextField getName() {
 		return tfBudgetName;
 	}
+	/**
+	 * gets the TextField associated with the budget amount.
+	 * @return TextField
+	 */
 	public TextField getAmount() {
 		return tfAmount;
 	}
+	/**
+	 * gets the DatePicker associated with the startDate
+	 * @return DatePicker
+	 */
 	public DatePicker getStartDate() {
 		return dpStartDate;
 	}
+	/**
+	 * gets the DatePicker associated with the endDate
+	 * @return DatePicker
+	 */
 	public DatePicker getEndDate() {
 		return dpEndDate;
 	}

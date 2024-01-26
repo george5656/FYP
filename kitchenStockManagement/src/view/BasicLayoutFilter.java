@@ -3,10 +3,19 @@ package view;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.scene.control.Button;
-
+/**
+ * class is designed to be extended. 
+ * it extends the BasicLayoutDetails, and simply changes the 
+ * save button to be apply instead.
+ * @author Student
+ *
+ */
 public class BasicLayoutFilter extends BasicLayoutDetails {
 	private Button btnApply = getbtnSave();
-	
+	/**
+	 * default constructor, 
+	 * simply changes the save button text to apply
+	 */
 	public BasicLayoutFilter() {
 		 btnApply.setText("apply");
 	}

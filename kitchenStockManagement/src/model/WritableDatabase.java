@@ -1,6 +1,5 @@
 package model;
 
-
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
@@ -9,137 +8,149 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 
 /**
- * 
- * @author George
- *class for the database mySqlDatabase, and database queries
+ * class for the database mySqlDatabase, and database queries
+ * @author George 
  */
 public class WritableDatabase {
-	//fields 
+	// fields
 	Connection mySqlDatabase;
-	
-	//Constructor
+
 	/**
-	 * default constructor, 
-	 * is used to make the connect to the mySqlDatabase
+	 * default constructor, is used to make the connect to the mySqlDatabase
 	 */
 	public WritableDatabase() {
-	try {
-		mySqlDatabase = DriverManager.getConnection("jdbc:mysql://localhost:3306/MySQL","root","Root123@");	
+		try {
+			mySqlDatabase = DriverManager.getConnection("jdbc:mysql://localhost:3306/MySQL", "root", "Root123@");
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
-		
-}
-/**
- * function used to check if the database hold said used name and if so if its password matches the inputed
- * password. 
- * @param username =  string. the user name you want the database to look for.
- * @param password = password. the password you want the database to see if it matches the stored one 
- * for inputed user name
- * @return Boolean=  if true means the username exists and the password matches the password stored for the
- * user name else its false.
- */
+
+	}
+
+	/**
+	 * function used to check if the database hold said used name and if so if its
+	 * password matches the inputed password.
+	 * 
+	 * @param username = string. the user name you want the database to look for.
+	 * @param password = password. the password you want the database to see if it
+	 *                 matches the stored one for inputed user name
+	 * @return Boolean= if true means the username exists and the password matches
+	 *         the password stored for the user name else its false.
+	 */
 	public Boolean passwordAndUsernameAreValid(String username, String password) {
 		Boolean output = false;
 		try {
-			PreparedStatement statement = mySqlDatabase.prepareStatement("select userName, password from  stock_mangemnet.tbl_account_details where userName = \'" + username +"\' and password = \'" + password +"\';");
+			PreparedStatement statement = mySqlDatabase.prepareStatement(
+					"select userName, password from  stock_mangemnet.tbl_account_details where userName = \'" + username
+							+ "\' and password = \'" + password + "\';");
 			ResultSet result = statement.executeQuery();
-			if(result.next()) {
+			if (result.next()) {
 				output = true;
 			}
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		
+
 		return output;
 	}
+
 	/**
-	 * gets all the current stock that the database holds.
-	 * it converts it to current stock objects before outputting it.
+	 * gets all the current stock that the database holds. it converts it to current
+	 * stock objects before outputting it.
 	 * 
 	 * @return ArrayList<CurrentStock>
 	 */
-public ArrayList<CurrentStock> getAllCurrentStock() {
-	PreparedStatement statement;
-	ArrayList<CurrentStock> currentStock = new ArrayList<>();
-	try {
-		statement = mySqlDatabase.prepareStatement("select * from stock_mangemnet.tbl_stock_iteration, stock_mangemnet.tbl_stock_type where tbl_stock_iteration.stockTypeId = tbl_stock_type.stockTypeId ;");
-		ResultSet result = statement.executeQuery();
-		//if(result.first()) {
-		while (result.next()) {
-			CurrentStock input = new CurrentStock(result.getInt(1),result.getString(2),result.getDouble(4),result.getString(8),result.getDate(5).toString(),result.getString(3),result.getDouble(7));
-			currentStock.add(input);
-		}
-		//}
+	public ArrayList<CurrentStock> getAllCurrentStock() {
+		PreparedStatement statement;
+		ArrayList<CurrentStock> currentStock = new ArrayList<>();
+		try {
+			statement = mySqlDatabase.prepareStatement(
+					"select * from stock_mangemnet.tbl_stock_iteration, stock_mangemnet.tbl_stock_type where tbl_stock_iteration.stockTypeId = tbl_stock_type.stockTypeId ;");
+			ResultSet result = statement.executeQuery();
+			// if(result.first()) {
+			while (result.next()) {
+				CurrentStock input = new CurrentStock(result.getInt(1), result.getString(2), result.getDouble(4),
+						result.getString(8), result.getDate(5).toString(), result.getString(3), result.getDouble(7));
+				currentStock.add(input);
+			}
+			// }
 		} catch (SQLException e) {
-		// TODO Auto-generated catch block
-		e.printStackTrace();
-	}
-	
-	return currentStock;
-}
-
-public ArrayList<String> getCurrentStockThatsLike(String where) {
-	PreparedStatement statement;
-	ArrayList<String> currentStock = new ArrayList<>();
-	try {
-		statement = mySqlDatabase.prepareStatement("select * from stock_mangemnet.tbl_stock_iteration, stock_mangemnet.tbl_stock_type where (tbl_stock_iteration.stockTypeId = tbl_stock_type.stockTypeId) and tbl_stock_type.stockTypeId like \'%" + where +"%\' ;");
-		ResultSet result = statement.executeQuery();
-		//if(result.first()) {
-		while (result.next()) {
-			CurrentStock input = new CurrentStock(result.getInt(1),result.getString(2),result.getDouble(4),result.getString(8),result.getDate(5).toString(),result.getString(6),result.getDouble(7));
-			currentStock.add(input.toString());
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 		}
-		//}
-		} catch (SQLException e) {
-		// TODO Auto-generated catch block
-		e.printStackTrace();
-	}
-	
-	return currentStock;
-}
 
+		return currentStock;
+	}
+
+	/**
+	 * gets current stock thats stock type Id is like the passed in parameter. gets
+	 * the date from the tbl_stock_iteration
+	 * 
+	 * @param like = Sting which is wanting to stock that is like it.
+	 * @return ArrayList<String> = which is the stock iteration row which are like
+	 *         the parameter, and then converted to a currentStock object before
+	 *         having the toString method called and that is what is represented in
+	 *         the ArrayList<String.
+	 */
+	public ArrayList<String> getCurrentStockThatsLike(String like) {
+		PreparedStatement statement;
+		ArrayList<String> currentStock = new ArrayList<>();
+		try {
+			statement = mySqlDatabase.prepareStatement(
+					"select * from stock_mangemnet.tbl_stock_iteration, stock_mangemnet.tbl_stock_type where (tbl_stock_iteration.stockTypeId = tbl_stock_type.stockTypeId) and tbl_stock_type.stockTypeId like \'%"
+							+ like + "%\' ;");
+			ResultSet result = statement.executeQuery();
+			// if(result.first()) {
+			while (result.next()) {
+				CurrentStock input = new CurrentStock(result.getInt(1), result.getString(2), result.getDouble(4),
+						result.getString(8), result.getDate(5).toString(), result.getString(6), result.getDouble(7));
+				currentStock.add(input.toString());
+			}
+			// }
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
+		return currentStock;
+	}
+
+	/**
+	 * save a currentStock object to the database. it take the passed in current
+	 * stock objects, and uses it method to populate a database row. it inserts in
+	 * to stock iteration table, creating a new row in the database.
+	 * 
+	 * @param data = CurrentStock object
+	 */
 	public void addCurrentStock(CurrentStock data) {
 		PreparedStatement statement;
 		try {
-			//CurrentStock stock = data.getcurrentStock().get(0);
-			statement = mySqlDatabase.prepareStatement("Insert Into stock_mangemnet.tbl_stock_iteration (storageLocationId, stockTypeId, quanity, expiereDate) Values ( \'" + data.getstorageLocationId() + "\',\'" + data.getStockName() +"\',\'" + data.getQuantity() + "\',\'" + data.getExpiereDate() + "\'); ");
+			// CurrentStock stock = data.getcurrentStock().get(0);
+			statement = mySqlDatabase.prepareStatement(
+					"Insert Into stock_mangemnet.tbl_stock_iteration (storageLocationId, stockTypeId, quanity, expiereDate) Values ( \'"
+							+ data.getstorageLocationId() + "\',\'" + data.getStockName() + "\',\'" + data.getQuantity()
+							+ "\',\'" + data.getExpiereDate() + "\'); ");
 			statement.execute();
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		
-				
+
 	}
-	
+
 	/**
-	 * deletes a row in the database.
-	 * deletes a stock iteration row where the row pk
+	 * deletes a row in the database. deletes a stock iteration row where the row pk
 	 * is the same as passed in id
+	 * 
 	 * @param id = String that related to a pk in the database for stock iteration
 	 */
 	public void deleteSelectedStock(String id) {
 		PreparedStatement statement;
 		try {
-			statement = mySqlDatabase.prepareStatement("Delete from stock_mangemnet.tbl_stock_iteration where tbl_stock_iteration.stockIterationId = \'" + id + "\';");
-			statement.execute();
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-	}
-	/**
-	 * deletes a row in the database.
-	 * deletes a budget row where the row pk
-	 * is the same as passed in id
-	 * @param id = String that related to a pk in the database for budget
-	 */
-	public void deleteSelectedBudgte(String id) {
-		PreparedStatement statement;
-		try {
-			statement = mySqlDatabase.prepareStatement("Delete from stock_mangemnet.tbl_budget where tbl_budget.budgetId = \'" + id + "\';");
+			statement = mySqlDatabase.prepareStatement(
+					"Delete from stock_mangemnet.tbl_stock_iteration where tbl_stock_iteration.stockIterationId = \'"
+							+ id + "\';");
 			statement.execute();
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
@@ -147,1215 +158,1439 @@ public ArrayList<String> getCurrentStockThatsLike(String where) {
 		}
 	}
 
-	public ArrayList<String> getStorageLocations(){
+	/**
+	 * deletes a row in the database. deletes a budget row where the row pk is the
+	 * same as passed in id
+	 * 
+	 * @param id = String that related to a pk in the database for budget
+	 */
+	public void deleteSelectedBudgte(String id) {
+		PreparedStatement statement;
+		try {
+			statement = mySqlDatabase.prepareStatement(
+					"Delete from stock_mangemnet.tbl_budget where tbl_budget.budgetId = \'" + id + "\';");
+			statement.execute();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+
+	/**
+	 * gets all the storage locations in the database. get all the row from the
+	 * table tbl_Stroage_Location, it then goes through each row making a new
+	 * Storage location object, calling it toString, method and storing the outtput,
+	 * in an ArrayList<String> which is then returned
+	 * 
+	 * @return ArrayList<String> = Storage locations in the database toString
+	 *         result.
+	 */
+	public ArrayList<String> getStorageLocations() {
 		PreparedStatement statement;
 		ArrayList<String> storageLocations = new ArrayList<>();
 		try {
 			statement = mySqlDatabase.prepareStatement("select * from stock_mangemnet.tbl_storage_location");
 			ResultSet results = statement.executeQuery();
-			while(results.next()) {
+			while (results.next()) {
 				storageLocations.add(results.getString(1));
 			}
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-	
-	return storageLocations;
+
+		return storageLocations;
 	}
+
 	/**
-	 * to check if it exists so know in the stock details if need to make the stock type or not.
+	 * to check if it exists so know in the stock details if need to make the stock
+	 * type or not.
+	 * 
 	 * @param stockTypeId
 	 * @return true = exist, false = dosent exist
 	 */
-	public StockType StockTypeExists(String stockTypeId){
+	public StockType StockTypeExists(String stockTypeId) {
 		PreparedStatement statement;
 		// haave to make sure they cant put null in
-		StockType stockTypeIteration = new StockType("null","null","null");
+		StockType stockTypeIteration = new StockType("null", "null", "null");
 		try {
-			statement = mySqlDatabase.prepareStatement("select * from stock_mangemnet.tbl_stock_type where tbl_stock_type.stockTypeId = \"" + stockTypeId + "\"" );
+			statement = mySqlDatabase.prepareStatement(
+					"select * from stock_mangemnet.tbl_stock_type where tbl_stock_type.stockTypeId = \"" + stockTypeId
+							+ "\"");
 			ResultSet results = statement.executeQuery();
-			if(results.next()) {
+			if (results.next()) {
 				stockTypeIteration = new StockType(results.getString(1), results.getString(2), results.getString(3));
 			}
-			} catch (SQLException e) {
+		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-	return stockTypeIteration;
-	
+		return stockTypeIteration;
+
 	}
-	
-	public void addStockType(String stockTypeId, String cost, String quanityType){
+
+	/**
+	 * create a new row in the table tbl_stock_type. the saved values are the passed
+	 * in parameters. the paramerets represent everything need to make a stock type
+	 * object
+	 * 
+	 * @param stockTypeId = String which value is placed in the stockTypeId column
+	 * @param cost        = String which is a double in a string format and which
+	 *                    value is placed in the Cost column
+	 * @param quanityType = String which value is placed in the quantityType column
+	 */
+	public void addStockType(String stockTypeId, String cost, String quanityType) {
 		PreparedStatement statement;
-		
+
 		try {
-			statement = mySqlDatabase.prepareStatement("Insert into stock_mangemnet.tbl_stock_type (stockTypeId,Cost,quantityType) values (\""+stockTypeId + "\",\""+cost+ "\",\"" +quanityType + "\");");
+			statement = mySqlDatabase.prepareStatement(
+					"Insert into stock_mangemnet.tbl_stock_type (stockTypeId,Cost,quantityType) values (\""
+							+ stockTypeId + "\",\"" + cost + "\",\"" + quanityType + "\");");
 			statement.execute();
-			
+
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 
-	
 	}
-	
-	
-	public void updateStockTypeCost(String stockTypeId ,String cost){
+	/**
+	 * updates the cost value of a row in the table tbl_stock_type with the passed in parameters. 
+	 * 
+	 * @param stockTypeId = String which is the pk of a row
+	 * @param cost = String which is a double in a string format. this the value that will be saved in the column 
+	 * cost, of the row that matches the stockTypeId parameter.
+	 */
+	public void updateStockTypeCost(String stockTypeId, String cost) {
 		PreparedStatement statement;
-		
+
 		try {
-			statement = mySqlDatabase.prepareStatement("Update stock_mangemnet.tbl_stock_type set cost = \"" + cost + "\" where stockTypeId = \"" + stockTypeId + "\";" );
+			statement = mySqlDatabase.prepareStatement("Update stock_mangemnet.tbl_stock_type set cost = \"" + cost
+					+ "\" where stockTypeId = \"" + stockTypeId + "\";");
 			statement.execute();
-			
+
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 
-	
 	}
-	
-	public void updateStockTypeQuanityType(String stockTypeId ,String quantityType){
+	/**
+	 * updates the quantity type value of a row in the table tbl_stock_type with the passed in parameters. 
+	 * 
+	 * @param stockTypeId = String which is the pk of a row
+	 * @param quantityType = String which is the value that will be saved in the column 
+	 * quantityType, of the row that matches the stockTypeId parameter.
+	 */
+	public void updateStockTypeQuanityType(String stockTypeId, String quantityType) {
 		PreparedStatement statement;
-		
+
 		try {
-			statement = mySqlDatabase.prepareStatement("Update stock_mangemnet.tbl_stock_type set tbl_stock_type.quantityType = \'" + quantityType + "\' where stockTypeId = \"" + stockTypeId + "\";" );
+			statement = mySqlDatabase
+					.prepareStatement("Update stock_mangemnet.tbl_stock_type set tbl_stock_type.quantityType = \'"
+							+ quantityType + "\' where stockTypeId = \"" + stockTypeId + "\";");
 			statement.execute();
-			
+
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 
-	
-	}
-	
-	public ArrayList<String> getCurrentStockThatMatchesWhere(String where){
-		PreparedStatement statement;
-		ArrayList<String> currentStock = new ArrayList<>();
-		try {
-			statement = mySqlDatabase.prepareStatement("select * from stock_mangemnet.tbl_stock_iteration, stock_mangemnet.tbl_stock_type where (tbl_stock_iteration.stockTypeId = tbl_stock_type.stockTypeId) and " + where + ";");
-			ResultSet result = statement.executeQuery();
-			//if(result.first()) {
-			while (result.next()) {
-				CurrentStock input = new CurrentStock(result.getInt(1),result.getString(2),result.getDouble(4),result.getString(8),result.getDate(5).toString(),result.getString(6),result.getDouble(7));
-				currentStock.add(input.toString());
-			}
-			//}
-			} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		
-		return currentStock;
 	}
 	
 	/**
-	 * gets all the stock type that the database holds.
-	 * it gets just the StockTypeID as a string
+	 * gets all the storage location in the database that match the where. use the
+	 * parameter where, to identity which storage locations to get.
+	 * 
+	 * @param where = String, which is the where part of the MySQL statement. note
+	 *              the where word is not needed.
+	 * @return ArrayList<String> = all the storage location that pass the where.
+	 *         each value is the output of a storage location toString method.
+	 */
+	
+	
+	/**
+	 *
+	 * gets all the Current stock the database hold that pass the where. 
+	 * the current stock objects are made from values the database holds in the 
+	 * tbl_stock_iteration and tbl_stock_type tables, and each primary key in the 
+	 * tbl_stock_iteration implies a current stock iteration. 
+	 *
+	 * @param where = String, which is the where part of the MySQL statement. note
+	 *              the where word is not needed.
+	 * @return ArrayList<String> = all the currentStock that pass the where.
+	 *         each value is the output of a currentStock toString method.
+	 */
+	public ArrayList<String> getCurrentStockThatMatchesWhere(String where) {
+		PreparedStatement statement;
+		ArrayList<String> currentStock = new ArrayList<>();
+		try {
+			statement = mySqlDatabase.prepareStatement(
+					"select * from stock_mangemnet.tbl_stock_iteration, stock_mangemnet.tbl_stock_type where (tbl_stock_iteration.stockTypeId = tbl_stock_type.stockTypeId) and "
+							+ where + ";");
+			ResultSet result = statement.executeQuery();
+			// if(result.first()) {
+			while (result.next()) {
+				CurrentStock input = new CurrentStock(result.getInt(1), result.getString(2), result.getDouble(4),
+						result.getString(8), result.getDate(5).toString(), result.getString(6), result.getDouble(7));
+				currentStock.add(input.toString());
+			}
+			// }
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
+		return currentStock;
+	}
+
+	/**
+	 * gets all the stock type that the database holds. it gets just the StockTypeID
+	 * as a string
 	 * 
 	 * @return ArrayList<String>
 	 */
-	public ArrayList<String> getAllStockType(){
+	public ArrayList<String> getAllStockType() {
 		PreparedStatement statement;
 		ArrayList<String> currentStock = new ArrayList<>();
 		try {
 			statement = mySqlDatabase.prepareStatement("select stockTypeId from stock_mangemnet.tbl_stock_type;");
 			ResultSet result = statement.executeQuery();
-			//if(result.first()) {
+			// if(result.first()) {
 			while (result.next()) {
 				currentStock.add(result.getString(1));
 			}
-			//}
-			} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		
-		return currentStock;
-	}
-	
-	public CurrentStock getSpecificCurrentStock(String Id) {
-		PreparedStatement statement;
-		CurrentStock currentStock = new CurrentStock(-1,"null",-1.0,"null","null","null",-1.0);
-		try {
-			statement = mySqlDatabase.prepareStatement("select * from stock_mangemnet.tbl_stock_iteration, stock_mangemnet.tbl_stock_type where (tbl_stock_iteration.stockIterationId = \""+Id+"\");");
-			ResultSet result = statement.executeQuery();
-			//if(result.first()) {
-			if(result.next()) {
-				currentStock = new CurrentStock(result.getInt(1),result.getString(2),result.getDouble(4),result.getString(8),result.getDate(5).toString(),result.getString(3),result.getDouble(7));
-				
-			}
-			//}
-			} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		
-		return currentStock;
-	}
-	
- public void updateStockIteration(CurrentStock data, int id) {
-	 PreparedStatement statement;
-	
-		try {
-			
-			statement = mySqlDatabase.prepareStatement("Update stock_mangemnet.tbl_stock_iteration set tbl_stock_iteration.storageLocationId = \'" + data.getstorageLocationId() + "\', stockTypeId = \'" + data.getStockName()+"\', quanity = \'" + data.getQuantity() +"\', expiereDate = \'" +  data.getExpiereDate()  +"\' where stockIterationId = \"" + id + "\";" );
-			statement.execute();
-			
+			// }
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
- }
 
- /**
-	 * gets all the budgets that the database holds.
-	 * it converts it to a budget objects before outputting it.
+		return currentStock;
+	}
+	/**
+	 * gets a specific current stock object that matches the passed in id parameter.
+	 * Current stock is made up of values from row in table tbl_stock_iteration and tbl_stock_type.
+	 * the values are the one where the table tbl_stock_iteration column stockIterationId is the same 
+	 * as the passed in parameter id.
+	 * it uses the row data to make a currentStock object which is then passed back.
+	 * @param id = String which is the primary key of the CurrentStock object wanted
+	 * @return CurrentStock = current stockObject which values relate to the passed in id parameter.
+	 */
+	public CurrentStock getSpecificCurrentStock(String id) {
+		PreparedStatement statement;
+		CurrentStock currentStock = new CurrentStock(-1, "null", -1.0, "null", "null", "null", -1.0);
+		try {
+			statement = mySqlDatabase.prepareStatement(
+					"select * from stock_mangemnet.tbl_stock_iteration, stock_mangemnet.tbl_stock_type where (tbl_stock_iteration.stockIterationId = \""
+							+ id + "\");");
+			ResultSet result = statement.executeQuery();
+			// if(result.first()) {
+			if (result.next()) {
+				currentStock = new CurrentStock(result.getInt(1), result.getString(2), result.getDouble(4),
+						result.getString(8), result.getDate(5).toString(), result.getString(3), result.getDouble(7));
+
+			}
+			// }
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
+		return currentStock;
+	}
+/**
+ * updates a row in the table tbl_stock_iteration.
+ * the row that is updates is the one where the primary key is the same as the parameter id.
+ * the new values are the values the parameter data has.
+ * @param data = CurrentStock object, which methods are called to get the values to be saved
+ * @param id = int, the pk of the row to be updated.
+ */
+	public void updateStockIteration(CurrentStock data, int id) {
+		PreparedStatement statement;
+
+		try {
+
+			statement = mySqlDatabase.prepareStatement(
+					"Update stock_mangemnet.tbl_stock_iteration set tbl_stock_iteration.storageLocationId = \'"
+							+ data.getstorageLocationId() + "\', stockTypeId = \'" + data.getStockName()
+							+ "\', quanity = \'" + data.getQuantity() + "\', expiereDate = \'" + data.getExpiereDate()
+							+ "\' where stockIterationId = \"" + id + "\";");
+			statement.execute();
+
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+
+	/**
+	 * gets all the budgets that the database holds. it converts it to a budget
+	 * objects before outputting it.
 	 * 
 	 * @return ArrayList<Budget>
 	 */
- 
- public ArrayList<Budget> getAllBudgets() {
+
+	public ArrayList<Budget> getAllBudgets() {
 		PreparedStatement statement;
 		ArrayList<Budget> allBudgets = new ArrayList<>();
 		try {
 			statement = mySqlDatabase.prepareStatement("select * from stock_mangemnet.tbl_budget;");
 			ResultSet result = statement.executeQuery();
-			//if(result.first()) {
+			// if(result.first()) {
 			while (result.next()) {
-				Budget input = new Budget(result.getString(1), result.getDouble(2), result.getDate(3).toString(), result.getDate(4).toString());
+				Budget input = new Budget(result.getString(1), result.getDouble(2), result.getDate(3).toString(),
+						result.getDate(4).toString());
 				allBudgets.add(input);
 			}
-			//}
-			} catch (SQLException e) {
+			// }
+		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		
+
 		return allBudgets;
 	}
- public ArrayList<String> getBudgetsThatMatchesWhere(String where){
+
+	public ArrayList<String> getBudgetsThatMatchesWhere(String where) {
 		PreparedStatement statement;
 		ArrayList<String> budgets = new ArrayList<>();
 		try {
 			statement = mySqlDatabase.prepareStatement("select * from stock_mangemnet.tbl_budget where " + where + ";");
 			ResultSet result = statement.executeQuery();
-			//if(result.first()) {
+			// if(result.first()) {
 			while (result.next()) {
-				Budget input = new Budget(result.getString(1), result.getDouble(2), result.getDate(3).toString(), result.getDate(4).toString());
+				Budget input = new Budget(result.getString(1), result.getDouble(2), result.getDate(3).toString(),
+						result.getDate(4).toString());
 				budgets.add(input.toString());
 			}
-			//}
-			} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		
-		return budgets;
-	}
- 
- public void addBudget(Budget userInput) {
-		PreparedStatement statement;
-		try {
-			statement = mySqlDatabase.prepareStatement("Insert into stock_mangemnet.tbl_budget values (\'" + userInput.getBudgetId() + "\',\'" + userInput.getAmount() + "\',\'" + userInput.getStartDate() + "\',\'" + userInput.getEndDate()+"\');");
-			statement.execute();
-			
-			//}
-			} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		
-		
-	}
- public ArrayList<String> getBudgetsThatsLike(String where) {
-	 	ArrayList<String> allBudgets = new ArrayList<>();	
-	 	PreparedStatement statement;
-		
-		try {
-			statement = mySqlDatabase.prepareStatement("select * from stock_mangemnet.tbl_budget where tbl_budget.budgetId like \'%" + where +"%\' ;");
-			ResultSet result = statement.executeQuery();
-			//if(result.first()) {
-			while (result.next()) {
-				Budget input = new Budget(result.getString(1), result.getDouble(2), result.getDate(3).toString(), result.getDate(4).toString());
-				allBudgets.add(input.toString());
-			}
-			//}
-			} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		
-		return allBudgets;
-	}
- //all check that id already exists so this should be fine
- public Budget getSpecificBudget(String Id) {
-		PreparedStatement statement;
-		Budget budget = new Budget ("null", -1.00,"null","null");
-		try {
-			statement = mySqlDatabase.prepareStatement("select * from stock_mangemnet.tbl_budget where (tbl_budget.budgetId = \""+Id+"\");");
-			ResultSet result = statement.executeQuery();
-			//if(result.first()) {
-			if(result.next()) {
-				budget = new Budget(result.getString(1), result.getDouble(2), result.getDate(3).toLocalDate().toString(), result.getDate(4).toLocalDate().toString());
-				
-			}
-			//}
-			} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		
-		return budget;
-	}
- 
- public void updateABudget(Budget userInput, String orginalId){
-		PreparedStatement statement;
-		
-		try {
-			statement = mySqlDatabase.prepareStatement("Update stock_mangemnet.tbl_budget set budgetId = \"" + userInput.getBudgetId() + "\", amount = \""+ userInput.getAmount() + "\", startDate = \""+  userInput.getStartDate() + "\", endDate = \""+userInput.getEndDate() +"\" where budgetId = \"" + orginalId + "\";" );
-			statement.execute();
-			
+			// }
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
- }
- /**
-	 * gets all the Accounts that the database holds.
-	 * it converts it to Account objects before outputting it.
+
+		return budgets;
+	}
+
+	/**
+	 * create a new row in the table tbl_budget. the values stored are all retrieved
+	 * from the parameter budget.
+	 * 
+	 * @param userInput = Budget, which you want to be added to the database.
+	 */
+
+	public void addBudget(Budget userInput) {
+		PreparedStatement statement;
+		try {
+			statement = mySqlDatabase.prepareStatement("Insert into stock_mangemnet.tbl_budget values (\'"
+					+ userInput.getBudgetId() + "\',\'" + userInput.getAmount() + "\',\'" + userInput.getStartDate()
+					+ "\',\'" + userInput.getEndDate() + "\');");
+			statement.execute();
+
+			// }
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
+	}
+
+	public ArrayList<String> getBudgetsThatsLike(String where) {
+		ArrayList<String> allBudgets = new ArrayList<>();
+		PreparedStatement statement;
+
+		try {
+			statement = mySqlDatabase.prepareStatement(
+					"select * from stock_mangemnet.tbl_budget where tbl_budget.budgetId like \'%" + where + "%\' ;");
+			ResultSet result = statement.executeQuery();
+			// if(result.first()) {
+			while (result.next()) {
+				Budget input = new Budget(result.getString(1), result.getDouble(2), result.getDate(3).toString(),
+						result.getDate(4).toString());
+				allBudgets.add(input.toString());
+			}
+			// }
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
+		return allBudgets;
+	}
+
+	// all check that id already exists so this should be fine
+	public Budget getSpecificBudget(String Id) {
+		PreparedStatement statement;
+		Budget budget = new Budget("null", -1.00, "null", "null");
+		try {
+			statement = mySqlDatabase.prepareStatement(
+					"select * from stock_mangemnet.tbl_budget where (tbl_budget.budgetId = \"" + Id + "\");");
+			ResultSet result = statement.executeQuery();
+			// if(result.first()) {
+			if (result.next()) {
+				budget = new Budget(result.getString(1), result.getDouble(2),
+						result.getDate(3).toLocalDate().toString(), result.getDate(4).toLocalDate().toString());
+
+			}
+			// }
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
+		return budget;
+	}
+/**
+ * updates the a row in the tbl_budget table.
+ * the row updates is the one that primary key matches the orginalId.
+ * @param userInput = Budget object, which methods are called to get the new values for the row
+ * @param orginalId = String, which is the primary key of a row in the table, so know which one to update. 
+ */
+	public void updateABudget(Budget userInput, String orginalId) {
+		PreparedStatement statement;
+
+		try {
+			statement = mySqlDatabase.prepareStatement("Update stock_mangemnet.tbl_budget set budgetId = \""
+					+ userInput.getBudgetId() + "\", amount = \"" + userInput.getAmount() + "\", startDate = \""
+					+ userInput.getStartDate() + "\", endDate = \"" + userInput.getEndDate() + "\" where budgetId = \""
+					+ orginalId + "\";");
+			statement.execute();
+
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+
+	/**
+	 * gets all the Accounts that the database holds. it converts it to Account
+	 * objects before outputting it.
 	 * 
 	 * @return ArrayList<Account>
 	 */
- public ArrayList<Account> getAllAccounts() {
+	public ArrayList<Account> getAllAccounts() {
 		PreparedStatement statement;
 		ArrayList<Account> allAccounts = new ArrayList<>();
 		try {
-			statement = mySqlDatabase.prepareStatement("select userName, isAdmin from stock_mangemnet.tbl_account_details;");
+			statement = mySqlDatabase
+					.prepareStatement("select userName, isAdmin from stock_mangemnet.tbl_account_details;");
 			ResultSet result = statement.executeQuery();
-			//if(result.first()) {
+			// if(result.first()) {
 			while (result.next()) {
 				Account input = new Account(result.getString(1), result.getBoolean(2));
 				allAccounts.add(input);
 			}
-			//}
-			} catch (SQLException e) {
+			// }
+		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		
+
 		return allAccounts;
 	}
- public ArrayList<String> getAccountsThatsLike(String where) {
+
+	public ArrayList<String> getAccountsThatsLike(String where) {
 		PreparedStatement statement;
 		ArrayList<String> account = new ArrayList<>();
 		try {
-			statement = mySqlDatabase.prepareStatement("select userName, isAdmin from stock_mangemnet.tbl_account_details where tbl_account_details.userName like \'%" + where +"%\' ;");
+			statement = mySqlDatabase.prepareStatement(
+					"select userName, isAdmin from stock_mangemnet.tbl_account_details where tbl_account_details.userName like \'%"
+							+ where + "%\' ;");
 			ResultSet result = statement.executeQuery();
-			//if(result.first()) {
+			// if(result.first()) {
 			while (result.next()) {
 				Account input = new Account(result.getString(1), result.getBoolean(2));
 				account.add(input.toString());
 			}
-			//}
-			} catch (SQLException e) {
+			// }
+		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		
+
 		return account;
 	}
- public ArrayList<String> getAccountsThatMatchesWhere(String where){
+
+	public ArrayList<String> getAccountsThatMatchesWhere(String where) {
 		PreparedStatement statement;
 		ArrayList<String> Accounts = new ArrayList<>();
 		try {
-			statement = mySqlDatabase.prepareStatement("select userName, isAdmin from stock_mangemnet.tbl_account_details where " + where + ";");
+			statement = mySqlDatabase.prepareStatement(
+					"select userName, isAdmin from stock_mangemnet.tbl_account_details where " + where + ";");
 			ResultSet result = statement.executeQuery();
-			//if(result.first()) {
+			// if(result.first()) {
 			while (result.next()) {
 				Account input = new Account(result.getString(1), result.getBoolean(2));
 				Accounts.add(input.toString());
 			}
-			//}
-			} catch (SQLException e) {
+			// }
+		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		
+
 		return Accounts;
 	}
- /**
-  * create a new row in the database, gets the info for the row from the passed in account object. 
-  * @param userInput = Account object.
-  */
- public void addAccount(Account userInput) {
+
+	/**
+	 * create a new row in the database, gets the info for the row from the passed
+	 * in account object.
+	 * 
+	 * @param userInput = Account object.
+	 */
+	public void addAccount(Account userInput) {
 		PreparedStatement statement;
-		int adminStatus= 0;
+		int adminStatus = 0;
 		try {
-			if(userInput.getAdminStatus() == true) {
+			if (userInput.getAdminStatus() == true) {
 				adminStatus = 1;
 			}
-			
-			statement = mySqlDatabase.prepareStatement("Insert into stock_mangemnet.tbl_account_details values (\'" + userInput.getUsername() + "\',\'" + userInput.getPassword() + "\',\'"+ adminStatus + "\');");
+
+			statement = mySqlDatabase.prepareStatement("Insert into stock_mangemnet.tbl_account_details values (\'"
+					+ userInput.getUsername() + "\',\'" + userInput.getPassword() + "\',\'" + adminStatus + "\');");
 			statement.execute();
-			
-			} catch (SQLException e) {
+
+		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		
-		
+
 	}
- /**
-  * makes an account object from the database using the data that has a pk that matches the passed in param id.
-  * @param id = String which relates to a pk in the accounts details table
-  * @return = Account object, made from the data, in the row with the matching primary key to the inputed param id
-  */
- public Account getSpecificAccount(String id) {
+
+	/**
+	 * makes an account object from the database using the data that has a pk that
+	 * matches the passed in param id.
+	 * 
+	 * @param id = String which relates to a pk in the accounts details table
+	 * @return = Account object, made from the data, in the row with the matching
+	 *         primary key to the inputed param id
+	 */
+	public Account getSpecificAccount(String id) {
 		PreparedStatement statement;
 		Account account = null;
 		try {
-			statement = mySqlDatabase.prepareStatement("select userName, isAdmin from stock_mangemnet.tbl_account_details where userName = \'" + id + "\';");
+			statement = mySqlDatabase.prepareStatement(
+					"select userName, isAdmin from stock_mangemnet.tbl_account_details where userName = \'" + id
+							+ "\';");
 			ResultSet result = statement.executeQuery();
-			//if(result.first()) {
-			if(result.next()) {
-				
+			// if(result.first()) {
+			if (result.next()) {
+
 				account = new Account(result.getString(1), result.getBoolean(2));
-				
+
 			}
-			//}
-			} catch (SQLException e) {
+			// }
+		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		
+
 		return account;
 	}
- 
- /**
-	 * deletes a row in the database.
-	 * deletes a account row where the row pk
-	 * is the same as passed in id
+
+	/**
+	 * deletes a row in the database. deletes a account row where the row pk is the
+	 * same as passed in id
+	 * 
 	 * @param id = String that related to a pk in the database for account table
 	 */
- public void deleteSelectedAccount(String id) {
+	public void deleteSelectedAccount(String id) {
 		PreparedStatement statement;
 		try {
-			statement = mySqlDatabase.prepareStatement("Delete from stock_mangemnet.tbl_account_details where tbl_account_details.userName = \'" + id + "\';");
+			statement = mySqlDatabase.prepareStatement(
+					"Delete from stock_mangemnet.tbl_account_details where tbl_account_details.userName = \'" + id
+							+ "\';");
 			statement.execute();
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}
- 
- public void updateAAccount(Account userInput, String orginalId){
+/**
+ * updates the a row in the tbl_account_details table.
+ * the row updates is the one that primary key matches the orginalId.
+ * @param userInput = Account object, which methods are called to get the new values for the row
+ * @param orginalId = String, which is the primary key of a row in the table, so know which one to update. 
+ */
+	public void updateAAccount(Account userInput, String orginalId) {
 		PreparedStatement statement;
-		int adminStatus= 0;
+		int adminStatus = 0;
 		try {
-			if(userInput.getAdminStatus() == true) {
+			if (userInput.getAdminStatus() == true) {
 				adminStatus = 1;
 			}
-			statement = mySqlDatabase.prepareStatement("Update stock_mangemnet.tbl_account_details set userName = \"" + userInput.getUsername() + "\", password = \""+ userInput.getPassword() + "\", isAdmin = \""+ adminStatus + "\" where userName = \"" + orginalId + "\";" );
+			statement = mySqlDatabase.prepareStatement("Update stock_mangemnet.tbl_account_details set userName = \""
+					+ userInput.getUsername() + "\", password = \"" + userInput.getPassword() + "\", isAdmin = \""
+					+ adminStatus + "\" where userName = \"" + orginalId + "\";");
 			statement.execute();
-			
+
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-}
- /**
-	 * gets all the storage locations that the database holds.
-	 * it converts it to storage location objects before outputting it.
+	}
+
+	/**
+	 * gets all the storage locations that the database holds. it converts it to
+	 * storage location objects before outputting it.
 	 * 
 	 * @return ArrayList<storage location>
 	 */
- public ArrayList<StorageLocation> getAllStorageLocations() {
+	public ArrayList<StorageLocation> getAllStorageLocations() {
 		PreparedStatement statement;
 		ArrayList<StorageLocation> allSl = new ArrayList<>();
 		try {
 			statement = mySqlDatabase.prepareStatement("select * from stock_mangemnet.tbl_storage_location;");
 			ResultSet result = statement.executeQuery();
-			//if(result.first()) {
+			// if(result.first()) {
 			while (result.next()) {
-				StorageLocation input = new StorageLocation(result.getString(1), result.getString(3), result.getBoolean(2) );
+				StorageLocation input = new StorageLocation(result.getString(1), result.getString(3),
+						result.getBoolean(2));
 				allSl.add(input);
 			}
-			//}
-			} catch (SQLException e) {
+			// }
+		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		
+
 		return allSl;
 	}
 
-
-
- public Boolean StorgaeLocationExists(String storagelocation){
+	public Boolean StorgaeLocationExists(String storagelocation) {
 		PreparedStatement statement;
 		try {
-			statement = mySqlDatabase.prepareStatement("select * from stock_mangemnet.tbl_storage_location where tbl_storage_location.storageLocationId = \"" + storagelocation + "\"" );
+			statement = mySqlDatabase.prepareStatement(
+					"select * from stock_mangemnet.tbl_storage_location where tbl_storage_location.storageLocationId = \""
+							+ storagelocation + "\"");
 			ResultSet results = statement.executeQuery();
-			if(results.next()) {
+			if (results.next()) {
 				return true;
 			}
-			} catch (SQLException e) {
+		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-	return false;
-	
+		return false;
+
 	}
- 
- public ArrayList<String> getStorageThatsLike(String where) {
+
+	public ArrayList<String> getStorageThatsLike(String where) {
 		PreparedStatement statement;
 		ArrayList<String> storage = new ArrayList<>();
 		try {
-			statement = mySqlDatabase.prepareStatement("select * from stock_mangemnet.tbl_storage_location where storageLocationId like \'%" + where +"%\' ;");
+			statement = mySqlDatabase.prepareStatement(
+					"select * from stock_mangemnet.tbl_storage_location where storageLocationId like \'%" + where
+							+ "%\' ;");
 			ResultSet result = statement.executeQuery();
-			//if(result.first()) {
+			// if(result.first()) {
 			while (result.next()) {
-				StorageLocation input = new StorageLocation (result.getString(1), result.getString(3), result.getBoolean(2));
+				StorageLocation input = new StorageLocation(result.getString(1), result.getString(3),
+						result.getBoolean(2));
 				storage.add(input.toString());
 			}
-			//}
-			} catch (SQLException e) {
+			// }
+		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		
+
 		return storage;
 	}
- /**
-	 * gets all the storage types that the database holds.
-	 * it gets just the type of storage location and outputs it as a string.
+
+	/**
+	 * gets all the storage types that the database holds. it gets just the type of
+	 * storage location and outputs it as a string.
 	 * 
 	 * @return ArrayList<String>
 	 */
- public ArrayList<String> getAllStorageType() {
+	public ArrayList<String> getAllStorageType() {
 		PreparedStatement statement;
 		ArrayList<String> storage = new ArrayList<>();
 		try {
 			statement = mySqlDatabase.prepareStatement("select type from stock_mangemnet.tbl_storage_location ");
 			ResultSet result = statement.executeQuery();
-			//if(result.first()) {
+			// if(result.first()) {
 			while (result.next()) {
-				if(!storage.contains(result.getString(1))) {
-				storage.add(result.getString(1));
+				if (!storage.contains(result.getString(1))) {
+					storage.add(result.getString(1));
 				}
-				}
-			//}
-			} catch (SQLException e) {
+			}
+			// }
+		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		
+
 		return storage;
 	}
 
- public ArrayList<String> getStorgeThatMatchesWhere(String where){
+	/**
+	 * gets all the storage location in the database that match the where. use the
+	 * parameter where, to identity which storage locations to get.
+	 * 
+	 * @param where = String, which is the where part of the MySQL statement. note
+	 *              the where word is not needed.
+	 * @return ArrayList<String> = all the storage location that pass the where.
+	 *         each value is the output of a storage location toString method.
+	 */
+	public ArrayList<String> getStorgeThatMatchesWhere(String where) {
 		PreparedStatement statement;
 		ArrayList<String> storage = new ArrayList<>();
 		try {
-			statement = mySqlDatabase.prepareStatement("select * from stock_mangemnet.tbl_storage_location where " + where + ";");
+			statement = mySqlDatabase
+					.prepareStatement("select * from stock_mangemnet.tbl_storage_location where " + where + ";");
 			ResultSet result = statement.executeQuery();
-			//if(result.first()) {
+			// if(result.first()) {
 			while (result.next()) {
-				StorageLocation input = new StorageLocation (result.getString(1), result.getString(3), result.getBoolean(2));
+				StorageLocation input = new StorageLocation(result.getString(1), result.getString(3),
+						result.getBoolean(2));
 				storage.add(input.toString());
 			}
-			//}
-			} catch (SQLException e) {
+			// }
+		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		
+
 		return storage;
 	}
 
- public void addStorage(String name, String type, Boolean isAvailble) {
+	/**
+	 * create a new row in the table tbl_storage_location.
+	 * 
+	 * @param name       = String values to be stored in column name
+	 * @param type       = String values to be stored in column type
+	 * @param isAvailble = boolean, true = is available, false = isn't available.
+	 *                   values to be stored in column adminStatus
+	 */
+	public void addStorage(String name, String type, Boolean isAvailble) {
 		PreparedStatement statement;
-		int adminStatus= 0;
+		int adminStatus = 0;
 		try {
-			if(isAvailble == true) {
+			if (isAvailble == true) {
 				adminStatus = 1;
 			}
-			
-			statement = mySqlDatabase.prepareStatement("Insert into stock_mangemnet.tbl_storage_location values (\'" + name + "\',\'" + adminStatus + "\',\'"+ type + "\');");
+
+			statement = mySqlDatabase.prepareStatement("Insert into stock_mangemnet.tbl_storage_location values (\'"
+					+ name + "\',\'" + adminStatus + "\',\'" + type + "\');");
 			statement.execute();
-			
-			} catch (SQLException e) {
+
+		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		
-		
+
 	}
- public void updateStorage(String name, String type, Boolean isAvailble,String orginalId) {
+	
+	
+	public void updateStorage(String name, String type, Boolean isAvailble, String orginalId) {
 		PreparedStatement statement;
-		int adminStatus= 0;
+		int adminStatus = 0;
 		try {
-			if(isAvailble == true) {
+			if (isAvailble == true) {
 				adminStatus = 1;
 			}
-			
-			statement = mySqlDatabase.prepareStatement("update stock_mangemnet.tbl_storage_location set storageLocationId = \"" + name + "\", isAvailable = \'" + adminStatus + "\', type = \'"+ type + "\' where storageLocationId = \'" + orginalId + "\';"); 
+
+			statement = mySqlDatabase
+					.prepareStatement("update stock_mangemnet.tbl_storage_location set storageLocationId = \"" + name
+							+ "\", isAvailable = \'" + adminStatus + "\', type = \'" + type
+							+ "\' where storageLocationId = \'" + orginalId + "\';");
 			statement.execute();
-			 
-			} catch (SQLException e) {
+
+		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		
-		
+
 	}
- public StorageLocation getSpecificStorageLocation(String Id) {
+
+	/**
+	 * Return the storage location that relates to the passed in string.
+	 * 
+	 * @param Id = String, which is an id in the database
+	 * @return StorageLocation or null. null if there is no storage location that
+	 *         match the passed in id.
+	 */
+	public StorageLocation getSpecificStorageLocation(String id) {
 		PreparedStatement statement;
 		StorageLocation storage = null;
 		try {
-			statement = mySqlDatabase.prepareStatement("select * from stock_mangemnet.tbl_storage_location where storageLocationId = \""+Id+"\";");
+			statement = mySqlDatabase.prepareStatement(
+					"select * from stock_mangemnet.tbl_storage_location where storageLocationId = \"" + id + "\";");
 			ResultSet result = statement.executeQuery();
-			//if(result.first()) {
-			if(result.next()) {
-			 storage = new StorageLocation (result.getString(1), result.getString(3), result.getBoolean(2));
-				
+			// if(result.first()) {
+			if (result.next()) {
+				storage = new StorageLocation(result.getString(1), result.getString(3), result.getBoolean(2));
+
 			}
-			//}
-			} catch (SQLException e) {
+			// }
+		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		
+
 		return storage;
 	}
- 
- 
- public void deleteSelectedStorage(String id) {
+
+	/**
+	 * delete a row from the database table tbl_Storage_location, which has the same
+	 * pk as the passed in parameter.
+	 * 
+	 * @param id = String which corresponds to the pk of the storage location row
+	 *           that is wanted to be deleted.
+	 */
+	public void deleteSelectedStorage(String id) {
 		PreparedStatement statement;
 		try {
-			statement = mySqlDatabase.prepareStatement("Delete from stock_mangemnet.tbl_storage_location where tbl_storage_location.storageLocationId = \'" + id + "\';");
+			statement = mySqlDatabase.prepareStatement(
+					"Delete from stock_mangemnet.tbl_storage_location where tbl_storage_location.storageLocationId = \'"
+							+ id + "\';");
 			statement.execute();
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}
- 
- public Boolean isAccountAdmin(String id){
+
+	public Boolean isAccountAdmin(String id) {
 		PreparedStatement statement;
 		try {
-			statement = mySqlDatabase.prepareStatement("select * from stock_mangemnet.tbl_account_details where tbl_account_details.userName = \"" + id + "\"" );
+			statement = mySqlDatabase.prepareStatement(
+					"select * from stock_mangemnet.tbl_account_details where tbl_account_details.userName = \"" + id
+							+ "\"");
 			ResultSet results = statement.executeQuery();
-			if(results.next()) {
+			if (results.next()) {
 				return results.getBoolean(3);
 			}
-			} catch (SQLException e) {
+		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-	return false;
-	
+		return false;
+
 	}
 
-
 //dish 
- /**
-	 * gets all the dishes that the database holds.
-	 * it converts it to dish objects before outputting it.
+	/**
+	 * gets all the dishes that the database holds. it converts it to dish objects
+	 * before outputting it.
 	 * 
 	 * @return ArrayList<dish>
 	 */
- public ArrayList<Dish> getAllCurrentDishes() {
+	public ArrayList<Dish> getAllCurrentDishes() {
 		PreparedStatement statement;
 		PreparedStatement statement2;
-		ArrayList<Dish> dish  = new ArrayList<>();
+		ArrayList<Dish> dish = new ArrayList<>();
 		ArrayList<StockType> stockType = new ArrayList<>();
 		try {
-			
-			
+
 			statement = mySqlDatabase.prepareStatement("SELECT * FROM stock_mangemnet.tbl_dish");
-			
+
 			ResultSet result = statement.executeQuery();
-			
-			
-			
+
 			while (result.next()) {
-				statement2 = mySqlDatabase.prepareStatement("SELECT * FROM stock_mangemnet.tbl_dish_stock, stock_mangemnet.tbl_stock_type where (tbl_dish_stock.dishId = \'" + result.getString(1) + "\') and ( tbl_dish_stock.stockTypeId = tbl_stock_type.stockTypeId);" );
+				statement2 = mySqlDatabase.prepareStatement(
+						"SELECT * FROM stock_mangemnet.tbl_dish_stock, stock_mangemnet.tbl_stock_type where (tbl_dish_stock.dishId = \'"
+								+ result.getString(1)
+								+ "\') and ( tbl_dish_stock.stockTypeId = tbl_stock_type.stockTypeId);");
 				ResultSet result2 = statement2.executeQuery();
 				stockType = new ArrayList<>();
-				while(result2.next()) {
-					stockType.add(new StockType(result2.getString(6),result2.getString(7),result2.getString(8)));
+				while (result2.next()) {
+					stockType.add(new StockType(result2.getString(6), result2.getString(7), result2.getString(8)));
 				}
-				dish.add(new Dish(result.getString(1),stockType));
-							}
-			
-			} catch (SQLException e) {
+				dish.add(new Dish(result.getString(1), stockType));
+			}
+
+		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		
-		return dish;
-	}
- public ArrayList<Dish> getAllCurrentDishesThatLike(String like) {
-		PreparedStatement statement;
-		PreparedStatement statement2;
-		ArrayList<Dish> dish  = new ArrayList<>();
-		ArrayList<StockType> stockType = new ArrayList<>();
-		try {
-			
-			
-			statement = mySqlDatabase.prepareStatement("SELECT * FROM stock_mangemnet.tbl_dish where dishId like \'%" + like +"%\'");
-			
-			ResultSet result = statement.executeQuery();
-			
-			
-			
-			while (result.next()) {
-				statement2 = mySqlDatabase.prepareStatement("SELECT * FROM stock_mangemnet.tbl_dish_stock, stock_mangemnet.tbl_stock_type where (tbl_dish_stock.dishId = \'" + result.getString(1) + "\') and ( tbl_dish_stock.stockTypeId = tbl_stock_type.stockTypeId);" );
-				ResultSet result2 = statement2.executeQuery();
-				stockType = new ArrayList<>();
-				while(result2.next()) {
-					stockType.add(new StockType(result2.getString(6),result2.getString(7),result2.getString(8)));
-				}
-				dish.add(new Dish(result.getString(1),stockType));
-							}
-			
-			} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		
-		return dish;
-	}
- 
- public Dish getASpecificDishes(String dishId) {
-		PreparedStatement statement;
-		PreparedStatement statement2;
-		Dish dish  = null;
-		ArrayList<StockType> stockType = new ArrayList<>();
-		try {
-			
-			
-			statement = mySqlDatabase.prepareStatement("SELECT * FROM stock_mangemnet.tbl_dish where dishId = \'" + dishId + "\';");
-			
-			ResultSet result = statement.executeQuery();
-			 
-			
-			
-			while (result.next()) {
-				statement2 = mySqlDatabase.prepareStatement("SELECT * FROM stock_mangemnet.tbl_dish_stock, stock_mangemnet.tbl_stock_type where (tbl_dish_stock.dishId = \'" + result.getString(1) + "\') and ( tbl_dish_stock.stockTypeId = tbl_stock_type.stockTypeId);" );
-				ResultSet result2 = statement2.executeQuery();
-				stockType = new ArrayList<>();
-				while(result2.next()) {
-					stockType.add(new StockType(result2.getString(6),result2.getString(7),result2.getString(8),result2.getString(4)));
-				}
-				dish = new Dish(result.getString(1),stockType);
-							}
-			
-			} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		
+
 		return dish;
 	}
 
- public void saveDishStockConnection(String stockType, String dishName, String quanityNeeded, String unit) {
-	 PreparedStatement statement;
+	public ArrayList<Dish> getAllCurrentDishesThatLike(String like) {
+		PreparedStatement statement;
+		PreparedStatement statement2;
+		ArrayList<Dish> dish = new ArrayList<>();
+		ArrayList<StockType> stockType = new ArrayList<>();
 		try {
-			
-			statement = mySqlDatabase.prepareStatement("Insert into stock_mangemnet.tbl_dish_stock (  stockTypeId, dishId, quanityOfStockNeeded, quantityOfStockNeedUnitType )values (\'" + stockType + "\', \'" + dishName +"\', \'" + quanityNeeded +"\', \'"+ unit +  "\');");
+
+			statement = mySqlDatabase
+					.prepareStatement("SELECT * FROM stock_mangemnet.tbl_dish where dishId like \'%" + like + "%\'");
+
+			ResultSet result = statement.executeQuery();
+
+			while (result.next()) {
+				statement2 = mySqlDatabase.prepareStatement(
+						"SELECT * FROM stock_mangemnet.tbl_dish_stock, stock_mangemnet.tbl_stock_type where (tbl_dish_stock.dishId = \'"
+								+ result.getString(1)
+								+ "\') and ( tbl_dish_stock.stockTypeId = tbl_stock_type.stockTypeId);");
+				ResultSet result2 = statement2.executeQuery();
+				stockType = new ArrayList<>();
+				while (result2.next()) {
+					stockType.add(new StockType(result2.getString(6), result2.getString(7), result2.getString(8)));
+				}
+				dish.add(new Dish(result.getString(1), stockType));
+			}
+
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
+		return dish;
+	}
+
+	public Dish getASpecificDishes(String dishId) {
+		PreparedStatement statement;
+		PreparedStatement statement2;
+		Dish dish = null;
+		ArrayList<StockType> stockType = new ArrayList<>();
+		try {
+
+			statement = mySqlDatabase
+					.prepareStatement("SELECT * FROM stock_mangemnet.tbl_dish where dishId = \'" + dishId + "\';");
+
+			ResultSet result = statement.executeQuery();
+
+			while (result.next()) {
+				statement2 = mySqlDatabase.prepareStatement(
+						"SELECT * FROM stock_mangemnet.tbl_dish_stock, stock_mangemnet.tbl_stock_type where (tbl_dish_stock.dishId = \'"
+								+ result.getString(1)
+								+ "\') and ( tbl_dish_stock.stockTypeId = tbl_stock_type.stockTypeId);");
+				ResultSet result2 = statement2.executeQuery();
+				stockType = new ArrayList<>();
+				while (result2.next()) {
+					stockType.add(new StockType(result2.getString(6), result2.getString(7), result2.getString(8),
+							result2.getString(4)));
+				}
+				dish = new Dish(result.getString(1), stockType);
+			}
+
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
+		return dish;
+	}
+
+	public void saveDishStockConnection(String stockType, String dishName, String quanityNeeded, String unit) {
+		PreparedStatement statement;
+		try {
+
+			statement = mySqlDatabase.prepareStatement(
+					"Insert into stock_mangemnet.tbl_dish_stock (  stockTypeId, dishId, quanityOfStockNeeded, quantityOfStockNeedUnitType )values (\'"
+							+ stockType + "\', \'" + dishName + "\', \'" + quanityNeeded + "\', \'" + unit + "\');");
 			statement.execute();
-			
-			} catch (SQLException e) {
+
+		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}
- 
- public void saveDish(String dishName) {
-	
-	 PreparedStatement statement;
-		try {
-			
-			statement = mySqlDatabase.prepareStatement("Insert into stock_mangemnet.tbl_dish values (\'" + dishName + "\');");
-			statement.execute();
-			
-			} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-	 
-	 
- }
- public void updateDish(String newDishName, String orginalDishName) {
-		
-	 PreparedStatement statement;
-		try {
-			
-			statement = mySqlDatabase.prepareStatement("update stock_mangemnet.tbl_dish set dishId = \'"+ newDishName + "\' where dishId = \'"+ orginalDishName + "\';");
-			statement.execute();
-			
-			} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-	 
-	 
- }
- public void deleteDishConnection( String orginalDishName) {
-		
-	 PreparedStatement statement;
-		try {
-			
-			statement = mySqlDatabase.prepareStatement("Delete From stock_mangemnet.tbl_dish where dishId = \'"+ orginalDishName + "\';");
-			statement.execute();
-			
-			} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-	 
-	 
- }
- public ArrayList<Integer> getDishStockIdsForADish(String dishId) {
+
+	public void saveDish(String dishName) {
+
 		PreparedStatement statement;
-		
-		
+		try {
+
+			statement = mySqlDatabase
+					.prepareStatement("Insert into stock_mangemnet.tbl_dish values (\'" + dishName + "\');");
+			statement.execute();
+
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
+	}
+	/**
+	 * updates a row in the table tbl_dish.
+	 * the row that it updates is the one where the primary key of it matches the passed in parameter orginalDishName.
+	 * @param newDishName = String the new dishId column value
+	 * @param orginalDishName = String the original dishId so know which column to update. 
+	 */
+	public void updateDish(String newDishName, String orginalDishName) {
+
+		PreparedStatement statement;
+		try {
+
+			statement = mySqlDatabase.prepareStatement("update stock_mangemnet.tbl_dish set dishId = \'" + newDishName
+					+ "\' where dishId = \'" + orginalDishName + "\';");
+			statement.execute();
+
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
+	}
+
+	public void deleteDishConnection(String orginalDishName) {
+
+		PreparedStatement statement;
+		try {
+
+			statement = mySqlDatabase.prepareStatement(
+					"Delete From stock_mangemnet.tbl_dish where dishId = \'" + orginalDishName + "\';");
+			statement.execute();
+
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
+	}
+/**
+ * gets only the column dishStockId where the row in tbl_dish_stock table equals the passed in parameter dishId.
+ * 
+ * @param dishId = String which represent the dishId you want the stockType to have.
+ * @return ArrayList<Integer> = all the dishStockIds the database where row dishId matches the passed in 
+ * parameter dishId.
+ */
+	public ArrayList<Integer> getDishStockIdsForADish(String dishId) {
+		PreparedStatement statement;
+
 		ArrayList<Integer> ids = new ArrayList<>();
 		try {
-			
-			
-			statement = mySqlDatabase.prepareStatement("SELECT * FROM stock_mangemnet.tbl_dish_stock where dishId = \'" + dishId + "\';");
-			
+
+			statement = mySqlDatabase.prepareStatement(
+					"SELECT * FROM stock_mangemnet.tbl_dish_stock where dishId = \'" + dishId + "\';");
+
 			ResultSet result = statement.executeQuery();
-			 while(result.next()) {
-				 ids.add(result.getInt(1));
-			 }
-			
-			
-		
-			
-			} catch (SQLException e) {
+			while (result.next()) {
+				ids.add(result.getInt(1));
+			}
+
+		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		
+
 		return ids;
 	}
 
+	public ArrayList<Dish> getDishWithLessThanSetItems(int numberOfMaxItems) {
 
-
- public ArrayList<Dish> getDishWithLessThanSetItems(int numberOfMaxItems) {
-		
-	 
-	 PreparedStatement statement;
+		PreparedStatement statement;
 		PreparedStatement statement2;
 		PreparedStatement statement3;
-		ArrayList<Dish> dish  = new ArrayList<>();
+		ArrayList<Dish> dish = new ArrayList<>();
 		ArrayList<StockType> stockType = new ArrayList<>();
 		try {
-			
-			
+
 			statement = mySqlDatabase.prepareStatement("SELECT * FROM stock_mangemnet.tbl_dish");
-			
+
 			ResultSet result = statement.executeQuery();
-			
-			
-			
+
 			while (result.next()) {
-				
-				
-				statement2 = mySqlDatabase.prepareStatement("select COUNT(stockTypeId) As number from stock_mangemnet.tbl_dish_stock where dishId = \'" + result.getString(1) + "\'");
+
+				statement2 = mySqlDatabase.prepareStatement(
+						"select COUNT(stockTypeId) As number from stock_mangemnet.tbl_dish_stock where dishId = \'"
+								+ result.getString(1) + "\'");
 				ResultSet result2 = statement2.executeQuery();
-			
+
 				result2.next();
-				if(Integer.parseInt(result2.getString(1)) <= numberOfMaxItems) {
-				
-					statement3= mySqlDatabase.prepareStatement("SELECT * FROM stock_mangemnet.tbl_dish_stock, stock_mangemnet.tbl_stock_type where (tbl_dish_stock.dishId = \'" + result.getString(1) + "\') and ( tbl_dish_stock.stockTypeId = tbl_stock_type.stockTypeId);" );
-				ResultSet result3 = statement3.executeQuery();
-				
-				stockType = new ArrayList<>();
-				while(result3.next()) {
-					stockType.add(new StockType(result3.getString(6),result3.getString(7),result3.getString(8)));
+				if (Integer.parseInt(result2.getString(1)) <= numberOfMaxItems) {
+
+					statement3 = mySqlDatabase.prepareStatement(
+							"SELECT * FROM stock_mangemnet.tbl_dish_stock, stock_mangemnet.tbl_stock_type where (tbl_dish_stock.dishId = \'"
+									+ result.getString(1)
+									+ "\') and ( tbl_dish_stock.stockTypeId = tbl_stock_type.stockTypeId);");
+					ResultSet result3 = statement3.executeQuery();
+
+					stockType = new ArrayList<>();
+					while (result3.next()) {
+						stockType.add(new StockType(result3.getString(6), result3.getString(7), result3.getString(8)));
+					}
+					dish.add(new Dish(result.getString(1), stockType));
+
 				}
-				dish.add(new Dish(result.getString(1),stockType));
-			
-							}
-			
-			
+
 			}
-			
-			} catch (SQLException e) {
+
+		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		
+
 		return dish;
-	 
- }
- 
-public ArrayList<Dish> getDishWithMoreThanSetItems(int numberOfMaxItems) {
-		
-	 
-	 PreparedStatement statement;
+
+	}
+
+	public ArrayList<Dish> getDishWithMoreThanSetItems(int numberOfMaxItems) {
+
+		PreparedStatement statement;
 		PreparedStatement statement2;
 		PreparedStatement statement3;
-		ArrayList<Dish> dish  = new ArrayList<>();
+		ArrayList<Dish> dish = new ArrayList<>();
 		ArrayList<StockType> stockType = new ArrayList<>();
 		try {
-			
-			
-			statement = mySqlDatabase.prepareStatement("SELECT * FROM stock_mangemnet.tbl_dish");
-			
-			ResultSet result = statement.executeQuery();
-			
-			
-			
-			while (result.next()) {
-				
-				
-				statement2 = mySqlDatabase.prepareStatement("select COUNT(stockTypeId) As number from stock_mangemnet.tbl_dish_stock where dishId = \'" + result.getString(1) + "\'");
-				ResultSet result2 = statement2.executeQuery();
-			
-				result2.next();
-				if(Integer.parseInt(result2.getString(1)) >= numberOfMaxItems) {
-				
-					statement3= mySqlDatabase.prepareStatement("SELECT * FROM stock_mangemnet.tbl_dish_stock, stock_mangemnet.tbl_stock_type where (tbl_dish_stock.dishId = \'" + result.getString(1) + "\') and ( tbl_dish_stock.stockTypeId = tbl_stock_type.stockTypeId);" );
-				ResultSet result3 = statement3.executeQuery();
-				
-				stockType = new ArrayList<>();
-				while(result3.next()) {
-					stockType.add(new StockType(result3.getString(6),result3.getString(7),result3.getString(8)));
-				}
-				dish.add(new Dish(result.getString(1),stockType));
-			
-							}
-			
-			
-			}
-			
-			} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		
-		return dish;
-	 
- }
- 
- 
-public ArrayList<Dish> getDishThatCostNotAbove(Double numberOfMaxItems) {
-	
-	 
-	 PreparedStatement statement;
-		
-		PreparedStatement statement3;
-		ArrayList<Dish> dish  = new ArrayList<>();
-		ArrayList<StockType> stockType = new ArrayList<>();
-		try {
-			
-			
-			statement = mySqlDatabase.prepareStatement("SELECT * FROM stock_mangemnet.tbl_dish");
-			
-			ResultSet result = statement.executeQuery();
-			
-			
-			
-			while (result.next()) {
-				
-				
-				
-					statement3= mySqlDatabase.prepareStatement("SELECT * FROM stock_mangemnet.tbl_dish_stock, stock_mangemnet.tbl_stock_type where (tbl_dish_stock.dishId = \'" + result.getString(1) + "\') and ( tbl_dish_stock.stockTypeId = tbl_stock_type.stockTypeId);" );
-				ResultSet result3 = statement3.executeQuery();
-				
-				stockType = new ArrayList<>();
-				while(result3.next()) {
-					stockType.add(new StockType(result3.getString(6),result3.getString(7),result3.getString(8)));
-				}
-				Dish input = new Dish(result.getString(1),stockType);
-				
-				
-				//where it is deiced if they are added or not. 
-						if(input.getDishCost()<=numberOfMaxItems) {
-				dish.add(input);
-						}
-							
-			
-			
-			}
-			
-			} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		
-		return dish;
-	 
-}
 
- 
-public ArrayList<Dish> getDishThatCostNotBellow(Double numberOfMaxItems) {
-	
-	 
-	 PreparedStatement statement;
-		
-		PreparedStatement statement3;
-		ArrayList<Dish> dish  = new ArrayList<>();
-		ArrayList<StockType> stockType = new ArrayList<>();
-		try {
-			
-			
 			statement = mySqlDatabase.prepareStatement("SELECT * FROM stock_mangemnet.tbl_dish");
-			
+
 			ResultSet result = statement.executeQuery();
-			
-			
-			
+
 			while (result.next()) {
-				
-				
-				
-					statement3= mySqlDatabase.prepareStatement("SELECT * FROM stock_mangemnet.tbl_dish_stock, stock_mangemnet.tbl_stock_type where (tbl_dish_stock.dishId = \'" + result.getString(1) + "\') and ( tbl_dish_stock.stockTypeId = tbl_stock_type.stockTypeId);" );
-				ResultSet result3 = statement3.executeQuery();
-				
-				stockType = new ArrayList<>();
-				while(result3.next()) {
-					stockType.add(new StockType(result3.getString(6),result3.getString(7),result3.getString(8)));
+
+				statement2 = mySqlDatabase.prepareStatement(
+						"select COUNT(stockTypeId) As number from stock_mangemnet.tbl_dish_stock where dishId = \'"
+								+ result.getString(1) + "\'");
+				ResultSet result2 = statement2.executeQuery();
+
+				result2.next();
+				if (Integer.parseInt(result2.getString(1)) >= numberOfMaxItems) {
+
+					statement3 = mySqlDatabase.prepareStatement(
+							"SELECT * FROM stock_mangemnet.tbl_dish_stock, stock_mangemnet.tbl_stock_type where (tbl_dish_stock.dishId = \'"
+									+ result.getString(1)
+									+ "\') and ( tbl_dish_stock.stockTypeId = tbl_stock_type.stockTypeId);");
+					ResultSet result3 = statement3.executeQuery();
+
+					stockType = new ArrayList<>();
+					while (result3.next()) {
+						stockType.add(new StockType(result3.getString(6), result3.getString(7), result3.getString(8)));
+					}
+					dish.add(new Dish(result.getString(1), stockType));
+
 				}
-				Dish input = new Dish(result.getString(1),stockType);
-				
-				
-				//where it is deiced if they are added or not. 
-						if(input.getDishCost()>=numberOfMaxItems) {
-				dish.add(input);
-						}
-							
-			
-			
+
 			}
-			
-			} catch (SQLException e) {
+
+		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		
+
 		return dish;
-	 
-}
- 
- 
- 
- 
-/**
- * gets all the menus that the database holds.
- * it converts it to menu objects before outputting it.
- * 
- * @return ArrayList<Menu>
- */
- public ArrayList<Menu> getAllMenu() {
+
+	}
+
+	public ArrayList<Dish> getDishThatCostNotAbove(Double numberOfMaxItems) {
+
+		PreparedStatement statement;
+
+		PreparedStatement statement3;
+		ArrayList<Dish> dish = new ArrayList<>();
+		ArrayList<StockType> stockType = new ArrayList<>();
+		try {
+
+			statement = mySqlDatabase.prepareStatement("SELECT * FROM stock_mangemnet.tbl_dish");
+
+			ResultSet result = statement.executeQuery();
+
+			while (result.next()) {
+
+				statement3 = mySqlDatabase.prepareStatement(
+						"SELECT * FROM stock_mangemnet.tbl_dish_stock, stock_mangemnet.tbl_stock_type where (tbl_dish_stock.dishId = \'"
+								+ result.getString(1)
+								+ "\') and ( tbl_dish_stock.stockTypeId = tbl_stock_type.stockTypeId);");
+				ResultSet result3 = statement3.executeQuery();
+
+				stockType = new ArrayList<>();
+				while (result3.next()) {
+					stockType.add(new StockType(result3.getString(6), result3.getString(7), result3.getString(8)));
+				}
+				Dish input = new Dish(result.getString(1), stockType);
+
+				// where it is deiced if they are added or not.
+				if (input.getDishCost() <= numberOfMaxItems) {
+					dish.add(input);
+				}
+
+			}
+
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
+		return dish;
+
+	}
+
+	public ArrayList<Dish> getDishThatCostNotBellow(Double numberOfMaxItems) {
+
+		PreparedStatement statement;
+
+		PreparedStatement statement3;
+		ArrayList<Dish> dish = new ArrayList<>();
+		ArrayList<StockType> stockType = new ArrayList<>();
+		try {
+
+			statement = mySqlDatabase.prepareStatement("SELECT * FROM stock_mangemnet.tbl_dish");
+
+			ResultSet result = statement.executeQuery();
+
+			while (result.next()) {
+
+				statement3 = mySqlDatabase.prepareStatement(
+						"SELECT * FROM stock_mangemnet.tbl_dish_stock, stock_mangemnet.tbl_stock_type where (tbl_dish_stock.dishId = \'"
+								+ result.getString(1)
+								+ "\') and ( tbl_dish_stock.stockTypeId = tbl_stock_type.stockTypeId);");
+				ResultSet result3 = statement3.executeQuery();
+
+				stockType = new ArrayList<>();
+				while (result3.next()) {
+					stockType.add(new StockType(result3.getString(6), result3.getString(7), result3.getString(8)));
+				}
+				Dish input = new Dish(result.getString(1), stockType);
+
+				// where it is deiced if they are added or not.
+				if (input.getDishCost() >= numberOfMaxItems) {
+					dish.add(input);
+				}
+
+			}
+
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
+		return dish;
+
+	}
+
+	/**
+	 * gets all the menus that the database holds. it converts it to menu objects
+	 * before outputting it.
+	 * 
+	 * @return ArrayList<Menu>
+	 */
+	public ArrayList<Menu> getAllMenu() {
 		PreparedStatement statementMenu;
-	 	PreparedStatement statementDish;
+		PreparedStatement statementDish;
 		PreparedStatement statementStockType;
 		ArrayList<Menu> menu = new ArrayList<>();
-		ArrayList<Dish> dish  = new ArrayList<>();
+		ArrayList<Dish> dish = new ArrayList<>();
 		ArrayList<StockType> stockType = new ArrayList<>();
 		try {
-			
-			
-			
+
 			statementMenu = mySqlDatabase.prepareStatement("select * From stock_mangemnet.tbl_menu");
 			ResultSet resultMenu = statementMenu.executeQuery();
-			
-			while(resultMenu.next()) {
-			statementDish = mySqlDatabase.prepareStatement("SELECT * FROM stock_mangemnet.tbl_dish, stock_mangemnet.tbl_menu_dishes where (tbl_dish.dishId = tbl_menu_dishes.dishId) and tbl_menu_dishes.menuId = \'" + resultMenu.getString(2) + "\';");
-			//statementDish = mySqlDatabase.prepareStatement("SELECT * FROM stock_mangemnet.tbl_dish");
-			
-			ResultSet resultDish = statementDish.executeQuery();
-			
-			
-			dish = new ArrayList<>();
-			while (resultDish.next()) {
-				statementStockType = mySqlDatabase.prepareStatement("SELECT * FROM stock_mangemnet.tbl_dish_stock, stock_mangemnet.tbl_stock_type where (tbl_dish_stock.dishId = \'" + resultDish.getString(1) + "\') and ( tbl_dish_stock.stockTypeId = tbl_stock_type.stockTypeId);" );
-				ResultSet resultStockType = statementStockType.executeQuery();
-				stockType = new ArrayList<>();
-				while(resultStockType.next()) {
-					stockType.add(new StockType(resultStockType.getString(6),resultStockType.getString(7),resultStockType.getString(8),resultStockType.getDouble(4)+""));
+
+			while (resultMenu.next()) {
+				statementDish = mySqlDatabase.prepareStatement(
+						"SELECT * FROM stock_mangemnet.tbl_dish, stock_mangemnet.tbl_menu_dishes where (tbl_dish.dishId = tbl_menu_dishes.dishId) and tbl_menu_dishes.menuId = \'"
+								+ resultMenu.getString(2) + "\';");
+				// statementDish = mySqlDatabase.prepareStatement("SELECT * FROM
+				// stock_mangemnet.tbl_dish");
+
+				ResultSet resultDish = statementDish.executeQuery();
+
+				dish = new ArrayList<>();
+				while (resultDish.next()) {
+					statementStockType = mySqlDatabase.prepareStatement(
+							"SELECT * FROM stock_mangemnet.tbl_dish_stock, stock_mangemnet.tbl_stock_type where (tbl_dish_stock.dishId = \'"
+									+ resultDish.getString(1)
+									+ "\') and ( tbl_dish_stock.stockTypeId = tbl_stock_type.stockTypeId);");
+					ResultSet resultStockType = statementStockType.executeQuery();
+					stockType = new ArrayList<>();
+					while (resultStockType.next()) {
+						stockType.add(new StockType(resultStockType.getString(6), resultStockType.getString(7),
+								resultStockType.getString(8), resultStockType.getDouble(4) + ""));
+					}
+					dish.add(new Dish(resultDish.getString(1), stockType));
 				}
-				dish.add(new Dish(resultDish.getString(1),stockType));
-							}
-			//top one ends here
-			
-			menu.add(new Menu(resultMenu.getString(2),getSpecificBudget(resultMenu.getString(1)),dish));
-			
+				// top one ends here
+
+				menu.add(new Menu(resultMenu.getString(2), getSpecificBudget(resultMenu.getString(1)), dish));
+
 			}
-			} catch (SQLException e) {
+		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		
+
 		return menu;
 	}
- public ArrayList<Menu> getAllMenuThatAreLike(String like) {
-	
-	 PreparedStatement statementMenu;
-	 	PreparedStatement statementDish;
+
+	public ArrayList<Menu> getAllMenuThatAreLike(String like) {
+
+		PreparedStatement statementMenu;
+		PreparedStatement statementDish;
 		PreparedStatement statementStockType;
 		ArrayList<Menu> menu = new ArrayList<>();
-		ArrayList<Dish> dish  = new ArrayList<>();
+		ArrayList<Dish> dish = new ArrayList<>();
 		ArrayList<StockType> stockType = new ArrayList<>();
 		try {
-			
-			
-			
-			statementMenu = mySqlDatabase.prepareStatement("SELECT * FROM stock_mangemnet.tbl_menu where tbl_menu.menuId like \"%" + like + "%\";" );
+
+			statementMenu = mySqlDatabase.prepareStatement(
+					"SELECT * FROM stock_mangemnet.tbl_menu where tbl_menu.menuId like \"%" + like + "%\";");
 			ResultSet resultMenu = statementMenu.executeQuery();
-			
-			while(resultMenu.next()) {
-				
-			statementDish = mySqlDatabase.prepareStatement("SELECT * FROM stock_mangemnet.tbl_dish, stock_mangemnet.tbl_menu_dishes where (tbl_dish.dishId = tbl_menu_dishes.dishId) and tbl_menu_dishes.menuDishId = \'" + resultMenu.getString(2) + "\';");
-			//statementDish = mySqlDatabase.prepareStatement("SELECT * FROM stock_mangemnet.tbl_dish");
-			
-			ResultSet resultDish = statementDish.executeQuery();
-			
-			
-			dish = new ArrayList<>();
-			while (resultDish.next()) {
-				
-				statementStockType = mySqlDatabase.prepareStatement("SELECT * FROM stock_mangemnet.tbl_dish_stock, stock_mangemnet.tbl_stock_type where (tbl_dish_stock.dishId = \'" + resultDish.getString(1) + "\') and ( tbl_dish_stock.stockTypeId = tbl_stock_type.stockTypeId);" );
-				ResultSet resultStockType = statementStockType.executeQuery();
-				stockType = new ArrayList<>();
-				while(resultStockType.next()) {
-					stockType.add(new StockType(resultStockType.getString(6),resultStockType.getString(7),resultStockType.getString(8)));
+
+			while (resultMenu.next()) {
+
+				statementDish = mySqlDatabase.prepareStatement(
+						"SELECT * FROM stock_mangemnet.tbl_dish, stock_mangemnet.tbl_menu_dishes where (tbl_dish.dishId = tbl_menu_dishes.dishId) and tbl_menu_dishes.menuDishId = \'"
+								+ resultMenu.getString(2) + "\';");
+				// statementDish = mySqlDatabase.prepareStatement("SELECT * FROM
+				// stock_mangemnet.tbl_dish");
+
+				ResultSet resultDish = statementDish.executeQuery();
+
+				dish = new ArrayList<>();
+				while (resultDish.next()) {
+
+					statementStockType = mySqlDatabase.prepareStatement(
+							"SELECT * FROM stock_mangemnet.tbl_dish_stock, stock_mangemnet.tbl_stock_type where (tbl_dish_stock.dishId = \'"
+									+ resultDish.getString(1)
+									+ "\') and ( tbl_dish_stock.stockTypeId = tbl_stock_type.stockTypeId);");
+					ResultSet resultStockType = statementStockType.executeQuery();
+					stockType = new ArrayList<>();
+					while (resultStockType.next()) {
+						stockType.add(new StockType(resultStockType.getString(6), resultStockType.getString(7),
+								resultStockType.getString(8)));
+					}
+
+					dish.add(new Dish(resultDish.getString(1), stockType));
 				}
-				
-				
-				dish.add(new Dish(resultDish.getString(1),stockType));
-							}
-			//top one ends here
-			
-			menu.add(new Menu(resultMenu.getString(2),getSpecificBudget(resultMenu.getString(1)),dish));
-			
+				// top one ends here
+
+				menu.add(new Menu(resultMenu.getString(2), getSpecificBudget(resultMenu.getString(1)), dish));
+
 			}
-			} catch (SQLException e) {
+		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		
+
 		return menu;
 	}
- 
- public void deleteSelectedDish(String id) {
+
+	/**
+	 * delete a row from the database table tbl_dish, which has the same pk as the
+	 * passed in parameter.
+	 * 
+	 * @param id = String which corresponds to the pk of the dish row that is wanted
+	 *           to be deleted.
+	 */
+	public void deleteSelectedDish(String id) {
 		PreparedStatement statement;
 		try {
-			statement = mySqlDatabase.prepareStatement("Delete from stock_mangemnet.tbl_dish where tbl_dish.dishId = \'" + id + "\';");
+			statement = mySqlDatabase
+					.prepareStatement("Delete from stock_mangemnet.tbl_dish where tbl_dish.dishId = \'" + id + "\';");
 			statement.execute();
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}
- 
- 
- 
- public void saveMenu(Menu menu) {
+	
+	/**
+	 * save the menu object. 
+	 * use the passed in parameter Menu to make new rows in the tables, 
+	 * tbl_menu and tbl_menu_dishes
+	 * @param menu = Menu object which methods are used to get the values which populate the tables.
+	 */
+	public void saveMenu(Menu menu) {
 		PreparedStatement statement;
 		try {
-			statement = mySqlDatabase.prepareStatement("Insert Into stock_mangemnet.tbl_menu values (\'" +menu.getBudget().getBudgetId() + "\', \'" + menu.getName() + "\');");
+			statement = mySqlDatabase.prepareStatement("Insert Into stock_mangemnet.tbl_menu values (\'"
+					+ menu.getBudget().getBudgetId() + "\', \'" + menu.getName() + "\');");
 			statement.execute();
-			
+
 			menu.getHeldDishes().forEach((Dish i) -> {
-				
+
 				try {
-					mySqlDatabase.prepareStatement("Insert Into stock_mangemnet.tbl_menu_dishes (dishId, menuId) values ( \'" +i.getName() + "\', \'" + menu.getName() + "\');").execute();
-				
+					mySqlDatabase
+							.prepareStatement("Insert Into stock_mangemnet.tbl_menu_dishes (dishId, menuId) values ( \'"
+									+ i.getName() + "\', \'" + menu.getName() + "\');")
+							.execute();
+
 				} catch (SQLException e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
-				
-				
+
 			});
-			
+
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}
- /**
-  * deletes all the date the database has about the menu that is passed in.
-  * this includes the menu_dishes row as well that have the passed in menu
-  * @param menu = Menu that you want to delete. 
-  */
- public void DeleteAMenu(Menu menu) {
+
+	/**
+	 * deletes all the date the database has about the menu that is passed in. this
+	 * includes the menu_dishes row as well that have the passed in menu
+	 * 
+	 * @param menu = Menu that you want to delete.
+	 */
+	public void DeleteAMenu(Menu menu) {
 		PreparedStatement statement;
 		try {
-			//gets rid of all the menudishes that are for the menu
-			statement = mySqlDatabase.prepareStatement("delete from stock_mangemnet.tbl_menu_dishes where menuId = \'"+ menu.getName() + "\';");
+			// gets rid of all the menudishes that are for the menu
+			statement = mySqlDatabase.prepareStatement(
+					"delete from stock_mangemnet.tbl_menu_dishes where menuId = \'" + menu.getName() + "\';");
 			statement.execute();
-			//gets rid of the menu its self
-			statement = mySqlDatabase.prepareStatement("delete from stock_mangemnet.tbl_menu where menuId = \'"+ menu.getName() + "\';");
+			// gets rid of the menu its self
+			statement = mySqlDatabase.prepareStatement(
+					"delete from stock_mangemnet.tbl_menu where menuId = \'" + menu.getName() + "\';");
 			statement.execute();
-			
-			
+
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}
- 
- public Menu getAMenuFromId(String id) {
-		
-	 PreparedStatement statementMenu;
-	 	PreparedStatement statementDish;
+
+	public Menu getAMenuFromId(String id) {
+
+		PreparedStatement statementMenu;
+		PreparedStatement statementDish;
 		PreparedStatement statementStockType;
 		Menu menu = null;
-		ArrayList<Dish> dish  = new ArrayList<>();
+		ArrayList<Dish> dish = new ArrayList<>();
 		ArrayList<StockType> stockType = new ArrayList<>();
 		try {
-			
-			
-			
-			statementMenu = mySqlDatabase.prepareStatement("SELECT * FROM stock_mangemnet.tbl_menu where tbl_menu.menuId = \"" + id + "\";" );
+
+			statementMenu = mySqlDatabase
+					.prepareStatement("SELECT * FROM stock_mangemnet.tbl_menu where tbl_menu.menuId = \"" + id + "\";");
 			ResultSet resultMenu = statementMenu.executeQuery();
-			
-			while(resultMenu.next()) {
-				
-			statementDish = mySqlDatabase.prepareStatement("SELECT * FROM stock_mangemnet.tbl_dish, stock_mangemnet.tbl_menu_dishes where (tbl_dish.dishId = tbl_menu_dishes.dishId) and tbl_menu_dishes.menuId = \'" + resultMenu.getString(2) + "\';");
-			//statementDish = mySqlDatabase.prepareStatement("SELECT * FROM stock_mangemnet.tbl_dish");
-			
-			ResultSet resultDish = statementDish.executeQuery();
-			
-			
-			dish = new ArrayList<>();
-			while (resultDish.next()) {
-				
-				statementStockType = mySqlDatabase.prepareStatement("SELECT * FROM stock_mangemnet.tbl_dish_stock, stock_mangemnet.tbl_stock_type where (tbl_dish_stock.dishId = \'" + resultDish.getString(1) + "\') and ( tbl_dish_stock.stockTypeId = tbl_stock_type.stockTypeId);" );
-				ResultSet resultStockType = statementStockType.executeQuery();
-				stockType = new ArrayList<>();
-				while(resultStockType.next()) {
-					stockType.add(new StockType(resultStockType.getString(6),resultStockType.getString(7),resultStockType.getString(8),resultStockType.getDouble(4)+""));
+
+			while (resultMenu.next()) {
+
+				statementDish = mySqlDatabase.prepareStatement(
+						"SELECT * FROM stock_mangemnet.tbl_dish, stock_mangemnet.tbl_menu_dishes where (tbl_dish.dishId = tbl_menu_dishes.dishId) and tbl_menu_dishes.menuId = \'"
+								+ resultMenu.getString(2) + "\';");
+				// statementDish = mySqlDatabase.prepareStatement("SELECT * FROM
+				// stock_mangemnet.tbl_dish");
+
+				ResultSet resultDish = statementDish.executeQuery();
+
+				dish = new ArrayList<>();
+				while (resultDish.next()) {
+
+					statementStockType = mySqlDatabase.prepareStatement(
+							"SELECT * FROM stock_mangemnet.tbl_dish_stock, stock_mangemnet.tbl_stock_type where (tbl_dish_stock.dishId = \'"
+									+ resultDish.getString(1)
+									+ "\') and ( tbl_dish_stock.stockTypeId = tbl_stock_type.stockTypeId);");
+					ResultSet resultStockType = statementStockType.executeQuery();
+					stockType = new ArrayList<>();
+					while (resultStockType.next()) {
+						stockType.add(new StockType(resultStockType.getString(6), resultStockType.getString(7),
+								resultStockType.getString(8), resultStockType.getDouble(4) + ""));
+					}
+
+					dish.add(new Dish(resultDish.getString(1), stockType));
 				}
-				
-				
-				dish.add(new Dish(resultDish.getString(1),stockType));
-							}
-			//top one ends here
-			
-			menu = new Menu(resultMenu.getString(2),getSpecificBudget(resultMenu.getString(1)),dish);
-			
+				// top one ends here
+
+				menu = new Menu(resultMenu.getString(2), getSpecificBudget(resultMenu.getString(1)), dish);
+
 			}
-			} catch (SQLException e) {
+		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		
+
 		return menu;
 	}
- 
- 
+
 }
