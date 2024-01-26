@@ -1136,10 +1136,12 @@ public void setOutputBtnAboutEventHandler(EventHandler<ActionEvent> event) {
  * @param event = Event handler<ActionEvent> 
  */
 public void setBudgetListBtnAddEventHandler(EventHandler<ActionEvent> event) {
+	budgetListPage.setBtnAddEventHandler(event);
+}
 	/**
 	 * sets the budget list filter button event handler 
 	 * @param event = Event handler<ActionEvent> 
-	 */}
+	 */
 public void setBudgetListBtnFilterEventHandler(EventHandler<ActionEvent> event) {
 	budgetListPage.setBtnFilterEventHandler(event);
 }
@@ -1240,10 +1242,13 @@ public void setBudgetDetailsBtnCancelEventHandler(EventHandler<ActionEvent> even
  * loads the budget details page. 
  * it removes any children from the root view VBox, and add self in place so is visible.
  */
+
 public void budgetDetailsLoad() {
+	
 	this.getChildren().remove(0);
 	this.getChildren().add(bdp);
 	this.setVgrow(bdp, Priority.ALWAYS);
+
 }
 /**
  * gets the user input for the budget name.

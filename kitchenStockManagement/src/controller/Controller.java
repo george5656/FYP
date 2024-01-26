@@ -666,6 +666,7 @@ public class Controller {
 
 		@Override
 		public void handle(ActionEvent event) {
+			
 			view.clearBudgetDetailsPage();
 			model.resetABudget();
 			view.budgetDetailsLoad();
