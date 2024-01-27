@@ -1,8 +1,5 @@
 package view;
 
-import java.util.Collections;
-import java.util.List;
-
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.geometry.Pos;
@@ -15,7 +12,13 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.Priority;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Font;
-
+/**
+ * class is a page/view of the application.
+ * class represent a way for the user to input details and see details of 
+ * stock, so that stock can be added and edited.
+ * @author Student
+ *
+ */
 public class StockDetails extends BasicLayoutDetails {
 private Label txtStockName = new Label("StockName");
 private Label txtStorageLocation = new Label("Storage Location");
@@ -33,6 +36,9 @@ private VBox labels;
 private VBox userTextInput;
 private Button btnFileLoad = new Button("load form file");
 private HBox buttons;
+/**
+ * default constructor
+ */
 public StockDetails() {
 	buttons = getButtonPane();
 	labels = getLabels();
@@ -95,34 +101,72 @@ public StockDetails() {
 	userTextInput.setVgrow(dpExpiereDate,Priority.ALWAYS);
 	userTextInput.setVgrow(tfCost,Priority.ALWAYS);
 }
+/**
+ * gets the dataPicker associated with the expire date
+ * @return DatePicker
+ */
 public DatePicker getExpiereDate() {
 	return dpExpiereDate;
 }
+/**
+ * gets the TextField associate with the stock name
+ * @return TextField
+ */
 public TextField getStockName() {
 	return tfStockName;
 }
+/**
+ * get the combo box associated with the storage locations
+ * @return ComboBoc<String>
+ */
 public ComboBox<String> getStorageLocation() {
 	return cbStorageLocation;
 }
+/**
+ * gets the TextField associate with the quantity
+ * @return TextField
+ */
 public TextField getQuanity() {
 	return tfQuanity;
 }
+/**
+ * gets the TextField associate with the quantity type
+ * @return TextField
+ */
 public TextField getQuantityType() {
 	return tfQuantityType;
 }
+/**
+ * gets the TextField associate with the cost
+ * @return TextField
+ */
 public TextField getCost() {
 	return tfCost;
 }
+/**
+ * changes the buttons on show.
+ * it adds the  btnFileLoad if it isn't present, when the page is loaded.
+ * needed as page is loaded for the add and edit.
+ */
 public void setAddVarient() {
 	if(buttons.getChildren().size() != 3) {
 	buttons.getChildren().add(btnFileLoad);
 	}
 }
+/**
+ * changes the buttons on show.
+ * it removes the  btnFileLoad if it is present, when the page is loaded.
+ * needed as page is loaded for the add and edit.
+ */
 public void RemoveAddVarient() {
 	if(buttons.getChildren().size()==3) {
 	buttons.getChildren().remove(2);
 	}
 }
+/**
+ * sets the load from file button event handler 
+ * @param event = Event handler<ActionEvent> 
+ */
 public void setBtnLoadFromFileEventHandler(EventHandler<ActionEvent> event) {
 	btnFileLoad.setOnAction(event);
 }

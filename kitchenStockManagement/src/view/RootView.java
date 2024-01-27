@@ -1680,7 +1680,7 @@ public String getStorgeFilterType() {
 }
 /**
  * says if the combo box on the stock storage location has had an item be selected. 
- * @return boolean = true = yes, false = no.
+ * @return boolean true = no item has been selected, false = an item has been selected.
  */
 public Boolean StorageFilterHasATypeBeenSelected() {
 	return sslf.hasATypeBeenSelectec();

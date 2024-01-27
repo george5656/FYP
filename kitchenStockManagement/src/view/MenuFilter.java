@@ -8,7 +8,13 @@ import javafx.scene.control.TextField;
 import javafx.scene.layout.Priority;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Font;
-
+/**
+ * class is the view for the menu filter page.
+ * page is designed to get user input, which can then be later used to 
+ * filter menu objects
+ * @author Student
+ *
+ */
 public class MenuFilter extends BasicLayoutFilter {
 private Label txtTotalCostBelow = new Label("total cost below");
 private Label txtTotalCostAbove = new Label("total cost above");
@@ -22,7 +28,9 @@ private VBox labels;
 private VBox userTextInput;
 private ArrayList<Label> labelList = new ArrayList<>();
 private ArrayList<TextField> input = new ArrayList<>();
-
+/**
+ * default constructor
+ */
 public MenuFilter() {
 	labels = getLabels();
 	userTextInput = getUserTextInput();
@@ -53,16 +61,31 @@ labels.getChildren().addAll(labelList);
 	}
 
 }
-
+/**
+ * gets the user input associate with total cost above 
+ * @return String
+ */
 public String getTotalCostAbove() {
 	return tfTotalCostAbove.getText();
 }
+/**
+ * gets the user input associate with total cost below 
+ * @return String
+ */
 public String getTotalCostBelow() {
 	return tfTotalCostBelow.getText();
 }
+/**
+ * gets the user input associate with contains dish
+ * @return String
+ */
 public String getContainsDish() {
 	return tfContainsDish.getText();
 }
+/**
+ * gets the user input associate with doesn't contains dish.
+ * @return String
+ */
 public String getDoesntContainDish() {
 	return tfDoesntContainDish.getText();
 }

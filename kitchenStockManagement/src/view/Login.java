@@ -14,9 +14,9 @@ import javafx.scene.layout.Priority;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Font;
 /**
- * 
+ * first page loaded, login page for the application.
  * @author George
- *first page loaded, login page for the application.
+ *
  */
 public class Login extends VBox {
 //fields 
@@ -34,6 +34,7 @@ public class Login extends VBox {
 	
 	
 	/**
+	 * default constructor
 	 * initialling the layout and set the properties.
 	 */
 	public Login() {
@@ -131,6 +132,9 @@ public String getUserUsernameInput() {
 public String getUserPasswordInput() {
 	return pfPassword. getText().toString(); 
 }
+/**
+ * clears the input fields, sets the inputs to ""
+ */
 public void clearInput() {
 	pfPassword.setText("");
 	tfUsername.setText("");

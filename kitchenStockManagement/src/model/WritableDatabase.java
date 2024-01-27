@@ -297,18 +297,6 @@ public class WritableDatabase {
 		}
 
 	}
-	
-	/**
-	 * gets all the storage location in the database that match the where. use the
-	 * parameter where, to identity which storage locations to get.
-	 * 
-	 * @param where = String, which is the where part of the MySQL statement. note
-	 *              the where word is not needed.
-	 * @return ArrayList<String> = all the storage location that pass the where.
-	 *         each value is the output of a storage location toString method.
-	 */
-	
-	
 	/**
 	 *
 	 * gets all the Current stock the database hold that pass the where. 
@@ -451,7 +439,15 @@ public class WritableDatabase {
 
 		return allBudgets;
 	}
-
+/**
+ * gets budget objects that pass all the where input. 
+ * a budget is simply the data that is in the table tbl_budget, and 
+ * each row contains all the values that are needed to make a budget object.
+ * @param where = String, which is the where part of the MySQL statement. note
+ *              the where word is not needed. 
+ * @return ArrayList<String> = all the budgets that pass the where.
+ *         each value is the output of a budget toString method.
+ */
 	public ArrayList<String> getBudgetsThatMatchesWhere(String where) {
 		PreparedStatement statement;
 		ArrayList<String> budgets = new ArrayList<>();
@@ -495,14 +491,23 @@ public class WritableDatabase {
 		}
 
 	}
-
-	public ArrayList<String> getBudgetsThatsLike(String where) {
+	/**
+	 * gets all budget that are like the inputed string.
+	 * a budget is simply the data that is in the table tbl_budget, and 
+	 * each row contains all the values that are needed to make a budget object.
+	 * the rows that are retrieved are the ones where the budgetId column, value is 
+	 * like eg % like % the inputed string like.
+	 * @param like = String, to indicate which budget to get. its seeing if the budgetId column value is like it.
+	 * @return ArrayList<String> = all the budgets that are like the inputed parameter.
+	 *         each value is the output of a budget toString method.
+	 */
+	public ArrayList<String> getBudgetsThatsLike(String like) {
 		ArrayList<String> allBudgets = new ArrayList<>();
 		PreparedStatement statement;
 
 		try {
 			statement = mySqlDatabase.prepareStatement(
-					"select * from stock_mangemnet.tbl_budget where tbl_budget.budgetId like \'%" + where + "%\' ;");
+					"select * from stock_mangemnet.tbl_budget where tbl_budget.budgetId like \'%" + like + "%\' ;");
 			ResultSet result = statement.executeQuery();
 			// if(result.first()) {
 			while (result.next()) {
@@ -518,14 +523,22 @@ public class WritableDatabase {
 
 		return allBudgets;
 	}
-
 	// all check that id already exists so this should be fine
-	public Budget getSpecificBudget(String Id) {
+	/**
+	 * gets a specific budget from the database.
+	 * a budget is simply the data that is in the table tbl_budget, and 
+	 * each row contains all the values that are needed to make a budget object.
+	 * the data the budget object has is the data in the row where the inputed id is the same as 
+	 * the budgetId value.
+	 * @param id = String, which is the primary key of the row values want the object to have.
+	 * @return Budget object, with the values from the database.
+	 */
+	public Budget getSpecificBudget(String id) {
 		PreparedStatement statement;
 		Budget budget = new Budget("null", -1.00, "null", "null");
 		try {
 			statement = mySqlDatabase.prepareStatement(
-					"select * from stock_mangemnet.tbl_budget where (tbl_budget.budgetId = \"" + Id + "\");");
+					"select * from stock_mangemnet.tbl_budget where (tbl_budget.budgetId = \"" + id + "\");");
 			ResultSet result = statement.executeQuery();
 			// if(result.first()) {
 			if (result.next()) {
@@ -589,14 +602,23 @@ public class WritableDatabase {
 
 		return allAccounts;
 	}
-
-	public ArrayList<String> getAccountsThatsLike(String where) {
+/**
+ * gets all Accounts that are like the inputed string.
+ * An account is simply the data that is in the table tbl_account_details, and 
+ * each row contains all the values that are needed to make a Account object.
+ * the rows that are retrieved are the ones where the username column, value is 
+ * like eg % like % the inputed string like.
+ * @param like = String, to indicate which Account to get. its seeing if the username column value is like it.
+ * @return ArrayList<String> = all the Accounts that are like the inputed parameter.
+ *         each value is the output of a Account toString method.
+ */
+	public ArrayList<String> getAccountsThatsLike(String like) {
 		PreparedStatement statement;
 		ArrayList<String> account = new ArrayList<>();
 		try {
 			statement = mySqlDatabase.prepareStatement(
 					"select userName, isAdmin from stock_mangemnet.tbl_account_details where tbl_account_details.userName like \'%"
-							+ where + "%\' ;");
+							+ like + "%\' ;");
 			ResultSet result = statement.executeQuery();
 			// if(result.first()) {
 			while (result.next()) {
@@ -611,7 +633,16 @@ public class WritableDatabase {
 
 		return account;
 	}
-
+	/**
+	 * gets Account objects that pass all the where input. 
+	 * a account is simply the data that is in the table tbl_account_details, and 
+	 * each row contains all the values that are needed to make a account object.
+	 * @param where = String, which is the where part of the MySQL statement. note
+	 *              the where word is not needed. 
+	 * @return ArrayList<String> = all the accounts that pass the where.
+	 *         each value is the output of a account toString method. not the password is not added
+	 *         for security reasons.
+	 */
 	public ArrayList<String> getAccountsThatMatchesWhere(String where) {
 		PreparedStatement statement;
 		ArrayList<String> Accounts = new ArrayList<>();
@@ -757,7 +788,13 @@ public class WritableDatabase {
 
 		return allSl;
 	}
-
+/**
+ * returns if a row in the database, already has the same primary key/storageLocationId.
+ * it checks the tbl_storage_location table, looking at the row storageLocationId. and sees if any of the rows
+ * has the same value as the String which has been passed in. 
+ * @param storagelocation = String, which is the primary key you want to see if already exists in the database.
+ * @return Boolean, true = it is already in database, false = it isn't already in the database.
+ */
 	public Boolean StorgaeLocationExists(String storagelocation) {
 		PreparedStatement statement;
 		try {
@@ -775,13 +812,22 @@ public class WritableDatabase {
 		return false;
 
 	}
-
-	public ArrayList<String> getStorageThatsLike(String where) {
+	/**
+	 * gets all storage locations that are like the inputed string.
+	 * A storage location is simply the data that is in the table tbl_storage_location, and 
+	 * each row contains all the values that are needed to make a storageLocation object.
+	 * the rows that are retrieved are the ones where the storageLocationId column, value is 
+	 * like eg % like % the inputed string like.
+	 * @param like = String, to indicate which Account to get. its seeing if the storageLocationId column value is like it.
+	 * @return ArrayList<String> = all the Storage locations that are like the inputed parameter.
+	 *         each value is the output of a StorageLocation toString method.
+	 */
+	public ArrayList<String> getStorageThatsLike(String like) {
 		PreparedStatement statement;
 		ArrayList<String> storage = new ArrayList<>();
 		try {
 			statement = mySqlDatabase.prepareStatement(
-					"select * from stock_mangemnet.tbl_storage_location where storageLocationId like \'%" + where
+					"select * from stock_mangemnet.tbl_storage_location where storageLocationId like \'%" + like
 							+ "%\' ;");
 			ResultSet result = statement.executeQuery();
 			// if(result.first()) {
@@ -883,8 +929,14 @@ public class WritableDatabase {
 		}
 
 	}
-	
-	
+	/**
+	 * updates a row in the tbl_storage_location table. 
+	 * @param name = String, which is the new storageLocationId row value
+	 * @param type = String, which is the new type row value 
+	 * @param isAvailble = Boolean, which is the new isAvailble value, true =is available, false = isn't available. 
+	 * @param orginalId = String which identifies, the row for which to update, as it should match a value that already 
+	 * in the row stirageLocationId
+	 */
 	public void updateStorage(String name, String type, Boolean isAvailble, String orginalId) {
 		PreparedStatement statement;
 		int adminStatus = 0;
@@ -953,7 +1005,15 @@ public class WritableDatabase {
 			e.printStackTrace();
 		}
 	}
-
+/**
+ * user to know if account is admin.
+ * checks the the table tbl_account_details looking at row is admin.
+ * if the value is 1 thats a true(as MySQL doesn't have boolean) and true = is admin, 
+ * if the value is 0 thats a false = isn't admin. 
+ * checks the row where the userName /primary key equals the passed in parameter id.
+ * @param id = String, this a primary key in the database
+ * @return boolean, true = is admin, false = isn't admin.
+ */
 	public Boolean isAccountAdmin(String id) {
 		PreparedStatement statement;
 		try {
@@ -1010,7 +1070,16 @@ public class WritableDatabase {
 
 		return dish;
 	}
-
+	/**
+	 *  get all the dish objects that are like the passed in parameter. 
+	 *  each dish object is values are retrieved from the database. 
+	 *  the tables it gets the data from are the tbl_dish, tbl_dish_stock and tbl_stock_type
+	 *  it uses the data from these tables to populate each of the dish object in the arrayList<Dish>
+	 * the rows that are retrieved are the ones where the dishId column, value is 
+	 * like eg % like % the inputed string like.
+	 * @param like = String, to indicate which dishes to get. its seeing if the tbl_dish column value is like it.
+	 * @return ArrayList<Dish> = all the dishes that dishId are like the passed in value.
+	 */
 	public ArrayList<Dish> getAllCurrentDishesThatLike(String like) {
 		PreparedStatement statement;
 		PreparedStatement statement2;
@@ -1043,7 +1112,14 @@ public class WritableDatabase {
 
 		return dish;
 	}
-
+/**
+ * gets a specific dish from the database.
+ * when say get a dish from a database, mean make a dish object and use the data in the database
+ * to create it and sets it values. 
+ * the values it gets are where the dishId parameter equals a value in the dishId column in the tbl_dish table. 
+ * @param dishId = String which represent a primary key, in he tbl_dish table
+ * @return Dish object, with its values gotten from the database.
+ */
 	public Dish getASpecificDishes(String dishId) {
 		PreparedStatement statement;
 		PreparedStatement statement2;
@@ -1077,7 +1153,15 @@ public class WritableDatabase {
 
 		return dish;
 	}
-
+/**
+ * makes a row in the table tbl_dish_stock.
+ * each row represents the connection between tbl_stock_Type and tbl_dish table.
+ * the values inputed are the ones passed in to the parameters.
+ * @param stockType = String, populates the stockTypeId column, should be a pk in the table tbl_stock_Type. 
+ * @param dishName = String, populates the dishId column, should be a pk in the table tbl_dish.
+ * @param quanityNeeded = String, which is a double in a string format, populates the quanityOfStockNeeded column.
+ * @param unit = String, populates the quantityOfStockNeedUnitType column.
+ */
 	public void saveDishStockConnection(String stockType, String dishName, String quanityNeeded, String unit) {
 		PreparedStatement statement;
 		try {
@@ -1092,7 +1176,11 @@ public class WritableDatabase {
 			e.printStackTrace();
 		}
 	}
-
+/**
+ * makes a new row in tbl_dish.
+ * the value it saves is the inputer parameter.
+ * @param dishName = String, which is to be saved in the column dishId
+ */
 	public void saveDish(String dishName) {
 
 		PreparedStatement statement;
@@ -1129,8 +1217,14 @@ public class WritableDatabase {
 		}
 
 	}
-
-	public void deleteDishConnection(String orginalDishName) {
+/**
+ * delete a row from the table tbl_dish and all the corresponding row in tbl_dish_stock.
+ * note, no call directly to tbl_dish_stock as the FK has them cascade when the dishId is deleted. 
+ * uses the passed in parameter to identify the row in tbl_dish where the dishId column has a row which 
+ * has that value.
+ * @param orginalDishName = String which is the primary key of the row wanted to be deleted.
+ */
+	public void deleteDish(String orginalDishName) {
 
 		PreparedStatement statement;
 		try {
@@ -1173,7 +1267,13 @@ public class WritableDatabase {
 
 		return ids;
 	}
-
+/**
+ * gets all the dishes which the number of stockType associated with it is less than the passed in parameter number.
+ * 
+ * 
+ * @param numberOfMaxItems = int, which is the max number so x <= numberOfMaxItems
+ * @return ArryaList<Dish>, all dish that have less needed stock type then the number numberOFMaxItems is.
+ */
 	public ArrayList<Dish> getDishWithLessThanSetItems(int numberOfMaxItems) {
 
 		PreparedStatement statement;
@@ -1221,8 +1321,14 @@ public class WritableDatabase {
 		return dish;
 
 	}
-
-	public ArrayList<Dish> getDishWithMoreThanSetItems(int numberOfMaxItems) {
+	/**
+	 * gets all the dishes which the number of stockType associated with it is more than the passed in parameter number.
+	 * 
+	 * 
+	 * @param numberOfMinItems = int, which is the min number so x >= numberOfMinItems
+	 * @return ArryaList<Dish>, all dish that have more needed stock type then the number numberOfMinItems is.
+	 */
+	public ArrayList<Dish> getDishWithMoreThanSetItems(int numberOfMinItems) {
 
 		PreparedStatement statement;
 		PreparedStatement statement2;
@@ -1243,7 +1349,7 @@ public class WritableDatabase {
 				ResultSet result2 = statement2.executeQuery();
 
 				result2.next();
-				if (Integer.parseInt(result2.getString(1)) >= numberOfMaxItems) {
+				if (Integer.parseInt(result2.getString(1)) >= numberOfMinItems) {
 
 					statement3 = mySqlDatabase.prepareStatement(
 							"SELECT * FROM stock_mangemnet.tbl_dish_stock, stock_mangemnet.tbl_stock_type where (tbl_dish_stock.dishId = \'"
@@ -1269,8 +1375,15 @@ public class WritableDatabase {
 		return dish;
 
 	}
-
-	public ArrayList<Dish> getDishThatCostNotAbove(Double numberOfMaxItems) {
+	
+/**
+ * gets all dishes where the total cost of all there needed stock type is not any more than the max cost parameter.
+ * 
+ * 
+ * @param maxCost = Double, which is the max cost the total stock can be so x <= maxCost
+ * @return ArrayList<Dish> all dishes where the cost of the needed stock is less then the maxCost parmeter.
+ */
+	public ArrayList<Dish> getDishThatCostNotAbove(Double maxCost) {
 
 		PreparedStatement statement;
 
@@ -1298,7 +1411,7 @@ public class WritableDatabase {
 				Dish input = new Dish(result.getString(1), stockType);
 
 				// where it is deiced if they are added or not.
-				if (input.getDishCost() <= numberOfMaxItems) {
+				if (input.getDishCost() <= maxCost) {
 					dish.add(input);
 				}
 
@@ -1313,7 +1426,14 @@ public class WritableDatabase {
 
 	}
 
-	public ArrayList<Dish> getDishThatCostNotBellow(Double numberOfMaxItems) {
+	/**
+	 * gets all dishes where the total cost of all there needed stock type is no less than the minCost parameter.
+	 * 
+	 * 
+	 * @param minCost = Double, which is the min cost the total stock can be so x >= minCost
+	 * @return ArrayList<Dish> all dishes where the cost of the needed stock is more then the maxCost parmeter.
+	 */
+	public ArrayList<Dish> getDishThatCostNotBellow(Double minCost) {
 
 		PreparedStatement statement;
 
@@ -1341,7 +1461,7 @@ public class WritableDatabase {
 				Dish input = new Dish(result.getString(1), stockType);
 
 				// where it is deiced if they are added or not.
-				if (input.getDishCost() >= numberOfMaxItems) {
+				if (input.getDishCost() >= minCost) {
 					dish.add(input);
 				}
 
@@ -1409,7 +1529,14 @@ public class WritableDatabase {
 
 		return menu;
 	}
-
+/**
+ * gets a list of menu where menu id is like the inputed parameter like.
+ * the menu objects values are populated by the database values. 
+ * this method gets all the menus, where row has a like value eg %like%, in the menuId column 
+ * of the tbl_menu table. 
+ * @param like = String that you want all the returned menu menuId/name to be like.
+ * @return ArrayList<Menu> = which are the menu who name/menuId is like the pameter like.
+ */
 	public ArrayList<Menu> getAllMenuThatAreLike(String like) {
 
 		PreparedStatement statementMenu;
@@ -1539,7 +1666,14 @@ public class WritableDatabase {
 			e.printStackTrace();
 		}
 	}
-
+/**
+ * gets a specific menu. 
+ * it makes a menu object which is returned, it gets the menu values from the database.
+ * the details it gets are the one where the menuId column found in the tbl_menu table, matches the 
+ * the inputed parameter id.
+ * @param id = String which is an id of the menu you want.
+ * @return Menu object.
+ */
 	public Menu getAMenuFromId(String id) {
 
 		PreparedStatement statementMenu;

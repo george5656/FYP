@@ -5,11 +5,16 @@ import javafx.geometry.Pos;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
-import javafx.scene.layout.HBox;
 import javafx.scene.layout.Priority;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Font;
-
+/**
+ * class is meant as a view / page.
+ * the page is meant to allow the user to input/select info about the menu, he is editing 
+ * or creating. 
+ * @author Student
+ *
+ */
 public class MenuSettingPage extends BasicLayoutDetails {
 private Label txtName = new Label("menu name");
 private Label txtBudget = new Label("budget");
@@ -19,6 +24,9 @@ private ComboBox<String> cbBudget = new ComboBox<>();
 private VBox labels;
 private VBox userTextInput;
 //private HBox test;
+/**
+ * default constructor
+ */
 public MenuSettingPage() {
 	labels = getLabels();
 	userTextInput = getUserTextInput();
@@ -53,15 +61,32 @@ public MenuSettingPage() {
 	txtName.setAlignment(Pos.CENTER);
 	txtBudget.setAlignment(Pos.CENTER);
 }
+/**
+ * get the  menu name area user input 
+ * @return String
+ */
 public String getName() {
 	return tfName.getText();
 }
+/**
+ * gets the index of the item the user selected in the combo box.
+ * @return integer = index of the item they selected.
+ */
 public Integer getBudgetIndex() {
 	return cbBudget.getSelectionModel().getSelectedIndex();
 }
+/**
+ * sets the values that can be selected in the combo box.
+ * @param options = ObservableList<String>, which are the options the user can select.
+ */
 public void setBudgetOptions(ObservableList<String> options){
+	cbBudget.getItems().clear();
 	cbBudget.getItems().addAll(options);
 }
+/**
+ * gets the combo box selected item value.
+ * @return String, combo box selected item value.
+ */
 public String getSelectedBudgetValue() {
 	return cbBudget.getSelectionModel().getSelectedItem();
 }

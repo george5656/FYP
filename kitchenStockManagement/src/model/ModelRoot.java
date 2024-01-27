@@ -2156,7 +2156,7 @@ public class ModelRoot {
 		// selectedDish is the one making
 
 		// bascially just purge all the rgianl connections and put new ones in its place
-		db.deleteDishConnection(orginalDishId);
+		db.deleteDish(orginalDishId);
 
 		db.updateDish(selectedDish.getName(), orginalDishId);
 
