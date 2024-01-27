@@ -97,15 +97,23 @@ public StockType(String name, String cost, String quanityType,String quanity) {
 	 this.quanity = quanity;
  }
  /**
-  * not official format.
-  * is done for the
+  * this is not official syntax.
+  * it is used by the current stock in its listView.
+  * syntax = name = ${name}, cost = ${cost}, quantityType = ${quanityType}
+  * @return String
   */
+ @Override
+	public String toString() {
+		return "name = " + name + ", cost = " + cost + ", quantityType = " + quanityType;
+	}
 /**
  * not official format.
  * is done this was so that it is displayed the correct way in the listView.
  * format = "name = ${name}, cost = ${cost}, quantityType = ${quanityType}, quanity = ${quanity}
  * @return String, which represent the stockType object.
  */
+ 
+ 
  public String toStringDishDetails() {
 		return "name = " + name + ", cost = " + cost + ", quantityType = " + quanityType + ", quanity = " + quanity;
 	}

@@ -148,6 +148,7 @@ public void setBtnSaveEventHandler(EventHandler<ActionEvent> event) {
  * @param event = Event handler<ActionEvent> 
  */
 public void setBtnAddEventHandler(EventHandler<ActionEvent> event) {
+	btnAdd.setOnAction(event);
 }
 /**
  * sets the delete button event handler 

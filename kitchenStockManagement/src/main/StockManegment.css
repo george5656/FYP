@@ -10,6 +10,15 @@
 .combo-box .text-field {
 -fx-font-size: 20;
 }
+.combo-box .text-field .list-cell {
+-fx-font-size: 20;
+}
+.combo-box .text-input .list-cell {
+-fx-font-size: 20;
+}
 .combo-box .text-input {
+-fx-font-size: 20;
+}
+.combo-box .list-cell {
 -fx-font-size: 20;
 }

@@ -1514,6 +1514,7 @@ public class ModelRoot {
 	 *         toString method.
 	 */
 	public ObservableList<String> getNotSelectedDishesAsString() {
+		
 		return FXCollections.observableArrayList(getNotSelectedDishesAsArrayListString());
 	}
 
@@ -1536,6 +1537,7 @@ public class ModelRoot {
 	 */
 	public void addDishToSelectedMenu(String dishId) {
 		selectedMenu.addItemToDishList(db.getASpecificDishes(dishId));
+		
 	}
 
 	/**
@@ -1695,8 +1697,19 @@ public class ModelRoot {
 	 *         output is what is in the ArrayList
 	 */
 	public ArrayList<String> getNotSelectedDishesAsArrayListString() {
-
 		ArrayList<String> dishAsString = new ArrayList<>();
+	
+		notSelectedDishes.clear();
+		
+		db.getAllCurrentDishes().forEach((Dish i) -> {
+			//sub string so isn't dish name = ****
+			if (!selectedMenu.doesItHoldDish(i.toString().substring(i.toString().indexOf("=")+2))) {
+				notSelectedDishes.add(i);
+
+			}
+
+		});
+		
 		notSelectedDishes.forEach((Dish i) -> {
 			dishAsString.add(i.toString());
 		});

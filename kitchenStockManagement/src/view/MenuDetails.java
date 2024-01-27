@@ -278,5 +278,19 @@ public class MenuDetails extends PaneMenu {
 	public void setBudgetValue(String value) {
 		txtBudget.setText("Budget = " + value);
 	}
-	
+	/**
+	 * clears the menu dish and shopping list and also clears the find input area text
+	 */
+	public void resetMenuAndShoppingListContent() {
+		lvMenu.getItems().clear();
+		lvShopping.getItems().clear();
+		tfUserInput.clear();
+		
+	}
+	/**
+	 * clears the find area input
+	 */
+	public void clearFindUserInput() {
+		tfUserInput.clear();
+	}
 }

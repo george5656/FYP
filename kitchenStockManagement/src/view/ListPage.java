@@ -177,4 +177,10 @@ public void setErrorMessage(String error) {
 	txtErrorMessage.setText(error);
 	txtErrorMessage.setVisible(true);
 }
+/**
+ * clears the value in the find user input area
+ */
+public void resetFindInput() {
+	tfFind.clear();
+}
 }

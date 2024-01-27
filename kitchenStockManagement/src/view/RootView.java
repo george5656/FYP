@@ -288,6 +288,7 @@ public void setStockListBtnFilterEventHandler(EventHandler<ActionEvent> event) {
 public void stockListLoad(ObservableList<String> data) {
 	stockListPage.getErrorLabel().setVisible(false);
 	stockListPage.setObservableList(data);
+	stockListPage.resetFindInput();
 	this.getChildren().remove(0);
 	this.getChildren().add(stockListPage);
 	this.setVgrow(stockListPage, Priority.ALWAYS);
@@ -567,6 +568,9 @@ public void stockFilterLoad(ArrayList<String> storageLocations, ArrayList<String
 	sf.getCbStockType().getItems().clear();
 	sf.getCbStockType().getItems().addAll(stockType);
 	
+	sf.resetPage();
+	
+	
 	this.getChildren().remove(0);
 	this.getChildren().add(sf);
 	this.setVgrow(sf, Priority.ALWAYS);
@@ -769,6 +773,7 @@ public void setMenuListErrorMessage(String error) {
  */
 public void menuListLoad(ObservableList<String> data) {
 	menuListPage.setObservableList(data);
+	menuListPage.resetFindInput();
 	this.getChildren().remove(0);
 	this.getChildren().add(menuListPage);
 	this.setVgrow(menuListPage, Priority.ALWAYS);
@@ -910,6 +915,16 @@ public void setMenuDetailsMenuListItems(ObservableList<String> items) {
 	menuDetails.setMenuDishList(items);
 }
 /**
+ * resets the menu details page menu and shopping list views. (middle and right ones)
+ * and also the find input area
+ */
+public void resetMenuDetailsPage() {
+	menuDetails.resetMenuAndShoppingListContent();
+}
+public void MenuDetailsRestFindInput() {
+	menuDetails.clearFindUserInput();
+}
+/**
  * sets the label in the menuDetails page.
  * format is Budget = amount
  * @param amount = String, which should be a double in a string format.
@@ -959,6 +974,7 @@ public String getBudgetListSelectedItem() {
  * it removes any children from the root view VBox, and add self in place so is visible
  */
 public void menuFilterLoad() {
+	mf.resetPage();
 	this.getChildren().remove(0);
 	this.getChildren().add(mf);
 	this.setVgrow(mf, Priority.ALWAYS);
@@ -1183,6 +1199,7 @@ public void setBudgetListBtnAboutEventHandler(EventHandler<ActionEvent> event) {
 public void BudgetListLoad(ObservableList<String> data) {
 	budgetListPage.getErrorLabel().setVisible(false);
 	budgetListPage.setObservableList(data);
+	budgetListPage.resetFindInput();
 	this.getChildren().remove(0);
 	this.getChildren().add(budgetListPage);
 	this.setVgrow(budgetListPage, Priority.ALWAYS);
@@ -1347,6 +1364,7 @@ public void setBudgetDetailsEndDate(String endDate) {
  * it removes any children from the root view VBox, and add self in place so is visible
  */
 public void budgetfilterLoad() {
+	budgetFilter.resetPage();
 	this.getChildren().remove(0);
 	this.getChildren().add(budgetFilter);
 	this.setVgrow(budgetFilter, Priority.ALWAYS);
@@ -1506,6 +1524,7 @@ public void setStorgaeLocationListBtnFindEventHandler(EventHandler<ActionEvent> 
 public void storgaeLocationListLoad(ObservableList<String> storageLocations) {
 	storageLocationListPage.getErrorLabel().setVisible(false);
 	storageLocationListPage.setObservableList(storageLocations);
+	storageLocationListPage.resetFindInput();
 	this.getChildren().remove(0);
 	this.getChildren().add(storageLocationListPage);
 	this.setVgrow(storageLocationListPage,Priority.ALWAYS);
@@ -1639,6 +1658,7 @@ public void setStorageLocationDetailsValues(String name, String type, Boolean is
  */
 public void StorgaeLocationFilterLoad(ArrayList<String> type) {
 	sslf.setType(type);
+	sslf.resetPage();
 	this.getChildren().remove(0);
 	this.getChildren().add(sslf);
 	this.setVgrow(sslf,Priority.ALWAYS);
@@ -1790,6 +1810,7 @@ public String getSelectedAccountName() {
 public void accountListLoad(ObservableList<String> data) {
 	accountListPage.getErrorLabel().setVisible(false);
 	accountListPage.setObservableList(data);
+	accountListPage.resetFindInput();
 	this.getChildren().remove(0);
 	this.getChildren().add(accountListPage);
 	this.setVgrow(accountListPage, Priority.ALWAYS);
@@ -2108,6 +2129,7 @@ public int getDishDetailsListSize() {
  * it removes any children from the root view VBox, and add self in place so is visible
  */
 public void dishFilterLoad() {
+	fd.resetPage();
 	this.getChildren().remove(0);
 	this.getChildren().add(fd);
 	this.setVgrow(fd, Priority.ALWAYS);

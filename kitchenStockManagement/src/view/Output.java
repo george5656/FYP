@@ -21,7 +21,7 @@ import javafx.scene.text.Font;
 public class Output extends PaneMenu {
 	private Label txtTitle = new Label("Which menu to save");
 	private Button btnMenu = new Button("output menu");
-	private Button btnShoppingList = new Button("output shoing List");
+	private Button btnShoppingList = new Button("output shopping List");
 	private Button btnBackToMenuDetails = new Button("back to menu details");
 	private Button btnBackToMenuList = new Button("back to menu list");
 	private Button btnSave = new Button("save");

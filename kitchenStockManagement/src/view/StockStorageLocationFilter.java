@@ -113,5 +113,11 @@ public String getSelectedType() {
 public boolean hasATypeBeenSelectec() {
 	return cbType.getSelectionModel().isEmpty();
 }
-
+/**
+ * reset all user input
+ */
+public void resetPage() {
+	rbYes.setSelected(false);
+	rbNo.setSelected(false);
+}
 }

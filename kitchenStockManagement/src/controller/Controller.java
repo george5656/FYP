@@ -321,6 +321,7 @@ public class Controller {
 		@Override
 		public void handle(ActionEvent event) {
 			
+			view.MenuDetailsRestFindInput();
 			view.MenuDetailsLoad();
 		
 		}
@@ -337,10 +338,13 @@ public class Controller {
 
 		@Override
 		public void handle(ActionEvent event) {
+			view.resetMenuDetailsPage();
 			model.setFromMenu(null);
 			model.resetMenuDetailList();
 			view.setMenuDetailsDishList(model.getAllDishes());
 			model.resetSelectedMenu();
+			view.resetMenuDetailsPage();
+			view.setMenuDetailsBudgetValue("not selected");
 			view.MenuDetailsLoad();
 		}
 
@@ -2042,8 +2046,8 @@ if(model.getDeleteFrom().equals("StockList")) {
 				view.setDishDetailsList(model.getSelectedDishList());
 				view.dishDetailsAddReset();
 			}else {
-				Alert dishDetailsErrorMessage = model.makeAlert(issueFrom, masterError);
-				dishDetailsErrorMessage.show();
+			model.makeAlert(issueFrom, masterError).show();
+				
 			}
 			
 			
@@ -2480,6 +2484,7 @@ if(model.getDeleteFrom().equals("StockList")) {
 					}
 				
 				//seperate as doesnt mess with the list so only need one
+				view.MenuDetailsRestFindInput();
 				view.MenuDetailsLoad();
 				
 				
@@ -2590,7 +2595,7 @@ if(model.getDeleteFrom().equals("StockList")) {
 			String issueFrom = "";
 			String masterErrorMessage = "";
 			if(view.getMenuDetailsMenuListSize() == 0) {
-				issueFrom = "menu list";
+				issueFrom = "menu dishes list";
 				masterErrorMessage = "no data to output";
 			}
 		
@@ -2616,7 +2621,9 @@ if(model.getDeleteFrom().equals("StockList")) {
 					e.printStackTrace();
 				}
 					
-			} 
+			} else {
+				model.makeAlert(issueFrom, masterErrorMessage).show();
+			}
 			
 		}
 	}
@@ -2636,7 +2643,7 @@ if(model.getDeleteFrom().equals("StockList")) {
 			String issueFrom = "";
 			String masterErrorMessage = "";
 			if(view.getMenuDetailsMenuListSize() == 0) {
-				issueFrom = "menu list";
+				issueFrom = "shopping list";
 				masterErrorMessage = "no data to output";
 			}
 		
@@ -2656,13 +2663,15 @@ if(model.getDeleteFrom().equals("StockList")) {
 					});
 					//need else it wont write it
 					 pw.flush();
-						
+						pw.close();
 				} catch (IOException e) {
 					
 					e.printStackTrace();
 				}
 				
-			} 
+			} else {
+				model.makeAlert(issueFrom, masterErrorMessage).show();
+			}
 
 		}
 	}

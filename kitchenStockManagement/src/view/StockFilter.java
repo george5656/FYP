@@ -153,4 +153,16 @@ public DatePicker getDpAfterDate() {
 public DatePicker getDpBeforeDate() {
 	return dpBeforeDate;
 }
+/**
+ * resets all the user input on this page
+ * not counting the data picker as they passed in data.
+ */
+public void resetPage() {
+	tfMinQuanity.clear();
+	tfMaxQuanity.clear();
+	tfAboveCost.clear();
+	tfBelowCost.clear();
+	dpAfterDate.getEditor().clear();
+	dpBeforeDate.getEditor().clear();
+}
 }

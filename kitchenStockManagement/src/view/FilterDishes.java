@@ -115,6 +115,13 @@ public String getNumberOfIngredientsMoreThan() {
 	}
 	
 }
-
-
+/**
+ * removes all user input from the page.
+ */
+public void resetPage() {
+	tfTotalCostAbove.clear();
+	tfTotalCostBelow.clear();
+	tfNumberOfItemsBelow.clear();
+	tfNumberOfItemsAbove.clear();
+}
 }

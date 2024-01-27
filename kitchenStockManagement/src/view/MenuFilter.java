@@ -89,6 +89,13 @@ public String getContainsDish() {
 public String getDoesntContainDish() {
 	return tfDoesntContainDish.getText();
 }
-
-
+/**
+ * resets the page user inputs
+ */
+public void resetPage() {
+	tfTotalCostBelow.clear();
+	tfTotalCostAbove.clear();
+	tfContainsDish.clear();
+	tfDoesntContainDish.clear();
+}
 }

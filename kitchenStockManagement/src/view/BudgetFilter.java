@@ -117,4 +117,15 @@ import javafx.scene.text.Font;
 	public DatePicker getEndsAfter() {
 		return dpEndsAfter;
 	}
+	/**
+	 * clears all user input
+	 */
+	public void resetPage() {
+		tfMinAmount.clear();
+		tfMaxAmount.clear();
+		dpStartBefore.getEditor().clear();
+		dpStartAfter.getEditor().clear();
+		dpEndsBefore.getEditor().clear();
+		dpEndsAfter.getEditor().clear();
+	}
 	}
