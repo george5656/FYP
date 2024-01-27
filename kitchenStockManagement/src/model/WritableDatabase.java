@@ -72,6 +72,7 @@ public class WritableDatabase {
 			while (result.next()) {
 				CurrentStock input = new CurrentStock(result.getInt(1), result.getString(2), result.getDouble(4),
 						result.getString(8), result.getDate(5).toString(), result.getString(3), result.getDouble(7));
+				
 				currentStock.add(input);
 			}
 			// }
@@ -129,7 +130,7 @@ public class WritableDatabase {
 			// CurrentStock stock = data.getcurrentStock().get(0);
 			statement = mySqlDatabase.prepareStatement(
 					"Insert Into stock_mangemnet.tbl_stock_iteration (storageLocationId, stockTypeId, quanity, expiereDate) Values ( \'"
-							+ data.getstorageLocationId() + "\',\'" + data.getStockName() + "\',\'" + data.getQuantity()
+							+ data.getstorageLocationId() + "\',\'" + data.getStockName() + "\',\'" + data.getQuanity()
 							+ "\',\'" + data.getExpiereDate() + "\'); ");
 			statement.execute();
 		} catch (SQLException e) {
@@ -402,7 +403,7 @@ public class WritableDatabase {
 			statement = mySqlDatabase.prepareStatement(
 					"Update stock_mangemnet.tbl_stock_iteration set tbl_stock_iteration.storageLocationId = \'"
 							+ data.getstorageLocationId() + "\', stockTypeId = \'" + data.getStockName()
-							+ "\', quanity = \'" + data.getQuantity() + "\', expiereDate = \'" + data.getExpiereDate()
+							+ "\', quanity = \'" + data.getQuanity() + "\', expiereDate = \'" + data.getExpiereDate()
 							+ "\' where stockIterationId = \"" + id + "\";");
 			statement.execute();
 

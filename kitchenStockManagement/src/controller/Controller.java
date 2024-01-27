@@ -1618,6 +1618,8 @@ if(model.getDeleteFrom().equals("StockList")) {
 			
 			String startDateErrorMessage = model.dateValidation(view.getBudgetDetailsInputtedStartDate(), view.getBudgetDetailsInputtedStartDateAsLocalDate());
 			String endDateErrorMessage = model.dateValidation(view.getBudgetDetailsInputtedEndDate(), view.getBudgetDetailsInputtedEndDateAsLocalDate());
+			
+			
 			if(!nameErrorMessage.equals("")) {
 				masterError = nameErrorMessage;
 				issueTitle = "issue with name";
@@ -1630,15 +1632,14 @@ if(model.getDeleteFrom().equals("StockList")) {
 			} else if(!endDateErrorMessage.equals("")) {
 				masterError = endDateErrorMessage;
 				issueTitle = "issue with end date";
-			} 
-			// need to check if it is the selected budget name so it doesn't error out if from edit
-			if (model.doesBudgetNameAlreadyExist(view.getBudgetDetailsInputtedName())&& model.getSelectedBudget() == null) {
+			} else if (model.getSelectedBudget() == null && model.doesBudgetNameAlreadyExist(view.getBudgetDetailsInputtedName())) {
 				masterError = "name already taken";
 				issueTitle = "issue with name";
-			}else if(model.doesBudgetNameAlreadyExistAndIsntId(view.getBudgetDetailsInputtedName())&&model.getSelectedBudget() != null) {
+			}else if(model.getSelectedBudget() != null && model.doesBudgetNameAlreadyExistAndIsntId(view.getBudgetDetailsInputtedName())) {
 				masterError = "name already taken";
 				issueTitle = "issue with name";
 			}
+			
 			
 			if(masterError.equals("")) {
 			
@@ -1656,8 +1657,9 @@ if(model.getDeleteFrom().equals("StockList")) {
 			loadBudgetListPage();
 			
 			}else {
-				Alert budgetError = model.makeAlert(issueTitle, masterError);
-				budgetError.show();
+				
+				 model.makeAlert(issueTitle, masterError).show();
+			
 			}
 		}
 
