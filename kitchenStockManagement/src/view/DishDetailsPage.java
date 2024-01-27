@@ -13,7 +13,14 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.Priority;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Font;
-
+/**
+ * class is meant to be a page in application. 
+ * the point of the page is to show the user info and get the user info.
+ * the input categories are all based around dish details, as it is is aimed at 
+ * editing and creating dishes.
+ * @author Student
+ *
+ */
 public class DishDetailsPage extends PaneMenu {
 private Button btnAdd = new Button("Add");
 private Button btnEdit = new Button("Edit");
@@ -40,7 +47,9 @@ private VBox labels = new VBox(20);
 private VBox textFields = new VBox(20);
 private HBox controllsTop = new HBox(20);
 private HBox controllsBottom = new HBox(20);
-
+/**
+ * default constructor
+ */
 DishDetailsPage(){
 	super.setCenter(mainLayout);
 	mainLayout.getChildren().addAll(list,userInput);
@@ -139,6 +148,7 @@ public void setBtnSaveEventHandler(EventHandler<ActionEvent> event) {
  * @param event = Event handler<ActionEvent> 
  */
 public void setBtnAddEventHandler(EventHandler<ActionEvent> event) {
+	btnAdd.setOnAction(event);
 }
 /**
  * sets the delete button event handler 
@@ -161,34 +171,71 @@ public void setBtnEditEventHandler(EventHandler<ActionEvent> event) {
 public void setBtnCancelEventHandler(EventHandler<ActionEvent> event) {
 	btnCancel.setOnAction(event);
 }
+/**
+ * get user input for the name input area.
+ * @return String
+ */
 public String getName() {
 	return tfDishName.getText();
 }
+/**
+ * get user input for the ingredient name input area.
+ * @return String
+ */
 public String getIngredientName() {
 	return tfIngredientName.getText();
 }
+/**
+ * get user input for the quantity input area.
+ * @return String
+ */
 public String getQuanity() {
 	return tfQuanity.getText();
 }
+/**
+ * get user input for the unit/quantity type input area.
+ * @return String
+ */
 public String getUnit() {
 	return tfUnit.getText();
 }
+/**
+ * get user input for the estimated cost input area.
+ * @return String
+ */
 public String getEstimatedCost() {
 	return tfEstimatedCost.getText();
 }
+/**
+ * sets the lisView to show the inputed observableList
+ * @param ingredents = ObservableList<String>, which values are shown in the listView.
+ */
 public void setIngredentList(ObservableList<String> ingredents) {
 	lvIngredients.getItems().clear();
 	lvIngredients.getItems().addAll(ingredents);
 }
+/**
+ * get the index of the item selected in the listView
+ * @return int = the index of the item selected in the listView
+ */
 public int getSelectedIndex() {
 	return lvIngredients.getSelectionModel().getSelectedIndex();
 }
+/**
+ * get the id of the selected item.
+ * when say id mean the value that is shown after the name =
+ * @return String = the id of the item selected in the listView.
+ */
 public String getSelectedId() {
 	String selection = lvIngredients.getSelectionModel().getSelectedItem();
 	int idStart = selection.indexOf("=");
 	int idEnd = selection.indexOf("cost");
 	return selection.substring(idStart + 2, idEnd -2);
 }
+/**
+ * resets all the input areas.
+ * removes all input and values in input areas
+ */
 public void addReset() {
 	tfIngredientName.clear();
 	tfQuanity.clear();
@@ -196,10 +243,21 @@ public void addReset() {
 	tfEstimatedCost.clear();
 
 }
-
+/**
+ * get the item that is selected. 
+ * not it gets the string, which the user clicked on in the listView.
+ * @return String
+ */
 public String getSelectedValue() {
 	return lvIngredients.getSelectionModel().getSelectedItem();
 }
+/**
+ * populates the input areas with the provided values.
+ * @param name = String goes in to the ingredient name user input area 
+ * @param quanity = String goes in to the quantity user input area
+ * @param quanityType = String goes in to the unit /quantity type user input area
+ * @param cost = String goes in to the estimated cost user input area
+ */
 public void setUserInputValues(String name, String quanity, String quanityType, String cost) {
 	addReset();
 	tfIngredientName.setText(name);
@@ -207,7 +265,10 @@ public void setUserInputValues(String name, String quanity, String quanityType, 
 	tfUnit.setText(quanityType);
 	tfEstimatedCost.setText(cost);
 }
-
+/**
+ * get the size of the list that the listView is showing.
+ * @return int = number of element in the listView.
+ */
 public int getIngredientListSize() {
 	return lvIngredients.getItems().size();
 }

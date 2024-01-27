@@ -11,7 +11,6 @@ package model;
 public class CurrentStock extends StockType{
 private Integer id;
 private String storageLocationId;
-private Double quantity;
 private String expiereDate;
 
 /**
@@ -26,10 +25,9 @@ private String expiereDate;
  */
 public CurrentStock(Integer id, String storageLocationId, Double quantity, 
 		String quantityType, String expiereDate, String name, Double cost ) {
-super(name,cost.toString(),quantityType);
+super(name,cost.toString(),quantityType,quantity+"");
 	this.id = id;
 	this.storageLocationId =storageLocationId;
-	this.quantity = quantity;
 	this.expiereDate = expiereDate;
 
 }
@@ -40,15 +38,16 @@ super(name,cost.toString(),quantityType);
 */
 @Override
 	public String toString() {
-		return super.toString() + ", id = " + id + ", storage location = "  +storageLocationId + ", quantity = " + quantity + ", expire date = " + expiereDate;
+		return super.toString() + ", id = " + id + ", storage location = "  +storageLocationId + ", quantity = " + super.getQuanity() + ", expire date = " + expiereDate;
 	}
 /**
  * gets the value in the quantity var
  * @return Double
  */
-public Double getQuantity() {
-	return quantity;
-}
+@Override
+	public String getQuanity() {
+		return super.getQuanity();
+	}
 /**
  * gets the value in the expiereDate var
  * @return String
@@ -70,7 +69,15 @@ public String getstorageLocationId() {
 public int getId() {
 	return id;
 }
-
-
+/**
+ *is used to compare two stock type.
+ *has down cast so if not a stock type will cause an issue.
+ *@return Boolean, true = is equal, false = isn't equal.
+ */
+@Override
+	public boolean equals(Object obj) {
+	StockType comparison = (StockType)obj;
+		return this.getStockName().equals(comparison.getStockName());
+	}
 
 }

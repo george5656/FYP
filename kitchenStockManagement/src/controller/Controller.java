@@ -321,6 +321,7 @@ public class Controller {
 		@Override
 		public void handle(ActionEvent event) {
 			
+			view.MenuDetailsRestFindInput();
 			view.MenuDetailsLoad();
 		
 		}
@@ -337,10 +338,13 @@ public class Controller {
 
 		@Override
 		public void handle(ActionEvent event) {
+			view.resetMenuDetailsPage();
 			model.setFromMenu(null);
 			model.resetMenuDetailList();
 			view.setMenuDetailsDishList(model.getAllDishes());
 			model.resetSelectedMenu();
+			view.resetMenuDetailsPage();
+			view.setMenuDetailsBudgetValue("not selected");
 			view.MenuDetailsLoad();
 		}
 
@@ -666,6 +670,7 @@ public class Controller {
 
 		@Override
 		public void handle(ActionEvent event) {
+			
 			view.clearBudgetDetailsPage();
 			model.resetABudget();
 			view.budgetDetailsLoad();
@@ -1613,6 +1618,8 @@ if(model.getDeleteFrom().equals("StockList")) {
 			
 			String startDateErrorMessage = model.dateValidation(view.getBudgetDetailsInputtedStartDate(), view.getBudgetDetailsInputtedStartDateAsLocalDate());
 			String endDateErrorMessage = model.dateValidation(view.getBudgetDetailsInputtedEndDate(), view.getBudgetDetailsInputtedEndDateAsLocalDate());
+			
+			
 			if(!nameErrorMessage.equals("")) {
 				masterError = nameErrorMessage;
 				issueTitle = "issue with name";
@@ -1625,15 +1632,14 @@ if(model.getDeleteFrom().equals("StockList")) {
 			} else if(!endDateErrorMessage.equals("")) {
 				masterError = endDateErrorMessage;
 				issueTitle = "issue with end date";
-			} 
-			// need to check if it is the selected budget name so it doesn't error out if from edit
-			if (model.doesBudgetNameAlreadyExist(view.getBudgetDetailsInputtedName())&& model.getSelectedBudget() == null) {
+			} else if (model.getSelectedBudget() == null && model.doesBudgetNameAlreadyExist(view.getBudgetDetailsInputtedName())) {
 				masterError = "name already taken";
 				issueTitle = "issue with name";
-			}else if(model.doesBudgetNameAlreadyExistAndIsntId(view.getBudgetDetailsInputtedName())&&model.getSelectedBudget() != null) {
+			}else if(model.getSelectedBudget() != null && model.doesBudgetNameAlreadyExistAndIsntId(view.getBudgetDetailsInputtedName())) {
 				masterError = "name already taken";
 				issueTitle = "issue with name";
 			}
+			
 			
 			if(masterError.equals("")) {
 			
@@ -1651,8 +1657,9 @@ if(model.getDeleteFrom().equals("StockList")) {
 			loadBudgetListPage();
 			
 			}else {
-				Alert budgetError = model.makeAlert(issueTitle, masterError);
-				budgetError.show();
+				
+				 model.makeAlert(issueTitle, masterError).show();
+			
 			}
 		}
 
@@ -2041,8 +2048,8 @@ if(model.getDeleteFrom().equals("StockList")) {
 				view.setDishDetailsList(model.getSelectedDishList());
 				view.dishDetailsAddReset();
 			}else {
-				Alert dishDetailsErrorMessage = model.makeAlert(issueFrom, masterError);
-				dishDetailsErrorMessage.show();
+			model.makeAlert(issueFrom, masterError).show();
+				
 			}
 			
 			
@@ -2479,6 +2486,7 @@ if(model.getDeleteFrom().equals("StockList")) {
 					}
 				
 				//seperate as doesnt mess with the list so only need one
+				view.MenuDetailsRestFindInput();
 				view.MenuDetailsLoad();
 				
 				
@@ -2589,7 +2597,7 @@ if(model.getDeleteFrom().equals("StockList")) {
 			String issueFrom = "";
 			String masterErrorMessage = "";
 			if(view.getMenuDetailsMenuListSize() == 0) {
-				issueFrom = "menu list";
+				issueFrom = "menu dishes list";
 				masterErrorMessage = "no data to output";
 			}
 		
@@ -2615,7 +2623,9 @@ if(model.getDeleteFrom().equals("StockList")) {
 					e.printStackTrace();
 				}
 					
-			} 
+			} else {
+				model.makeAlert(issueFrom, masterErrorMessage).show();
+			}
 			
 		}
 	}
@@ -2635,7 +2645,7 @@ if(model.getDeleteFrom().equals("StockList")) {
 			String issueFrom = "";
 			String masterErrorMessage = "";
 			if(view.getMenuDetailsMenuListSize() == 0) {
-				issueFrom = "menu list";
+				issueFrom = "shopping list";
 				masterErrorMessage = "no data to output";
 			}
 		
@@ -2655,13 +2665,15 @@ if(model.getDeleteFrom().equals("StockList")) {
 					});
 					//need else it wont write it
 					 pw.flush();
-						
+						pw.close();
 				} catch (IOException e) {
 					
 					e.printStackTrace();
 				}
 				
-			} 
+			} else {
+				model.makeAlert(issueFrom, masterErrorMessage).show();
+			}
 
 		}
 	}

@@ -6,14 +6,18 @@ import javafx.geometry.Pos;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.RadioButton;
-import javafx.scene.control.TextField;
 import javafx.scene.control.ToggleGroup;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Priority;
-import javafx.scene.layout.Region;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Font;
-
+/**
+ * class is meant as a view/page. 
+ * the point of the class is to be able to get user input,
+ * which can then be used to filter storage locations.
+ * @author Student
+ *
+ */
 public class StockStorageLocationFilter  extends BasicLayoutFilter {
 private Label txtIsAvailble = new Label("is available");
 private Label txtType = new Label("Type");
@@ -26,7 +30,9 @@ private ArrayList<Label> labelList = new ArrayList<>();
 private HBox toggleGroupLayout = new HBox();
 private VBox labels;
 private VBox userTextInput;
-
+/**
+ * default constructors
+ */
 public StockStorageLocationFilter() {
 	labels = getLabels();
 	userTextInput = getUserTextInput();
@@ -70,11 +76,19 @@ public StockStorageLocationFilter() {
 	}
 	
 }
+/**
+ * resets the combo box for type.
+ * @param type = ArrayList<String>, which is all the storage location type options.
+ */
 public void setType(ArrayList<String> type) {
 	cbType.getItems().clear();
 	cbType.getItems().addAll(type);
 }
 //false = no, true = yes
+/**
+ *  gets which radio button has been selected.
+ * @return Boolean, false = radio button no has been selected, true = radio button yes has been selected.
+ */
 public Boolean getAvailblityStatus() {
 	if(rbYes.isSelected()) {
 		return true;
@@ -85,11 +99,25 @@ public Boolean getAvailblityStatus() {
 	}
 	
 }
+/**
+ * gets the item the user has selected in the combo box.
+ * @return String, which is the item selected in the combo box.
+ */
 public String getSelectedType() {
 	return cbType.getSelectionModel().getSelectedItem();
 }
+/**
+ * return if the combo box has had an item be selected.
+ * @return boolean, true = is empty(no selection), false = item has been selected
+ */
 public boolean hasATypeBeenSelectec() {
 	return cbType.getSelectionModel().isEmpty();
 }
-
+/**
+ * reset all user input
+ */
+public void resetPage() {
+	rbYes.setSelected(false);
+	rbNo.setSelected(false);
+}
 }

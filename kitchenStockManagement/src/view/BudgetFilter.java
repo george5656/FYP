@@ -12,7 +12,9 @@ import javafx.scene.layout.Region;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Font;
 /**
- * class is the view for the BudgetFilter
+ * class is the view for the BudgetFilter.
+ * is designed to take input which can be used to filter 
+ * budget objects
  * @author George
  *
  */
@@ -33,7 +35,9 @@ import javafx.scene.text.Font;
 	private VBox userTextInput;
 	private ArrayList<Label> labelList = new ArrayList<>();
 	private ArrayList<Region> input = new ArrayList<>();
-	
+	/**
+	 * default constructor
+	 */
 	public BudgetFilter() {
 		labels = getLabels();
 		userTextInput = getUserTextInput();
@@ -71,34 +75,57 @@ import javafx.scene.text.Font;
 		}
 	
 	}
-	
-	
+	/**
+	 * gets the textFiled associated with the min Amount
+	 * @return TextField
+	 */
 	public TextField getMinAmount() {
 		return tfMinAmount;
 	}
+	/**
+	 * gets the textFiled associated with the max Amount
+	 * @return TextField
+	 */
 	public TextField getMaxAmount() {
 		return tfMaxAmount;
 	}
+	/**
+	 * get the datePicker associated with start Before
+	 * @return DatePicker
+	 */
 	public DatePicker getStartBefore() {
 		return dpStartBefore;
 	}
+	/**
+	 * get the datePicker associated with start after
+	 * @return DatePicker
+	 */
 	public DatePicker getStartAfter() {
 		return dpStartAfter;
 	}
+	/**
+	 * get the datePicker associated with ends Before
+	 * @return DatePicker
+	 */
 	public DatePicker getEndsBefore() {
 		return dpEndsBefore;
 	}
+	/**
+	 * get the datePicker associated with ends after
+	 * @return DatePicker
+	 */
 	public DatePicker getEndsAfter() {
 		return dpEndsAfter;
 	}
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
+	/**
+	 * clears all user input
+	 */
+	public void resetPage() {
+		tfMinAmount.clear();
+		tfMaxAmount.clear();
+		dpStartBefore.getEditor().clear();
+		dpStartAfter.getEditor().clear();
+		dpEndsBefore.getEditor().clear();
+		dpEndsAfter.getEditor().clear();
+	}
 	}

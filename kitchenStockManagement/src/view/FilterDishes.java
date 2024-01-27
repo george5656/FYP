@@ -2,16 +2,19 @@ package view;
 
 import java.util.ArrayList;
 
-import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
 import javafx.geometry.Pos;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.Priority;
-import javafx.scene.layout.Region;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Font;
-
+/**
+ * class is meant to work as view / page. 
+ * the page is meant to allow the user to input info which can then be 
+ * used to filter dish objects.
+ * @author Student
+ *
+ */
 public class FilterDishes extends BasicLayoutFilter {
 private Label txtTotalCostAbove = new Label("total cost more than");
 private Label txtTotalCostBelow = new Label("total cost less than");
@@ -25,7 +28,9 @@ private VBox labels;
 private VBox userTextInput;
 private ArrayList<Label> labelList = new ArrayList<>();
 private ArrayList<TextField> input = new ArrayList<>();
-
+/**
+ * default constructor
+ */
 public FilterDishes() {
 	labels = getLabels();
 	userTextInput = getUserTextInput();
@@ -58,7 +63,10 @@ public FilterDishes() {
 	
 	
 }
-
+/**
+ * gets the user input for the cost more than section. 
+ * @return = String, which if no value inputed is a string version of null
+ */
 public String getCostMoreThan() {
 	if(tfTotalCostAbove.getText() == null) {
 		return "null";
@@ -67,6 +75,10 @@ public String getCostMoreThan() {
 	return tfTotalCostAbove.getText();
 	}
 	}
+/**
+ * gets the user input for the cost less than section. 
+ * @return = String, which if no value inputed is a string version of null
+ */
 public String getCostLessThan() {
 	if(tfTotalCostBelow.getText() == null) {
 		return "null";
@@ -76,6 +88,10 @@ public String getCostLessThan() {
 	}
 	
 }
+/**
+ * gets the user input for the number of ingredients less than section. 
+ * @return = String, which if no value inputed is a string version of null
+ */
 public String getNumberOfIngredientsLessThan() {
 	if(tfNumberOfItemsBelow.getText() == null) {
 		return "null";
@@ -86,6 +102,10 @@ public String getNumberOfIngredientsLessThan() {
 	
 	
 }
+/**
+ * gets the user input for the number of ingredients more than section. 
+ * @return = String, which if no value inputed is a string version of null
+ */
 public String getNumberOfIngredientsMoreThan() {
 	if(tfNumberOfItemsAbove.getText() == null) {
 		return "null";
@@ -95,6 +115,13 @@ public String getNumberOfIngredientsMoreThan() {
 	}
 	
 }
-
-
+/**
+ * removes all user input from the page.
+ */
+public void resetPage() {
+	tfTotalCostAbove.clear();
+	tfTotalCostBelow.clear();
+	tfNumberOfItemsBelow.clear();
+	tfNumberOfItemsAbove.clear();
+}
 }

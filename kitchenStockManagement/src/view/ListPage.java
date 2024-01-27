@@ -38,7 +38,9 @@ public class ListPage extends PaneMenu {
 	private VBox list = new VBox(20);
 	private VBox buttons = new VBox(20);
 	private HBox find = new HBox(20);
-	
+	/**
+	 * default constructor
+	 */
 	public ListPage() {
 	
 		super.setCenter(mainLayout);
@@ -125,26 +127,60 @@ public void setBtnFindEventHandler(EventHandler<ActionEvent> event) {
 public void setBtnEditEventHandler(EventHandler<ActionEvent> event) {
 	btnEdit.setOnAction(event);
 }
-public void setObservableList(ObservableList<String> test) {
-	lv.setItems(test);
+/**
+ * sets the listView to the passed in data. 
+ * @param data = ObservableList<Sting>.
+ */
+public void setObservableList(ObservableList<String> data) {
+	lv.setItems(data);
 }
+/**
+ * gets the item that the user selected in the listView
+ * @return String = the String which the user selected.  
+ */
 public String getSelection() {
 	return lv.getSelectionModel().getSelectedItem();
 }
+/**
+ * get the listView which is displayed on this page.
+ * @return ListView<String>
+ */
 public ListView<String> getSelectionNode(){
 	return lv;
 }
+/**
+ * gets the user input for the find section.
+ * @return String
+ */
 public String getTfFindValue() {
 	return tfFind.getText();
 }
+/**
+ * get the label node.
+ * the label is hidden by default and meant to be used to show errors
+ * @return Label
+ */
 public Label getErrorLabel() {
 	return txtErrorMessage;
 }
+/**
+ * hides the Label.
+ */
 public void hideErrorMessage() {
 	txtErrorMessage.setVisible(false);
 }
+/**
+ * sets the error message text and makes it visible.
+ * @param error = String you want to show the user.
+ */
 public void setErrorMessage(String error) {
 	txtErrorMessage.setText(error);
 	txtErrorMessage.setVisible(true);
+}
+/**
+ * clears the value in the find user input area
+ */
+public void resetFindInput() {
+	tfFind.clear();
 }
 }

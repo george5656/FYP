@@ -12,17 +12,24 @@ import javafx.scene.control.Labeled;
 import javafx.scene.layout.Priority;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Font;
-
+/**
+ * class is meant to represent a page shown to the user.
+ * page contains a selection of buttons, which determine how the list are outputed.
+ * @author Student
+ *
+ */
 public class Output extends PaneMenu {
 	private Label txtTitle = new Label("Which menu to save");
 	private Button btnMenu = new Button("output menu");
-	private Button btnShoppingList = new Button("output shoing List");
+	private Button btnShoppingList = new Button("output shopping List");
 	private Button btnBackToMenuDetails = new Button("back to menu details");
 	private Button btnBackToMenuList = new Button("back to menu list");
 	private Button btnSave = new Button("save");
 	private ArrayList<Labeled> controls = new ArrayList<>();
 	private VBox layout =  new VBox(20);
-	
+	/**
+	 * default constructor
+	 */
 	public Output() {
 		
 		this.setCenter(layout);

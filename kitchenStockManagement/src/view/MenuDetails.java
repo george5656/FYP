@@ -13,7 +13,13 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.Priority;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Font;
-
+/**
+ * the class represent a page of the application.
+ * this page is meant to allow the navigation to other pages, 
+ * and to show the menu details, to allow the creation of new one and edit old ones.
+ * @author Student
+ *
+ */
 public class MenuDetails extends PaneMenu {
 	//feilds 
 	private Button btnAdd = new Button("add");
@@ -36,7 +42,9 @@ public class MenuDetails extends PaneMenu {
 	private HBox lists = new HBox(20);
 	private HBox controlsTop = new HBox(20);
 	private HBox controlsBottom = new HBox(20);
-	
+	/**
+	 * default constructor
+	 */
 	public MenuDetails() {
 		super.setCenter(mainLayout);
 		mainLayout.getChildren().addAll(lists,controlsTop,controlsBottom);
@@ -182,43 +190,107 @@ public class MenuDetails extends PaneMenu {
 	public void setBtnLoadFromFileChooserEventHandler(EventHandler<ActionEvent> event) {
 		btnLoadFromFileChooser.setOnAction(event);
 	}
+	/**
+	 * gets the user input in the find input area 
+	 * @return String
+	 */
 	public String getFindUserInput() {
 		return tfUserInput.getText();
 	}
+	/**
+	 * sets the list that displays the dish to the inputed list.
+	 * list on the far left
+	 * @param dishes = ObservableList<String>,
+	 */
 	public void setDishes(ObservableList<String> dishes) {
 		lvDishes.getItems().clear();
 		lvDishes.getItems().addAll(dishes);
 	}
+	/**
+	 * gets the index of the item selected in the dish (far left) list view
+	 * @return int = index of dish selected
+	 */
 	public int getDishListSelectedIndex() {
 		return lvDishes.getSelectionModel().getSelectedIndex();
 	}
+	/**
+	 * gets the item the use selected in the dish (far left) list view
+	 * @return String, which the user selected.
+	 */
 	public String getDishListSelectedValue() {
 		return lvDishes.getSelectionModel().getSelectedItem();	
 	}
+	/**
+	 * sets the list that displays the dish in a menu to the inputed list.
+	 * list in the middle
+	 * @param items = ObservableList<String>,
+	 */
 	public void setMenuDishList(ObservableList<String> items) {
 		lvMenu.getItems().clear();
 		lvMenu.getItems().addAll(items);
 	}
+	/**
+	 * sets the list that displays the stock that needs to be brought (shopping list) to the inputed list.
+	 * list on the far right.
+	 * @param items = ObservableList<String>,
+	 */
 	public void setShoppingListList(ObservableList<String> items) {
 		lvShopping.getItems().clear();
 		lvShopping.getItems().addAll(items);
 	}
+	/**
+	 * gets the underling data structure the shopping (far right) list has
+	 * @return ObservableList<String>
+	 */
 	public ObservableList<String> getShoppingListList(){
 		return lvShopping.getItems();
 	}
+	/**
+	 * gets the index of the item which was selected in the menu list (middle one)
+	 * @return int
+	 */
 	public int getMenuListSelectedIndex() {
 		return lvMenu.getSelectionModel().getSelectedIndex();
 	}
+	/**
+	 * gets the item selected in the menu list(middle one) but only the id of that item.
+	 * the id is the id which is shown, eg after the dish name =
+	 * @return String, = just the selected item id. 
+	 */
 	public String getMenuListSelectedValueAsId() {
 		return lvMenu.getSelectionModel().getSelectedItem().substring(lvMenu.getSelectionModel().getSelectedItem().indexOf("=")+2);
 	}
 	//so for output know if anything there to output or not
+	/**
+	 * get the size of the list that listView in the middle (menu list)
+	 * main purpose is to know if have any data to be outputted.
+	 * @return int = size of list
+	 */
 	public int getMenuListSize() {
 		return lvMenu.getItems().size();
 	}
 	//for easy of use just add the semantics around it
+	/**
+	 * sets the budget label.
+	 * sets it to Budget = ${value}
+	 * @param value = String which is a double in a string format.
+	 */
 	public void setBudgetValue(String value) {
 		txtBudget.setText("Budget = " + value);
 	}
-	
+	/**
+	 * clears the menu dish and shopping list and also clears the find input area text
+	 */
+	public void resetMenuAndShoppingListContent() {
+		lvMenu.getItems().clear();
+		lvShopping.getItems().clear();
+		tfUserInput.clear();
+		
+	}
+	/**
+	 * clears the find area input
+	 */
+	public void clearFindUserInput() {
+		tfUserInput.clear();
+	}
 }

@@ -11,7 +11,12 @@ import javafx.scene.layout.Priority;
 import javafx.scene.layout.Region;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Font;
-
+/**
+ * class is a page that allows the input of filter values to be applied. 
+ * the filters categories are designed to be for the CurrentStock objects.
+ * @author Student
+ *
+ */
 public class StockFilter extends BasicLayoutFilter {
 private Label txtStorageLocation = new Label("Storage location");
 private Label txtStockType = new Label("stock type");
@@ -33,7 +38,9 @@ private VBox labels;
 private VBox userTextInput;
 private ArrayList<Label> labelList = new ArrayList<>();
 private ArrayList<Region> input = new ArrayList<>();
-
+/**
+ * default constructor
+ */
 public StockFilter() {
 	labels = getLabels();
 	userTextInput = getUserTextInput();
@@ -89,30 +96,73 @@ public StockFilter() {
 
 	
 }
-
+/**
+ * get the min quantity textField.
+ * @return TextField
+ */
 
 public TextField getTfMinQunaity() {
 	return tfMinQuanity;
 }
+/**
+ * gets the max quantity textField.
+ * @return TextField
+ */
 public TextField getTfMaxQuanity() {
 	return tfMaxQuanity;
 }
+/**
+ * gets the min quantity textField.
+ * @return TextField
+ */
 public TextField getTfAboveCost() {
 	return tfAboveCost;
 }
+/**
+ * get the belowCost textField.
+ * @return TextField
+ */
 public TextField getTfBelowCost() {
 	return tfBelowCost;
 }
+/**
+ * get the storageLocation comboBox.
+ * @return ComboBox<String>
+ */
 public ComboBox<String> getCbStorageLocation(){
 	return cbStorageLocation;
 }
+/**
+ * get the stockType comboBox.
+ * @return ComboBox<String>
+ */
 public ComboBox<String> getCbStockType(){
 	return cbStockType;
 }
+/**
+ * gets the after date date picker
+ * @return DatePicker
+ */
 public DatePicker getDpAfterDate() {
 	return dpAfterDate;
 }
+/**
+ * gets the before date date picker
+ * @return DatePicker
+ */
 public DatePicker getDpBeforeDate() {
 	return dpBeforeDate;
+}
+/**
+ * resets all the user input on this page
+ * not counting the data picker as they passed in data.
+ */
+public void resetPage() {
+	tfMinQuanity.clear();
+	tfMaxQuanity.clear();
+	tfAboveCost.clear();
+	tfBelowCost.clear();
+	dpAfterDate.getEditor().clear();
+	dpBeforeDate.getEditor().clear();
 }
 }
