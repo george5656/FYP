@@ -13,7 +13,9 @@ public class InputValidation {
 	/**
 	 * function checks if the user input is validate and ok to use.
 	 * it checks if there is an input, if the input size is below 50,
-	 * if it only contains [a-zA-Z0-9 ]+
+	 * if it only contains [a-z0-9 ]+
+	 * and that it doesn't contain any key words
+	 * note, no upper case as the database, converts all char to lower case.
 	 * @param userInput = a string of the user data want to check
 	 * @return String that says the error or just "" if no error
 	 */
@@ -30,6 +32,7 @@ public class InputValidation {
 	 * function checks if the user input is validate and ok to use.
 	 * if the input size is below 50 and
 	 * if it only contains [a-zA-Z0-9 ]+
+	 * and that it doesn't contain any key words
 	 * @param userInput = a string of the user data want to check
 	 * @return String that says the error or just "" if no error 
 	 */
@@ -38,8 +41,17 @@ public class InputValidation {
 		if(userInput.length()>50) {
 			errorMessage = "user input to big";
 		}
-		if(!userInput.matches("[a-zA-Z0-9 ]+")&&!userInput.equals("")) {
-			errorMessage = "only a-z, A-Z and 0-9 allowed";
+		if(!userInput.matches("[a-z0-9 ]+")&&!userInput.equals("")) {
+			errorMessage = "only a-z and 0-9 allowed";
+		}
+		if(userInput.contains("null")||userInput.contains("name")||userInput.contains("name")||userInput.contains("cost")) {
+			errorMessage = "a key word has been inputed and must be removed";
+		}
+		if(userInput.contains("id")||userInput.contains("storage")||userInput.contains("quantity")||userInput.contains("quanity")) {
+			errorMessage = "a key word has been inputed and must be removed";
+		}
+		if(userInput.contains("amount")||userInput.contains("quantity type")||userInput.contains("account")||userInput.contains("type")) {
+			errorMessage = "a key word has been inputed and must be removed";
 		}
 		return errorMessage;
 	

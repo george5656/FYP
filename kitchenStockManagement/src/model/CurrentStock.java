@@ -48,6 +48,7 @@ super(name,cost.toString(),quantityType,quantity+"");
 	public String getQuanity() {
 		return super.getQuanity();
 	}
+
 /**
  * gets the value in the expiereDate var
  * @return String

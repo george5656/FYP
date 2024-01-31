@@ -83,7 +83,61 @@ public class WritableDatabase {
 
 		return currentStock;
 	}
+	/**
+	 * identifies if the stored cost for the stockType is different to the inputed one.
+	 * @param cost = String which are seeing if it it very from the one in the database
+	 * @param id = String which is the id of a stockType in the database.
+	 * @return String = if no change to inputed cost get "" else get what the database holds for the cost 
+	 */
+	
+	public String hasTheStockTypeCostChanged(String cost, String id) {
+		PreparedStatement statement;
+		String output = "";
+		try {
+			statement = mySqlDatabase.prepareStatement(
+					"select * from stock_mangemnet.tbl_stock_type where tbl_stock_type.stockTypeId = \'"+id+"\';");
+			ResultSet result = statement.executeQuery();
+			// if(result.first()) {
+			while(result.next()) {
+			if(!result.getString(2).equals(cost)) {
+				output = result.getString(2);
+			}
+			 }
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 
+		return output;
+	}
+	/**
+	 * identifies if the stored quanityType for the stockType is different to the inputed one.
+	 * @param quanityType = String which are seeing if it it very from the one in the database
+	 * @param id = String which is the id of a stockType in the database.
+	 * @return String = if no change to inputed quanityType get "" else get what the database holds for the quanityType 
+	 */
+	
+	public String hasTheStockTypeQuanityTypeChanged(String quanityType, String id) {
+		PreparedStatement statement;
+		String output = "";
+		try {
+			statement = mySqlDatabase.prepareStatement(
+					"select * from stock_mangemnet.tbl_stock_type where tbl_stock_type.stockTypeId = \'"+id+"\';");
+			ResultSet result = statement.executeQuery();
+			// if(result.first()) {
+			while(result.next()) {
+			if(!result.getString(3).equals(quanityType)) {
+				output = result.getString(3);
+			}
+			
+			 }
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
+		return output;
+	}
 	/**
 	 * gets current stock thats stock type Id is like the passed in parameter. gets
 	 * the date from the tbl_stock_iteration
@@ -372,7 +426,7 @@ public class WritableDatabase {
 		try {
 			statement = mySqlDatabase.prepareStatement(
 					"select * from stock_mangemnet.tbl_stock_iteration, stock_mangemnet.tbl_stock_type where (tbl_stock_iteration.stockIterationId = \""
-							+ id + "\");");
+							+ id + "\") and tbl_stock_iteration.stockTypeId = tbl_stock_type.stockTypeId ;");
 			ResultSet result = statement.executeQuery();
 			// if(result.first()) {
 			if (result.next()) {
@@ -739,6 +793,37 @@ public class WritableDatabase {
 			e.printStackTrace();
 		}
 	}
+	
+	/**
+	 * checks to see if there is more than one admin class left.
+	 * the point of this is to let the controller know if, the user can delete the account.
+	 * this is needed as if the last admin delete a class, then there is no admin left which can add
+	 * new classes.
+	 * @return Boolean, true = is more than one admin left, false = there isn't more than admin left
+	 */
+	public Boolean areThereOtherAdminAccounts() {
+		PreparedStatement statement;
+		Integer counter = 0;
+		try {
+			statement = mySqlDatabase.prepareStatement("select * from stock_mangemnet.tbl_account_details where tbl_account_details.isAdmin = \'1\';");
+			ResultSet result = statement.executeQuery();
+			while (result.next()) {
+				counter = counter +1;
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		if(counter > 1) {
+			return true;
+		}else {
+			return false;
+		}
+		
+		
+	}
+	
 /**
  * updates the a row in the tbl_account_details table.
  * the row updates is the one that primary key matches the orginalId.
