@@ -5,12 +5,14 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.ArrayList;
+import java.util.Optional;
 import java.util.Scanner;
 
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
+import javafx.scene.control.ButtonType;
 import javafx.stage.FileChooser;
 import model.ModelRoot;
 import view.RootView;
@@ -436,11 +438,16 @@ public class Controller {
 				model.selectAAccount(view.getSelectedAccountName());
 				
 				if((model.getSelectedAccountAdminStatus().equals(false) || model.getSelectedAccountUsername().equals(model.getLogedInAccountId()))) {
-
+					//this is the final check, making sure the last admin cant just delete there account
+					if(model.doesTheDatabaseHaveMoreThanOneAdminLeft()) {
 				view.getDeleteConfirmationPage()
 						.setTxtConfirmMessage("Are you sure you wan to delete " + model.getSelectedAccountUsername() + "?");
 				model.setDeleteFrom("Account");
 				view.deleteConfirmationLoad();
+					}else {
+						view.setAccountListError("last admin in database cant \ndelete there account");
+					}
+				
 				}else {
 					view.setAccountListError("must be that admin to delete that account");
 				}
@@ -984,9 +991,9 @@ if (!view.getBudgetListSelectedItem().equals("null")) {
  * @author Student
  *
  */
-	
 	private class EHStockDetailsBtnSave implements EventHandler<ActionEvent> {
 
+		
 		@Override
 		public void handle(ActionEvent event) {
 			// StockDetails userInput = view.getStockDetails();
@@ -994,6 +1001,11 @@ if (!view.getBudgetListSelectedItem().equals("null")) {
 			String masterErrorMessage = "";
 			String issuesWith = "";
 		
+			//used to inform the user the Quantity Type and Cost will change. 
+			Alert options = new Alert(AlertType.CONFIRMATION);
+			Optional<ButtonType> output = null;
+			
+			
 
 			String nameErrorMessage = model.stringMustBePresetValidation(view.getStockDetailsStockName());
 			String quanityErrorMessage = model.doubleMustBePresetValidation(view.getStockDetailsQuantity());
@@ -1002,7 +1014,9 @@ if (!view.getBudgetListSelectedItem().equals("null")) {
 					view.getStockDetailsDateValueAsLocalDate());
 
 			String costErrorMessage = model.doubleMustBePresetValidation(view.getStockDetailsCost());
-
+			
+		
+			
 			// userInput.getExpiereDate().getValue().toString()
 			if (!nameErrorMessage.equals("")) {
 				masterErrorMessage = nameErrorMessage;
@@ -1025,6 +1039,36 @@ if (!view.getBudgetListSelectedItem().equals("null")) {
 			}
 
 			if (masterErrorMessage.equals("")) {
+				
+				//used to tell the user, hey your changing, x/y/z
+				if(!(model.hasTheStockTypeCostChanged(view.getStockDetailsCost(),view.getStockDetailsStockName()).equals("")&&model.hasTheStockTypeQuanityTypeChanged(view.getStockDetailsQuanitType(),view.getStockDetailsStockName()).equals(""))) {
+				
+					options.setContentText("chaning the ");
+					if(!model.hasTheStockTypeCostChanged(view.getStockDetailsCost(),view.getStockDetailsStockName()).equals("")) {
+						
+						options.setHeaderText("changing the cost of all the matching stock");
+						options.setContentText(options.getContentText() + "cost from " + model.hasTheStockTypeCostChanged(view.getStockDetailsCost(),view.getStockDetailsStockName()));
+					}
+					if(!model.hasTheStockTypeQuanityTypeChanged(view.getStockDetailsQuanitType(),view.getStockDetailsStockName()).equals("")) {
+						
+						if(!options.getHeaderText().equals("changing the cost of all the matching stock")) {
+							
+							options.setHeaderText("quantity type");
+							options.setContentText(options.getContentText() + "quanityType from " + model.hasTheStockTypeQuanityTypeChanged(view.getStockDetailsQuanitType(),view.getStockDetailsStockName()));
+						}else {
+							
+							options.setHeaderText("changing the cost and quantity type of all the matching stock");
+							options.setContentText(options.getContentText() + " and quantity type from " + model.hasTheStockTypeQuanityTypeChanged(view.getStockDetailsQuanitType(),view.getStockDetailsStockName()));
+						}
+						
+					}
+					
+					output = options.showAndWait();
+				}
+				
+				if(output == null || output.isPresent() && output.get() == ButtonType.OK) {
+					
+					
 				model.setTestStockType(view.getStockDetailsStockName());
 
 				if (model.getTestStockName() == "null") {
@@ -1061,7 +1105,7 @@ model.createStock(model.getSelectedStockId(), view.getStorageLocation(), Double.
 						model.updateCurrentStock();
 					}
 					loadStockListPage();
-				
+			}
 				}else {
 					// if it fails the first if, eg validation of the inputs fails
 					Alert errorPopup = model.makeAlert("issue with " + issuesWith, masterErrorMessage);
@@ -1080,7 +1124,7 @@ model.createStock(model.getSelectedStockId(), view.getStorageLocation(), Double.
 
 		@Override
 		public void handle(ActionEvent event) {
-
+			
 			loadStockListPage();
 
 		}
@@ -1922,7 +1966,7 @@ if(model.getDeleteFrom().equals("StockList")) {
 			if (!(view.getStockListSelectedItem().equals("null"))) {
 
 				model.selectAStock(view.getSelectedStockId());
-
+				
 				// reformatting the text so the save isn't in a diffrente format
 
 				// populating the items
@@ -1959,13 +2003,14 @@ if(model.getDeleteFrom().equals("StockList")) {
 	 * @author Student
 	 *
 	 */
-	
 	private class EHDishDetailsBtnAdd implements EventHandler<ActionEvent> {
 
 		@Override
 		public void handle(ActionEvent event) {
 			
-		
+			//used to inform the user the Quantity Type and Cost will change. 
+			Alert options = new Alert(AlertType.CONFIRMATION);
+			Optional<ButtonType> output = null;
 			
 			String issueFrom = "";
 			String masterError = "";
@@ -2004,6 +2049,47 @@ if(model.getDeleteFrom().equals("StockList")) {
 			
 			if(masterError.equals("")) {
 			
+				
+				//used to tell the user, hey your changing, x/y/z
+				if(!(model.hasTheStockTypeCostChanged(view.getDishDetailsEstimateCost(),view.getDishDetailsIngrdeintName()).equals("")&&model.hasTheStockTypeQuanityTypeChanged(view.getDishDetailsUnit(),view.getDishDetailsIngrdeintName()).equals(""))) {
+				
+					options.setContentText("chaning the ");
+					if(!model.hasTheStockTypeCostChanged(view.getDishDetailsEstimateCost(),view.getDishDetailsIngrdeintName()).equals("")) {
+						
+						options.setHeaderText("changing the cost of all the matching stock");
+						options.setContentText(options.getContentText() + "cost from " + model.hasTheStockTypeCostChanged(view.getDishDetailsEstimateCost(),view.getDishDetailsIngrdeintName()));
+					}
+					if(!model.hasTheStockTypeQuanityTypeChanged(view.getDishDetailsUnit(),view.getDishDetailsIngrdeintName()).equals("")) {
+						
+						if(!options.getHeaderText().equals("changing the cost of all the matching stock")) {
+							
+							options.setHeaderText("quantity type");
+							options.setContentText(options.getContentText() + "quanityType from " + model.hasTheStockTypeQuanityTypeChanged(view.getDishDetailsUnit(),view.getDishDetailsIngrdeintName()));
+						}else {
+							
+							options.setHeaderText("changing the cost and quantity type of all the matching stock");
+							options.setContentText(options.getContentText() + " and quantity type from " + model.hasTheStockTypeQuanityTypeChanged(view.getDishDetailsUnit(),view.getDishDetailsIngrdeintName()));
+						}
+						
+					}
+					
+					output = options.showAndWait();
+				}
+				
+				if(output == null || output.isPresent() && output.get() == ButtonType.OK) {
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
 				model.setTestStockType(view.getDishDetailsIngrdeintName());
 
 				
@@ -2047,6 +2133,7 @@ if(model.getDeleteFrom().equals("StockList")) {
 				
 				view.setDishDetailsList(model.getSelectedDishList());
 				view.dishDetailsAddReset();
+			}
 			}else {
 			model.makeAlert(issueFrom, masterError).show();
 				
@@ -2320,8 +2407,14 @@ if(model.getDeleteFrom().equals("StockList")) {
 			
 			
 			if(masterError.equals("")) {
+				view.resetMenuDetailsPage();
+				view.setMenuDetailsDishList(model.getAllDishes());
+				
+				
+				
 				//needs both as makes a menu object
 				model.setSelectedMenu(view.getMenuSettingName(), view.getMenuSettingSelectedBudgetOption());
+				
 				view.MenuDetailsLoad();
 				view.setMenuDetailsBudgetValue(model.getBudgetSizeMinusTheShoppingList() +"");
 			}else {

@@ -2436,4 +2436,33 @@ public class ModelRoot {
 
 	}
 
+	/**
+	 * checks if the database has more than one admin account
+	 * @return Boolean, true = is more than one, false = there isn't more than one.
+	 */
+	public boolean doesTheDatabaseHaveMoreThanOneAdminLeft() {
+		return db.areThereOtherAdminAccounts();
+	}
+	/**
+	 * identifies if the stored cost for the stockType is different to the inputed one.
+	 * @param cost = String which are seeing if it it very from the one in the database
+	 * @param id = String which is the id of a stockType in the database.
+	 * @return String = if no change to inputed cost get "" else get what the database holds for the cost 
+	 */
+	public String hasTheStockTypeCostChanged(String cost, String id) {
+		return db.hasTheStockTypeCostChanged(cost, id);
+	}
+	/**
+	 * identifies if the stored quanityType for the stockType is different to the inputed one.
+	 * @param quanityType = String which are seeing if it it very from the one in the database
+	 * @param id = String which is the id of a stockType in the database.
+	 * @return String = if no change to inputed quanityType get "" else get what the database holds for the quanityType 
+	 */
+	public String hasTheStockTypeQuanityTypeChanged(String quanityType, String id) {
+		return db.hasTheStockTypeQuanityTypeChanged(quanityType, id);
+	}
+	
+	
+	
+	
 }

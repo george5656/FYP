@@ -42,6 +42,12 @@ private ArrayList<Region> input = new ArrayList<>();
  * default constructor
  */
 public StockFilter() {
+	// due to number of elements, need to shrink size vs a normal one so giving id so can do it in css
+	//cbsl = combo box storage location.
+	cbStorageLocation.setId("cbsl");
+	cbStockType.setId("cbst");
+	dpAfterDate.setId("dpad");
+	dpBeforeDate.setId("dpbd");
 	labels = getLabels();
 	userTextInput = getUserTextInput();
 	
@@ -88,7 +94,7 @@ public StockFilter() {
 	*/
 	labels.getChildren().addAll(labelList);
 	for(Label i : labelList) {
-		i.setFont(new Font(30));
+		i.setFont(new Font(20));
 		i.setMaxSize(Double.MAX_VALUE, Double.MAX_VALUE);
 		labels.setVgrow(i,Priority.ALWAYS);
 		i.setAlignment(Pos.CENTER);

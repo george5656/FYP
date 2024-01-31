@@ -32,13 +32,63 @@ private String stringLength50 = new String("012345678901234567890123456789012345
 	}
 	@Test
 	public void stringValidatioCharWrongType() {
-		assertEquals("only a-z and A-Z",testingclass.stringMustBePresetValidation(new String("@@@")));
+		assertEquals("only a-z and 0-9 allowed",testingclass.stringMustBePresetValidation(new String("@@@")));
+	}
+	@Test
+	public void stringValidatioCharWrongTypeCaptial() {
+		assertEquals("only a-z and 0-9 allowed",testingclass.stringMustBePresetValidation(new String("Hellow")));
 	}
 	@Test
 	public void stringValidatioCharInRangeAndWriteTypeString() {
-		assertEquals("",testingclass.stringMustBePresetValidation(new String("Hello")));
-	}@Test
+		assertEquals("",testingclass.stringMustBePresetValidation(new String("hello")));
+	}
+	@Test
 	public void stringValidatioCharInRangeAndWriteTypeStringInt() {
 		assertEquals("",testingclass.stringMustBePresetValidation(new String("1234")));
 	}
+	@Test
+	public void stringValidatioKeyWordTest() {
+		assertEquals("a key word has been inputed and must be removed",testingclass.stringMustBePresetValidation(new String("amount")));
+	}
+	
+
+	
+	@Test
+	public void stringValidationOptionalMinBoundary() {
+		assertEquals("",testingclass.stringPresentIsOptionalValidation(new String("")));
+	}
+	
+	@Test
+	public void stringValidationOptionalMaxBoundary() {
+		assertEquals("",testingclass.stringPresentIsOptionalValidation(stringLength50));
+	}
+	@Test
+	public void stringValidationOptionalMaxBoundaryPlusOne() {
+		assertEquals("user input to big",testingclass.stringPresentIsOptionalValidation(stringLength50+"1"));
+	}
+	@Test
+	public void stringValidationOptionalMaxBoundaryMinusOne() {
+		assertEquals("",testingclass.stringPresentIsOptionalValidation(stringLength50.substring(1)));
+	}
+	@Test
+	public void stringValidatioOptionalCharWrongType() {
+		assertEquals("only a-z and 0-9 allowed",testingclass.stringPresentIsOptionalValidation(new String("@@@")));
+	}
+	@Test
+	public void stringValidatioOptionalCharWrongTypeCaptial() {
+		assertEquals("only a-z and 0-9 allowed",testingclass.stringPresentIsOptionalValidation(new String("Hellow")));
+	}
+	@Test
+	public void stringValidatioOptionalCharInRangeAndWriteTypeString() {
+		assertEquals("",testingclass.stringPresentIsOptionalValidation(new String("hello")));
+	}
+	@Test
+	public void stringValidatioOptionalCharInRangeAndWriteTypeStringInt() {
+		assertEquals("",testingclass.stringPresentIsOptionalValidation(new String("1234")));
+	}
+	@Test
+	public void stringValidatioOptionalKeyWordTest() {
+		assertEquals("a key word has been inputed and must be removed",testingclass.stringPresentIsOptionalValidation(new String("amount")));
+	}
+	
 }
