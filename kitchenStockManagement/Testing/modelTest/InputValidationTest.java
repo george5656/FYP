@@ -40,6 +40,7 @@ private String stringLength50 = new String("012345678901234567890123456789012345
 	public void stringValidatioCharWrongTypeCaptial() {
 		assertEquals("only a-z and 0-9 allowed",testingclass.stringMustBePresetValidation(new String("MEW")));
 	}
+	
 	@Test
 	public void stringValidatioCharInRangeAndWriteTypeString() {
 		assertEquals("",testingclass.stringMustBePresetValidation(new String("ditto")));
