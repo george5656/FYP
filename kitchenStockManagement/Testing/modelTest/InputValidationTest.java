@@ -79,11 +79,11 @@ private String stringLength50 = new String("012345678901234567890123456789012345
 	}
 	@Test
 	public void stringValidatioOptionalCharWrongTypeCaptial() {
-		assertEquals("only a-z and 0-9 allowed",testingclass.stringPresentIsOptionalValidation(new String("Hellow")));
+		assertEquals("only a-z and 0-9 allowed",testingclass.stringPresentIsOptionalValidation(new String("Charmander")));
 	}
 	@Test
 	public void stringValidatioOptionalCharInRangeAndWriteTypeString() {
-		assertEquals("",testingclass.stringPresentIsOptionalValidation(new String("hello")));
+		assertEquals("",testingclass.stringPresentIsOptionalValidation(new String("diglett")));
 	}
 	@Test
 	public void stringValidatioOptionalCharInRangeAndWriteTypeStringInt() {
@@ -109,7 +109,7 @@ private String stringLength50 = new String("012345678901234567890123456789012345
 	}
 	@Test
 	public void intValidationNotAcceptedChar() {
-		assertEquals("only characters between 0-9 allowed", testingclass.intPresentIsOptionalValidation("hello world"));	
+		assertEquals("only characters between 0-9 allowed", testingclass.intPresentIsOptionalValidation("vaporeon"));	
 	}
 	@Test
 	public void intValidationNormalAccaptedInput() {
@@ -134,7 +134,7 @@ private String stringLength50 = new String("012345678901234567890123456789012345
 	}
 	@Test
 	public void intValidationNotOptionalNotAcceptedChar() {
-		assertEquals("only characters between 0-9 allowed", testingclass.intMustBePresetValidation("hello world"));	
+		assertEquals("only characters between 0-9 allowed", testingclass.intMustBePresetValidation("clefairy"));	
 	}
 	@Test
 	public void intValidationNotOptionalNormalAccaptedInput() {
