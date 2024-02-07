@@ -85,14 +85,10 @@ public ArrayList<StockType> getHeldStock(){
  * @return Double = total cost to get the dish.
  */
 public Double getDishCost() {
-	
 	double totalCost = 0.00;
 	int count = 0;
-	
 	while(count != ingrdents.size()) {
-		
 		totalCost = totalCost + (Double.parseDouble(ingrdents.get(count).getCost()) * Double.parseDouble(ingrdents.get(count).getQuanity()));
-		
 		count = count + 1;
 	}
 	return totalCost;	

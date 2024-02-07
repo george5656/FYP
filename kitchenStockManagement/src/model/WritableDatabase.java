@@ -7,6 +7,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
+
 /**
  * class for the database mySqlDatabase, and database queries
  * @author George 
@@ -1492,7 +1493,7 @@ public class WritableDatabase {
 
 				stockType = new ArrayList<>();
 				while (result3.next()) {
-					stockType.add(new StockType(result3.getString(6), result3.getString(7), result3.getString(8)));
+					stockType.add(new StockType(result3.getString(6), result3.getString(7), result3.getString(8), result3.getString(4)));
 				}
 				Dish input = new Dish(result.getString(1), stockType);
 
@@ -1542,12 +1543,15 @@ public class WritableDatabase {
 
 				stockType = new ArrayList<>();
 				while (result3.next()) {
-					stockType.add(new StockType(result3.getString(6), result3.getString(7), result3.getString(8)));
+					stockType.add(new StockType(result3.getString(6), result3.getString(7), result3.getString(8), result3.getString(4)));
 				}
+				
 				Dish input = new Dish(result.getString(1), stockType);
 
 				// where it is deiced if they are added or not.
-				if (input.getDishCost() >= minCost) {
+
+if (input.getDishCost() >= minCost) {
+					
 					dish.add(input);
 				}
 

@@ -2630,8 +2630,8 @@ if(model.getDeleteFrom().equals("StockList")) {
 					
 		}
 		
-			
 		if(masterError.equals("")) {
+			
 			//ass need a way to run it if they dont put anything in
 			String cmtInput = "null";
 			String cltInput ="null";
@@ -2658,11 +2658,16 @@ if(model.getDeleteFrom().equals("StockList")) {
 			
 			if(!niaInput.equals("null") || !nibInput.equals("null") || !cltInput.equals("null") || !cmtInput.equals("null")) {
 			//actaully runs it and get results
+				
 			view.setMenuDetailsDishList(model.getDishFilterResults(niaInput, nibInput, cltInput, cmtInput));	
 			}else {
 				//just bascially removes any filters if none have been applied. 
+				if(model.getSelectedMenu() == null) {
+					view.setMenuDetailsDishList(model.getAllDishes());
+				}else {
 				view.setMenuDetailsDishList(model.getNotSelectedDishesAsString());
-			}
+				}
+				}
 			
 			
 			view.MenuDetailsLoad();

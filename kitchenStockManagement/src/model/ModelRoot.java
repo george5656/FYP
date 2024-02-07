@@ -1894,6 +1894,7 @@ public class ModelRoot {
 
 	public ObservableList<String> getDishFilterResults(String maxNumberOfItems, String minNumberOfItems, String maxCost,
 			String minCost) {
+		
 		ArrayList<Dish> maxni = null;
 		ArrayList<Dish> minni = null;
 		ArrayList<Dish> maxc = null;
@@ -1903,19 +1904,23 @@ public class ModelRoot {
 
 		if (!maxNumberOfItems.equals("null")) {
 			// as first one dont need to worry about the others
+			
 			maxni = db.getDishWithLessThanSetItems(Integer.parseInt(maxNumberOfItems));
 
 		}
 
 		if (!minNumberOfItems.equals("null")) {
+		
 			minni = db.getDishWithMoreThanSetItems(Integer.parseInt(minNumberOfItems));
 
 		}
 		if (!maxCost.equals("null")) {
+		
 			maxc = db.getDishThatCostNotAbove(Double.parseDouble(maxCost));
 
 		}
 		if (!minCost.equals("null")) {
+		
 			minc = db.getDishThatCostNotBellow(Double.parseDouble(minCost));
 
 		}
@@ -2135,7 +2140,7 @@ public class ModelRoot {
 
 		}
 
-		System.out.println("passes retain All");
+		
 		master.forEach((Menu i) -> {
 
 			output.add(i.toString());
