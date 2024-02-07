@@ -33,52 +33,100 @@ public class MenuDetails extends PaneMenu {
 	private Button btnFilter = new Button("filter");
 	private Button btnOutput = new Button("output list");
 	private Label txtBudget = new Label("Budget = not selected");
-	private Label txtErrorMessage = new Label("Error");
+	//private Label txtErrorMessage = new Label("Error");
 	private TextField tfUserInput = new TextField();
 	private ListView<String> lvDishes = new ListView<>();
 	private ListView<String> lvMenu = new ListView<>();
 	private ListView<String> lvShopping = new ListView<>();
 	private VBox mainLayout = new VBox(20);
+	
+	
+	private HBox initialSplit = new HBox(20);
+	private VBox budgetAndFind = new VBox(20);
+	private HBox buttons = new HBox(20);
+	private HBox find = new HBox(20);
+	
+	
+	
 	private HBox lists = new HBox(20);
-	private HBox controlsTop = new HBox(20);
-	private HBox controlsBottom = new HBox(20);
+private VBox sAndN = new VBox(20);
+private VBox aAndE = new VBox(20);
+private VBox rAndD = new VBox(20);
+private VBox LAndFAndO = new VBox(20);
+private HBox fAndO = new HBox(20);
+	
 	/**
 	 * default constructor
 	 */
 	public MenuDetails() {
 		super.setCenter(mainLayout);
-		mainLayout.getChildren().addAll(lists,controlsTop,controlsBottom);
+		mainLayout.getChildren().addAll(lists,initialSplit);
+		initialSplit.getChildren().addAll(budgetAndFind,buttons);
+		buttons.getChildren().addAll(sAndN,aAndE,rAndD,LAndFAndO);
+		budgetAndFind.getChildren().addAll(txtBudget, find);
+		find.getChildren().addAll(btnFind,tfUserInput);
 		lists.getChildren().addAll(lvDishes,lvMenu,lvShopping);
-		controlsTop.getChildren().addAll(txtBudget, txtErrorMessage,btnAdd,btnEdit,btnRemoveFromList,btnLoadFromFileChooser);
-		controlsBottom.getChildren().addAll(btnFind,tfUserInput,btnNewDish,btnSettings,btnDeleteDishPeremently,btnFilter,btnOutput);
-	 
+		sAndN.getChildren().addAll(btnSettings,btnNewDish);
+		aAndE.getChildren().addAll(btnAdd,btnEdit);
+		rAndD.getChildren().addAll(btnRemoveFromList,btnDeleteDishPeremently);
+		LAndFAndO.getChildren().addAll(btnLoadFromFileChooser,fAndO);
+		fAndO.getChildren().addAll(btnFilter,btnOutput);
 	//mainLayout.setAlignment(Pos.CENTER);
 	//lists.setAlignment(Pos.CENTER);
-	controlsTop.setAlignment(Pos.CENTER);
-	controlsBottom.setAlignment(Pos.CENTER);
+		
 	txtBudget.setAlignment(Pos.CENTER);
-	txtErrorMessage.setAlignment(Pos.CENTER);
+	//txtErrorMessage.setAlignment(Pos.CENTER);
 	
 	
-	mainLayout.setVgrow(lists, Priority.ALWAYS);
-	mainLayout.setVgrow(controlsTop, Priority.ALWAYS);
-	mainLayout.setVgrow(controlsBottom, Priority.ALWAYS);
-	lists.setHgrow(lvDishes, Priority.ALWAYS);
-	lists.setHgrow(lvMenu, Priority.ALWAYS);
-	lists.setHgrow(lvShopping, Priority.ALWAYS);
-	controlsTop.setHgrow(txtBudget, Priority.ALWAYS);
-	controlsTop.setHgrow(txtErrorMessage, Priority.ALWAYS);
-	controlsTop.setHgrow(btnAdd, Priority.ALWAYS);
-	controlsTop.setHgrow(btnEdit, Priority.ALWAYS);
-	controlsTop.setHgrow(btnRemoveFromList, Priority.ALWAYS);
-	controlsTop.setHgrow(btnLoadFromFileChooser, Priority.ALWAYS);
-	controlsBottom.setHgrow(btnFind, Priority.ALWAYS);
-	controlsBottom.setHgrow(tfUserInput, Priority.ALWAYS);
-	controlsBottom.setHgrow(btnNewDish, Priority.ALWAYS);
-	controlsBottom.setHgrow(btnSettings, Priority.ALWAYS);
-	controlsBottom.setHgrow(btnDeleteDishPeremently, Priority.ALWAYS);
-	controlsBottom.setHgrow(btnFilter, Priority.ALWAYS);
-	controlsBottom.setHgrow(btnOutput, Priority.ALWAYS);
+	VBox.setVgrow(lists, Priority.ALWAYS);
+	VBox.setVgrow(initialSplit, Priority.ALWAYS);
+	HBox.setHgrow(budgetAndFind, Priority.ALWAYS);
+	HBox.setHgrow(buttons, Priority.ALWAYS);
+	
+	HBox.setHgrow(lvDishes, Priority.ALWAYS);
+	HBox.setHgrow(lvMenu, Priority.ALWAYS);
+	HBox.setHgrow(lvShopping, Priority.ALWAYS);
+	HBox.setHgrow(txtBudget, Priority.ALWAYS);
+	HBox.setHgrow(find, Priority.ALWAYS);
+	//controlsTop.setHgrow(txtErrorMessage, Priority.ALWAYS);
+	HBox.setHgrow(btnAdd, Priority.ALWAYS);
+	HBox.setHgrow(btnEdit, Priority.ALWAYS);
+	HBox.setHgrow(btnRemoveFromList, Priority.ALWAYS);
+	HBox.setHgrow(btnLoadFromFileChooser, Priority.ALWAYS);
+	HBox.setHgrow(btnFind, Priority.ALWAYS);
+	HBox.setHgrow(tfUserInput, Priority.ALWAYS);
+	HBox.setHgrow(btnNewDish, Priority.ALWAYS);
+	HBox.setHgrow(btnSettings, Priority.ALWAYS);
+	HBox.setHgrow(btnDeleteDishPeremently, Priority.ALWAYS);
+	HBox.setHgrow(btnFilter, Priority.ALWAYS);
+	HBox.setHgrow(btnOutput, Priority.ALWAYS);
+	
+	
+	VBox.setVgrow(btnAdd, Priority.ALWAYS);
+	VBox.setVgrow(btnEdit, Priority.ALWAYS);
+	VBox.setVgrow(btnRemoveFromList, Priority.ALWAYS);
+	VBox.setVgrow(btnLoadFromFileChooser, Priority.ALWAYS);
+	VBox.setVgrow(btnFind, Priority.ALWAYS);
+	VBox.setVgrow(tfUserInput, Priority.ALWAYS);
+	VBox.setVgrow(btnNewDish, Priority.ALWAYS);
+	VBox.setVgrow(btnSettings, Priority.ALWAYS);
+	VBox.setVgrow(btnDeleteDishPeremently, Priority.ALWAYS);
+	VBox.setVgrow(btnFilter, Priority.ALWAYS);
+	VBox.setVgrow(btnOutput, Priority.ALWAYS);
+	VBox.setVgrow(fAndO, Priority.ALWAYS);
+	
+	
+	HBox.setHgrow(sAndN, Priority.ALWAYS);
+	HBox.setHgrow(aAndE, Priority.ALWAYS);
+	HBox.setHgrow(rAndD, Priority.ALWAYS);
+	HBox.setHgrow(LAndFAndO, Priority.ALWAYS);
+	
+	VBox.setVgrow(txtBudget, Priority.ALWAYS);
+	VBox.setVgrow(find, Priority.ALWAYS);
+	VBox.setVgrow(btnFind, Priority.ALWAYS);
+	VBox.setVgrow(tfUserInput, Priority.ALWAYS);
+	
+	
 	
 	mainLayout.setPadding(new Insets(20,20,20,20));
 	
@@ -94,7 +142,7 @@ public class MenuDetails extends PaneMenu {
 	btnOutput.setMaxSize(Double.MAX_VALUE, Double.MAX_VALUE);
 	tfUserInput.setMaxSize(Double.MAX_VALUE, Double.MAX_VALUE);
 	txtBudget.setMaxSize(Double.MAX_VALUE, Double.MAX_VALUE);
-	txtErrorMessage.setMaxSize(Double.MAX_VALUE, Double.MAX_VALUE);
+	//txtErrorMessage.setMaxSize(Double.MAX_VALUE, Double.MAX_VALUE);
 	
 	btnAdd.setFont(new Font(20));
 	btnEdit.setFont(new Font(20));
@@ -108,7 +156,7 @@ public class MenuDetails extends PaneMenu {
 	btnOutput.setFont(new Font(20));
 	
 	txtBudget.setFont(new Font(20));
-	txtErrorMessage.setFont(new Font(20));
+	//txtErrorMessage.setFont(new Font(20));
 	
 	tfUserInput.setFont(new Font(20));
 	
