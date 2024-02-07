@@ -134,6 +134,8 @@ DishDetailsPage(){
 	tfQuanity.setFont(new Font(20));
 	tfUnit.setFont(new Font(20));
 	tfEstimatedCost.setFont(new Font(20));
+	
+	txtErrorMessage.setVisible(false);
  
 }
 /**
@@ -241,6 +243,7 @@ public void addReset() {
 	tfQuanity.clear();
 	tfUnit.clear();
 	tfEstimatedCost.clear();
+	txtErrorMessage.setVisible(false);
 
 }
 /**
@@ -272,5 +275,15 @@ public void setUserInputValues(String name, String quanity, String quanityType, 
 public int getIngredientListSize() {
 	return lvIngredients.getItems().size();
 }
-
+/**
+ * set the label text and makes it visible 
+ * @param errorMessage = String which you want to be shown
+ */
+public void setErrorMessage(String errorMessage) {
+txtErrorMessage.setText(errorMessage);
+txtErrorMessage.setVisible(true);
+}
+public void hideErrorMessage() {
+	txtErrorMessage.setVisible(false);
+}
 }

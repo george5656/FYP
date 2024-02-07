@@ -1988,7 +1988,18 @@ public void setAllPaneMenu(EventHandler<ActionEvent> home,EventHandler<ActionEve
 public void dishDetailsLoad() {
 	this.getChildren().remove(0);
 	this.getChildren().add(ddp);
+	ddp.hideErrorMessage();
 	this.setVgrow(ddp, Priority.ALWAYS);
+}
+/**
+ * set the text of the label in the dish details page and make it visible
+ * @param errorMessage = String which is the text you want to show.
+ */
+public void setDishDetailsErrorMessage(String errorMessage) {
+	ddp.setErrorMessage(errorMessage);
+}
+public void setDishDetailsErrorMessageFalse() {
+	ddp.hideErrorMessage();
 }
 /**
  * sets the dish details save button event handler 
