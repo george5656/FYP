@@ -709,7 +709,6 @@ public class ModelRoot {
 	 */
 	public String saveStockTypeFromFile(URI uri) {
 		String errorMessage = "";
-
 		try {
 			// as wont identify text if not in format
 			if (!uri.toString().endsWith(".txt")) {
@@ -718,19 +717,55 @@ public class ModelRoot {
 			Scanner sc = new Scanner(new File(uri)).useDelimiter("[\"\n, \r]+");
 
 			while (sc.hasNext()) {
-
+try {
 				String storageLocationId = sc.next();
-
+				
+				
 				Double quantity = Double.parseDouble(sc.next());
-
+				
 				String quantityType = sc.next();
-
+				
 				String expiereDate = sc.next();
-
+				
+				//just checking that the data is correct
+				
+				if(expiereDate.length() != 10) {
+					errorMessage = "issue with file";
+					break;
+				}
+				if(!expiereDate.matches("[0-9-]+")) {
+					errorMessage = "issue with file";
+					break;	
+				}
+				
+				//index of first dash
+				int iofd = expiereDate.indexOf("-");
+				int iosd = expiereDate.indexOf("-", iofd+1);
+				
+				
+				if(iofd == -1) {
+					errorMessage = "issue with file";
+					break;	
+				}else if(iosd == -1) {
+					errorMessage = "issue with file";
+					break;
+				} else if(expiereDate.subSequence(0, iofd).length() != 4) {
+					errorMessage = "issue with file";
+					break;
+				}else if(expiereDate.subSequence(iofd+1, iosd).length() != 2) {
+					errorMessage = "issue with file";
+					break;
+				}else if(expiereDate.subSequence(iosd+1, expiereDate.length()).length() != 2) {
+					errorMessage = "issue with file";
+					break;
+				}
+				
 				String name = sc.next();
-
+				
+					
 				Double cost = Double.parseDouble(sc.next());
-
+				
+				
 				// to see if storag locaiton exists.
 				if (!db.StorgaeLocationExists(storageLocationId)) {
 					errorMessage = "storage location doesn't exists";
@@ -746,12 +781,24 @@ public class ModelRoot {
 					createStock(-1, storageLocationId, quantity, quantityType, expiereDate, name, cost);
 					addCurrentStock();
 				}
-			}
+			
+}catch (Exception e) {
+	errorMessage = "issue with file";
+	break;
+}
+//bellow is the while loop end
+}
 
+ 
+			
+			
+			
+			
 		} catch (FileNotFoundException e) {
 
 			e.printStackTrace();
 			errorMessage = "issue with file";
+			
 		}
 
 		return errorMessage;

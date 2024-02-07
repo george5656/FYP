@@ -2135,7 +2135,8 @@ if(model.getDeleteFrom().equals("StockList")) {
 				view.dishDetailsAddReset();
 			}
 			}else {
-			model.makeAlert(issueFrom, masterError).show();
+				view.setDishDetailsErrorMessage(masterError);
+			//model.makeAlert(issueFrom, masterError).show();
 				
 			}
 			
@@ -2171,11 +2172,12 @@ if(model.getDeleteFrom().equals("StockList")) {
 				
 				model.selectedDishIngrednitnRemove(view.getDishDetailsSelectedIndex()-1);
 				view.setDishDetailsList(model.getSelectedDishList());
+				view.setDishDetailsErrorMessageFalse();
 			}else {
 				
-			
-				Alert dishDetailsErrorMessage = model.makeAlert("selection issue", masterIssue);
-				dishDetailsErrorMessage.show();
+			view.setDishDetailsErrorMessage(masterIssue);
+				//Alert dishDetailsErrorMessage = model.makeAlert("selection issue", masterIssue);
+				//dishDetailsErrorMessage.show();
 			}
 		}
 
@@ -2228,9 +2230,9 @@ if(model.getDeleteFrom().equals("StockList")) {
 				view.setDishDetailsList(model.getSelectedDishList());
 			}else {
 				
-			
-				Alert dishDetailsErrorMessage = model.makeAlert("selection issue", masterIssue);
-				dishDetailsErrorMessage.show();
+			view.setDishDetailsErrorMessage(masterIssue);
+				//Alert dishDetailsErrorMessage = model.makeAlert("selection issue", masterIssue);
+				//dishDetailsErrorMessage.show();
 			}
 		}
 
@@ -2565,8 +2567,8 @@ if(model.getDeleteFrom().equals("StockList")) {
 		public void handle(ActionEvent event) {
 		
 			if(view.getDishDetailsListSize() < 2) {
-				
-				model.makeAlert("data to be saved", "not enough to be saved").show();
+				view.setDishDetailsErrorMessage("not enough to be saved");
+				//model.makeAlert("data to be saved", "not enough to be saved").show();
 			
 			}else {
 				// if have data to be save it does this part.
