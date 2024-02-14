@@ -46,10 +46,10 @@ public class DeleteConfirmationPage extends PaneMenu {
 		
 		
 		
-		mainLayout.setVgrow(txtConfirmMessage, Priority.ALWAYS);
-		mainLayout.setVgrow(controls, Priority.ALWAYS);
-		controls.setHgrow(cancel, Priority.ALWAYS);
-		controls.setHgrow(confirm, Priority.ALWAYS);
+		VBox.setVgrow(txtConfirmMessage, Priority.ALWAYS);
+		VBox.setVgrow(controls, Priority.ALWAYS);
+		HBox.setHgrow(cancel, Priority.ALWAYS);
+		HBox.setHgrow(confirm, Priority.ALWAYS);
 	}
 	
 	/**

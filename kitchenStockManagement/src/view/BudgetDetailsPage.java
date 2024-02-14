@@ -1,9 +1,6 @@
 package view;
 
 import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
-
 import javafx.geometry.Pos;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.Label;
@@ -44,7 +41,7 @@ public class BudgetDetailsPage extends BasicLayoutDetails {
 		for(Label i : labelList) {
 			i.setFont(new Font(20));
 			i.setMaxSize(Double.MAX_VALUE, Double.MAX_VALUE);
-			labels.setVgrow(i,Priority.ALWAYS);
+			VBox.setVgrow(i,Priority.ALWAYS);
 			i.setAlignment(Pos.CENTER);
 		}
 		textFieldList.add(tfBudgetName);
@@ -55,16 +52,16 @@ public class BudgetDetailsPage extends BasicLayoutDetails {
 		for(TextField i : textFieldList) {
 			i.setFont(new Font(20));
 			i.setMaxSize(Double.MAX_VALUE, Double.MAX_VALUE);
-			userTextInput.setVgrow(i,Priority.ALWAYS);
+			VBox.setVgrow(i,Priority.ALWAYS);
 	
 		}
 		
 		dpStartDate.setMaxSize(Double.MAX_VALUE, Double.MAX_VALUE);
-		userTextInput.setVgrow(dpStartDate,Priority.ALWAYS);
+		VBox.setVgrow(dpStartDate,Priority.ALWAYS);
 		
 		
 		dpEndDate.setMaxSize(Double.MAX_VALUE, Double.MAX_VALUE);
-		userTextInput.setVgrow(dpEndDate,Priority.ALWAYS);
+		VBox.setVgrow(dpEndDate,Priority.ALWAYS);
 
 	}
 	/**

@@ -269,6 +269,13 @@ private HBox fAndO = new HBox(20);
 		return lvDishes.getSelectionModel().getSelectedItem();	
 	}
 	/**
+	 * gets the item the use selected in the menu (middle) list view
+	 * @return String, which the user selected.
+	 */
+	public String getMenuListSelectedValue() {
+		return lvMenu.getSelectionModel().getSelectedItem();	
+	}
+	/**
 	 * sets the list that displays the dish in a menu to the inputed list.
 	 * list in the middle
 	 * @param items = ObservableList<String>,
@@ -340,5 +347,12 @@ private HBox fAndO = new HBox(20);
 	 */
 	public void clearFindUserInput() {
 		tfUserInput.clear();
+	}
+	/**
+	 * removes selection from the list view menu and list view dishes
+	 */
+	public void deSelect() {
+		lvMenu.getSelectionModel().clearSelection();
+		lvDishes.getSelectionModel().clearSelection();
 	}
 }

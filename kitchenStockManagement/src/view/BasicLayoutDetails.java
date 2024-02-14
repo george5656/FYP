@@ -46,12 +46,12 @@ public class BasicLayoutDetails extends PaneMenu {
 		btnSave.setFont(new Font(20));
 		btnCancel.setFont(new Font(20));
 		
-		mainLayout.setVgrow(labelsAndUserTextInput, Priority.ALWAYS);
-		mainLayout.setVgrow(buttons, Priority.ALWAYS);
-		labelsAndUserTextInput.setHgrow(labels, Priority.ALWAYS);
-		labelsAndUserTextInput.setHgrow(userTextInput, Priority.ALWAYS );
-		buttons.setHgrow(btnCancel, Priority.ALWAYS);
-		buttons.setHgrow(btnSave, Priority.ALWAYS);
+		VBox.setVgrow(labelsAndUserTextInput, Priority.ALWAYS);
+		VBox.setVgrow(buttons, Priority.ALWAYS);
+		HBox.setHgrow(labels, Priority.ALWAYS);
+		HBox.setHgrow(userTextInput, Priority.ALWAYS );
+		HBox.setHgrow(btnCancel, Priority.ALWAYS);
+		HBox.setHgrow(btnSave, Priority.ALWAYS);
 	
 		
 		

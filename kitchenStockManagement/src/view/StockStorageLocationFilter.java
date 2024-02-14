@@ -45,8 +45,8 @@ public StockStorageLocationFilter() {
 	rbNo.setToggleGroup(tgYesAndNo);
 	
 	toggleGroupLayout.getChildren().addAll(rbYes,rbNo);
-	toggleGroupLayout.setHgrow(rbYes, Priority.ALWAYS);
-	toggleGroupLayout.setHgrow(rbNo, Priority.ALWAYS);
+	HBox.setHgrow(rbYes, Priority.ALWAYS);
+	HBox.setHgrow(rbNo, Priority.ALWAYS);
 	
 	
 	userTextInput.getChildren().addAll(toggleGroupLayout,cbType);
@@ -56,11 +56,11 @@ public StockStorageLocationFilter() {
 	cbType.setMaxHeight(Double.MAX_VALUE);
 	cbType.setPrefWidth(300);
 		
-		userTextInput.setVgrow(rbYes,Priority.ALWAYS);
-		userTextInput.setVgrow(rbNo,Priority.ALWAYS);
-		userTextInput.setVgrow(cbType,Priority.ALWAYS);
+	VBox.setVgrow(rbYes,Priority.ALWAYS);
+		VBox.setVgrow(rbNo,Priority.ALWAYS);
+		VBox.setVgrow(cbType,Priority.ALWAYS);
 	
-	userTextInput.setVgrow(toggleGroupLayout, Priority.ALWAYS);
+		VBox.setVgrow(toggleGroupLayout, Priority.ALWAYS);
 	rbYes.setFont(new Font(30));
 	rbNo.setFont(new Font(30));
 	
@@ -71,7 +71,7 @@ public StockStorageLocationFilter() {
 	for(Label i : labelList) {
 		i.setFont(new Font(30));
 		i.setMaxSize(Double.MAX_VALUE, Double.MAX_VALUE);
-		labels.setVgrow(i,Priority.ALWAYS);
+		VBox.setVgrow(i,Priority.ALWAYS);
 		i.setAlignment(Pos.CENTER);
 	}
 	

@@ -27,11 +27,11 @@ public class HomePage extends PaneMenu {
 		layout.getChildren().addAll(btnStock,btnMenu,btnStorage,btnAccount,btnBudget);
 		layout.setAlignment(Pos.CENTER);
 		
-		layout.setVgrow(btnStock, Priority.ALWAYS);
-		layout.setVgrow(btnBudget, Priority.ALWAYS);
-		layout.setVgrow(btnAccount, Priority.ALWAYS);
-		layout.setVgrow(btnMenu, Priority.ALWAYS);
-		layout.setVgrow(btnStorage, Priority.ALWAYS);
+		VBox.setVgrow(btnStock, Priority.ALWAYS);
+		VBox.setVgrow(btnBudget, Priority.ALWAYS);
+		VBox.setVgrow(btnAccount, Priority.ALWAYS);
+		VBox.setVgrow(btnMenu, Priority.ALWAYS);
+		VBox.setVgrow(btnStorage, Priority.ALWAYS);
 		
 		layout.setFillWidth(true);
 		

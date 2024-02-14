@@ -50,7 +50,7 @@ public class Output extends PaneMenu {
 			i.setFont(new Font(20));
 			i.setMaxSize(Double.MAX_VALUE, Double.MAX_VALUE);
 			i.setAlignment(Pos.CENTER);
-			layout.setVgrow(i, Priority.ALWAYS);
+			VBox.setVgrow(i, Priority.ALWAYS);
 		}
 	}
 	/**

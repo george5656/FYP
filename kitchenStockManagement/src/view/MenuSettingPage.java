@@ -39,11 +39,11 @@ public MenuSettingPage() {
 	userTextInput.getChildren().addAll(tfName,cbBudget);
 	//test.setHgrow(userTextInput.getChildren().get(1), Priority.SOMETIMES);
 	
-	labels.setVgrow(txtName, Priority.ALWAYS);
-	labels.setVgrow(txtBudget, Priority.ALWAYS);
+	VBox.setVgrow(txtName, Priority.ALWAYS);
+	VBox.setVgrow(txtBudget, Priority.ALWAYS);
 	
-	userTextInput.setVgrow(tfName, Priority.ALWAYS);
-	userTextInput.setVgrow(cbBudget, Priority.ALWAYS);
+	VBox.setVgrow(tfName, Priority.ALWAYS);
+	VBox.setVgrow(cbBudget, Priority.ALWAYS);
 
 	//comboBoxContainer.setVgrow(cbBudget, Priority.ALWAYS);
 	
@@ -89,5 +89,12 @@ public void setBudgetOptions(ObservableList<String> options){
  */
 public String getSelectedBudgetValue() {
 	return cbBudget.getSelectionModel().getSelectedItem();
+}
+/**
+ * removes all user input from the page
+ */
+public void resetPage() {
+	cbBudget.getSelectionModel().clearSelection();
+	tfName.clear();
 }
 }

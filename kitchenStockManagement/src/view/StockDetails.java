@@ -85,21 +85,21 @@ public StockDetails() {
 	txtExpiereDate.setAlignment(Pos.CENTER);
 	txtCost.setAlignment(Pos.CENTER);
 	
-	buttons.setHgrow(btnFileLoad, Priority.ALWAYS);
+	HBox.setHgrow(btnFileLoad, Priority.ALWAYS);
 	
-	labels.setVgrow(txtStockName,Priority.ALWAYS);
-	labels.setVgrow(txtStorageLocation,Priority.ALWAYS);
-	labels.setVgrow(txtQuanity,Priority.ALWAYS);
-	labels.setVgrow(txtQuantityType,Priority.ALWAYS);
-	labels.setVgrow(txtExpiereDate,Priority.ALWAYS);
-	labels.setVgrow(txtCost,Priority.ALWAYS);
+	VBox.setVgrow(txtStockName,Priority.ALWAYS);
+	VBox.setVgrow(txtStorageLocation,Priority.ALWAYS);
+	VBox.setVgrow(txtQuanity,Priority.ALWAYS);
+	VBox.setVgrow(txtQuantityType,Priority.ALWAYS);
+	VBox.setVgrow(txtExpiereDate,Priority.ALWAYS);
+	VBox.setVgrow(txtCost,Priority.ALWAYS);
 	
-	userTextInput.setVgrow(tfStockName,Priority.ALWAYS);
-	userTextInput.setVgrow(cbStorageLocation,Priority.ALWAYS);
-	userTextInput.setVgrow(tfQuanity,Priority.ALWAYS);
-	userTextInput.setVgrow(tfQuantityType,Priority.ALWAYS);
-	userTextInput.setVgrow(dpExpiereDate,Priority.ALWAYS);
-	userTextInput.setVgrow(tfCost,Priority.ALWAYS);
+	VBox.setVgrow(tfStockName,Priority.ALWAYS);
+	VBox.setVgrow(cbStorageLocation,Priority.ALWAYS);
+	VBox.setVgrow(tfQuanity,Priority.ALWAYS);
+	VBox.setVgrow(tfQuantityType,Priority.ALWAYS);
+	VBox.setVgrow(dpExpiereDate,Priority.ALWAYS);
+	VBox.setVgrow(tfCost,Priority.ALWAYS);
 }
 /**
  * gets the dataPicker associated with the expire date

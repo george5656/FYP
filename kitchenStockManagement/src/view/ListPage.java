@@ -2,8 +2,6 @@ package view;
 
 
 
-import java.util.ArrayList;
-
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
@@ -12,7 +10,6 @@ import javafx.geometry.Pos;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
-import javafx.scene.control.MultipleSelectionModel;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Priority;
@@ -67,18 +64,18 @@ public class ListPage extends PaneMenu {
 		tfFind.setMaxSize(Double.MAX_VALUE, Double.MAX_VALUE );
 		txtErrorMessage.setMaxSize(Double.MAX_VALUE, Double.MAX_VALUE);
 		
-		mainLayout.setHgrow(list, Priority.ALWAYS);
-		mainLayout.setHgrow(buttons, Priority.ALWAYS);
-		list.setVgrow(lv, Priority.ALWAYS);
-		list.setVgrow(txtErrorMessage,Priority.ALWAYS);
-		buttons.setVgrow(btnAdd, Priority.ALWAYS);
-		buttons.setVgrow(btnAdd, Priority.ALWAYS);
-		buttons.setVgrow(btnEdit, Priority.ALWAYS);
-		buttons.setVgrow(btnDelete, Priority.ALWAYS);
-		buttons.setVgrow(btnFilter, Priority.ALWAYS);
-		buttons.setVgrow(find, Priority.ALWAYS);
-		find.setHgrow(btnFind, Priority.ALWAYS);
-		find.setHgrow(tfFind, Priority.ALWAYS);
+		HBox.setHgrow(list, Priority.ALWAYS);
+		HBox.setHgrow(buttons, Priority.ALWAYS);
+		VBox.setVgrow(lv, Priority.ALWAYS);
+		VBox.setVgrow(txtErrorMessage,Priority.ALWAYS);
+		VBox.setVgrow(btnAdd, Priority.ALWAYS);
+		VBox.setVgrow(btnAdd, Priority.ALWAYS);
+		VBox.setVgrow(btnEdit, Priority.ALWAYS);
+		VBox.setVgrow(btnDelete, Priority.ALWAYS);
+		VBox.setVgrow(btnFilter, Priority.ALWAYS);
+		VBox.setVgrow(find, Priority.ALWAYS);
+		HBox.setHgrow(btnFind, Priority.ALWAYS);
+		HBox.setHgrow(tfFind, Priority.ALWAYS);
 		
 		mainLayout.setPadding(new Insets(20,20,20,20));
 		

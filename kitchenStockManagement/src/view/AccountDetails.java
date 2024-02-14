@@ -46,12 +46,12 @@ public class AccountDetails extends BasicLayoutDetails {
 		for (Label i : labelList) {
 			i.setFont(new Font(30));
 			i.setMaxSize(Double.MAX_VALUE, Double.MAX_VALUE);
-			labels.setVgrow(i, Priority.ALWAYS);
+			VBox.setVgrow(i, Priority.ALWAYS);
 			i.setAlignment(Pos.CENTER);
 		}
 		userTextInput.getChildren().addAll(tfUserName, pfPassword, rbLayout);
-		rbLayout.setHgrow(rbYes, Priority.ALWAYS);
-		rbLayout.setHgrow(rbNo, Priority.ALWAYS);
+		HBox.setHgrow(rbYes, Priority.ALWAYS);
+		HBox.setHgrow(rbNo, Priority.ALWAYS);
 		tfUserName.setFont(new Font(30));
 		pfPassword.setFont(new Font(30));
 		rbYes.setFont(new Font(30));
@@ -62,9 +62,9 @@ public class AccountDetails extends BasicLayoutDetails {
 		rbYes.setMaxSize(Double.MAX_VALUE, Double.MAX_VALUE);
 		rbNo.setMaxSize(Double.MAX_VALUE, Double.MAX_VALUE);
 
-		userTextInput.setVgrow(tfUserName, Priority.ALWAYS);
-		userTextInput.setVgrow(pfPassword, Priority.ALWAYS);
-		userTextInput.setVgrow(rbLayout, Priority.ALWAYS);
+		VBox.setVgrow(tfUserName, Priority.ALWAYS);
+		VBox.setVgrow(pfPassword, Priority.ALWAYS);
+		VBox.setVgrow(rbLayout, Priority.ALWAYS);
 
 		rbYes.setAlignment(Pos.CENTER);
 		rbNo.setAlignment(Pos.CENTER);

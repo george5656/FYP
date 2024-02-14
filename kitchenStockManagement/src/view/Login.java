@@ -46,12 +46,12 @@ public class Login extends VBox {
 	label.getChildren().addAll(txtUsername,txtPassword);
 	textInput.getChildren().addAll(tfUsername,pfPassword);
 	
-	labelAndTextInputLayout.setHgrow(label, Priority.ALWAYS);
-	labelAndTextInputLayout.setHgrow(textInput, Priority.ALWAYS);
-	label.setVgrow(txtUsername, Priority.ALWAYS);
-	label.setVgrow(txtPassword, Priority.ALWAYS);
-	textInput.setVgrow(tfUsername, Priority.ALWAYS);
-	textInput.setVgrow(pfPassword, Priority.ALWAYS);
+	HBox.setHgrow(label, Priority.ALWAYS);
+	HBox.setHgrow(textInput, Priority.ALWAYS);
+	VBox.setVgrow(txtUsername, Priority.ALWAYS);
+	VBox.setVgrow(txtPassword, Priority.ALWAYS);
+	VBox.setVgrow(tfUsername, Priority.ALWAYS);
+	VBox.setVgrow(pfPassword, Priority.ALWAYS);
 	 
 	controls.getChildren().addAll(btnExit,btnLogin);
 	 
@@ -88,16 +88,16 @@ public class Login extends VBox {
 	 tfUsername.setFont(new Font(20));
 		pfPassword.setFont(new Font(20));
 	 //growth 
-	this.setVgrow(txtTitle, Priority.ALWAYS);
-	this.setVgrow(labelAndTextInputLayout, Priority.ALWAYS);
-	this.setVgrow(controls, Priority.ALWAYS);
+		VBox.setVgrow(txtTitle, Priority.ALWAYS);
+		VBox.setVgrow(labelAndTextInputLayout, Priority.ALWAYS);
+		VBox.setVgrow(controls, Priority.ALWAYS);
 	this.setFillWidth(true);
 	 
 	 
 	 
 	 controls.setFillHeight(true);
-	 controls.setHgrow(btnExit, Priority.ALWAYS);
-	 controls.setHgrow(btnLogin, Priority.ALWAYS);
+	 HBox.setHgrow(btnExit, Priority.ALWAYS);
+	 HBox.setHgrow(btnLogin, Priority.ALWAYS);
 	
 	
 	//the padding

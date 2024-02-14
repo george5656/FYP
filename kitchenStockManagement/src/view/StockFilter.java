@@ -74,7 +74,7 @@ public StockFilter() {
 	
 	for(Region i : input) {
 		i.setMaxSize(Double.MAX_VALUE, Double.MAX_VALUE);
-		userTextInput.setVgrow(i,Priority.ALWAYS);
+		VBox.setVgrow(i,Priority.ALWAYS);
 	}
 	
 	
@@ -84,8 +84,8 @@ public StockFilter() {
 	cbStorageLocation.setPrefWidth(300);
 	cbStockType.setPrefWidth(300);
 	
-	userTextInput.setVgrow(cbStorageLocation,Priority.ALWAYS);
-	userTextInput.setVgrow(cbStockType,Priority.ALWAYS);
+	VBox.setVgrow(cbStorageLocation,Priority.ALWAYS);
+	VBox.setVgrow(cbStockType,Priority.ALWAYS);
 	/*
 	tfMinQuanity.setFont(new Font(30));
 	tfMaxQuanity.setFont(new Font(30));
@@ -96,7 +96,7 @@ public StockFilter() {
 	for(Label i : labelList) {
 		i.setFont(new Font(20));
 		i.setMaxSize(Double.MAX_VALUE, Double.MAX_VALUE);
-		labels.setVgrow(i,Priority.ALWAYS);
+		VBox.setVgrow(i,Priority.ALWAYS);
 		i.setAlignment(Pos.CENTER);
 	}
 

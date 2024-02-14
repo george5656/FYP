@@ -45,7 +45,7 @@ public class RootView extends VBox {
 	public RootView() {
 		super(20);
 		this.getChildren().add(login);
-		this.setVgrow(login, Priority.ALWAYS);
+		VBox.setVgrow(login, Priority.ALWAYS);
 		this.setAlignment(Pos.CENTER);
 		this.setFillWidth(true);
 	}
@@ -120,6 +120,11 @@ public MenuSettingPage getMenuSettingPage() {
 	return msp;
 }
 /**
+ */
+public void clearMenuSettingPage() {
+	msp.resetPage();
+}
+/**
  * gets all the views that have instance in the RootView.
  * get all the views the application has. 
  * @return ArrayList<PaneMenu> All views downcast to the pane menu.
@@ -189,7 +194,7 @@ public String getLoginUserPasswordInput() {
 public void loginLoad() {
 	this.getChildren().remove(0);
 	this.getChildren().add(login);
-	this.setVgrow(login, Priority.ALWAYS);
+	VBox.setVgrow(login, Priority.ALWAYS);
 	login.clearInput();
 }
 //home page
@@ -246,7 +251,7 @@ public void homePageMenuLoad(Boolean isAdmin) {
 	homePage.setHomePagetype(isAdmin);
 	this.getChildren().remove(0);
 	this.getChildren().add(homePage);
-	this.setVgrow(homePage, Priority.ALWAYS);
+	VBox.setVgrow(homePage, Priority.ALWAYS);
 }
 
 //stockListPage
@@ -291,7 +296,7 @@ public void stockListLoad(ObservableList<String> data) {
 	stockListPage.resetFindInput();
 	this.getChildren().remove(0);
 	this.getChildren().add(stockListPage);
-	this.setVgrow(stockListPage, Priority.ALWAYS);
+	VBox.setVgrow(stockListPage, Priority.ALWAYS);
 }
 /**
  * gets the item that is selected in the listview in the stock list page. 
@@ -392,7 +397,7 @@ public void setStockDetailsBtnLoadFromFileEventHandler(EventHandler<ActionEvent>
 public void stockDetailsLoad(Boolean add) {
 	this.getChildren().remove(0);
 	this.getChildren().add(sd);
-	this.setVgrow(sd, Priority.ALWAYS);
+	VBox.setVgrow(sd, Priority.ALWAYS);
 	
 	if(add) {
 		sd.setAddVarient();
@@ -573,7 +578,7 @@ public void stockFilterLoad(ArrayList<String> storageLocations, ArrayList<String
 	
 	this.getChildren().remove(0);
 	this.getChildren().add(sf);
-	this.setVgrow(sf, Priority.ALWAYS);
+	VBox.setVgrow(sf, Priority.ALWAYS);
 }
 /**
  * get the user input, of min quantity input area.
@@ -776,7 +781,7 @@ public void menuListLoad(ObservableList<String> data) {
 	menuListPage.resetFindInput();
 	this.getChildren().remove(0);
 	this.getChildren().add(menuListPage);
-	this.setVgrow(menuListPage, Priority.ALWAYS);
+	VBox.setVgrow(menuListPage, Priority.ALWAYS);
 	
 }
 // menuDetails
@@ -864,7 +869,7 @@ public void setMenuDetailsBtnAboutEventHandler(EventHandler<ActionEvent> event) 
 public void MenuDetailsLoad() {
 	this.getChildren().remove(0);
 	this.getChildren().add(menuDetails);
-	this.setVgrow(menuDetails, Priority.ALWAYS);
+	VBox.setVgrow(menuDetails, Priority.ALWAYS);
 }
 /**
  * sets the menu details dish List view. 
@@ -897,6 +902,21 @@ public String getMenuDetailsFindUserInput() {
  */
 public String getMenuDetailsDishListSelectedItemValueIdOnly() {
 	return menuDetails.getDishListSelectedValue().substring(menuDetails.getDishListSelectedValue().indexOf("=")+2);
+}
+/**
+ * gets the selected item from the Menu list, list view but only the items id. 
+ * selection from the menu details page. 
+ * @return String = selected items id.
+ */
+public String getMenuDetailsMenuDishListSelectedItemValueIdOnly() {
+	return menuDetails.getMenuListSelectedValue().substring(menuDetails.getMenuListSelectedValue().indexOf("=")+2);
+}
+/**
+ * removes the user selection from the menu details lists.
+ * it doesn't remove selection from shipping list as user doesn't interact with it for anything.
+ */
+public void clearMenuDetailsListSelection() {
+	menuDetails.deSelect();
 }
 /**
  * gets the selected item index in list view from the dish list, list view. 
@@ -977,7 +997,7 @@ public void menuFilterLoad() {
 	mf.resetPage();
 	this.getChildren().remove(0);
 	this.getChildren().add(mf);
-	this.setVgrow(mf, Priority.ALWAYS);
+	VBox.setVgrow(mf, Priority.ALWAYS);
 }
 /**
  * sets the menu filter save button event handler 
@@ -1039,7 +1059,7 @@ public String getMenuFilterDoesntContainsDish() {
 public void menuSettingsLoad() {
 	this.getChildren().remove(0);
 	this.getChildren().add(msp);
-	this.setVgrow(msp, Priority.ALWAYS);
+	VBox.setVgrow(msp, Priority.ALWAYS);
 }
 /**
  * sets the menu settings save button event handler 
@@ -1102,7 +1122,7 @@ public String getMenuSettingSelectedBudgetOption() {
 public void outputPageLoad() {
 	this.getChildren().remove(0);
 	this.getChildren().add(output);
-	this.setVgrow(output, Priority.ALWAYS);
+	VBox.setVgrow(output, Priority.ALWAYS);
 }
 /**
  * sets the output menu button event handler 
@@ -1202,7 +1222,7 @@ public void BudgetListLoad(ObservableList<String> data) {
 	budgetListPage.resetFindInput();
 	this.getChildren().remove(0);
 	this.getChildren().add(budgetListPage);
-	this.setVgrow(budgetListPage, Priority.ALWAYS);
+	VBox.setVgrow(budgetListPage, Priority.ALWAYS);
 }
 /**
  * get the user input in the find section on the budget list page.
@@ -1264,7 +1284,7 @@ public void budgetDetailsLoad() {
 	
 	this.getChildren().remove(0);
 	this.getChildren().add(bdp);
-	this.setVgrow(bdp, Priority.ALWAYS);
+	VBox.setVgrow(bdp, Priority.ALWAYS);
 
 }
 /**
@@ -1367,7 +1387,7 @@ public void budgetfilterLoad() {
 	budgetFilter.resetPage();
 	this.getChildren().remove(0);
 	this.getChildren().add(budgetFilter);
-	this.setVgrow(budgetFilter, Priority.ALWAYS);
+	VBox.setVgrow(budgetFilter, Priority.ALWAYS);
 }
 /**
  * sets the budget filter save button event handler 
@@ -1527,7 +1547,7 @@ public void storgaeLocationListLoad(ObservableList<String> storageLocations) {
 	storageLocationListPage.resetFindInput();
 	this.getChildren().remove(0);
 	this.getChildren().add(storageLocationListPage);
-	this.setVgrow(storageLocationListPage,Priority.ALWAYS);
+	VBox.setVgrow(storageLocationListPage,Priority.ALWAYS);
 }
 /**
  * get the user input in the find section on the storage location list page.
@@ -1581,7 +1601,7 @@ public String getSelectedStorageId() {
 public void StorgaeLocationDetailsLoad() {
 	this.getChildren().remove(0);
 	this.getChildren().add(ssld);
-	this.setVgrow(ssld,Priority.ALWAYS);
+	VBox.setVgrow(ssld,Priority.ALWAYS);
 }
 /**
  * sets the storage location details save button event handler 
@@ -1661,7 +1681,7 @@ public void StorgaeLocationFilterLoad(ArrayList<String> type) {
 	sslf.resetPage();
 	this.getChildren().remove(0);
 	this.getChildren().add(sslf);
-	this.setVgrow(sslf,Priority.ALWAYS);
+	VBox.setVgrow(sslf,Priority.ALWAYS);
 }
 /**
  * sets the storage location filter apply button event handler 
@@ -1762,7 +1782,7 @@ public String getAccountTfFindValue() {
 public void accountDetailsLoad() {
 	this.getChildren().remove(0);
 	this.getChildren().add(ad);
-	this.setVgrow(ad, Priority.ALWAYS);
+	VBox.setVgrow(ad, Priority.ALWAYS);
 }
 /**
  * shows the user an error message on the account list page.
@@ -1813,7 +1833,7 @@ public void accountListLoad(ObservableList<String> data) {
 	accountListPage.resetFindInput();
 	this.getChildren().remove(0);
 	this.getChildren().add(accountListPage);
-	this.setVgrow(accountListPage, Priority.ALWAYS);
+	VBox.setVgrow(accountListPage, Priority.ALWAYS);
 }
 /**
  * gets the account details page, user name user input
@@ -1895,7 +1915,7 @@ public void accountFilterLoad() {
 	af.reset();
 	this.getChildren().remove(0);
 	this.getChildren().add(af);
-	this.setVgrow(af, Priority.ALWAYS);
+	VBox.setVgrow(af, Priority.ALWAYS);
 }
 /**
  * sets the account filter apply button event handler 
@@ -1962,7 +1982,7 @@ public void setDeleteConfirmationBtnAboutEventHandler(EventHandler<ActionEvent> 
 public void deleteConfirmationLoad() {
 	this.getChildren().remove(0);
 	this.getChildren().add(dcp);
-	this.setVgrow(dcp, Priority.ALWAYS);
+	VBox.setVgrow(dcp, Priority.ALWAYS);
 }
 
 /**
@@ -1989,7 +2009,7 @@ public void dishDetailsLoad() {
 	this.getChildren().remove(0);
 	this.getChildren().add(ddp);
 	ddp.hideErrorMessage();
-	this.setVgrow(ddp, Priority.ALWAYS);
+	VBox.setVgrow(ddp, Priority.ALWAYS);
 }
 /**
  * set the text of the label in the dish details page and make it visible
@@ -2091,6 +2111,12 @@ public void setDishDetailsList(ObservableList<String> ingredents) {
 	ddp.setIngredentList(ingredents);
 }
 /**
+ * clears all the input and listview on the dish details page.
+ */
+public void clearDishDetailsPage() {
+	ddp.resetWholePage();
+}
+/**
  * get the index of the item selected in the list view which is in dish details page, 
  * @return int =index of the selected item
  */
@@ -2143,7 +2169,7 @@ public void dishFilterLoad() {
 	fd.resetPage();
 	this.getChildren().remove(0);
 	this.getChildren().add(fd);
-	this.setVgrow(fd, Priority.ALWAYS);
+	VBox.setVgrow(fd, Priority.ALWAYS);
 }
 /**
  * sets the filter dishes apply button event handler 

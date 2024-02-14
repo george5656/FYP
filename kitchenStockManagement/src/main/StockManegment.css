@@ -22,8 +22,10 @@
 .combo-box .list-cell {
 -fx-font-size: 20;
 }
-
 .text-field {
+-fx-font-size: 20;
+}
+.list-view .list-cell{
 -fx-font-size: 20;
 }
 

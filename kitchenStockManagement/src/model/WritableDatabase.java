@@ -1254,7 +1254,7 @@ public class WritableDatabase {
 		try {
 
 			statement = mySqlDatabase.prepareStatement(
-					"Insert into stock_mangemnet.tbl_dish_stock (  stockTypeId, dishId, quanityOfStockNeeded, quantityOfStockNeedUnitType )values (\'"
+					"Insert into stock_mangemnet.tbl_dish_stock (stockTypeId, dishId, quanityOfStockNeeded, quantityOfStockNeedUnitType )values (\'"
 							+ stockType + "\', \'" + dishName + "\', \'" + quanityNeeded + "\', \'" + unit + "\');");
 			statement.execute();
 
@@ -1318,6 +1318,26 @@ public class WritableDatabase {
 
 			statement = mySqlDatabase.prepareStatement(
 					"Delete From stock_mangemnet.tbl_dish where dishId = \'" + orginalDishName + "\';");
+			statement.execute();
+
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
+	}
+	/**
+	 * delete multiple row from the tbl_dish_stock table.
+	 * row delete are based of if the dishID column matches the passed in parameter
+	 * @param orginalDishName = String which indicate which row to delete. 
+	 */
+	public void deleteTblDishStock(String orginalDishName) {
+
+		PreparedStatement statement;
+		try {
+
+			statement = mySqlDatabase.prepareStatement(
+					"Delete From stock_mangemnet.tbl_dish_Stock where dishId = \'" + orginalDishName + "\';");
 			statement.execute();
 
 		} catch (SQLException e) {

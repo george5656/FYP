@@ -65,30 +65,30 @@ DishDetailsPage(){
 	mainLayout.setPadding(new Insets(20,20,20,20));
 	
 	
-	mainLayout.setHgrow(list, Priority.ALWAYS);
-	mainLayout.setHgrow(userInput, Priority.ALWAYS);
-	list.setVgrow(lvIngredients, Priority.ALWAYS);
-	list.setVgrow(txtErrorMessage, Priority.ALWAYS);
-	userInput.setVgrow(textInputAndLabel, Priority.ALWAYS);
-	userInput.setVgrow(controllsTop, Priority.ALWAYS);
-	userInput.setVgrow(controllsBottom, Priority.ALWAYS);
-	textInputAndLabel.setHgrow(labels, Priority.ALWAYS);
-	textInputAndLabel.setHgrow(textFields, Priority.ALWAYS);
-	labels.setVgrow(txtDishName, Priority.ALWAYS);
-	labels.setVgrow(txtIngredientName, Priority.ALWAYS);
-	labels.setVgrow(txtQuantity, Priority.ALWAYS);
-	labels.setVgrow(txtUnit, Priority.ALWAYS);
-	labels.setVgrow(txtEstimatedCost, Priority.ALWAYS);
-	textFields.setVgrow(tfDishName, Priority.ALWAYS);
-	textFields.setVgrow(tfIngredientName, Priority.ALWAYS);
-	textFields.setVgrow(tfQuanity, Priority.ALWAYS);
-	textFields.setVgrow(tfUnit, Priority.ALWAYS);
-	textFields.setVgrow(tfEstimatedCost, Priority.ALWAYS);
-	controllsTop.setHgrow(btnAdd, Priority.ALWAYS);
-	controllsTop.setHgrow(btnEdit, Priority.ALWAYS);
-	controllsTop.setHgrow(btnDelete, Priority.ALWAYS);
-	controllsBottom.setHgrow(btnCancel, Priority.ALWAYS);
-	controllsBottom.setHgrow(btnSave, Priority.ALWAYS);
+	HBox.setHgrow(list, Priority.ALWAYS);
+	HBox.setHgrow(userInput, Priority.ALWAYS);
+	VBox.setVgrow(lvIngredients, Priority.ALWAYS);
+	VBox.setVgrow(txtErrorMessage, Priority.ALWAYS);
+	VBox.setVgrow(textInputAndLabel, Priority.ALWAYS);
+	VBox.setVgrow(controllsTop, Priority.ALWAYS);
+	VBox.setVgrow(controllsBottom, Priority.ALWAYS);
+	HBox.setHgrow(labels, Priority.ALWAYS);
+	HBox.setHgrow(textFields, Priority.ALWAYS);
+	VBox.setVgrow(txtDishName, Priority.ALWAYS);
+	VBox.setVgrow(txtIngredientName, Priority.ALWAYS);
+	VBox.setVgrow(txtQuantity, Priority.ALWAYS);
+	VBox.setVgrow(txtUnit, Priority.ALWAYS);
+	VBox.setVgrow(txtEstimatedCost, Priority.ALWAYS);
+	VBox.setVgrow(tfDishName, Priority.ALWAYS);
+	VBox.setVgrow(tfIngredientName, Priority.ALWAYS);
+	VBox.setVgrow(tfQuanity, Priority.ALWAYS);
+	VBox.setVgrow(tfUnit, Priority.ALWAYS);
+	VBox.setVgrow(tfEstimatedCost, Priority.ALWAYS);
+	HBox.setHgrow(btnAdd, Priority.ALWAYS);
+	HBox.setHgrow(btnEdit, Priority.ALWAYS);
+	HBox.setHgrow(btnDelete, Priority.ALWAYS);
+	HBox.setHgrow(btnCancel, Priority.ALWAYS);
+	HBox.setHgrow(btnSave, Priority.ALWAYS);
 	
 	
 	btnAdd.setMaxSize(Double.MAX_VALUE, Double.MAX_VALUE);
@@ -247,6 +247,14 @@ public void addReset() {
 
 }
 /**
+ * reset all the page inputs and the listview
+ */
+public void resetWholePage() {
+	addReset();
+	lvIngredients.getItems().clear();
+	tfDishName.clear();
+}
+/**
  * get the item that is selected. 
  * not it gets the string, which the user clicked on in the listView.
  * @return String
@@ -283,6 +291,9 @@ public void setErrorMessage(String errorMessage) {
 txtErrorMessage.setText(errorMessage);
 txtErrorMessage.setVisible(true);
 }
+/**
+ * make the label for error message invisible
+ */
 public void hideErrorMessage() {
 	txtErrorMessage.setVisible(false);
 }

@@ -32,8 +32,8 @@ public AccountFilter() {
 	rbNo.setToggleGroup(tgYesAndNo);
 	
 	toggleGroupLayout.getChildren().addAll(rbYes,rbNo);
-	toggleGroupLayout.setHgrow(rbYes,Priority.ALWAYS);
-	toggleGroupLayout.setHgrow(rbNo,Priority.ALWAYS);
+	HBox.setHgrow(rbYes,Priority.ALWAYS);
+	HBox.setHgrow(rbNo,Priority.ALWAYS);
 	
 	labels.getChildren().add(txtIsAdmin);
 	userTextInput.getChildren().add(toggleGroupLayout);
@@ -46,8 +46,8 @@ public AccountFilter() {
 	rbNo.setMaxSize(Double.MAX_VALUE, Double.MAX_VALUE);
 	txtIsAdmin.setMaxSize(Double.MAX_VALUE, Double.MAX_VALUE);
 	
-	labels.setVgrow(txtIsAdmin,Priority.ALWAYS);
-	userTextInput.setVgrow(	toggleGroupLayout,Priority.ALWAYS);
+	VBox.setVgrow(txtIsAdmin,Priority.ALWAYS);
+	VBox.setVgrow(	toggleGroupLayout,Priority.ALWAYS);
 	
 	rbYes.setAlignment(Pos.CENTER);
 	rbNo.setAlignment(Pos.CENTER);

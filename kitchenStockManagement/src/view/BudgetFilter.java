@@ -6,7 +6,6 @@ import javafx.geometry.Pos;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
-import javafx.scene.layout.HBox;
 import javafx.scene.layout.Priority;
 import javafx.scene.layout.Region;
 import javafx.scene.layout.VBox;
@@ -54,7 +53,7 @@ import javafx.scene.text.Font;
 		for(Label i : labelList) {
 			i.setFont(new Font(20));
 			i.setMaxSize(Double.MAX_VALUE, Double.MAX_VALUE);
-			labels.setVgrow(i,Priority.ALWAYS);
+			VBox.setVgrow(i,Priority.ALWAYS);
 			i.setAlignment(Pos.CENTER);
 		}
 		
@@ -71,7 +70,7 @@ import javafx.scene.text.Font;
 		
 		for(Region i : input) {
 			i.setMaxSize(Double.MAX_VALUE, Double.MAX_VALUE);
-			userTextInput.setVgrow(i,Priority.ALWAYS);
+			VBox.setVgrow(i,Priority.ALWAYS);
 		}
 	
 	}

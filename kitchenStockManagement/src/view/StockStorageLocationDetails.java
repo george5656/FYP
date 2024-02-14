@@ -48,21 +48,21 @@ public StockStorageLocationDetails() {
 	textFieldList.add(tfType);
 	
 	radioButtonLayout.getChildren().addAll(rbYes,rbNo);
-	radioButtonLayout.setHgrow(rbYes, Priority.ALWAYS);
-	radioButtonLayout.setHgrow(rbNo, Priority.ALWAYS);
+	HBox.setHgrow(rbYes, Priority.ALWAYS);
+	HBox.setHgrow(rbNo, Priority.ALWAYS);
 	
 	labels.getChildren().addAll(labelList);
 	for(Label i : labelList) {
 		i.setFont(new Font(30));
 		i.setMaxSize(Double.MAX_VALUE, Double.MAX_VALUE);
-		labels.setVgrow(i,Priority.ALWAYS);
+		VBox.setVgrow(i,Priority.ALWAYS);
 		i.setAlignment(Pos.CENTER);
 	}
 userTextInput.getChildren().addAll(tfName,radioButtonLayout,tfType);
 	for(TextField i : textFieldList) {
 		i.setFont(new Font(30));
 		i.setMaxSize(Double.MAX_VALUE, Double.MAX_VALUE);
-		userTextInput.setVgrow(i,Priority.ALWAYS);
+		VBox.setVgrow(i,Priority.ALWAYS);
 
 	}
 rbYes.setFont(new Font(30));
@@ -70,7 +70,7 @@ rbNo.setFont(new Font(30));
 rbYes.setMaxSize(Double.MAX_VALUE, Double.MAX_VALUE);
 rbNo.setMaxSize(Double.MAX_VALUE, Double.MAX_VALUE);
 
-userTextInput.setVgrow(radioButtonLayout,Priority.ALWAYS);
+VBox.setVgrow(radioButtonLayout,Priority.ALWAYS);
 
 }
 /**

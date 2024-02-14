@@ -1670,9 +1670,7 @@ try {
 		// so not sharing the same memory location
 		selectedMenu.getHeldDishes().forEach((Dish i) -> dishes.add(i));
 		//simply a containe for the shopping list
-		ArrayList<StockType> currentlyHeldStockType = new ArrayList<>();
 		ArrayList<String> output = new ArrayList<>();
-		ArrayList<StockType> shoppingListWithDuplicates = new ArrayList<>();
 		ArrayList<Integer> indexTracker = new ArrayList<>();
 		ArrayList<StockType> shoppingList = new ArrayList<>();
 		// not this is for removing any duplicates that may be present.
@@ -1832,9 +1830,6 @@ try {
 		
 		Double BudgetAmount = selectedMenu.getBudget().getAmount();
 		Double totalCost = 0.00;
-		int counter = 0;
-		int counter2 = 0;
-
 		
 		//sli = shopping list items
 		ObservableList<String> sli = getSelectedMenuStockType();
@@ -1865,12 +1860,14 @@ try {
 		
 		db.getAllCurrentDishes().forEach((Dish i) -> {
 			//sub string so isn't dish name = ****
-			if (!selectedMenu.doesItHoldDish(i.toString().substring(i.toString().indexOf("=")+2))) {
+			if (selectedMenu == null || !selectedMenu.doesItHoldDish(i.toString().substring(i.toString().indexOf("=")+2))) {
 				notSelectedDishes.add(i);
 
 			}
 
 		});
+		
+		
 		
 		notSelectedDishes.forEach((Dish i) -> {
 			dishAsString.add(i.toString());
@@ -2336,17 +2333,20 @@ try {
 		// selectedDish is the one making
 
 		// bascially just purge all the rgianl connections and put new ones in its place
-		db.deleteDish(orginalDishId);
+		//db.deleteDish(orginalDishId);
 
 		db.updateDish(selectedDish.getName(), orginalDishId);
-
+		
 		// if it borke its this one, cant figure out why its also used.
 		// db.saveDish(selectedDish.getName());
-
+		db.deleteTblDishStock(orginalDishId);
 		ArrayList<StockType> st = selectedDish.getHeldStock();
 
 		int counter = 0;
-
+		
+		
+		
+		
 		while (counter != st.size()) {
 
 			String value = st.get(counter).toString();
@@ -2364,10 +2364,12 @@ try {
 			String quanityType = value.substring(equals3 + 2);
 
 			db.saveDishStockConnection(name, selectedDish.getName(), quanity, quanityType);
+			
 			counter = counter + 1;
 			// so is shown as soon goes back
 
 		}
+		
 		resetMenuDetailList();
 		return getNotSelectedDishesAsString();
 	}

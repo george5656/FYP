@@ -322,7 +322,7 @@ public class Controller {
 
 		@Override
 		public void handle(ActionEvent event) {
-			
+			view.clearMenuDetailsListSelection();
 			view.MenuDetailsRestFindInput();
 			view.MenuDetailsLoad();
 		
@@ -340,6 +340,7 @@ public class Controller {
 
 		@Override
 		public void handle(ActionEvent event) {
+			view.clearMenuSettingPage();
 			view.resetMenuDetailsPage();
 			model.setFromMenu(null);
 			model.resetMenuDetailList();
@@ -499,10 +500,11 @@ public class Controller {
 
 		@Override
 		public void handle(ActionEvent event) {
+			view.clearDishDetailsPage();
 			model.setDishDetailsCameFromEdit(false);
 			model.setDishDetailsOrginalId(null);
 			view.dishDetailsLoad();
-
+			
 		}
 
 	}
@@ -525,27 +527,37 @@ public class Controller {
 			
 			String issueFrom ="";
 			String masterErrorMessage ="";
-			if(view.getMenuDetailsDishListSelectedItemIndex() == -1) {
-				issueFrom = "dish list";
+			if(view.getMenuDetailsDishListSelectedItemIndex() == -1 && view.getMenuDetailsMenuListSelectedIndex() == -1) {
+				issueFrom = "the lists";
 				masterErrorMessage = "no item selected";
+			} else if (view.getMenuDetailsDishListSelectedItemIndex() != -1 && view.getMenuDetailsMenuListSelectedIndex() != -1) {
+				issueFrom = "the list";
+				masterErrorMessage = "please only select from one list at a time";
 			}
 			
 			
 			if (masterErrorMessage.equals("")) {
 
 				//gets the dish and stores it to be used later
-				
+				view.clearDishDetailsPage();
 				model.setDishDetailsCameFromEdit(true);
+				//simply as could come from one of two lists
+				if(view.getMenuDetailsDishListSelectedItemIndex() != -1) {
 				model.setDishDetailsOrginalId(view.getMenuDetailsDishListSelectedItemValueIdOnly());
 				model.setDishStockId(view.getMenuDetailsDishListSelectedItemValueIdOnly());
-				
 				model.setSelectedDish(model.getASpecificDish(view.getMenuDetailsDishListSelectedItemValueIdOnly()));
+				}else {
+					model.setDishDetailsOrginalId(view.getMenuDetailsMenuDishListSelectedItemValueIdOnly());
+					model.setDishStockId(view.getMenuDetailsMenuDishListSelectedItemValueIdOnly());
+					model.setSelectedDish(model.getASpecificDish(view.getMenuDetailsMenuDishListSelectedItemValueIdOnly()));
+				}
+				
 				view.setDishDetailsList(model.getSelectedDishList());
 				view.dishDetailsLoad();
-				
+				view.dishDetailsAddReset();
 			} else {
 				model.makeAlert(issueFrom, masterErrorMessage).show();
-
+				view.clearMenuDetailsListSelection();
 			}
 			
 		}
@@ -1183,10 +1195,24 @@ view.BudgetListLoad(model.getObservableListBudgetList());
 	loadStorgaeLocationListPage();
 	
 } else if(model.getDeleteFrom().equals("MenuDetails")) {
+	if(view.getMenuDetailsDishListSelectedItemIndex() != -1) {
+		view.setMenuDetailsDishList(model.deleteADish(view.getMenuDetailsDishListSelectedItemValueIdOnly()));
+}else {
 	
+	view.setMenuDetailsDishList(model.deleteADish(view.getMenuDetailsMenuDishListSelectedItemValueIdOnly()));
+	
+	model.removeADishFromSelectedMenuDishes(view.getMenuDetailsMenuListSelectedIndex());
+	model.resetMenuDetailList();
+	view.setMenuDetailsMenuListItems(model.getSelectedMenuDishes());
+	view.setMenuDetailsDishList(model.getNotSelectedDishesAsString());
+	view.setMenuDetailsShoppingList(model.getSelectedMenuStockType());
+	view.setMenuDetailsBudgetValue(model.getBudgetSizeMinusTheShoppingList()+"");
+	
+}
 	//need to also remove from the temporary hold
-	view.setMenuDetailsDishList(model.deleteADish(view.getMenuDetailsDishListSelectedItemValueIdOnly()));
+	
 	view.MenuDetailsLoad();
+	
 } else if (model.getDeleteFrom().equals("MenuList")) {
 	model.deleteSelectedMenu();
 	view.menuListLoad(model.getAllMenus());
@@ -1493,16 +1519,16 @@ if(model.getDeleteFrom().equals("StockList")) {
 		}
 		
 		if(!view.getBudgetFilterStartsBeforeDateText().equals("")) {
-			whereClause = whereClause + "tbl_budget.startDate <= \"" + view.getBudgetFilterStartsBeforeDateText() + "\" And ";
+			whereClause = whereClause + "tbl_budget.startDate <= \"" + model.formatDate(view.getBudgetFilterStartsBeforeDateText()) + "\" And ";
 		}
 		if(!view.getBudgetFilterStartsAfterDateText().equals("")) {
-			whereClause = whereClause + "tbl_budget.startDate >= \"" + view.getBudgetFilterStartsAfterDateText() + "\" And ";
+			whereClause = whereClause + "tbl_budget.startDate >= \"" + model.formatDate(view.getBudgetFilterStartsAfterDateText()) + "\" And ";
 		}
 		if(!view.getBudgetFilterEndsBeforeDateText().equals("")) {
-			whereClause = whereClause + "tbl_budget.endDate <= \"" + view.getBudgetFilterEndsBeforeDateText() + "\" And ";
+			whereClause = whereClause + "tbl_budget.endDate <= \"" + model.formatDate(view.getBudgetFilterEndsBeforeDateText()) + "\" And ";
 		}
 		if(!view.getBudgetFilterEndsAfterDateText().equals("")) {
-			whereClause = whereClause + "tbl_budget.endDate >= \"" + view.getBudgetFilterEndsAfterDateText() + "\" And ";
+			whereClause = whereClause + "tbl_budget.endDate >= \"" + model.formatDate(view.getBudgetFilterEndsAfterDateText()) + "\" And ";
 		}
 		//the final run, where it actually find them all
 		if (!whereClause.equals("")) {
@@ -1943,6 +1969,8 @@ if(model.getDeleteFrom().equals("StockList")) {
 			if (!errorMessage.equals("")) {
 				Alert fileLoadErrorPopup = model.makeAlert("file issue", errorMessage);
 				fileLoadErrorPopup.show();
+			} else {
+				loadStockListPage();
 			}
 		}
 
@@ -2012,7 +2040,7 @@ if(model.getDeleteFrom().equals("StockList")) {
 			Alert options = new Alert(AlertType.CONFIRMATION);
 			Optional<ButtonType> output = null;
 			
-			String issueFrom = "";
+		
 			String masterError = "";
 			
 			String nameError = model.stringMustBePresetValidation(view.getDishDetailsDishName());
@@ -2025,24 +2053,24 @@ if(model.getDeleteFrom().equals("StockList")) {
 			
 			
 			if(!nameError.equals("")) {
-				issueFrom = "dish name";
+				
 				masterError = nameError;
 			} else if(!ingredientNameError.equals("")) {
-				issueFrom = "ingredeint name";
+				
 				masterError = ingredientNameError;
 			}else if(!quanityError.equals("")) {
-				issueFrom = "quanity";
+				
 				masterError = quanityError;
 			}else if(!unitError.equals("")) {
-				issueFrom = "unit";
+				
 				masterError = unitError;
 			}else if(!costError.equals("")) {
-				issueFrom = "cost";
+				
 				masterError = costError;
 			} else if(model.doseDishNameAlreadyExist(view.getDishDetailsDishName())) {
 				
 				
-				issueFrom = "dish name";
+				
 				masterError = "name already taken";
 			}
 			
@@ -2352,7 +2380,7 @@ if(model.getDeleteFrom().equals("StockList")) {
 
 			if (!view.getMenuListSelectedMenu().equals("null")) {
 				
-				
+				view.clearMenuSettingPage();
 				model.setFromMenu(view.getMenuListSelectedMenuId());
 				
 				model.setSelectedMenuToBeAnExisitingMenu(view.getMenuListSelectedMenuId());
@@ -2529,18 +2557,26 @@ if(model.getDeleteFrom().equals("StockList")) {
 		public void handle(ActionEvent event) {
 			String issueFrom ="";
 			String masterErrorMessage ="";
-			if(view.getMenuDetailsDishListSelectedItemIndex() == -1) {
-				issueFrom = "dish list";
+			if(view.getMenuDetailsDishListSelectedItemIndex() == -1 && view.getMenuDetailsMenuListSelectedIndex() == -1) {
+				issueFrom = "the lists";
 				masterErrorMessage = "no item selected";
+			} else if (view.getMenuDetailsDishListSelectedItemIndex() != -1 && view.getMenuDetailsMenuListSelectedIndex() != -1) {
+				issueFrom = "the list";
+				masterErrorMessage = "please only select from one list at a time";
 			}
 			
 			
 			if (masterErrorMessage.equals("")) {
 
 				
-
+if(view.getMenuDetailsDishListSelectedItemIndex() != -1) {
 				view.getDeleteConfirmationPage()
 						.setTxtConfirmMessage("Are you sure you wan to delete " + view.getMenuDetailsDishListSelectedItemValueIdOnly() + "?");
+}else {
+	view.getDeleteConfirmationPage()
+	.setTxtConfirmMessage("Are you sure you wan to delete " + view.getMenuDetailsMenuDishListSelectedItemValueIdOnly() + "?");
+
+}
 				model.setDeleteFrom("MenuDetails");
 				view.deleteConfirmationLoad();
 			} else {
@@ -2583,7 +2619,7 @@ if(model.getDeleteFrom().equals("StockList")) {
 				//seperate as doesnt mess with the list so only need one
 				view.MenuDetailsRestFindInput();
 				view.MenuDetailsLoad();
-				
+				view.clearMenuDetailsListSelection();
 				
 			}
 			
@@ -2700,10 +2736,14 @@ if(model.getDeleteFrom().equals("StockList")) {
 				issueFrom = "menu dishes list";
 				masterErrorMessage = "no data to output";
 			}
+			File chosenLocation = new FileChooser().showSaveDialog(null);
+			if (chosenLocation == null) {
+				masterErrorMessage = "no location selected";
+			}
 		
 			if(masterErrorMessage.equals("")) {
 			
-				File chosenLocation = new FileChooser().showSaveDialog(null);
+			
 				try {
 					PrintWriter pw = new PrintWriter(chosenLocation);
 					
@@ -2742,16 +2782,18 @@ if(model.getDeleteFrom().equals("StockList")) {
 
 		@Override
 		public void handle(ActionEvent event)  {
-			String issueFrom = "";
+			String issueFrom = "shopping list";
 			String masterErrorMessage = "";
 			if(view.getMenuDetailsMenuListSize() == 0) {
-				issueFrom = "shopping list";
 				masterErrorMessage = "no data to output";
 			}
-		
+			File chosenLocation = new FileChooser().showSaveDialog(null);
+			if (chosenLocation == null) {
+				masterErrorMessage = "no location selected";
+			}
 			if(masterErrorMessage.equals("")) {
 			
-				File chosenLocation = new FileChooser().showSaveDialog(null);
+				
 						
 				try {
 					PrintWriter pw = new PrintWriter(chosenLocation);

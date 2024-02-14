@@ -44,7 +44,7 @@ labels.getChildren().addAll(labelList);
 	for(Label i : labelList) {
 		i.setFont(new Font(30));
 		i.setMaxSize(Double.MAX_VALUE, Double.MAX_VALUE);
-		labels.setVgrow(i,Priority.ALWAYS);
+		VBox.setVgrow(i,Priority.ALWAYS);
 		i.setAlignment(Pos.CENTER);
 	}
 
@@ -57,7 +57,7 @@ labels.getChildren().addAll(labelList);
 	for(TextField i : input) {
 		i.setFont(new Font(30));
 		i.setMaxSize(Double.MAX_VALUE, Double.MAX_VALUE);
-		labels.setVgrow(i,Priority.ALWAYS);
+		VBox.setVgrow(i,Priority.ALWAYS);
 	}
 
 }
