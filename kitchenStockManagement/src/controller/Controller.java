@@ -1406,7 +1406,6 @@ if(model.getDeleteFrom().equals("StockList")) {
 				}
 
 				if (!view.getStockFilterTfMinQunaity().equals("")) {
-
 					whereClause = whereClause + "tbl_stock_iteration.quanity >= \""
 							+ view.getStockFilter().getTfMinQunaity().getText() + "\" And ";
 				}
@@ -1416,17 +1415,20 @@ if(model.getDeleteFrom().equals("StockList")) {
 							+ view.getStockFilter().getTfMaxQuanity().getText() + "\" And ";
 
 				}
-
+				boolean expiresAfterToRun = model.dateValidation(view.getStockFilterDpAfterDateText(),
+						view.getStockFilterDpAfterDateValuePresent()).equals("");
+				boolean expiresBeforeToRun = model.dateValidation(view.getStockFilterDpBeforeDateText(),
+						view.getStockFilterDpBeforeDateValuePresent()).equals("");
 				
-				if (view.getStockFilterDpAfterDateValuePresent() != null) {
-
+				if (expiresAfterToRun) {
+				
 					whereClause = whereClause + "tbl_stock_iteration.expiereDate > \""
 							+ model.formatDate(view.getStockFilterDpAfterDateText()) + "\" And ";
-
+					
 				}
 
-				if (view.getStockFilterDpBeforeDateValuePresent()!=null) {
-
+				if (expiresBeforeToRun) {
+					
 					whereClause = whereClause + "tbl_stock_iteration.expiereDate < \""
 							+ model.formatDate(view.getStockFilterDpBeforeDateText()) + "\" And ";
 
@@ -1677,7 +1679,6 @@ if(model.getDeleteFrom().equals("StockList")) {
  *
  */
 	private class EHBudgetDetailsBtnSave implements EventHandler<ActionEvent> {
-
 		@Override
 		public void handle(ActionEvent event) {
 			String masterError = "";
@@ -1717,7 +1718,7 @@ if(model.getDeleteFrom().equals("StockList")) {
 			model.addBudget(view.getBudgetDetailsInputtedName(), Double.parseDouble(view.getBudgetDetailsInputtedAmount()),
 					model.formatDate(view.getBudgetDetailsInputtedStartDate()), model.formatDate(view.getBudgetDetailsInputtedEndDate()));
 				}else {
-					System.out.println(view.getBudgetDetailsInputtedStartDate());
+					
 					model.updateBudget(view.getBudgetDetailsInputtedName(), Double.parseDouble(view.getBudgetDetailsInputtedAmount()),
 							model.formatDate(view.getBudgetDetailsInputtedStartDate()), model.formatDate(view.getBudgetDetailsInputtedEndDate()));
 					
