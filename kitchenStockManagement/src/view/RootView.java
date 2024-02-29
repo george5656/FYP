@@ -1309,8 +1309,16 @@ public String getBudgetDetailsInputtedAmount() {
  * get the value in the textField that is associated with the date picker
  * @return String = the value in the textField.
  */
+
+
 public String getBudgetDetailsInputtedStartDate() {
-	return bdp.getStartDate().getEditor().getText();
+	
+	if(bdp.getStartDate().getEditor().getText() != null) {
+		return bdp.getStartDate().getEditor().getText();
+		}else {
+			return "null";
+		}
+	
 }
 /**
  * gets the user input for the end date.
@@ -1319,9 +1327,14 @@ public String getBudgetDetailsInputtedStartDate() {
  * @return String = the value in the textField.
  */
 public String getBudgetDetailsInputtedEndDate() {
-	return bdp.getEndDate().getEditor().getText();
-	//bdp.getEndDate().getEditor().
-}
+	
+	if(bdp.getEndDate().getEditor().getText() != null) {
+		return bdp.getEndDate().getEditor().getText();
+		}else {
+			return "null";
+		}
+	
+} 
 /**
  * gets the user input for the start date.
  * user input comes form the budget details page.
@@ -1331,12 +1344,14 @@ public String getBudgetDetailsInputtedEndDate() {
 public LocalDate getBudgetDetailsInputtedStartDateAsLocalDate() {
 	return bdp.getStartDate().getValue();
 }
+
 /**
  * gets the user input for the end date.
  * user input comes form the budget details page.
  * gets the local date that the datePicker has
  * @return LocalDate that the datePicker has
  */
+
 public LocalDate getBudgetDetailsInputtedEndDateAsLocalDate() {
 	return bdp.getEndDate().getValue();
 }

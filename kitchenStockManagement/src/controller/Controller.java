@@ -1717,6 +1717,7 @@ if(model.getDeleteFrom().equals("StockList")) {
 			model.addBudget(view.getBudgetDetailsInputtedName(), Double.parseDouble(view.getBudgetDetailsInputtedAmount()),
 					model.formatDate(view.getBudgetDetailsInputtedStartDate()), model.formatDate(view.getBudgetDetailsInputtedEndDate()));
 				}else {
+					System.out.println(view.getBudgetDetailsInputtedStartDate());
 					model.updateBudget(view.getBudgetDetailsInputtedName(), Double.parseDouble(view.getBudgetDetailsInputtedAmount()),
 							model.formatDate(view.getBudgetDetailsInputtedStartDate()), model.formatDate(view.getBudgetDetailsInputtedEndDate()));
 					
