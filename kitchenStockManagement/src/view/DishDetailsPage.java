@@ -244,13 +244,14 @@ public void addReset() {
 	tfUnit.clear();
 	tfEstimatedCost.clear();
 	txtErrorMessage.setVisible(false);
+	tfDishName.clear();
+	tfDishName.setText(lvIngredients.getItems().get(0));
 
 }
 /**
  * reset all the page inputs and the listview
  */
 public void resetWholePage() {
-	addReset();
 	lvIngredients.getItems().clear();
 	tfDishName.clear();
 }

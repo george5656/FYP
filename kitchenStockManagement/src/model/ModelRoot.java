@@ -1034,13 +1034,14 @@ try {
 	 *           exists.
 	 * @return Boolean, true = account already exist, false = doesnt already exist.
 	 */
+	
 	public Boolean doesAccountNameAlreadyExist(String id) {
 		accounts = db.getAllAccounts();
 		Boolean exist = false;
 		int counter = 0;
 		while (accounts.size() != counter) {
 
-			if (accounts.get(counter).getUsername().toLowerCase().equals(id)) {
+			if (accounts.get(counter).getUsername().toLowerCase().equals(id) && !id.equals(selectedAccount.getUsername()) ) {
 				exist = true;
 
 			}
@@ -1494,6 +1495,7 @@ try {
 		selectABudget(budgetId);
 		selectedMenu = new Menu(name, selectedBudget, new ArrayList<>());
 	}
+	
 
 	/**
 	 * sets selectedMenu variable to a menu object that is already in the database.

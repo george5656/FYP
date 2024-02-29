@@ -29,7 +29,7 @@ public class Controller {
 	// private String stockId;
 
 	/**
-	 * Constructor, intictae all the other classes and assigning the event handlers.
+	 * Constructor, indicate all the other classes and assigning the event handlers.
 	 * 
 	 * @param model. the root of the M from MVC
 	 * @param view.  the root of the v from MVC
@@ -555,6 +555,7 @@ public class Controller {
 				view.setDishDetailsList(model.getSelectedDishList());
 				view.dishDetailsLoad();
 				view.dishDetailsAddReset();
+			
 			} else {
 				model.makeAlert(issueFrom, masterErrorMessage).show();
 				view.clearMenuDetailsListSelection();
@@ -932,8 +933,12 @@ if (!view.getBudgetListSelectedItem().equals("null")) {
 		public void handle(ActionEvent event) {
 			
 			view.setMenuSettingBudgetOptions(model.getAllBudgetsButJustTheId());
+			if(model.getSelectedMenu() == null) {
+				view.menuSettingsLoad("null", "null");
+			}else {
+				view.menuSettingsLoad(model.getSelectedMenu().getBudget().getBudgetId(), model.getSelectedMenu().getName());
+			}
 			
-			view.menuSettingsLoad();
 
 		}
 
@@ -1406,7 +1411,6 @@ if(model.getDeleteFrom().equals("StockList")) {
 				}
 
 				if (!view.getStockFilterTfMinQunaity().equals("")) {
-
 					whereClause = whereClause + "tbl_stock_iteration.quanity >= \""
 							+ view.getStockFilter().getTfMinQunaity().getText() + "\" And ";
 				}
@@ -1416,17 +1420,20 @@ if(model.getDeleteFrom().equals("StockList")) {
 							+ view.getStockFilter().getTfMaxQuanity().getText() + "\" And ";
 
 				}
-
+				boolean expiresAfterToRun = model.dateValidation(view.getStockFilterDpAfterDateText(),
+						view.getStockFilterDpAfterDateValuePresent()).equals("");
+				boolean expiresBeforeToRun = model.dateValidation(view.getStockFilterDpBeforeDateText(),
+						view.getStockFilterDpBeforeDateValuePresent()).equals("");
 				
-				if (view.getStockFilterDpAfterDateValuePresent() != null) {
-
+				if (expiresAfterToRun) {
+				
 					whereClause = whereClause + "tbl_stock_iteration.expiereDate > \""
 							+ model.formatDate(view.getStockFilterDpAfterDateText()) + "\" And ";
-
+					
 				}
 
-				if (view.getStockFilterDpBeforeDateValuePresent()!=null) {
-
+				if (expiresBeforeToRun) {
+					
 					whereClause = whereClause + "tbl_stock_iteration.expiereDate < \""
 							+ model.formatDate(view.getStockFilterDpBeforeDateText()) + "\" And ";
 
@@ -1677,7 +1684,6 @@ if(model.getDeleteFrom().equals("StockList")) {
  *
  */
 	private class EHBudgetDetailsBtnSave implements EventHandler<ActionEvent> {
-
 		@Override
 		public void handle(ActionEvent event) {
 			String masterError = "";
@@ -1717,6 +1723,7 @@ if(model.getDeleteFrom().equals("StockList")) {
 			model.addBudget(view.getBudgetDetailsInputtedName(), Double.parseDouble(view.getBudgetDetailsInputtedAmount()),
 					model.formatDate(view.getBudgetDetailsInputtedStartDate()), model.formatDate(view.getBudgetDetailsInputtedEndDate()));
 				}else {
+					
 					model.updateBudget(view.getBudgetDetailsInputtedName(), Double.parseDouble(view.getBudgetDetailsInputtedAmount()),
 							model.formatDate(view.getBudgetDetailsInputtedStartDate()), model.formatDate(view.getBudgetDetailsInputtedEndDate()));
 					
@@ -2252,7 +2259,7 @@ if(model.getDeleteFrom().equals("StockList")) {
 				String quanityType = value.substring(equals3 + 2,comma3); 
 				String cost  = value.substring(equals4 + 2);
 				
-				view.setDishDetailsUserInput(name, quanity, quanityType, cost);
+				view.setDishDetailsUserInput(name, cost, quanityType, quanity);
 				
 				model.selectedDishIngrednitnRemove(view.getDishDetailsSelectedIndex()-1);
 				view.setDishDetailsList(model.getSelectedDishList());
