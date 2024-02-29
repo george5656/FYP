@@ -933,8 +933,12 @@ if (!view.getBudgetListSelectedItem().equals("null")) {
 		public void handle(ActionEvent event) {
 			
 			view.setMenuSettingBudgetOptions(model.getAllBudgetsButJustTheId());
+			if(model.getSelectedMenu() == null) {
+				view.menuSettingsLoad("null", "null");
+			}else {
+				view.menuSettingsLoad(model.getSelectedMenu().getBudget().getBudgetId(), model.getSelectedMenu().getName());
+			}
 			
-			view.menuSettingsLoad();
 
 		}
 

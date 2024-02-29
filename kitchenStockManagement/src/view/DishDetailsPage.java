@@ -246,7 +246,7 @@ public void addReset() {
 	txtErrorMessage.setVisible(false);
 	tfDishName.clear();
 	tfDishName.setText(lvIngredients.getItems().get(0));
-	
+
 }
 /**
  * reset all the page inputs and the listview

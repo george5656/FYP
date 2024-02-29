@@ -31,7 +31,7 @@ public MenuSettingPage() {
 	labels = getLabels();
 	userTextInput = getUserTextInput();
 	//test = getLabelsAndUserTextInput();
-	
+	 
 	
 	//comboBoxContainer.getChildren().add(cbBudget);
 	
@@ -96,5 +96,15 @@ public String getSelectedBudgetValue() {
 public void resetPage() {
 	cbBudget.getSelectionModel().clearSelection();
 	tfName.clear();
+}
+/**
+ * sets the input options to be the passed in parameters
+ * @param budget = String, sets the budget combo box to select the passed in value
+ * @param name = String, sets the budget name input to the passed in string
+ */
+public void setSettingUserInput(String budget, String name) {
+	
+	cbBudget.getSelectionModel().select(cbBudget.getItems().indexOf(budget));
+	tfName.setText(name);
 }
 }

@@ -1052,14 +1052,21 @@ public String getMenuFilterContainsDish() {
 public String getMenuFilterDoesntContainsDish() {
 	return mf.getDoesntContainDish();
 }
+
 /**
  * loads the menu settings page. 
  * it removes any children from the root view VBox, and add self in place so is visible
+ * it also sets the input on the page to the passed in inputs
+ * @param budget = String, sets the budget combo box in menu setting page to select the passed in value
+ * @param name = string, sets the budget name input in menu setting page to the passed in string 
  */
-public void menuSettingsLoad() {
+public void menuSettingsLoad(String budget, String name) {
 	this.getChildren().remove(0);
 	this.getChildren().add(msp);
 	VBox.setVgrow(msp, Priority.ALWAYS);
+	if(!budget.equals("null")) {
+	msp.setSettingUserInput(budget, name);
+	}
 }
 /**
  * sets the menu settings save button event handler 

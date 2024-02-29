@@ -1495,6 +1495,7 @@ try {
 		selectABudget(budgetId);
 		selectedMenu = new Menu(name, selectedBudget, new ArrayList<>());
 	}
+	
 
 	/**
 	 * sets selectedMenu variable to a menu object that is already in the database.
