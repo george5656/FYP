@@ -29,7 +29,7 @@ public class Controller {
 	// private String stockId;
 
 	/**
-	 * Constructor, intictae all the other classes and assigning the event handlers.
+	 * Constructor, indicate all the other classes and assigning the event handlers.
 	 * 
 	 * @param model. the root of the M from MVC
 	 * @param view.  the root of the v from MVC
@@ -555,6 +555,7 @@ public class Controller {
 				view.setDishDetailsList(model.getSelectedDishList());
 				view.dishDetailsLoad();
 				view.dishDetailsAddReset();
+			
 			} else {
 				model.makeAlert(issueFrom, masterErrorMessage).show();
 				view.clearMenuDetailsListSelection();
