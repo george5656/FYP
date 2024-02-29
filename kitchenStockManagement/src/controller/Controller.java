@@ -2254,7 +2254,7 @@ if(model.getDeleteFrom().equals("StockList")) {
 				String quanityType = value.substring(equals3 + 2,comma3); 
 				String cost  = value.substring(equals4 + 2);
 				
-				view.setDishDetailsUserInput(name, quanity, quanityType, cost);
+				view.setDishDetailsUserInput(name, cost, quanityType, quanity);
 				
 				model.selectedDishIngrednitnRemove(view.getDishDetailsSelectedIndex()-1);
 				view.setDishDetailsList(model.getSelectedDishList());
