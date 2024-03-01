@@ -56,6 +56,15 @@ public class ListPage extends PaneMenu {
 		txtErrorMessage.setAlignment(Pos.CENTER);
 		
 		
+		
+		btnAdd.setPrefSize(200,200);
+		btnEdit.setPrefSize(200,200);
+		btnFilter.setPrefSize(200,200);
+		btnFind.setPrefSize(200,200);
+		btnDelete.setPrefSize(200,200);
+		tfFind.setPrefSize(200,200);
+		
+		
 		btnAdd.setMaxSize(Double.MAX_VALUE, Double.MAX_VALUE);
 		btnEdit.setMaxSize(Double.MAX_VALUE, Double.MAX_VALUE);
 		btnFilter.setMaxSize(Double.MAX_VALUE, Double.MAX_VALUE);
@@ -65,17 +74,9 @@ public class ListPage extends PaneMenu {
 		txtErrorMessage.setMaxSize(Double.MAX_VALUE, Double.MAX_VALUE);
 		
 		HBox.setHgrow(list, Priority.ALWAYS);
-		HBox.setHgrow(buttons, Priority.ALWAYS);
+		
 		VBox.setVgrow(lv, Priority.ALWAYS);
-		VBox.setVgrow(txtErrorMessage,Priority.ALWAYS);
-		VBox.setVgrow(btnAdd, Priority.ALWAYS);
-		VBox.setVgrow(btnAdd, Priority.ALWAYS);
-		VBox.setVgrow(btnEdit, Priority.ALWAYS);
-		VBox.setVgrow(btnDelete, Priority.ALWAYS);
-		VBox.setVgrow(btnFilter, Priority.ALWAYS);
-		VBox.setVgrow(find, Priority.ALWAYS);
-		HBox.setHgrow(btnFind, Priority.ALWAYS);
-		HBox.setHgrow(tfFind, Priority.ALWAYS);
+		
 		
 		mainLayout.setPadding(new Insets(20,20,20,20));
 		
