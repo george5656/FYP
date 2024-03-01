@@ -236,11 +236,13 @@ public class ModelRoot {
 	 * 
 	 * @return ObservableList<String> = all the stock toString outputs.
 	 */
-	public ObservableList<String> getObservableListStringStockList() {
-		currentStock = db.getAllCurrentStock();
-		ArrayList<String> output = new ArrayList<>();
-		currentStock.forEach((CurrentStock i) -> output.add(i.toString()));
-		return FXCollections.observableArrayList(output);
+	/*
+	 * changed how it works 
+	 */
+	public ObservableList<CurrentStock> getObservableListStringStockList() {
+		db.getAllCurrentStock();
+		
+		return FXCollections.observableArrayList(db.getAllCurrentStock());
 
 	}
 
@@ -250,11 +252,12 @@ public class ModelRoot {
 	 * 
 	 * @return ObservableList<String> = all the storage location toString outputs.
 	 */
-	public ObservableList<String> getObservableListStringStorgaeLocationsList() {
-		sl = db.getAllStorageLocations();
-		ArrayList<String> output = new ArrayList<>();
-		sl.forEach((StorageLocation i) -> output.add(i.toString()));
-		return FXCollections.observableArrayList(output);
+	/*
+	 * changed all of it
+	 */
+	public ObservableList<StorageLocation> getObservableListStringStorgaeLocationsList() {
+	
+		return FXCollections.observableArrayList(db.getAllStorageLocations());
 
 	}
 
@@ -264,11 +267,12 @@ public class ModelRoot {
 	 * 
 	 * @return ObservableList<String> = all the accounts toString outputs.
 	 */
-	public ObservableList<String> getObservableListAccountList() {
-		accounts = db.getAllAccounts();
-		ArrayList<String> output = new ArrayList<>();
-		accounts.forEach((Account i) -> output.add(i.toString()));
-		return FXCollections.observableArrayList(output);
+	/*
+	 * complete changed
+	 */
+	public ObservableList<Account> getObservableListAccountList() {
+		
+		return FXCollections.observableArrayList(db.getAllAccounts());
 
 	}
 
@@ -278,11 +282,12 @@ public class ModelRoot {
 	 * 
 	 * @return ObservableList<String> = all the budgets toString outputs.
 	 */
-	public ObservableList<String> getObservableListBudgetList() {
-		budget = db.getAllBudgets();
-		ArrayList<String> output = new ArrayList<>();
-		budget.forEach((Budget i) -> output.add(i.toString()));
-		return FXCollections.observableArrayList(output);
+	/*
+	 * complete changed how it works
+	 */
+	public ObservableList<Budget> getObservableListBudgetList() {
+		
+		return FXCollections.observableArrayList(db.getAllBudgets());
 
 	}
 
@@ -342,7 +347,10 @@ public class ModelRoot {
 	 * @return ObservableList<String> = the string is the budgets but after it has
 	 *         gone through the toString method.
 	 */
-	public ObservableList<String> getBudgetThatsLike(String value) {
+	/*
+	 * changed output
+	 */
+	public ObservableList<Budget> getBudgetThatsLike(String value) {
 		return FXCollections.observableArrayList(db.getBudgetsThatsLike(value));
 	}
 
@@ -549,7 +557,7 @@ public class ModelRoot {
 	 * @return ObservableList<String> = the string is the stock but after it has
 	 *         gone through the toString method.
 	 */
-	public ObservableList<String> getCurrentStockThatsLike(String value) {
+	public ObservableList<CurrentStock> getCurrentStockThatsLike(String value) {
 		return FXCollections.observableArrayList(db.getCurrentStockThatsLike(value));
 	}
 
@@ -560,7 +568,10 @@ public class ModelRoot {
 	 * @return ObservableList<String> = the string is the stock but after it has
 	 *         gone through the toString method.
 	 */
-	public ObservableList<String> getCurrentStockThatsMatchesWhere(String value) {
+	/*
+	 * changed output
+	 */
+	public ObservableList<CurrentStock> getCurrentStockThatsMatchesWhere(String value) {
 		return FXCollections.observableArrayList(db.getCurrentStockThatMatchesWhere(value));
 	}
 
@@ -571,7 +582,10 @@ public class ModelRoot {
 	 * @return ObservableList<String> = the string is the budget but after it has
 	 *         gone through the toString method.
 	 */
-	public ObservableList<String> getBudgetsThatMatchesWhere(String value) {
+	/*
+	 * changed out put
+	 */
+	public ObservableList<Budget> getBudgetsThatMatchesWhere(String value) {
 		return FXCollections.observableArrayList(db.getBudgetsThatMatchesWhere(value));
 	}
 
@@ -582,7 +596,10 @@ public class ModelRoot {
 	 * @return ObservableList<String> = the string is the accounts but after it has
 	 *         gone through the toString method.
 	 */
-	public ObservableList<String> getAccountsThatMatchesWhere(String value) {
+	/*
+	 * changed output
+	 */
+	public ObservableList<Account> getAccountsThatMatchesWhere(String value) {
 		return FXCollections.observableArrayList(db.getAccountsThatMatchesWhere(value));
 	}
 
@@ -612,7 +629,7 @@ public class ModelRoot {
 	 *         holds
 	 */
 	public String getSelectedStockStorgaeLocation() {
-		return selectedStock.getstorageLocationId();
+		return selectedStock.getStorageLocationId();
 	}
 
 	/**
@@ -983,7 +1000,10 @@ try {
 	 * @return ObservableList<String> = the string is the account but after it has
 	 *         gone through the toString method.
 	 */
-	public ObservableList<String> getAccountsThatsLike(String value) {
+	/*
+	 * changed ouput
+	 */
+	public ObservableList<Account> getAccountsThatsLike(String value) {
 		return FXCollections.observableArrayList(db.getAccountsThatsLike(value));
 	}
 
@@ -1103,7 +1123,10 @@ try {
 	 * @return ObservableList<String> = the string is the storage location but after
 	 *         it has gone through the toString method.
 	 */
-	public ObservableList<String> getStorageThatsLike(String value) {
+	/*
+	 * changed output
+	 */
+	public ObservableList<StorageLocation> getStorageThatsLike(String value) {
 		return FXCollections.observableArrayList(db.getStorageThatsLike(value));
 	}
 
@@ -1126,7 +1149,10 @@ try {
 	 *         where, and each iteration is just a storage location result of there
 	 *         toString method.
 	 */
-	public ObservableList<String> getStorageWhere(String where) {
+	/*
+	 * changed output
+	 */
+	public ObservableList<StorageLocation> getStorageWhere(String where) {
 		return FXCollections.observableArrayList(db.getStorgeThatMatchesWhere(where));
 	}
 
@@ -2063,7 +2089,10 @@ try {
 	 * @return ObservableList Of the menu items that pass all the filters in there
 	 *         string format.
 	 */
-	public ObservableList<String> getMenuFilterResults(String tcb, String tca, String cd, String dcd) {
+	/*
+	 * changed output
+	 */
+	public ObservableList<Menu> getMenuFilterResults(String tcb, String tca, String cd, String dcd) {
 
 		ArrayList<Menu> allMenus = db.getAllMenu();
 
@@ -2074,7 +2103,7 @@ try {
 		ArrayList<Menu> cdMatchingMenus = null;
 		ArrayList<Menu> dcdMatchingMenus = null;
 		ArrayList<Menu> master = new ArrayList<>();
-		ArrayList<String> output = new ArrayList<>();
+		ArrayList<Menu> output = new ArrayList<>();
 
 		if (tcb != null) {
 
@@ -2189,7 +2218,7 @@ try {
 		
 		master.forEach((Menu i) -> {
 
-			output.add(i.toString());
+			output.add(i);
 
 		});
 
@@ -2205,12 +2234,12 @@ try {
 	 * @return ObservableList<String> = each entity is a menu, its represented by
 	 *         its output of the toString method.
 	 */
-	public ObservableList<String> getAllMenus() {
-		ArrayList<String> menuAsString = new ArrayList<>();
-		db.getAllMenu().forEach((Menu i) -> {
-			menuAsString.add(i.toString());
-		});
-		return FXCollections.observableArrayList(menuAsString);
+/*
+ * complete changed how it workes
+ */
+	public ObservableList<Menu> getAllMenus() {
+		
+		return FXCollections.observableArrayList(db.getAllMenu());
 	}
 
 	/**
@@ -2222,12 +2251,12 @@ try {
 	 * @return ObservableList<String> = the string is the menus but after it has
 	 *         gone through the toString method.
 	 */
-	public ObservableList<String> getAllMenusThatAreLike(String like) {
-		ArrayList<String> menuAsString = new ArrayList<>();
-		db.getAllMenuThatAreLike(like).forEach((Menu i) -> {
-			menuAsString.add(i.toString());
-		});
-		return FXCollections.observableArrayList(menuAsString);
+	/*
+	 * complete changed it
+	 */
+	public ObservableList<Menu> getAllMenusThatAreLike(String like) {
+		
+		return FXCollections.observableArrayList(db.getAllMenuThatAreLike(like));
 	}
 
 //menu settings 

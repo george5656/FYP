@@ -60,7 +60,7 @@ public String getExpiereDate() {
  * gets the value in the storageLocationId var
  * @return String
  */
-public String getstorageLocationId() {
+public String getStorageLocationId() {
 	return storageLocationId;
 }
 /**
@@ -80,5 +80,8 @@ public int getId() {
 	StockType comparison = (StockType)obj;
 		return this.getStockName().equals(comparison.getStockName());
 	}
+/*
+ * simply for the tableview
+ */
 
 }

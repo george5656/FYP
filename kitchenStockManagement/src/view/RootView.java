@@ -6,8 +6,16 @@ import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.geometry.Pos;
+import javafx.scene.control.TableColumn;
+import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.Priority;
 import javafx.scene.layout.VBox;
+import model.Account;
+import model.Budget;
+import model.CurrentStock;
+import model.Menu;
+import model.StockType;
+import model.StorageLocation;
 
 /**
  * class is the root of the view in the MVC
@@ -20,18 +28,18 @@ public class RootView extends VBox {
 	private Login login = new Login();
 	private BudgetFilter budgetFilter = new BudgetFilter();
 	private HomePage homePage = new HomePage();
-	private ListPage stockListPage = new ListPage();
+	private ListPage<CurrentStock> stockListPage = new ListPage<>();
 	private MenuDetails menuDetails = new MenuDetails();
-	private ListPage menuListPage = new ListPage();
+	private ListPage<Menu> menuListPage = new ListPage<>();
 	private DeleteConfirmationPage dcp= new DeleteConfirmationPage(); 
 	private DishDetailsPage ddp = new DishDetailsPage();
 	private StockDetails sd = new StockDetails();
-	private ListPage budgetListPage = new ListPage();
+	private ListPage<Budget> budgetListPage = new ListPage<>();
 	private BudgetDetailsPage bdp = new BudgetDetailsPage();
-	private ListPage storageLocationListPage = new ListPage();
+	private ListPage<StorageLocation> storageLocationListPage = new ListPage<>();
 	private StockStorageLocationDetails ssld = new StockStorageLocationDetails();
 	private AccountDetails ad = new AccountDetails();
-	private ListPage accountListPage = new ListPage();
+	private ListPage<Account> accountListPage = new ListPage<>();
 	private StockStorageLocationFilter sslf = new StockStorageLocationFilter();
 	private StockFilter sf = new StockFilter();
 	private FilterDishes fd = new FilterDishes();
@@ -53,7 +61,10 @@ public class RootView extends VBox {
  * get the stock list page 
  * @return ListPage
  */
-public ListPage getStockListPage() {
+	/*
+	 * output changed
+	 */
+public ListPage<CurrentStock> getStockListPage() {
 	return stockListPage;
 }
 /**
@@ -74,7 +85,10 @@ public StockDetails getStockDetails() {
  * get the account list page 
  * @return ListPage
  */
-public ListPage getAccountListPage() {
+/*
+ * output chnaged
+ */
+public ListPage<Account> getAccountListPage() {
 	return accountListPage;
 }
 /**
@@ -290,7 +304,34 @@ public void setStockListBtnFilterEventHandler(EventHandler<ActionEvent> event) {
  * the inputed data is then shown in the list view. 
  * @param data = ObservableList<String> each iteration is a string representation of stock
  */
-public void stockListLoad(ObservableList<String> data) {
+/*
+ * multiple thinsg changed
+ */
+public void stockListLoad(ObservableList<CurrentStock> data) {
+	stockListPage.clearTableColumn();
+	
+	TableColumn<CurrentStock, String> name = new TableColumn<>("name");
+	TableColumn<CurrentStock, String> cost = new TableColumn<>("cost");
+	TableColumn<CurrentStock, String> quantityType = new TableColumn<>("quantity type");
+	TableColumn<CurrentStock, String> location = new TableColumn<>("storage Location");
+	TableColumn<CurrentStock, String> quantity = new TableColumn<>("quantity");
+	TableColumn<CurrentStock, String> expiereDate = new TableColumn<>("expiere date");
+	
+	name.setCellValueFactory(new PropertyValueFactory<CurrentStock, String>("name"));
+	cost.setCellValueFactory(new PropertyValueFactory<CurrentStock, String>("cost"));
+	quantityType.setCellValueFactory(new PropertyValueFactory<CurrentStock, String>("quanityType"));
+	location.setCellValueFactory(new PropertyValueFactory<CurrentStock, String>("storageLocationId"));
+	quantity.setCellValueFactory(new PropertyValueFactory<CurrentStock, String>("quanity"));
+	expiereDate.setCellValueFactory(new PropertyValueFactory<CurrentStock, String>("expiereDate"));
+	
+	
+	stockListPage.setTableColumn(name);
+	stockListPage.setTableColumn(cost);
+	stockListPage.setTableColumn(quantityType);
+	stockListPage.setTableColumn(location);
+	stockListPage.setTableColumn(quantity);
+	stockListPage.setTableColumn(expiereDate);
+	
 	stockListPage.getErrorLabel().setVisible(false);
 	stockListPage.setObservableList(data);
 	stockListPage.resetFindInput();
@@ -305,7 +346,7 @@ public void stockListLoad(ObservableList<String> data) {
 public String getStockListSelectedItem() {
 	
 	if(stockListPage.getSelectionNode().getSelectionModel().getSelectedItem()!= null) {
-	return stockListPage.getSelectionNode().getSelectionModel().getSelectedItem();
+	return stockListPage.getSelectionNode().getSelectionModel().getSelectedItem().getStockName();
 	}else {
 		return "null";
 	}
@@ -338,11 +379,14 @@ public void setStockListBtnEditEventHandler(EventHandler<ActionEvent> event) {
  * use id and storage to identify where the id values starts and ends.
  * @return String which is the id of the stock selected in the listView
  */
+/*
+ * complete changed it
+ */
 public String getSelectedStockId() {
-	String stockId = stockListPage.getSelection();
-	int idStart = stockId.indexOf("id");
-	int storageStart = stockId.indexOf("storage");
-	return stockId.substring(idStart + 5, storageStart -2);
+	System.out.println(stockListPage.getSelection());
+	
+	
+	return String.valueOf(stockListPage.getSelection().getId());
 }
 /**
  * get the user input in the find section on the stock list page.
@@ -355,7 +399,10 @@ public String getStockListTfFindValue() {
  * sets the list view in the stock list page 
  * @param data = ObservableList<String> each iteration is a string representation of stock
  */
-public void setStockListValues(ObservableList<String> data) {
+/*
+ * input changed
+ */
+public void setStockListValues(ObservableList<CurrentStock> data) {
 stockListPage.setObservableList(data);
 }
 // stock details 
@@ -726,7 +773,7 @@ public void setMenuListBtnAboutEventHandler(EventHandler<ActionEvent> event) {
  */
 public String getMenuListSelectedMenu() {
 	if(menuListPage.getSelectionNode().getSelectionModel().getSelectedItem()!= null) {
-	return menuListPage.getSelectionNode().getSelectionModel().getSelectedItem();
+	return menuListPage.getSelectionNode().getSelectionModel().getSelectedItem().getName();
 	}else {
 		return "null";
 	}
@@ -736,9 +783,12 @@ public String getMenuListSelectedMenu() {
  * 
  * @return String = the selected menu id
  */
+/*
+ * complete changed
+ */
 public String getMenuListSelectedMenuId() {
-	String selection = menuListPage.getSelectionNode().getSelectionModel().getSelectedItem();
-	return selection.substring(selection.indexOf("=")+2);
+	return menuListPage.getSelectionNode().getSelectionModel().getSelectedItem().getName();
+	
 	
 }
 /**
@@ -776,7 +826,10 @@ public void setMenuListErrorMessage(String error) {
  * the inputed data is then shown in the list view. 
  * @param data = ObservableList<String> each iteration is a string representation of menus
  */
-public void menuListLoad(ObservableList<String> data) {
+/*
+ * input changed
+ */
+public void menuListLoad(ObservableList<Menu> data) {
 	menuListPage.setObservableList(data);
 	menuListPage.resetFindInput();
 	this.getChildren().remove(0);
@@ -983,7 +1036,7 @@ public int getMenuDetailsMenuListSize() {
 public String getBudgetListSelectedItem() {
 	
 	if(budgetListPage.getSelectionNode().getSelectionModel().getSelectedItem()!= null) {
-	return budgetListPage.getSelectionNode().getSelectionModel().getSelectedItem();
+	return budgetListPage.getSelectionNode().getSelectionModel().getSelectedItem().getBudgetId();
 	}else {
 		return "null";
 	}
@@ -1223,7 +1276,10 @@ public void setBudgetListBtnAboutEventHandler(EventHandler<ActionEvent> event) {
  * the inputed data is then shown in the list view. 
  * @param data = ObservableList<String> each iteration is a string representation of budget
  */
-public void BudgetListLoad(ObservableList<String> data) {
+/*
+ * input changed
+ */
+public void BudgetListLoad(ObservableList<Budget> data) {
 	budgetListPage.getErrorLabel().setVisible(false);
 	budgetListPage.setObservableList(data);
 	budgetListPage.resetFindInput();
@@ -1253,11 +1309,12 @@ public void setBudgetListErrorMessage(String error) {
  * 
  * @return String which is the selected budget id.
  */
+/*
+ * complete changed
+ */
 public String getSelectedBudgetId() {
-	String budgetId = budgetListPage.getSelection();
-	int idStart = budgetId.indexOf("id");
-	int amountStart = budgetId.indexOf("amount");
-	return budgetId.substring(idStart + 5, amountStart -2);
+	
+	return budgetListPage.getSelection().getBudgetId();
 }
 
 //budgetDetailsPage
@@ -1563,7 +1620,10 @@ public void setStorgaeLocationListBtnFindEventHandler(EventHandler<ActionEvent> 
  * the inputed data is then shown in the list view. 
  * @param storageLocations = ObservableList<String> each iteration is a string representation of a storage location.
  */
-public void storgaeLocationListLoad(ObservableList<String> storageLocations) {
+/*
+ * input changed
+ */
+public void storgaeLocationListLoad(ObservableList<StorageLocation> storageLocations) {
 	storageLocationListPage.getErrorLabel().setVisible(false);
 	storageLocationListPage.setObservableList(storageLocations);
 	storageLocationListPage.resetFindInput();
@@ -1599,7 +1659,7 @@ public void hideStorageListErrorMessage() {
 public String getStorageListSelectedItem() {
 	
 	if(storageLocationListPage.getSelectionNode().getSelectionModel().getSelectedItem()!= null) {
-	return storageLocationListPage.getSelectionNode().getSelectionModel().getSelectedItem();
+	return storageLocationListPage.getSelectionNode().getSelectionModel().getSelectedItem().getName();
 	}else {
 		return "null";
 	}
@@ -1610,11 +1670,12 @@ public String getStorageListSelectedItem() {
  * the id that is given is not the index id, but the id that is shown in the list view/ what the string displays.
  * @return String  = selected storage id
  */
+/*
+ * complete changed
+ */
 public String getSelectedStorageId() {
-	String storageId = storageLocationListPage.getSelection();
-	int idStart = storageId.indexOf("=");
-	int typeStart = storageId.indexOf("type");
-	return storageId.substring(idStart + 2, typeStart -2);
+	
+	return storageLocationListPage.getSelection().getName();
 }
 /**
  * loads the Storage location details page. 
@@ -1821,7 +1882,7 @@ public void setAccountListError(String errorMessgae) {
 public String getAccountListSelectedItem() {
 	
 	if(accountListPage.getSelectionNode().getSelectionModel().getSelectedItem()!= null) {
-	return accountListPage.getSelectionNode().getSelectionModel().getSelectedItem();
+	return accountListPage.getSelectionNode().getSelectionModel().getSelectedItem().getUsername();
 	}else {
 		return "null";
 	}
@@ -1834,11 +1895,12 @@ public String getAccountListSelectedItem() {
  * 
  * @return String = account name only.
  */
+/*
+ * completely changed
+ */
 public String getSelectedAccountName() {
-	String accountId = accountListPage.getSelection();
-	int usernameStart = accountId.indexOf("=");
-	int accountStart = accountId.indexOf("account");
-	return accountId.substring(usernameStart + 2, accountStart -2);
+	
+	return accountListPage.getSelection().getUsername();
 }
 
 //account details
@@ -1849,7 +1911,10 @@ public String getSelectedAccountName() {
  * the inputed data is then shown in the list view. 
  * @param data = ObservableList<String> each iteration is a string representation of a account
  */
-public void accountListLoad(ObservableList<String> data) {
+/*
+ * input chnaged
+ */
+public void accountListLoad(ObservableList<Account> data) {
 	accountListPage.getErrorLabel().setVisible(false);
 	accountListPage.setObservableList(data);
 	accountListPage.resetFindInput();

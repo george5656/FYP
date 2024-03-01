@@ -45,6 +45,12 @@ public StockType(String name, String cost, String quanityType,String quanity) {
  public String getStockName() {
 	 return name;
  }
+ /*
+  * added simply for the table column as need this to be able to find them
+  */
+ public String getName() {
+	 return name;
+ }
  /**
   * get the cost associated with this stock type object. 
   * note its cost per unit

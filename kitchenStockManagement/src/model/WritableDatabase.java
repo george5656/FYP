@@ -149,9 +149,12 @@ public class WritableDatabase {
 	 *         having the toString method called and that is what is represented in
 	 *         the ArrayList<String.
 	 */
-	public ArrayList<String> getCurrentStockThatsLike(String like) {
+	/*
+	 * changed output
+	 */
+	public ArrayList<CurrentStock> getCurrentStockThatsLike(String like) {
 		PreparedStatement statement;
-		ArrayList<String> currentStock = new ArrayList<>();
+		ArrayList<CurrentStock> currentStock = new ArrayList<>();
 		try {
 			statement = mySqlDatabase.prepareStatement(
 					"select * from stock_mangemnet.tbl_stock_iteration, stock_mangemnet.tbl_stock_type where (tbl_stock_iteration.stockTypeId = tbl_stock_type.stockTypeId) and tbl_stock_type.stockTypeId like \'%"
@@ -161,7 +164,7 @@ public class WritableDatabase {
 			while (result.next()) {
 				CurrentStock input = new CurrentStock(result.getInt(1), result.getString(2), result.getDouble(4),
 						result.getString(8), result.getDate(5).toString(), result.getString(6), result.getDouble(7));
-				currentStock.add(input.toString());
+				currentStock.add(input);
 			}
 			// }
 		} catch (SQLException e) {
@@ -185,7 +188,7 @@ public class WritableDatabase {
 			// CurrentStock stock = data.getcurrentStock().get(0);
 			statement = mySqlDatabase.prepareStatement(
 					"Insert Into stock_mangemnet.tbl_stock_iteration (storageLocationId, stockTypeId, quanity, expiereDate) Values ( \'"
-							+ data.getstorageLocationId() + "\',\'" + data.getStockName() + "\',\'" + data.getQuanity()
+							+ data.getStorageLocationId() + "\',\'" + data.getStockName() + "\',\'" + data.getQuanity()
 							+ "\',\'" + data.getExpiereDate() + "\'); ");
 			statement.execute();
 		} catch (SQLException e) {
@@ -365,9 +368,12 @@ public class WritableDatabase {
 	 * @return ArrayList<String> = all the currentStock that pass the where.
 	 *         each value is the output of a currentStock toString method.
 	 */
-	public ArrayList<String> getCurrentStockThatMatchesWhere(String where) {
+	/*
+	 * changes output
+	 */
+	public ArrayList<CurrentStock> getCurrentStockThatMatchesWhere(String where) {
 		PreparedStatement statement;
-		ArrayList<String> currentStock = new ArrayList<>();
+		ArrayList<CurrentStock> currentStock = new ArrayList<>();
 		try {
 			statement = mySqlDatabase.prepareStatement(
 					"select * from stock_mangemnet.tbl_stock_iteration, stock_mangemnet.tbl_stock_type where (tbl_stock_iteration.stockTypeId = tbl_stock_type.stockTypeId) and "
@@ -377,7 +383,7 @@ public class WritableDatabase {
 			while (result.next()) {
 				CurrentStock input = new CurrentStock(result.getInt(1), result.getString(2), result.getDouble(4),
 						result.getString(8), result.getDate(5).toString(), result.getString(6), result.getDouble(7));
-				currentStock.add(input.toString());
+				currentStock.add(input);
 			}
 			// }
 		} catch (SQLException e) {
@@ -427,13 +433,14 @@ public class WritableDatabase {
 		try {
 			statement = mySqlDatabase.prepareStatement(
 					"select * from stock_mangemnet.tbl_stock_iteration, stock_mangemnet.tbl_stock_type where (tbl_stock_iteration.stockIterationId = \""
-							+ id + "\") and tbl_stock_iteration.stockTypeId = tbl_stock_type.stockTypeId ;");
+							+ id + "\") and tbl_stock_iteration.stockTypeId = tbl_stock_type.stockTypeId;");
 			ResultSet result = statement.executeQuery();
 			// if(result.first()) {
+			
 			if (result.next()) {
 				currentStock = new CurrentStock(result.getInt(1), result.getString(2), result.getDouble(4),
 						result.getString(8), result.getDate(5).toString(), result.getString(3), result.getDouble(7));
-
+System.out.println("hit1");
 			}
 			// }
 		} catch (SQLException e) {
@@ -457,7 +464,7 @@ public class WritableDatabase {
 
 			statement = mySqlDatabase.prepareStatement(
 					"Update stock_mangemnet.tbl_stock_iteration set tbl_stock_iteration.storageLocationId = \'"
-							+ data.getstorageLocationId() + "\', stockTypeId = \'" + data.getStockName()
+							+ data.getStorageLocationId() + "\', stockTypeId = \'" + data.getStockName()
 							+ "\', quanity = \'" + data.getQuanity() + "\', expiereDate = \'" + data.getExpiereDate()
 							+ "\' where stockIterationId = \"" + id + "\";");
 			statement.execute();
@@ -504,9 +511,12 @@ public class WritableDatabase {
  * @return ArrayList<String> = all the budgets that pass the where.
  *         each value is the output of a budget toString method.
  */
-	public ArrayList<String> getBudgetsThatMatchesWhere(String where) {
+	/*
+	 * changed outputs
+	 */
+	public ArrayList<Budget> getBudgetsThatMatchesWhere(String where) {
 		PreparedStatement statement;
-		ArrayList<String> budgets = new ArrayList<>();
+		ArrayList<Budget> budgets = new ArrayList<>();
 		try {
 			statement = mySqlDatabase.prepareStatement("select * from stock_mangemnet.tbl_budget where " + where + ";");
 			ResultSet result = statement.executeQuery();
@@ -514,7 +524,7 @@ public class WritableDatabase {
 			while (result.next()) {
 				Budget input = new Budget(result.getString(1), result.getDouble(2), result.getDate(3).toString(),
 						result.getDate(4).toString());
-				budgets.add(input.toString());
+				budgets.add(input);
 			}
 			// }
 		} catch (SQLException e) {
@@ -557,8 +567,11 @@ public class WritableDatabase {
 	 * @return ArrayList<String> = all the budgets that are like the inputed parameter.
 	 *         each value is the output of a budget toString method.
 	 */
-	public ArrayList<String> getBudgetsThatsLike(String like) {
-		ArrayList<String> allBudgets = new ArrayList<>();
+	/*
+	 * changed output
+	 */
+	public ArrayList<Budget> getBudgetsThatsLike(String like) {
+		ArrayList<Budget> allBudgets = new ArrayList<>();
 		PreparedStatement statement;
 
 		try {
@@ -569,7 +582,7 @@ public class WritableDatabase {
 			while (result.next()) {
 				Budget input = new Budget(result.getString(1), result.getDouble(2), result.getDate(3).toString(),
 						result.getDate(4).toString());
-				allBudgets.add(input.toString());
+				allBudgets.add(input);
 			}
 			// }
 		} catch (SQLException e) {
@@ -668,9 +681,12 @@ public class WritableDatabase {
  * @return ArrayList<String> = all the Accounts that are like the inputed parameter.
  *         each value is the output of a Account toString method.
  */
-	public ArrayList<String> getAccountsThatsLike(String like) {
+	/*
+	 * changed output
+	 */
+	public ArrayList<Account> getAccountsThatsLike(String like) {
 		PreparedStatement statement;
-		ArrayList<String> account = new ArrayList<>();
+		ArrayList<Account> account = new ArrayList<>();
 		try {
 			statement = mySqlDatabase.prepareStatement(
 					"select userName, isAdmin from stock_mangemnet.tbl_account_details where tbl_account_details.userName like \'%"
@@ -679,7 +695,7 @@ public class WritableDatabase {
 			// if(result.first()) {
 			while (result.next()) {
 				Account input = new Account(result.getString(1), result.getBoolean(2));
-				account.add(input.toString());
+				account.add(input);
 			}
 			// }
 		} catch (SQLException e) {
@@ -699,9 +715,12 @@ public class WritableDatabase {
 	 *         each value is the output of a account toString method. not the password is not added
 	 *         for security reasons.
 	 */
-	public ArrayList<String> getAccountsThatMatchesWhere(String where) {
+	/*
+	 * changes output
+	 */
+	public ArrayList<Account> getAccountsThatMatchesWhere(String where) {
 		PreparedStatement statement;
-		ArrayList<String> Accounts = new ArrayList<>();
+		ArrayList<Account> Accounts = new ArrayList<>();
 		try {
 			statement = mySqlDatabase.prepareStatement(
 					"select userName, isAdmin from stock_mangemnet.tbl_account_details where " + where + ";");
@@ -709,7 +728,7 @@ public class WritableDatabase {
 			// if(result.first()) {
 			while (result.next()) {
 				Account input = new Account(result.getString(1), result.getBoolean(2));
-				Accounts.add(input.toString());
+				Accounts.add(input);
 			}
 			// }
 		} catch (SQLException e) {
@@ -909,9 +928,12 @@ public class WritableDatabase {
 	 * @return ArrayList<String> = all the Storage locations that are like the inputed parameter.
 	 *         each value is the output of a StorageLocation toString method.
 	 */
-	public ArrayList<String> getStorageThatsLike(String like) {
+	/*
+	 * changed output
+	 */
+	public ArrayList<StorageLocation> getStorageThatsLike(String like) {
 		PreparedStatement statement;
-		ArrayList<String> storage = new ArrayList<>();
+		ArrayList<StorageLocation> storage = new ArrayList<>();
 		try {
 			statement = mySqlDatabase.prepareStatement(
 					"select * from stock_mangemnet.tbl_storage_location where storageLocationId like \'%" + like
@@ -921,7 +943,7 @@ public class WritableDatabase {
 			while (result.next()) {
 				StorageLocation input = new StorageLocation(result.getString(1), result.getString(3),
 						result.getBoolean(2));
-				storage.add(input.toString());
+				storage.add(input);
 			}
 			// }
 		} catch (SQLException e) {
@@ -968,9 +990,12 @@ public class WritableDatabase {
 	 * @return ArrayList<String> = all the storage location that pass the where.
 	 *         each value is the output of a storage location toString method.
 	 */
-	public ArrayList<String> getStorgeThatMatchesWhere(String where) {
+	/*
+	 * changed output
+	 */
+	public ArrayList<StorageLocation> getStorgeThatMatchesWhere(String where) {
 		PreparedStatement statement;
-		ArrayList<String> storage = new ArrayList<>();
+		ArrayList<StorageLocation> storage = new ArrayList<>();
 		try {
 			statement = mySqlDatabase
 					.prepareStatement("select * from stock_mangemnet.tbl_storage_location where " + where + ";");
@@ -979,7 +1004,7 @@ public class WritableDatabase {
 			while (result.next()) {
 				StorageLocation input = new StorageLocation(result.getString(1), result.getString(3),
 						result.getBoolean(2));
-				storage.add(input.toString());
+				storage.add(input);
 			}
 			// }
 		} catch (SQLException e) {
