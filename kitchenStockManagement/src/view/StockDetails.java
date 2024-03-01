@@ -61,6 +61,8 @@ public StockDetails() {
 	txtExpiereDate.setFont(new Font(20));
 	txtCost.setFont(new Font(20));
 	
+	cbStorageLocation.setMaxSize(Double.MAX_VALUE, Double.MAX_VALUE);
+	
 	btnFileLoad.setMaxSize(Double.MAX_VALUE, Double.MAX_VALUE);
 	tfStockName.setMaxSize(Double.MAX_VALUE, Double.MAX_VALUE);
 	//cbStorageLocation.setMaxSize(Double.MAX_VALUE, Double.MAX_VALUE);
@@ -87,6 +89,8 @@ public StockDetails() {
 	
 	HBox.setHgrow(btnFileLoad, Priority.ALWAYS);
 	
+	
+	
 	VBox.setVgrow(txtStockName,Priority.ALWAYS);
 	VBox.setVgrow(txtStorageLocation,Priority.ALWAYS);
 	VBox.setVgrow(txtQuanity,Priority.ALWAYS);
@@ -100,6 +104,14 @@ public StockDetails() {
 	VBox.setVgrow(tfQuantityType,Priority.ALWAYS);
 	VBox.setVgrow(dpExpiereDate,Priority.ALWAYS);
 	VBox.setVgrow(tfCost,Priority.ALWAYS);
+	
+	
+	
+	
+	
+	
+	
+	
 }
 /**
  * gets the dataPicker associated with the expire date

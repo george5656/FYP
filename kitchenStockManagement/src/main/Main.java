@@ -17,7 +17,7 @@ public class Main extends Application {
 	private Scene scene ;
 	/**
 	 * where the root V,M,c and scene are made
-	 * and the css file is connected to the scene.
+	 * and the css file is connected to tsthe scene.
 	 */
 	@Override
 	public void init() {

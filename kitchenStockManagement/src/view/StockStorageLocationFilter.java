@@ -53,7 +53,7 @@ public StockStorageLocationFilter() {
 	
 	rbYes.setMaxSize(Double.MAX_VALUE, Double.MAX_VALUE);
 	rbNo.setMaxSize(Double.MAX_VALUE, Double.MAX_VALUE);
-	cbType.setMaxHeight(Double.MAX_VALUE);
+	cbType.setMaxSize(Double.MAX_VALUE, Double.MAX_VALUE);
 	cbType.setPrefWidth(300);
 		
 	VBox.setVgrow(rbYes,Priority.ALWAYS);

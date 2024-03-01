@@ -50,7 +50,7 @@ public MenuSettingPage() {
 	txtName.setMaxSize(Double.MAX_VALUE, Double.MAX_VALUE);
 	txtBudget.setMaxSize(Double.MAX_VALUE, Double.MAX_VALUE);
 	tfName.setMaxSize(Double.MAX_VALUE, Double.MAX_VALUE);
-	cbBudget.setMaxHeight(Double.MAX_VALUE);
+	cbBudget.setMaxSize(Double.MAX_VALUE,Double.MAX_VALUE);
 	cbBudget.setPrefWidth(300);
 	//cbBudget.setMaxSize(Double.MAX_VALUE, Double.MAX_VALUE);
 
