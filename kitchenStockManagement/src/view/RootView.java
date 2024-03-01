@@ -332,8 +332,9 @@ public void stockListLoad(ObservableList<CurrentStock> data) {
 	stockListPage.setTableColumn(expiereDate);
 	
 	
-name.setResizable(true);
-	
+
+
+
 
 	stockListPage.getErrorLabel().setVisible(false);
 	stockListPage.setObservableList(data);
@@ -847,7 +848,6 @@ public void menuListLoad(ObservableList<Menu> data) {
 	
 	
 	menuListPage.setTableColumn(name);
-	
 	
 	
 	

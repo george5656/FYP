@@ -2,6 +2,7 @@ package view;
 
 
 
+import javafx.beans.property.DoubleProperty;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
@@ -41,7 +42,7 @@ public class ListPage<E> extends PaneMenu {
 	 * default constructor
 	 */
 	public ListPage() {
-	
+	tv.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
 		super.setCenter(mainLayout);
 		txtErrorMessage.setVisible(false);
 		mainLayout.getChildren().addAll(list,buttons);
@@ -91,6 +92,9 @@ public class ListPage<E> extends PaneMenu {
 		
 		tfFind.setFont(new Font(20)); 
 
+		
+		
+		
 	}
 	/**
 	 * sets the add button event handler 
@@ -204,6 +208,8 @@ public void resetFindInput() {
 public void setTableColumn(TableColumn<E,String> column) {
 	tv.getColumns().add(column);
 }
+
+
 /*
  * new column
  */
