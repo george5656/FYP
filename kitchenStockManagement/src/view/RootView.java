@@ -2194,6 +2194,31 @@ public void setAllPaneMenu(EventHandler<ActionEvent> home,EventHandler<ActionEve
  * it removes any children from the root view VBox, and add self in place so is visible
  */
 public void dishDetailsLoad() {
+	
+
+	ddp.clearTableColumn();
+	
+	TableColumn<StockType, String> name = new TableColumn<>("name");
+	TableColumn<StockType, String> cost = new TableColumn<>("cost");
+	TableColumn<StockType, String> quantityType = new TableColumn<>("quantity type");
+	TableColumn<StockType, String> quanity = new TableColumn<>("quantity");
+	
+	
+	name.setCellValueFactory(new PropertyValueFactory<StockType, String>("name"));
+	cost.setCellValueFactory(new PropertyValueFactory<StockType, String>("cost"));
+	quantityType.setCellValueFactory(new PropertyValueFactory<StockType, String>("quanityType"));
+	quanity.setCellValueFactory(new PropertyValueFactory<StockType, String>("quanity"));
+	
+	
+	
+	ddp.setTableColumn(name);
+	ddp.setTableColumn(cost);
+	ddp.setTableColumn(quantityType);
+	ddp.setTableColumn(quanity);
+	
+	
+	
+	
 	this.getChildren().remove(0);
 	this.getChildren().add(ddp);
 	ddp.hideErrorMessage();
@@ -2295,7 +2320,10 @@ public String getDishDetailsEstimateCost() {
  * sets the dish details list view
  * @param ingredents = ObservableList<String> = the elements wants the list view to show
  */
-public void setDishDetailsList(ObservableList<String> ingredents) {
+/*
+ * changed return type
+ */
+public void setDishDetailsList(ObservableList<StockType> ingredents) {
 	ddp.setIngredentList(ingredents);
 }
 /**

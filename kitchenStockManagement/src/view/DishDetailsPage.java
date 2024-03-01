@@ -7,12 +7,14 @@ import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
-import javafx.scene.control.ListView;
+import javafx.scene.control.TableColumn;
+import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Priority;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Font;
+import model.StockType;
 /**
  * class is meant to be a page in application. 
  * the point of the page is to show the user info and get the user info.
@@ -33,7 +35,7 @@ private Label txtIngredientName = new Label("Ingredient Name");
 private Label txtQuantity = new Label("Qantity");
 private Label txtUnit = new Label("Unit");
 private Label txtEstimatedCost = new Label("Estimated Cost");
-private ListView<String> lvIngredients = new ListView<>();
+private TableView<StockType> tvIngredients = new TableView<>();
 private TextField tfDishName = new TextField();
 private TextField tfIngredientName = new TextField();
 private TextField tfQuanity = new TextField();
@@ -53,7 +55,7 @@ private HBox controllsBottom = new HBox(20);
 DishDetailsPage(){
 	super.setCenter(mainLayout);
 	mainLayout.getChildren().addAll(list,userInput);
-	list.getChildren().addAll(lvIngredients,txtErrorMessage);
+	list.getChildren().addAll(tvIngredients,txtErrorMessage);
 	userInput.getChildren().addAll(textInputAndLabel, controllsTop,controllsBottom);
 	textInputAndLabel.getChildren().addAll(labels, textFields);
 	labels.getChildren().addAll(txtDishName,txtIngredientName,txtQuantity,txtUnit,txtEstimatedCost);
@@ -67,7 +69,7 @@ DishDetailsPage(){
 	
 	HBox.setHgrow(list, Priority.ALWAYS);
 	HBox.setHgrow(userInput, Priority.ALWAYS);
-	VBox.setVgrow(lvIngredients, Priority.ALWAYS);
+	VBox.setVgrow(tvIngredients, Priority.ALWAYS);
 	VBox.setVgrow(txtErrorMessage, Priority.ALWAYS);
 	VBox.setVgrow(textInputAndLabel, Priority.ALWAYS);
 	VBox.setVgrow(controllsTop, Priority.ALWAYS);
@@ -137,6 +139,9 @@ DishDetailsPage(){
 	
 	txtErrorMessage.setVisible(false);
  
+	
+	tvIngredients.setPlaceholder(new Label("No data"));
+	tvIngredients.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
 }
 /**
  * sets the save button event handler 
@@ -212,16 +217,19 @@ public String getEstimatedCost() {
  * sets the lisView to show the inputed observableList
  * @param ingredents = ObservableList<String>, which values are shown in the listView.
  */
-public void setIngredentList(ObservableList<String> ingredents) {
-	lvIngredients.getItems().clear();
-	lvIngredients.getItems().addAll(ingredents);
+/*
+ * input chnaged
+ */
+public void setIngredentList(ObservableList<StockType> ingredents) {
+	tvIngredients.getItems().clear();
+	tvIngredients.getItems().addAll(ingredents);
 }
 /**
  * get the index of the item selected in the listView
  * @return int = the index of the item selected in the listView
  */
 public int getSelectedIndex() {
-	return lvIngredients.getSelectionModel().getSelectedIndex();
+	return tvIngredients.getSelectionModel().getSelectedIndex();
 }
 /**
  * get the id of the selected item.
@@ -229,10 +237,8 @@ public int getSelectedIndex() {
  * @return String = the id of the item selected in the listView.
  */
 public String getSelectedId() {
-	String selection = lvIngredients.getSelectionModel().getSelectedItem();
-	int idStart = selection.indexOf("=");
-	int idEnd = selection.indexOf("cost");
-	return selection.substring(idStart + 2, idEnd -2);
+	return tvIngredients.getSelectionModel().getSelectedItem().getName();
+	
 }
 /**
  * resets all the input areas.
@@ -245,14 +251,14 @@ public void addReset() {
 	tfEstimatedCost.clear();
 	txtErrorMessage.setVisible(false);
 	tfDishName.clear();
-	tfDishName.setText(lvIngredients.getItems().get(0));
+	//tfDishName.setText(tvIngredients.getItems().get(0));
 
 }
 /**
  * reset all the page inputs and the listview
  */
 public void resetWholePage() {
-	lvIngredients.getItems().clear();
+	tvIngredients.getItems().clear();
 	tfDishName.clear();
 }
 /**
@@ -260,8 +266,9 @@ public void resetWholePage() {
  * not it gets the string, which the user clicked on in the listView.
  * @return String
  */
+
 public String getSelectedValue() {
-	return lvIngredients.getSelectionModel().getSelectedItem();
+	return tvIngredients.getSelectionModel().getSelectedItem().getName();
 }
 /**
  * populates the input areas with the provided values.
@@ -282,7 +289,7 @@ public void setUserInputValues(String name, String quanity, String quanityType, 
  * @return int = number of element in the listView.
  */
 public int getIngredientListSize() {
-	return lvIngredients.getItems().size();
+	return tvIngredients.getItems().size();
 }
 /**
  * set the label text and makes it visible 
@@ -297,5 +304,17 @@ txtErrorMessage.setVisible(true);
  */
 public void hideErrorMessage() {
 	txtErrorMessage.setVisible(false);
+}
+/*
+ * new column
+ */
+public void clearTableColumn() {
+	tvIngredients.getColumns().clear();
+}
+/*
+ * new column
+ */
+public void setTableColumn(TableColumn<StockType,String> column) {
+	tvIngredients.getColumns().add(column);
 }
 }

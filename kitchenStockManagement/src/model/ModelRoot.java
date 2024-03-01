@@ -1316,12 +1316,15 @@ try {
 	 * @return ObservableList<Sting> = all the stock type output of there
 	 *         toStringDishDetails method called.
 	 */
-	public ObservableList<String> getSelectedDishList() {
+	/*
+	 * changed return type
+	 */
+	public ObservableList<StockType> getSelectedDishList() {
 
-		ObservableList<String> dishDetails = FXCollections.observableArrayList();
-		dishDetails.add(selectedDish.getName());
-		dishDetails.addAll(selectedDish.getStockTypeAsString());
-		return dishDetails;
+		
+		//dishDetails.add(selectedDish.getName());
+		
+		return FXCollections.observableArrayList(selectedDish.getHeldStock());
 	}
 
 	/**
