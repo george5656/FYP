@@ -50,4 +50,10 @@ public class StorageLocation {
 	public Boolean getAvailbility() {
 		return isAvailble;
 	}
+	/*
+	 * need for the tableView
+	 */
+	public String getIsAvailble() {
+		return String.valueOf(isAvailble);
+	}
 }

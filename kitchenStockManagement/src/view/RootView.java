@@ -14,7 +14,6 @@ import model.Account;
 import model.Budget;
 import model.CurrentStock;
 import model.Menu;
-import model.StockType;
 import model.StorageLocation;
 
 /**
@@ -332,6 +331,10 @@ public void stockListLoad(ObservableList<CurrentStock> data) {
 	stockListPage.setTableColumn(quantity);
 	stockListPage.setTableColumn(expiereDate);
 	
+	
+name.setResizable(true);
+	
+
 	stockListPage.getErrorLabel().setVisible(false);
 	stockListPage.setObservableList(data);
 	stockListPage.resetFindInput();
@@ -830,6 +833,24 @@ public void setMenuListErrorMessage(String error) {
  * input changed
  */
 public void menuListLoad(ObservableList<Menu> data) {
+	
+	
+	menuListPage.clearTableColumn();
+	
+	TableColumn<Menu, String> name = new TableColumn<>("menu name");
+	
+	
+	
+	name.setCellValueFactory(new PropertyValueFactory<Menu, String>("name"));
+	
+	
+	
+	
+	menuListPage.setTableColumn(name);
+	
+	
+	
+	
 	menuListPage.setObservableList(data);
 	menuListPage.resetFindInput();
 	this.getChildren().remove(0);
@@ -1279,7 +1300,26 @@ public void setBudgetListBtnAboutEventHandler(EventHandler<ActionEvent> event) {
 /*
  * input changed
  */
+
 public void BudgetListLoad(ObservableList<Budget> data) {
+	
+	budgetListPage.clearTableColumn();
+	
+	TableColumn<Budget, String> id = new TableColumn<>("id");
+	TableColumn<Budget, String> amount = new TableColumn<>("amount");
+	TableColumn<Budget, String> start = new TableColumn<>("start date");
+	TableColumn<Budget, String> end = new TableColumn<>("end date");
+	
+	id.setCellValueFactory(new PropertyValueFactory<Budget, String>("budgetId"));
+	amount.setCellValueFactory(new PropertyValueFactory<Budget, String>("amount"));
+	start.setCellValueFactory(new PropertyValueFactory<Budget, String>("startDate"));
+	end.setCellValueFactory(new PropertyValueFactory<Budget, String>("endDate"));
+	
+	budgetListPage.setTableColumn(id);
+	budgetListPage.setTableColumn(amount);
+	budgetListPage.setTableColumn(start);
+	budgetListPage.setTableColumn(end);
+	
 	budgetListPage.getErrorLabel().setVisible(false);
 	budgetListPage.setObservableList(data);
 	budgetListPage.resetFindInput();
@@ -1623,7 +1663,24 @@ public void setStorgaeLocationListBtnFindEventHandler(EventHandler<ActionEvent> 
 /*
  * input changed
  */
+
 public void storgaeLocationListLoad(ObservableList<StorageLocation> storageLocations) {
+	
+	storageLocationListPage.clearTableColumn();
+	
+	TableColumn<StorageLocation, String> name = new TableColumn<>("name");
+	TableColumn<StorageLocation, String> type = new TableColumn<>("type");
+	TableColumn<StorageLocation, String> available = new TableColumn<>("is avaible");
+	
+	name.setCellValueFactory(new PropertyValueFactory<StorageLocation, String>("name"));
+	type.setCellValueFactory(new PropertyValueFactory<StorageLocation, String>("type"));
+	available.setCellValueFactory(new PropertyValueFactory<StorageLocation, String>("isAvailble"));
+	
+	
+	storageLocationListPage.setTableColumn(name);
+	storageLocationListPage.setTableColumn(type);
+	storageLocationListPage.setTableColumn(available);
+	
 	storageLocationListPage.getErrorLabel().setVisible(false);
 	storageLocationListPage.setObservableList(storageLocations);
 	storageLocationListPage.resetFindInput();
@@ -1915,6 +1972,21 @@ public String getSelectedAccountName() {
  * input chnaged
  */
 public void accountListLoad(ObservableList<Account> data) {
+	accountListPage.clearTableColumn();
+	
+	TableColumn<Account, String> username = new TableColumn<>("username");
+	TableColumn<Account, String> isAccountAdmin = new TableColumn<>("is account admin");
+	
+	
+	username.setCellValueFactory(new PropertyValueFactory<Account, String>("username"));
+	isAccountAdmin.setCellValueFactory(new PropertyValueFactory<Account, String>("isAdmin"));
+	
+	
+	
+	accountListPage.setTableColumn(username);
+	accountListPage.setTableColumn(isAccountAdmin);
+	
+	
 	accountListPage.getErrorLabel().setVisible(false);
 	accountListPage.setObservableList(data);
 	accountListPage.resetFindInput();

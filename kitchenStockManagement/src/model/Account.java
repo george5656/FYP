@@ -60,4 +60,11 @@ public String getPassword() {
 public Boolean getAdminStatus() {
 	return isAdmin;
 }
+
+/*
+ * need for the tableview
+ */
+public String getIsAdmin() {
+	return String.valueOf(isAdmin);
+}
 }
