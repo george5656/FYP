@@ -15,6 +15,7 @@ import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.ButtonType;
 import javafx.stage.FileChooser;
 import model.ModelRoot;
+import model.StockType;
 import view.RootView;
 
 /**
@@ -2807,7 +2808,7 @@ if(view.getMenuDetailsDishListSelectedItemIndex() != -1) {
 					
 					pw.write("shopping list for\n menu name = " + model.getSelectedMenu().getName() + "\n");
 					
-					model.getSelectedMenuStockType().forEach((String i) -> {
+					model.getSelectedMenuStockType().forEach((StockType i) -> {
 						
 						pw.print(i + "\n");
 						

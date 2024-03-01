@@ -62,6 +62,9 @@ public class WritableDatabase {
 	 * 
 	 * @return ArrayList<CurrentStock>
 	 */
+	/*
+	 * changed
+	 */
 	public ArrayList<CurrentStock> getAllCurrentStock() {
 		PreparedStatement statement;
 		ArrayList<CurrentStock> currentStock = new ArrayList<>();
@@ -431,7 +434,7 @@ public class WritableDatabase {
 		PreparedStatement statement;
 		CurrentStock currentStock = new CurrentStock(-1, "null", -1.0, "null", "null", "null", -1.0);
 		try {
-			statement = mySqlDatabase.prepareStatement(
+				statement = mySqlDatabase.prepareStatement(
 					"select * from stock_mangemnet.tbl_stock_iteration, stock_mangemnet.tbl_stock_type where (tbl_stock_iteration.stockIterationId = \""
 							+ id + "\") and tbl_stock_iteration.stockTypeId = tbl_stock_type.stockTypeId;");
 			ResultSet result = statement.executeQuery();

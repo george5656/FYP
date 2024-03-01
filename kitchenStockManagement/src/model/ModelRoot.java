@@ -1281,14 +1281,13 @@ try {
 	 * @return ObservableList<String>, each value is the output of a dish using its
 	 *         toString method.
 	 */
-	public ObservableList<String> getAllDishes() {
-		currentDish = db.getAllCurrentDishes();
-		ArrayList<String> dishAsString = new ArrayList<>();
-		currentDish.forEach((Dish i) -> {
-			dishAsString.add(i.toString());
-		});
+	/*
+	 * changed
+	 */
+	public ObservableList<Dish> getAllDishes() {
+		
 
-		return FXCollections.observableArrayList(dishAsString);
+		return FXCollections.observableArrayList(db.getAllCurrentDishes());
 	}
 
 	/**
@@ -1501,12 +1500,11 @@ try {
 	 * @return ObservableList<String> = the string is the dishes but after it has
 	 *         gone through the toString method.
 	 */
-	public ObservableList<String> getAllDishesThatAreLike(String like) {
-		ArrayList<String> dishAsString = new ArrayList<>();
-		db.getAllCurrentDishesThatLike(like).forEach((Dish i) -> {
-			dishAsString.add(i.toString());
-		});
-		return FXCollections.observableArrayList(dishAsString);
+	/*
+	 * changed output
+	 */
+	public ObservableList<Dish> getAllDishesThatAreLike(String like) {
+		return FXCollections.observableArrayList(db.getAllCurrentDishesThatLike(like));
 	}
 
 	/**
@@ -1600,7 +1598,10 @@ try {
 	 * @return ObservableList<String>, the string is just the dish output from the
 	 *         toString method.
 	 */
-	public ObservableList<String> getNotSelectedDishesAsString() {
+	/*
+	 * changed output
+	 */
+	public ObservableList<Dish> getNotSelectedDishesAsString() {
 		
 		return FXCollections.observableArrayList(getNotSelectedDishesAsArrayListString());
 	}
@@ -1670,7 +1671,10 @@ try {
 	 * @return ObservableList<String>, string as each iteration is the output of the
 	 *         dish toString method.
 	 */
-	public ObservableList<String> getSelectedMenuDishes() {
+	/*
+	 * changed
+	 */
+	public ObservableList<Dish> getSelectedMenuDishes() {
 
 		return selectedMenu.getDishesAsObservableListOFString();
 
@@ -1687,7 +1691,10 @@ try {
 	 *         toStringDishDetails Method
 	 */
 	
-	public ObservableList<String> getSelectedMenuStockType() {
+	/*
+	 * changed output
+	 */
+	public ObservableList<StockType> getSelectedMenuStockType() {
 		
 		//needed so know what got
 		currentStock = db.getAllCurrentStock();
@@ -1698,7 +1705,7 @@ try {
 		// so not sharing the same memory location
 		selectedMenu.getHeldDishes().forEach((Dish i) -> dishes.add(i));
 		//simply a containe for the shopping list
-		ArrayList<String> output = new ArrayList<>();
+		ArrayList<StockType> output = new ArrayList<>();
 		ArrayList<Integer> indexTracker = new ArrayList<>();
 		ArrayList<StockType> shoppingList = new ArrayList<>();
 		// not this is for removing any duplicates that may be present.
@@ -1837,7 +1844,7 @@ try {
 		}
 		
 		// convert it all to a string to be outputed
-			shoppingListNoDuplicates.forEach((StockType i) -> {output.add(i.toStringDishDetails());
+			shoppingListNoDuplicates.forEach((StockType i) -> {output.add(i);
 				
 			});	
 			
@@ -1854,13 +1861,20 @@ try {
 	 *get how much the budget has remaining after the, the items in the shopping list have been removed.
 	 * @return Double = how much the budget is left after the shopping list cost have been removed.
 	 */
+	/*
+	 * changed
+	 */
 	public Double getBudgetSizeMinusTheShoppingList() {
 		
 		Double BudgetAmount = selectedMenu.getBudget().getAmount();
 		Double totalCost = 0.00;
 		
+		ArrayList<String> valueHold = new ArrayList<>();
+		getSelectedMenuStockType().forEach((StockType i) -> {valueHold.add(i.toStringDishDetails());});
+		
 		//sli = shopping list items
-		ObservableList<String> sli = getSelectedMenuStockType();
+		ObservableList<String> sli = FXCollections.observableArrayList(valueHold);
+				
 	//slis =shopping list items string
 		for(String slis : sli) {
 			
@@ -1881,8 +1895,11 @@ try {
 	 *         dish object are strings by using there toString methods and there
 	 *         output is what is in the ArrayList
 	 */
-	public ArrayList<String> getNotSelectedDishesAsArrayListString() {
-		ArrayList<String> dishAsString = new ArrayList<>();
+	/*
+	 * changed output
+	 */
+	public ArrayList<Dish> getNotSelectedDishesAsArrayListString() {
+		
 	
 		notSelectedDishes.clear();
 		
@@ -1897,10 +1914,9 @@ try {
 		
 		
 		
-		notSelectedDishes.forEach((Dish i) -> {
-			dishAsString.add(i.toString());
-		});
-		return dishAsString;
+	
+		
+		return notSelectedDishes;
 	}
 
 // bascailly the dish find, looking to see if it already held to not included it then 
@@ -1916,12 +1932,24 @@ try {
 	 * @return ObservableList<String> = the string is the dishes but after it has
 	 *         gone through the toString method.
 	 */
-	public ObservableList<String> getNotSelectedDishesThatAreLikeMenuDetailsFind(String userInput) {
-		ArrayList<String> notSelectedDishes = getNotSelectedDishesAsArrayListString();
-		ArrayList<String> output = new ArrayList<String>();
-		notSelectedDishes.forEach((String i) -> {
+	/*
+	 * chnaged
+	 */
+	public ObservableList<Dish> getNotSelectedDishesThatAreLikeMenuDetailsFind(String userInput) {
+		
+		
+		
+		ArrayList<Dish> notSelectedDishes = new ArrayList<>();
+		
+		getNotSelectedDishesAsArrayListString().forEach((Dish i) -> {
+			notSelectedDishes.add(i);
+		});
+		
+		
+		ArrayList<Dish> output = new ArrayList<Dish>();
+		notSelectedDishes.forEach((Dish i) -> {
 
-			if (i.contains(userInput)) {
+			if (i.getName().contains(userInput)) {
 				output.add(i);
 			}
 
@@ -1963,8 +1991,10 @@ try {
 	 * @return ObservaleList<String> = all the dishes that pass all the filters, the
 	 *         dish are respreented by there toString output.
 	 */
-
-	public ObservableList<String> getDishFilterResults(String maxNumberOfItems, String minNumberOfItems, String maxCost,
+/*
+ * changed output
+ */
+	public ObservableList<Dish> getDishFilterResults(String maxNumberOfItems, String minNumberOfItems, String maxCost,
 			String minCost) {
 		
 		ArrayList<Dish> maxni = null;
@@ -1972,7 +2002,7 @@ try {
 		ArrayList<Dish> maxc = null;
 		ArrayList<Dish> minc = null;
 		ArrayList<Dish> master = new ArrayList<>();
-		ArrayList<String> output = new ArrayList<>();
+		ArrayList<Dish> output = new ArrayList<>();
 
 		if (!maxNumberOfItems.equals("null")) {
 			// as first one dont need to worry about the others
@@ -2067,7 +2097,7 @@ try {
 
 		master.forEach((Dish i) -> {
 
-			output.add(i.toString());
+			output.add(i);
 
 		});
 
@@ -2313,7 +2343,10 @@ try {
 	 * ObservableList<String> = all the dishes not in the menu dish list and with
 	 * the to sting method applied to them, it also has the newly added dish
 	 */
-	public ObservableList<String> saveDishDetails() {
+	/*
+	 * changed output
+	 */
+	public ObservableList<Dish> saveDishDetails() {
 
 		// selectedDish is the one making
 
@@ -2359,7 +2392,10 @@ try {
 	 *         with the to sting method applied to them, it also has the update dish
 	 *         info in it without the old details.
 	 */
-	public ObservableList<String> updateDishDetails() {
+	/*
+	 * changed output
+	 */
+	public ObservableList<Dish> updateDishDetails() {
 
 		// selectedDish is the one making
 
@@ -2414,7 +2450,10 @@ try {
 	 * @return ObservableList<String> = all the dishes not in the menu dish list and
 	 *         with the to sting method applied to them
 	 */
-	public ObservableList<String> deleteADish(String id) {
+	/*
+	 * changed output
+	 */
+	public ObservableList<Dish> deleteADish(String id) {
 		db.deleteSelectedDish(id);
 		resetMenuDetailList();
 		return getNotSelectedDishesAsString();

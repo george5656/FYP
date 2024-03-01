@@ -7,12 +7,15 @@ import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
-import javafx.scene.control.ListView;
+import javafx.scene.control.TableColumn;
+import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Priority;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Font;
+import model.Dish;
+import model.StockType;
 /**
  * the class represent a page of the application.
  * this page is meant to allow the navigation to other pages, 
@@ -35,9 +38,9 @@ public class MenuDetails extends PaneMenu {
 	private Label txtBudget = new Label("Budget = not selected");
 	//private Label txtErrorMessage = new Label("Error");
 	private TextField tfUserInput = new TextField();
-	private ListView<String> lvDishes = new ListView<>();
-	private ListView<String> lvMenu = new ListView<>();
-	private ListView<String> lvShopping = new ListView<>();
+	private TableView<Dish> tvDishes = new TableView<>();
+	private TableView<Dish> tvMenu = new TableView<>();
+	private TableView<StockType> tvShopping = new TableView<>();
 	private VBox mainLayout = new VBox(20);
 	
 	
@@ -65,7 +68,7 @@ private HBox fAndO = new HBox(20);
 		buttons.getChildren().addAll(sAndN,aAndE,rAndD,LAndFAndO);
 		budgetAndFind.getChildren().addAll(txtBudget, find);
 		find.getChildren().addAll(btnFind,tfUserInput);
-		lists.getChildren().addAll(lvDishes,lvMenu,lvShopping);
+		lists.getChildren().addAll(tvDishes,tvMenu,tvShopping);
 		sAndN.getChildren().addAll(btnSettings,btnNewDish);
 		aAndE.getChildren().addAll(btnAdd,btnEdit);
 		rAndD.getChildren().addAll(btnRemoveFromList,btnDeleteDishPeremently);
@@ -83,9 +86,9 @@ private HBox fAndO = new HBox(20);
 	HBox.setHgrow(budgetAndFind, Priority.ALWAYS);
 	HBox.setHgrow(buttons, Priority.ALWAYS);
 	
-	HBox.setHgrow(lvDishes, Priority.ALWAYS);
-	HBox.setHgrow(lvMenu, Priority.ALWAYS);
-	HBox.setHgrow(lvShopping, Priority.ALWAYS);
+	HBox.setHgrow(tvDishes, Priority.ALWAYS);
+	HBox.setHgrow(tvMenu, Priority.ALWAYS);
+	HBox.setHgrow(tvShopping, Priority.ALWAYS);
 	HBox.setHgrow(txtBudget, Priority.ALWAYS);
 	HBox.setHgrow(find, Priority.ALWAYS);
 	//controlsTop.setHgrow(txtErrorMessage, Priority.ALWAYS);
@@ -161,10 +164,13 @@ private HBox fAndO = new HBox(20);
 	tfUserInput.setFont(new Font(20));
 	
 	
-	lvDishes.setPlaceholder(new Label("empty dish list"));
-	lvMenu.setPlaceholder(new Label("empty menu items list"));
-	lvShopping.setPlaceholder(new Label("empty shopping list"));
+	tvDishes.setPlaceholder(new Label("empty dish list"));
+	tvMenu.setPlaceholder(new Label("empty menu items list"));
+	tvShopping.setPlaceholder(new Label("empty shopping list"));
 	
+	tvDishes.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
+	tvMenu.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
+	tvShopping.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
 	
 	
 	}
@@ -250,70 +256,91 @@ private HBox fAndO = new HBox(20);
 	 * list on the far left
 	 * @param dishes = ObservableList<String>,
 	 */
-	public void setDishes(ObservableList<String> dishes) {
-		lvDishes.getItems().clear();
-		lvDishes.getItems().addAll(dishes);
+	/*
+	 * changed
+	 */
+	public void setDishes(ObservableList<Dish> dishes) {
+		tvDishes.getItems().clear();
+		tvDishes.getItems().addAll(dishes);
 	}
 	/**
 	 * gets the index of the item selected in the dish (far left) list view
 	 * @return int = index of dish selected
 	 */
 	public int getDishListSelectedIndex() {
-		return lvDishes.getSelectionModel().getSelectedIndex();
+		return tvDishes.getSelectionModel().getSelectedIndex();
 	}
 	/**
 	 * gets the item the use selected in the dish (far left) list view
 	 * @return String, which the user selected.
 	 */
-	public String getDishListSelectedValue() {
-		return lvDishes.getSelectionModel().getSelectedItem();	
+	/*
+	 * changed output
+	 */
+	public Dish getDishListSelectedValue() {
+		return tvDishes.getSelectionModel().getSelectedItem();	
 	}
 	/**
 	 * gets the item the use selected in the menu (middle) list view
 	 * @return String, which the user selected.
 	 */
-	public String getMenuListSelectedValue() {
-		return lvMenu.getSelectionModel().getSelectedItem();	
+	/*
+	 * changed output
+	 */
+	public Dish getMenuListSelectedValue() {
+		return tvMenu.getSelectionModel().getSelectedItem();	
 	}
 	/**
 	 * sets the list that displays the dish in a menu to the inputed list.
 	 * list in the middle
 	 * @param items = ObservableList<String>,
 	 */
-	public void setMenuDishList(ObservableList<String> items) {
-		lvMenu.getItems().clear();
-		lvMenu.getItems().addAll(items);
+	/*
+	 * changed input
+	 */
+	public void setMenuDishList(ObservableList<Dish> items) {
+		tvMenu.getItems().clear();
+		tvMenu.getItems().addAll(items);
 	}
 	/**
 	 * sets the list that displays the stock that needs to be brought (shopping list) to the inputed list.
 	 * list on the far right.
 	 * @param items = ObservableList<String>,
 	 */
-	public void setShoppingListList(ObservableList<String> items) {
-		lvShopping.getItems().clear();
-		lvShopping.getItems().addAll(items);
+	/*
+	 * changed input
+	 */
+	public void setShoppingListList(ObservableList<StockType> items) {
+		tvShopping.getItems().clear();
+		tvShopping.getItems().addAll(items);
 	}
 	/**
 	 * gets the underling data structure the shopping (far right) list has
 	 * @return ObservableList<String>
 	 */
-	public ObservableList<String> getShoppingListList(){
-		return lvShopping.getItems();
+	/*
+	 * changed
+	 */
+	public ObservableList<StockType> getShoppingListList(){
+		return tvShopping.getItems();
 	}
 	/**
 	 * gets the index of the item which was selected in the menu list (middle one)
 	 * @return int
 	 */
 	public int getMenuListSelectedIndex() {
-		return lvMenu.getSelectionModel().getSelectedIndex();
+		return tvMenu.getSelectionModel().getSelectedIndex();
 	}
 	/**
 	 * gets the item selected in the menu list(middle one) but only the id of that item.
 	 * the id is the id which is shown, eg after the dish name =
 	 * @return String, = just the selected item id. 
 	 */
+	/*
+	 * changed 
+	 */
 	public String getMenuListSelectedValueAsId() {
-		return lvMenu.getSelectionModel().getSelectedItem().substring(lvMenu.getSelectionModel().getSelectedItem().indexOf("=")+2);
+		return tvMenu.getSelectionModel().getSelectedItem().getName();
 	}
 	//so for output know if anything there to output or not
 	/**
@@ -322,7 +349,7 @@ private HBox fAndO = new HBox(20);
 	 * @return int = size of list
 	 */
 	public int getMenuListSize() {
-		return lvMenu.getItems().size();
+		return tvMenu.getItems().size();
 	}
 	//for easy of use just add the semantics around it
 	/**
@@ -337,8 +364,8 @@ private HBox fAndO = new HBox(20);
 	 * clears the menu dish and shopping list and also clears the find input area text
 	 */
 	public void resetMenuAndShoppingListContent() {
-		lvMenu.getItems().clear();
-		lvShopping.getItems().clear();
+		tvMenu.getItems().clear();
+		tvShopping.getItems().clear();
 		tfUserInput.clear();
 		
 	}
@@ -352,7 +379,28 @@ private HBox fAndO = new HBox(20);
 	 * removes selection from the list view menu and list view dishes
 	 */
 	public void deSelect() {
-		lvMenu.getSelectionModel().clearSelection();
-		lvDishes.getSelectionModel().clearSelection();
+		tvMenu.getSelectionModel().clearSelection();
+		tvDishes.getSelectionModel().clearSelection();
 	}
+	
+	public void clearTablesColumns() {
+	tvMenu.getColumns().clear();
+	tvDishes.getColumns().clear();
+	tvShopping.getColumns().clear();
+	}
+	
+	
+	
+	public void setDishColumn(TableColumn<Dish, String> column) {
+		tvDishes.getColumns().add(column);
+	}
+	public void setMenuColumn(TableColumn<Dish, String> column) {
+		tvMenu.getColumns().add(column);
+	}
+	public void setShoppingColumn(TableColumn<StockType, String> column) {
+		tvShopping.getColumns().add(column);
+	}
+	
+	
+	
 }

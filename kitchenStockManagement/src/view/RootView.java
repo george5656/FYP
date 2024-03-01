@@ -13,7 +13,9 @@ import javafx.scene.layout.VBox;
 import model.Account;
 import model.Budget;
 import model.CurrentStock;
+import model.Dish;
 import model.Menu;
+import model.StockType;
 import model.StorageLocation;
 
 /**
@@ -940,7 +942,34 @@ public void setMenuDetailsBtnAboutEventHandler(EventHandler<ActionEvent> event) 
  * loads the menu details page. 
  * it removes any children from the root view VBox, and add self in place so is visible
  */
+
 public void MenuDetailsLoad() {
+	
+	
+	menuDetails.clearTablesColumns();
+	
+	TableColumn<Dish, String> dName = new TableColumn<>("name");
+	TableColumn<Dish, String> mName = new TableColumn<>("name");
+	TableColumn<StockType, String> slName = new TableColumn<>("name");
+	TableColumn<StockType, String> slCost = new TableColumn<>("cost");
+	TableColumn<StockType, String> slQuanityType = new TableColumn<>("quantity type");
+	TableColumn<StockType, String> slQuanity = new TableColumn<>("quantity");
+	
+	dName.setCellValueFactory(new PropertyValueFactory<Dish, String>("dishName"));
+	mName.setCellValueFactory(new PropertyValueFactory<Dish, String>("dishName"));
+	slName.setCellValueFactory(new PropertyValueFactory<StockType, String>("name"));
+	slCost.setCellValueFactory(new PropertyValueFactory<StockType, String>("cost"));
+	slQuanityType.setCellValueFactory(new PropertyValueFactory<StockType, String>("quanityType"));
+	slQuanity.setCellValueFactory(new PropertyValueFactory<StockType, String>("quanity"));
+
+	menuDetails.setDishColumn(dName);
+	menuDetails.setMenuColumn(mName);
+	menuDetails.setShoppingColumn(slName);
+	menuDetails.setShoppingColumn(slCost);
+	menuDetails.setShoppingColumn(slQuanityType);
+	menuDetails.setShoppingColumn(slQuanity);
+	
+	
 	this.getChildren().remove(0);
 	this.getChildren().add(menuDetails);
 	VBox.setVgrow(menuDetails, Priority.ALWAYS);
@@ -950,7 +979,7 @@ public void MenuDetailsLoad() {
  * set the values to be the passed in value 
  * @param dishes ObservableList<String> = values to be shown in the dish list.
  */
-public void setMenuDetailsDishList(ObservableList<String> dishes) {
+public void setMenuDetailsDishList(ObservableList<Dish> dishes) {
 	menuDetails.setDishes(dishes);
 }
 /**
@@ -958,7 +987,7 @@ public void setMenuDetailsDishList(ObservableList<String> dishes) {
  * set the values to be the passed in value 
  * @param dishes ObservableList<String> = values to be shown in the shopping list.
  */
-public void setMenuDetailsShoppingList(ObservableList<String> dishes) {	
+public void setMenuDetailsShoppingList(ObservableList<StockType> dishes) {	
 	menuDetails.setShoppingListList(dishes);
 }
 /**
@@ -975,7 +1004,7 @@ public String getMenuDetailsFindUserInput() {
  * @return String = selected items id.
  */
 public String getMenuDetailsDishListSelectedItemValueIdOnly() {
-	return menuDetails.getDishListSelectedValue().substring(menuDetails.getDishListSelectedValue().indexOf("=")+2);
+	return menuDetails.getDishListSelectedValue().getName();
 }
 /**
  * gets the selected item from the Menu list, list view but only the items id. 
@@ -983,7 +1012,7 @@ public String getMenuDetailsDishListSelectedItemValueIdOnly() {
  * @return String = selected items id.
  */
 public String getMenuDetailsMenuDishListSelectedItemValueIdOnly() {
-	return menuDetails.getMenuListSelectedValue().substring(menuDetails.getMenuListSelectedValue().indexOf("=")+2);
+	return menuDetails.getMenuListSelectedValue().getName();
 }
 /**
  * removes the user selection from the menu details lists.
@@ -1005,7 +1034,7 @@ public Integer getMenuDetailsDishListSelectedItemIndex() {
  * set the values to be the passed in value 
  * @param items ObservableList<String> = values to be shown in the menu list.
  */
-public void setMenuDetailsMenuListItems(ObservableList<String> items) {
+public void setMenuDetailsMenuListItems(ObservableList<Dish> items) {
 	menuDetails.setMenuDishList(items);
 }
 /**
