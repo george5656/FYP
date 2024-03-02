@@ -6,8 +6,17 @@ import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.geometry.Pos;
+import javafx.scene.control.TableColumn;
+import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.Priority;
 import javafx.scene.layout.VBox;
+import model.Account;
+import model.Budget;
+import model.CurrentStock;
+import model.Dish;
+import model.Menu;
+import model.StockType;
+import model.StorageLocation;
 
 /**
  * class is the root of the view in the MVC
@@ -20,18 +29,18 @@ public class RootView extends VBox {
 	private Login login = new Login();
 	private BudgetFilter budgetFilter = new BudgetFilter();
 	private HomePage homePage = new HomePage();
-	private ListPage stockListPage = new ListPage();
+	private ListPage<CurrentStock> stockListPage = new ListPage<>();
 	private MenuDetails menuDetails = new MenuDetails();
-	private ListPage menuListPage = new ListPage();
+	private ListPage<Menu> menuListPage = new ListPage<>();
 	private DeleteConfirmationPage dcp= new DeleteConfirmationPage(); 
 	private DishDetailsPage ddp = new DishDetailsPage();
 	private StockDetails sd = new StockDetails();
-	private ListPage budgetListPage = new ListPage();
+	private ListPage<Budget> budgetListPage = new ListPage<>();
 	private BudgetDetailsPage bdp = new BudgetDetailsPage();
-	private ListPage storageLocationListPage = new ListPage();
+	private ListPage<StorageLocation> storageLocationListPage = new ListPage<>();
 	private StockStorageLocationDetails ssld = new StockStorageLocationDetails();
 	private AccountDetails ad = new AccountDetails();
-	private ListPage accountListPage = new ListPage();
+	private ListPage<Account> accountListPage = new ListPage<>();
 	private StockStorageLocationFilter sslf = new StockStorageLocationFilter();
 	private StockFilter sf = new StockFilter();
 	private FilterDishes fd = new FilterDishes();
@@ -53,7 +62,10 @@ public class RootView extends VBox {
  * get the stock list page 
  * @return ListPage
  */
-public ListPage getStockListPage() {
+	/*
+	 * output changed
+	 */
+public ListPage<CurrentStock> getStockListPage() {
 	return stockListPage;
 }
 /**
@@ -74,7 +86,10 @@ public StockDetails getStockDetails() {
  * get the account list page 
  * @return ListPage
  */
-public ListPage getAccountListPage() {
+/*
+ * output chnaged
+ */
+public ListPage<Account> getAccountListPage() {
 	return accountListPage;
 }
 /**
@@ -290,7 +305,39 @@ public void setStockListBtnFilterEventHandler(EventHandler<ActionEvent> event) {
  * the inputed data is then shown in the list view. 
  * @param data = ObservableList<String> each iteration is a string representation of stock
  */
-public void stockListLoad(ObservableList<String> data) {
+/*
+ * multiple thinsg changed
+ */
+public void stockListLoad(ObservableList<CurrentStock> data) {
+	stockListPage.clearTableColumn();
+	
+	TableColumn<CurrentStock, String> name = new TableColumn<>("name");
+	TableColumn<CurrentStock, String> cost = new TableColumn<>("cost");
+	TableColumn<CurrentStock, String> quantityType = new TableColumn<>("quantity type");
+	TableColumn<CurrentStock, String> location = new TableColumn<>("storage Location");
+	TableColumn<CurrentStock, String> quantity = new TableColumn<>("quantity");
+	TableColumn<CurrentStock, String> expiereDate = new TableColumn<>("expiere date");
+	
+	name.setCellValueFactory(new PropertyValueFactory<CurrentStock, String>("name"));
+	cost.setCellValueFactory(new PropertyValueFactory<CurrentStock, String>("cost"));
+	quantityType.setCellValueFactory(new PropertyValueFactory<CurrentStock, String>("quanityType"));
+	location.setCellValueFactory(new PropertyValueFactory<CurrentStock, String>("storageLocationId"));
+	quantity.setCellValueFactory(new PropertyValueFactory<CurrentStock, String>("quanity"));
+	expiereDate.setCellValueFactory(new PropertyValueFactory<CurrentStock, String>("expiereDate"));
+	
+	
+	stockListPage.setTableColumn(name);
+	stockListPage.setTableColumn(cost);
+	stockListPage.setTableColumn(quantityType);
+	stockListPage.setTableColumn(location);
+	stockListPage.setTableColumn(quantity);
+	stockListPage.setTableColumn(expiereDate);
+	
+	
+
+
+
+
 	stockListPage.getErrorLabel().setVisible(false);
 	stockListPage.setObservableList(data);
 	stockListPage.resetFindInput();
@@ -305,7 +352,7 @@ public void stockListLoad(ObservableList<String> data) {
 public String getStockListSelectedItem() {
 	
 	if(stockListPage.getSelectionNode().getSelectionModel().getSelectedItem()!= null) {
-	return stockListPage.getSelectionNode().getSelectionModel().getSelectedItem();
+	return stockListPage.getSelectionNode().getSelectionModel().getSelectedItem().getStockName();
 	}else {
 		return "null";
 	}
@@ -338,11 +385,13 @@ public void setStockListBtnEditEventHandler(EventHandler<ActionEvent> event) {
  * use id and storage to identify where the id values starts and ends.
  * @return String which is the id of the stock selected in the listView
  */
+/*
+ * complete changed it
+ */
 public String getSelectedStockId() {
-	String stockId = stockListPage.getSelection();
-	int idStart = stockId.indexOf("id");
-	int storageStart = stockId.indexOf("storage");
-	return stockId.substring(idStart + 5, storageStart -2);
+	
+	
+	return String.valueOf(stockListPage.getSelection().getId());
 }
 /**
  * get the user input in the find section on the stock list page.
@@ -355,7 +404,10 @@ public String getStockListTfFindValue() {
  * sets the list view in the stock list page 
  * @param data = ObservableList<String> each iteration is a string representation of stock
  */
-public void setStockListValues(ObservableList<String> data) {
+/*
+ * input changed
+ */
+public void setStockListValues(ObservableList<CurrentStock> data) {
 stockListPage.setObservableList(data);
 }
 // stock details 
@@ -726,7 +778,7 @@ public void setMenuListBtnAboutEventHandler(EventHandler<ActionEvent> event) {
  */
 public String getMenuListSelectedMenu() {
 	if(menuListPage.getSelectionNode().getSelectionModel().getSelectedItem()!= null) {
-	return menuListPage.getSelectionNode().getSelectionModel().getSelectedItem();
+	return menuListPage.getSelectionNode().getSelectionModel().getSelectedItem().getName();
 	}else {
 		return "null";
 	}
@@ -736,9 +788,12 @@ public String getMenuListSelectedMenu() {
  * 
  * @return String = the selected menu id
  */
+/*
+ * complete changed
+ */
 public String getMenuListSelectedMenuId() {
-	String selection = menuListPage.getSelectionNode().getSelectionModel().getSelectedItem();
-	return selection.substring(selection.indexOf("=")+2);
+	return menuListPage.getSelectionNode().getSelectionModel().getSelectedItem().getName();
+	
 	
 }
 /**
@@ -776,7 +831,27 @@ public void setMenuListErrorMessage(String error) {
  * the inputed data is then shown in the list view. 
  * @param data = ObservableList<String> each iteration is a string representation of menus
  */
-public void menuListLoad(ObservableList<String> data) {
+/*
+ * input changed
+ */
+public void menuListLoad(ObservableList<Menu> data) {
+	
+	
+	menuListPage.clearTableColumn();
+	
+	TableColumn<Menu, String> name = new TableColumn<>("menu name");
+	
+	
+	
+	name.setCellValueFactory(new PropertyValueFactory<Menu, String>("name"));
+	
+	
+	
+	
+	menuListPage.setTableColumn(name);
+	
+	
+	
 	menuListPage.setObservableList(data);
 	menuListPage.resetFindInput();
 	this.getChildren().remove(0);
@@ -866,7 +941,34 @@ public void setMenuDetailsBtnAboutEventHandler(EventHandler<ActionEvent> event) 
  * loads the menu details page. 
  * it removes any children from the root view VBox, and add self in place so is visible
  */
+
 public void MenuDetailsLoad() {
+	
+	
+	menuDetails.clearTablesColumns();
+	
+	TableColumn<Dish, String> dName = new TableColumn<>("name");
+	TableColumn<Dish, String> mName = new TableColumn<>("name");
+	TableColumn<StockType, String> slName = new TableColumn<>("name");
+	TableColumn<StockType, String> slCost = new TableColumn<>("cost");
+	TableColumn<StockType, String> slQuanityType = new TableColumn<>("quantity type");
+	TableColumn<StockType, String> slQuanity = new TableColumn<>("quantity");
+	
+	dName.setCellValueFactory(new PropertyValueFactory<Dish, String>("dishName"));
+	mName.setCellValueFactory(new PropertyValueFactory<Dish, String>("dishName"));
+	slName.setCellValueFactory(new PropertyValueFactory<StockType, String>("name"));
+	slCost.setCellValueFactory(new PropertyValueFactory<StockType, String>("cost"));
+	slQuanityType.setCellValueFactory(new PropertyValueFactory<StockType, String>("quanityType"));
+	slQuanity.setCellValueFactory(new PropertyValueFactory<StockType, String>("quanity"));
+
+	menuDetails.setDishColumn(dName);
+	menuDetails.setMenuColumn(mName);
+	menuDetails.setShoppingColumn(slName);
+	menuDetails.setShoppingColumn(slCost);
+	menuDetails.setShoppingColumn(slQuanityType);
+	menuDetails.setShoppingColumn(slQuanity);
+	
+	
 	this.getChildren().remove(0);
 	this.getChildren().add(menuDetails);
 	VBox.setVgrow(menuDetails, Priority.ALWAYS);
@@ -876,7 +978,7 @@ public void MenuDetailsLoad() {
  * set the values to be the passed in value 
  * @param dishes ObservableList<String> = values to be shown in the dish list.
  */
-public void setMenuDetailsDishList(ObservableList<String> dishes) {
+public void setMenuDetailsDishList(ObservableList<Dish> dishes) {
 	menuDetails.setDishes(dishes);
 }
 /**
@@ -884,7 +986,7 @@ public void setMenuDetailsDishList(ObservableList<String> dishes) {
  * set the values to be the passed in value 
  * @param dishes ObservableList<String> = values to be shown in the shopping list.
  */
-public void setMenuDetailsShoppingList(ObservableList<String> dishes) {	
+public void setMenuDetailsShoppingList(ObservableList<StockType> dishes) {	
 	menuDetails.setShoppingListList(dishes);
 }
 /**
@@ -901,7 +1003,7 @@ public String getMenuDetailsFindUserInput() {
  * @return String = selected items id.
  */
 public String getMenuDetailsDishListSelectedItemValueIdOnly() {
-	return menuDetails.getDishListSelectedValue().substring(menuDetails.getDishListSelectedValue().indexOf("=")+2);
+	return menuDetails.getDishListSelectedValue().getName();
 }
 /**
  * gets the selected item from the Menu list, list view but only the items id. 
@@ -909,7 +1011,7 @@ public String getMenuDetailsDishListSelectedItemValueIdOnly() {
  * @return String = selected items id.
  */
 public String getMenuDetailsMenuDishListSelectedItemValueIdOnly() {
-	return menuDetails.getMenuListSelectedValue().substring(menuDetails.getMenuListSelectedValue().indexOf("=")+2);
+	return menuDetails.getMenuListSelectedValue().getName();
 }
 /**
  * removes the user selection from the menu details lists.
@@ -931,7 +1033,7 @@ public Integer getMenuDetailsDishListSelectedItemIndex() {
  * set the values to be the passed in value 
  * @param items ObservableList<String> = values to be shown in the menu list.
  */
-public void setMenuDetailsMenuListItems(ObservableList<String> items) {
+public void setMenuDetailsMenuListItems(ObservableList<Dish> items) {
 	menuDetails.setMenuDishList(items);
 }
 /**
@@ -983,7 +1085,7 @@ public int getMenuDetailsMenuListSize() {
 public String getBudgetListSelectedItem() {
 	
 	if(budgetListPage.getSelectionNode().getSelectionModel().getSelectedItem()!= null) {
-	return budgetListPage.getSelectionNode().getSelectionModel().getSelectedItem();
+	return budgetListPage.getSelectionNode().getSelectionModel().getSelectedItem().getBudgetId();
 	}else {
 		return "null";
 	}
@@ -1223,7 +1325,29 @@ public void setBudgetListBtnAboutEventHandler(EventHandler<ActionEvent> event) {
  * the inputed data is then shown in the list view. 
  * @param data = ObservableList<String> each iteration is a string representation of budget
  */
-public void BudgetListLoad(ObservableList<String> data) {
+/*
+ * input changed
+ */
+
+public void BudgetListLoad(ObservableList<Budget> data) {
+	
+	budgetListPage.clearTableColumn();
+	
+	TableColumn<Budget, String> id = new TableColumn<>("id");
+	TableColumn<Budget, String> amount = new TableColumn<>("amount");
+	TableColumn<Budget, String> start = new TableColumn<>("start date");
+	TableColumn<Budget, String> end = new TableColumn<>("end date");
+	
+	id.setCellValueFactory(new PropertyValueFactory<Budget, String>("budgetId"));
+	amount.setCellValueFactory(new PropertyValueFactory<Budget, String>("amount"));
+	start.setCellValueFactory(new PropertyValueFactory<Budget, String>("startDate"));
+	end.setCellValueFactory(new PropertyValueFactory<Budget, String>("endDate"));
+	
+	budgetListPage.setTableColumn(id);
+	budgetListPage.setTableColumn(amount);
+	budgetListPage.setTableColumn(start);
+	budgetListPage.setTableColumn(end);
+	
 	budgetListPage.getErrorLabel().setVisible(false);
 	budgetListPage.setObservableList(data);
 	budgetListPage.resetFindInput();
@@ -1253,11 +1377,12 @@ public void setBudgetListErrorMessage(String error) {
  * 
  * @return String which is the selected budget id.
  */
+/*
+ * complete changed
+ */
 public String getSelectedBudgetId() {
-	String budgetId = budgetListPage.getSelection();
-	int idStart = budgetId.indexOf("id");
-	int amountStart = budgetId.indexOf("amount");
-	return budgetId.substring(idStart + 5, amountStart -2);
+	
+	return budgetListPage.getSelection().getBudgetId();
 }
 
 //budgetDetailsPage
@@ -1563,7 +1688,27 @@ public void setStorgaeLocationListBtnFindEventHandler(EventHandler<ActionEvent> 
  * the inputed data is then shown in the list view. 
  * @param storageLocations = ObservableList<String> each iteration is a string representation of a storage location.
  */
-public void storgaeLocationListLoad(ObservableList<String> storageLocations) {
+/*
+ * input changed
+ */
+
+public void storgaeLocationListLoad(ObservableList<StorageLocation> storageLocations) {
+	
+	storageLocationListPage.clearTableColumn();
+	
+	TableColumn<StorageLocation, String> name = new TableColumn<>("name");
+	TableColumn<StorageLocation, String> type = new TableColumn<>("type");
+	TableColumn<StorageLocation, String> available = new TableColumn<>("is avaible");
+	
+	name.setCellValueFactory(new PropertyValueFactory<StorageLocation, String>("name"));
+	type.setCellValueFactory(new PropertyValueFactory<StorageLocation, String>("type"));
+	available.setCellValueFactory(new PropertyValueFactory<StorageLocation, String>("isAvailble"));
+	
+	
+	storageLocationListPage.setTableColumn(name);
+	storageLocationListPage.setTableColumn(type);
+	storageLocationListPage.setTableColumn(available);
+	
 	storageLocationListPage.getErrorLabel().setVisible(false);
 	storageLocationListPage.setObservableList(storageLocations);
 	storageLocationListPage.resetFindInput();
@@ -1599,7 +1744,7 @@ public void hideStorageListErrorMessage() {
 public String getStorageListSelectedItem() {
 	
 	if(storageLocationListPage.getSelectionNode().getSelectionModel().getSelectedItem()!= null) {
-	return storageLocationListPage.getSelectionNode().getSelectionModel().getSelectedItem();
+	return storageLocationListPage.getSelectionNode().getSelectionModel().getSelectedItem().getName();
 	}else {
 		return "null";
 	}
@@ -1610,11 +1755,12 @@ public String getStorageListSelectedItem() {
  * the id that is given is not the index id, but the id that is shown in the list view/ what the string displays.
  * @return String  = selected storage id
  */
+/*
+ * complete changed
+ */
 public String getSelectedStorageId() {
-	String storageId = storageLocationListPage.getSelection();
-	int idStart = storageId.indexOf("=");
-	int typeStart = storageId.indexOf("type");
-	return storageId.substring(idStart + 2, typeStart -2);
+	
+	return storageLocationListPage.getSelection().getName();
 }
 /**
  * loads the Storage location details page. 
@@ -1821,7 +1967,7 @@ public void setAccountListError(String errorMessgae) {
 public String getAccountListSelectedItem() {
 	
 	if(accountListPage.getSelectionNode().getSelectionModel().getSelectedItem()!= null) {
-	return accountListPage.getSelectionNode().getSelectionModel().getSelectedItem();
+	return accountListPage.getSelectionNode().getSelectionModel().getSelectedItem().getUsername();
 	}else {
 		return "null";
 	}
@@ -1834,11 +1980,12 @@ public String getAccountListSelectedItem() {
  * 
  * @return String = account name only.
  */
+/*
+ * completely changed
+ */
 public String getSelectedAccountName() {
-	String accountId = accountListPage.getSelection();
-	int usernameStart = accountId.indexOf("=");
-	int accountStart = accountId.indexOf("account");
-	return accountId.substring(usernameStart + 2, accountStart -2);
+	
+	return accountListPage.getSelection().getUsername();
 }
 
 //account details
@@ -1849,7 +1996,25 @@ public String getSelectedAccountName() {
  * the inputed data is then shown in the list view. 
  * @param data = ObservableList<String> each iteration is a string representation of a account
  */
-public void accountListLoad(ObservableList<String> data) {
+/*
+ * input chnaged
+ */
+public void accountListLoad(ObservableList<Account> data) {
+	accountListPage.clearTableColumn();
+	
+	TableColumn<Account, String> username = new TableColumn<>("username");
+	TableColumn<Account, String> isAccountAdmin = new TableColumn<>("is account admin");
+	
+	
+	username.setCellValueFactory(new PropertyValueFactory<Account, String>("username"));
+	isAccountAdmin.setCellValueFactory(new PropertyValueFactory<Account, String>("isAdmin"));
+	
+	
+	
+	accountListPage.setTableColumn(username);
+	accountListPage.setTableColumn(isAccountAdmin);
+	
+	
 	accountListPage.getErrorLabel().setVisible(false);
 	accountListPage.setObservableList(data);
 	accountListPage.resetFindInput();
@@ -2028,6 +2193,31 @@ public void setAllPaneMenu(EventHandler<ActionEvent> home,EventHandler<ActionEve
  * it removes any children from the root view VBox, and add self in place so is visible
  */
 public void dishDetailsLoad() {
+	
+
+	ddp.clearTableColumn();
+	
+	TableColumn<StockType, String> name = new TableColumn<>("name");
+	TableColumn<StockType, String> cost = new TableColumn<>("cost");
+	TableColumn<StockType, String> quantityType = new TableColumn<>("quantity type");
+	TableColumn<StockType, String> quanity = new TableColumn<>("quantity");
+	
+	
+	name.setCellValueFactory(new PropertyValueFactory<StockType, String>("name"));
+	cost.setCellValueFactory(new PropertyValueFactory<StockType, String>("cost"));
+	quantityType.setCellValueFactory(new PropertyValueFactory<StockType, String>("quanityType"));
+	quanity.setCellValueFactory(new PropertyValueFactory<StockType, String>("quanity"));
+	
+	
+	ddp.setDishNameLabel("No dish name");
+	
+	ddp.setTableColumn(name);
+	ddp.setTableColumn(cost);
+	ddp.setTableColumn(quantityType);
+	ddp.setTableColumn(quanity);
+	
+	
+	
 	this.getChildren().remove(0);
 	this.getChildren().add(ddp);
 	ddp.hideErrorMessage();
@@ -2129,8 +2319,12 @@ public String getDishDetailsEstimateCost() {
  * sets the dish details list view
  * @param ingredents = ObservableList<String> = the elements wants the list view to show
  */
-public void setDishDetailsList(ObservableList<String> ingredents) {
+/*
+ * changed return type
+ */
+public void setDishDetailsList(ObservableList<StockType> ingredents,String dishName) {
 	ddp.setIngredentList(ingredents);
+	ddp.setDishNameLabel(dishName);
 }
 /**
  * clears all the input and listview on the dish details page.
@@ -2163,7 +2357,10 @@ public void dishDetailsAddReset() {
  * the list view is located in the dish details page
  * @return String which is the string the user has selected.
  */
-public String getDishDetailsSelectedItem() {
+/*
+ * changed output
+ */
+public StockType getDishDetailsSelectedItem() {
 	return ddp.getSelectedValue();
 }
 /**

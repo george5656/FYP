@@ -53,12 +53,12 @@ public void addItemToDishList(Dish item) {
  * each iteration in the Observable list is the output of a dish object toString method.
  * @return ObservableList<String>
  */
-public ObservableList<String> getDishesAsObservableListOFString(){
-	ArrayList<String> dishes = new ArrayList<>();
-	heldDishes.forEach((Dish i) -> {
-		dishes.add(i.toString());
-	});
-	return FXCollections.observableArrayList(dishes);
+/*
+ * chnaged
+ */
+public ObservableList<Dish> getDishesAsObservableListOFString(){
+	
+	return FXCollections.observableArrayList(heldDishes);
 }
 
 /**

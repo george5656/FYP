@@ -43,6 +43,12 @@ public void addStockType(StockType st) {
 public String getName() {
 	return dishName;
 }
+/*
+ * for table view
+ */
+public String getDishName() {
+return dishName;
+}
 /**
  * gets the stock type associated with the dish as a string. 
  * the format is the output of the toStringDishDetails() method in stockType class.
@@ -60,8 +66,12 @@ public ArrayList<String> getStockTypeAsString() {
  * 
  * @param index = int which represent the place in the ingrdents, where 
  */
-public void removeIngredent(int index) {
-	ingrdents.remove(index);
+/*
+ * chnaged
+ */
+public void removeIngredent(StockType st) {
+	
+	ingrdents.remove(st);
 }
 /**
  * sets the value in the dishName var

@@ -9,7 +9,8 @@ import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
-import javafx.scene.control.ListView;
+import javafx.scene.control.TableColumn;
+import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Priority;
@@ -19,9 +20,10 @@ import javafx.scene.text.Font;
 /**
  * class meant to be extened to give the default info about the other UI pages
  * @author Student
+ * @param <E>
  *
  */
-public class ListPage extends PaneMenu {
+public class ListPage<E> extends PaneMenu {
 	//fields 
 	private Button btnAdd = new Button("add");
 	private Button btnEdit = new Button("edit");
@@ -30,7 +32,7 @@ public class ListPage extends PaneMenu {
 	private Button btnFind = new Button("find");
 	private TextField tfFind = new TextField();
 	private Label txtErrorMessage = new Label("Error");
-	private ListView<String> lv = new ListView<>();
+	private TableView<E> tv = new TableView<>();
 	private HBox mainLayout = new HBox(20);
 	private VBox list = new VBox(20);
 	private VBox buttons = new VBox(20);
@@ -39,15 +41,15 @@ public class ListPage extends PaneMenu {
 	 * default constructor
 	 */
 	public ListPage() {
-	
+	tv.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
 		super.setCenter(mainLayout);
 		txtErrorMessage.setVisible(false);
 		mainLayout.getChildren().addAll(list,buttons);
-		list.getChildren().addAll(lv,txtErrorMessage);
+		list.getChildren().addAll(tv,txtErrorMessage);
 		buttons.getChildren().addAll(btnAdd,btnEdit,btnDelete,btnFilter,find);
 		find.getChildren().addAll(btnFind,tfFind);
 		
-		lv.setPlaceholder(new Label("No data"));
+		tv.setPlaceholder(new Label("No data"));
 		
 		mainLayout.setAlignment(Pos.CENTER);
 		list.setAlignment(Pos.CENTER);
@@ -75,7 +77,7 @@ public class ListPage extends PaneMenu {
 		
 		HBox.setHgrow(list, Priority.ALWAYS);
 		
-		VBox.setVgrow(lv, Priority.ALWAYS);
+		VBox.setVgrow(tv, Priority.ALWAYS);
 		
 		
 		mainLayout.setPadding(new Insets(20,20,20,20));
@@ -89,6 +91,9 @@ public class ListPage extends PaneMenu {
 		
 		tfFind.setFont(new Font(20)); 
 
+		
+		
+		
 	}
 	/**
 	 * sets the add button event handler 
@@ -129,22 +134,37 @@ public void setBtnEditEventHandler(EventHandler<ActionEvent> event) {
  * sets the listView to the passed in data. 
  * @param data = ObservableList<Sting>.
  */
-public void setObservableList(ObservableList<String> data) {
-	lv.setItems(data);
+
+/*
+ * comment need updating 
+ * 
+ * 
+ * 
+ * 
+ */
+public void setObservableList(ObservableList<E> data) {
+	tv.setItems(data);
 }
 /**
  * gets the item that the user selected in the listView
  * @return String = the String which the user selected.  
  */
-public String getSelection() {
-	return lv.getSelectionModel().getSelectedItem();
+public E getSelection() {
+	return tv.getSelectionModel().getSelectedItem();
 }
 /**
  * get the listView which is displayed on this page.
  * @return ListView<String>
  */
-public ListView<String> getSelectionNode(){
-	return lv;
+/*
+ * comment need updating 
+ * 
+ * 
+ * 
+ * 
+ */
+public TableView<E> getSelectionNode(){
+	return tv;
 }
 /**
  * gets the user input for the find section.
@@ -180,5 +200,19 @@ public void setErrorMessage(String error) {
  */
 public void resetFindInput() {
 	tfFind.clear();
+}
+/*
+ * new column
+ */
+public void setTableColumn(TableColumn<E,String> column) {
+	tv.getColumns().add(column);
+}
+
+
+/*
+ * new column
+ */
+public void clearTableColumn() {
+	tv.getColumns().clear();
 }
 }

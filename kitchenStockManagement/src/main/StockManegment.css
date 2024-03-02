@@ -28,4 +28,10 @@
 .list-view .list-cell{
 -fx-font-size: 20;
 }
+.table-view{
+-fx-font-size: 20;
+}
+.table-view .table-cell{
+  -fx-alignment: CENTER;
+}
 
