@@ -1864,5 +1864,54 @@ if (input.getDishCost() >= minCost) {
 
 		return menu;
 	}
-
+/*
+ * new method 
+ * used to know if the stock type is still needed
+ * false means its not used again
+ */
+	public Boolean isStockTypeInUser(String stockType) {
+		PreparedStatement statement;
+		Boolean output = false;
+		ResultSet result;
+		try {
+			statement = mySqlDatabase
+					.prepareStatement("SELECT * FROM stock_mangemnet.tbl_stock_iteration where tbl_stock_iteration.stocktypeid = \"" + stockType + "\";");
+			result = statement.executeQuery();
+			if(result.next()) {
+				output = true;
+			}else {
+				
+				
+				statement = mySqlDatabase
+						.prepareStatement("SELECT * FROM stock_mangemnet.tbl_dish_stock where tbl_dish_stock.stocktypeid = \"" + stockType + "\";");
+				 result = statement.executeQuery();
+				
+				 if(result.next()) {
+						output = true;
+					}
+				
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+return output;
+	}
+	/*
+	 * new method
+	 */
+	public void deleteSelectedStockType(String id) {
+		PreparedStatement statement;
+		try {
+			statement = mySqlDatabase.prepareStatement(
+					"Delete from stock_mangemnet.tbl_stock_type where tbl_stock_type.stockTypeId = \'"
+							+ id + "\';");
+			statement.execute();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+	
 }

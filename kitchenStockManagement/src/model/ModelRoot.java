@@ -527,9 +527,19 @@ public class ModelRoot {
 	/**
 	 * deletes the stock that is the selectedStock variable from the database
 	 */
+	/*
+	 * chnaged
+	 */
 	public void deleteStockType() {
+		
 		Integer id = selectedStock.getId();
 		db.deleteSelectedStock(id.toString());
+		
+		if(!db.isStockTypeInUser(selectedStock.getName())) {
+			db.deleteSelectedStockType(selectedStock.getName());
+		}
+		
+		
 	}
 
 	/**
@@ -2411,13 +2421,16 @@ public String getSelctedDishDishName() {
 
 		// selectedDish is the one making
 
-		// bascially just purge all the rgianl connections and put new ones in its place
+		// bascially just purge all the orgianl connections and put new ones in its place
 		//db.deleteDish(orginalDishId);
 
 		
 		
 		// if it borke its this one, cant figure out why its also used.
 		// db.saveDish(selectedDish.getName());
+		
+		ArrayList<StockType> orginalDishStock = db.getASpecificDishes(orginalDishId).getHeldStock();
+		
 		db.deleteTblDishStock(orginalDishId);
 		db.updateDish(selectedDish.getName(), orginalDishId);
 		ArrayList<StockType> st = selectedDish.getHeldStock();
@@ -2450,6 +2463,13 @@ public String getSelctedDishDishName() {
 
 		}
 		
+		orginalDishStock.forEach(stockType -> {
+			if(!db.isStockTypeInUser(stockType.getName())) {
+				db.deleteSelectedStockType(stockType.getName());
+			}
+			
+		});
+		
 		resetMenuDetailList();
 		return getNotSelectedDishesAsString();
 	}
@@ -2464,12 +2484,31 @@ public String getSelctedDishDishName() {
 	 *         with the to sting method applied to them
 	 */
 	/*
-	 * changed output
+	 * changed and what it does
 	 */
 	public ObservableList<Dish> deleteADish(String id) {
+		
+		
+
+		
+//dtbd = dish to be deleted
+		Dish dtbd  = db.getASpecificDishes(id);
+		
 		db.deleteSelectedDish(id);
+		
+		dtbd.getHeldStock().forEach(st -> {
+			if(!db.isStockTypeInUser(st.getName())) {
+				db.deleteSelectedStockType(st.getName());
+			}
+			
+		});
+		
+		
 		resetMenuDetailList();
 		return getNotSelectedDishesAsString();
+		
+		
+		
 	}
 
 	/**

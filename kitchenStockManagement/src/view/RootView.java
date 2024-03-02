@@ -389,7 +389,6 @@ public void setStockListBtnEditEventHandler(EventHandler<ActionEvent> event) {
  * complete changed it
  */
 public String getSelectedStockId() {
-	System.out.println(stockListPage.getSelection());
 	
 	
 	return String.valueOf(stockListPage.getSelection().getId());

@@ -1158,73 +1158,70 @@ model.createStock(model.getSelectedStockId(), view.getStorageLocation(), Double.
 		view.stockListLoad(model.getObservableListStringStockList());
 		
 	}
-
-	/**
-	 * 
-	 * deletes a item from the database. deletes the item it hold which name it is
-	 * showing in the list view, which it got from the delete buttons on the list
-	 * pages. it will then load the list page they original came from the only time
-	 * it wont do the above is if the user deletes there own account. if a user is
-	 * deleting there own account that they are currently logged in as, it will then
-	 * take the user to the log in page where there account will be removed and they
-	 * will have to use another account if they want to use the application
-	 * 
-	 * @author Student
-	 *
-	 */
+/**
+ * 
+ * deletes a item from the database.
+ * deletes the item it hold which name it is showing in the list view, which it got from the delete buttons
+ * on the list pages. 
+ *it will then load the list page they original came from 
+ *the only time it wont do the above is if the user deletes there own account.
+ *if a user is deleting there own account that they are currently logged in as, it will then take the user
+ *to the log in page where there account will be removed and they will have to use another account
+ *if they want to use the application
+ * 
+ * @author Student
+ *
+ */
 	private class EHDeleteBtnConfirm implements EventHandler<ActionEvent> {
 
 		@Override
 		public void handle(ActionEvent event) {
-			if (model.getDeleteFrom().equals("StockList")) {
-				model.selectAStock(view.getSelectedStockId());
-				model.deleteStockType();
-				view.stockListLoad(model.getObservableListStringStockList());
-			} else if (model.getDeleteFrom().equals("BudgteList")) {
-				model.selectABudget(view.getSelectedBudgetId());
-				model.deleteBudgetType();
-				view.BudgetListLoad(model.getObservableListBudgetList());
-			} else if (model.getDeleteFrom().equals("Account")) {
-				model.selectAAccount(view.getSelectedAccountName());
-
-				model.deleteAccount();
-
-				if (model.getLogedInAccountId().equals(model.getSelectedAccountUsername())) {
-					// deletes own account
-					view.loginLoad();
-				} else {
-					view.accountListLoad(model.getObservableListAccountList());
-				}
-			} else if (model.getDeleteFrom().equals("Storage")) {
-				model.selectAStorageLocation(view.getSelectedStorageId());
-				model.deleteSelectedStorage();
-				loadStorgaeLocationListPage();
-
-			} else if (model.getDeleteFrom().equals("MenuDetails")) {
-				if (view.getMenuDetailsDishListSelectedItemIndex() != -1) {
-					view.setMenuDetailsDishList(
-							model.deleteADish(view.getMenuDetailsDishListSelectedItemValueIdOnly()));
-				} else {
-
-					view.setMenuDetailsDishList(
-							model.deleteADish(view.getMenuDetailsMenuDishListSelectedItemValueIdOnly()));
-
-					model.removeADishFromSelectedMenuDishes(view.getMenuDetailsMenuListSelectedIndex());
-					model.resetMenuDetailList();
-					view.setMenuDetailsMenuListItems(model.getSelectedMenuDishes());
-					view.setMenuDetailsDishList(model.getNotSelectedDishesAsString());
-					view.setMenuDetailsShoppingList(model.getSelectedMenuStockType());
-					view.setMenuDetailsBudgetValue(model.getBudgetSizeMinusTheShoppingList() + "");
-
-				}
-				// need to also remove from the temporary hold
-
-				view.MenuDetailsLoad();
-
-			} else if (model.getDeleteFrom().equals("MenuList")) {
-				model.deleteSelectedMenu();
-				view.menuListLoad(model.getAllMenus());
-			}
+if(model.getDeleteFrom().equals("StockList")) {
+			model.selectAStock(view.getSelectedStockId());
+			model.deleteStockType();
+			view.stockListLoad(model.getObservableListStringStockList());
+}else if (model.getDeleteFrom().equals("BudgteList")) {
+model.selectABudget(view.getSelectedBudgetId());
+model.deleteBudgetType();
+view.BudgetListLoad(model.getObservableListBudgetList());
+} else if(model.getDeleteFrom().equals("Account")) {
+	model.selectAAccount(view.getSelectedAccountName());
+	
+	model.deleteAccount();
+	
+	if(model.getLogedInAccountId().equals(model.getSelectedAccountUsername())) {
+		//deletes own account 
+		view.loginLoad();
+	}else {
+		view.accountListLoad(model.getObservableListAccountList());
+	}
+} else if(model.getDeleteFrom().equals("Storage")) {
+	model.selectAStorageLocation(view.getSelectedStorageId());
+	model.deleteSelectedStorage();
+	loadStorgaeLocationListPage();
+	
+} else if(model.getDeleteFrom().equals("MenuDetails")) {
+	if(view.getMenuDetailsDishListSelectedItemIndex() != -1) {
+		view.setMenuDetailsDishList(model.deleteADish(view.getMenuDetailsDishListSelectedItemValueIdOnly()));
+}else {
+	
+	view.setMenuDetailsDishList(model.deleteADish(view.getMenuDetailsMenuDishListSelectedItemValueIdOnly()));
+	
+	model.removeADishFromSelectedMenuDishes(view.getMenuDetailsMenuListSelectedIndex());
+	model.resetMenuDetailList();
+	view.setMenuDetailsMenuListItems(model.getSelectedMenuDishes());
+	view.setMenuDetailsDishList(model.getNotSelectedDishesAsString());
+	view.setMenuDetailsShoppingList(model.getSelectedMenuStockType());
+	view.setMenuDetailsBudgetValue(model.getBudgetSizeMinusTheShoppingList()+"");
+	
+}
+	//need to also remove from the temporary hold
+	
+	view.MenuDetailsLoad();
+	
+} else if (model.getDeleteFrom().equals("MenuList")) {
+	model.deleteSelectedMenu();
+	view.menuListLoad(model.getAllMenus());}
 
 		}
 	}
