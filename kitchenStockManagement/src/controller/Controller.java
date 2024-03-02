@@ -326,7 +326,7 @@ public class Controller {
 			view.clearMenuDetailsListSelection();
 			view.MenuDetailsRestFindInput();
 			view.MenuDetailsLoad();
-		
+			model.setSelectedDish(null);
 		}
 
 	}
@@ -505,7 +505,7 @@ public class Controller {
 			model.setDishDetailsCameFromEdit(false);
 			model.setDishDetailsOrginalId(null);
 			view.dishDetailsLoad();
-			
+			view.dishDetailsAddReset();
 		}
 
 	}
@@ -553,8 +553,9 @@ public class Controller {
 					model.setSelectedDish(model.getASpecificDish(view.getMenuDetailsMenuDishListSelectedItemValueIdOnly()));
 				}
 				
-				view.setDishDetailsList(model.getSelectedDishList(), model.getSelctedDishDishName());
+				
 				view.dishDetailsLoad();
+				view.setDishDetailsList(model.getSelectedDishList(), model.getSelctedDishDishName());
 				view.dishDetailsAddReset();
 			
 			} else {
@@ -2061,24 +2062,22 @@ if(model.getDeleteFrom().equals("StockList")) {
 			
 			if(!nameError.equals("")) {
 				
-				masterError = nameError;
+				masterError = "Dish name error = " + nameError;
 			} else if(!ingredientNameError.equals("")) {
 				
-				masterError = ingredientNameError;
+				masterError =  "Ingredeint error = " +ingredientNameError;
 			}else if(!quanityError.equals("")) {
 				
-				masterError = quanityError;
+				masterError =  "Quanity error = " +quanityError;
 			}else if(!unitError.equals("")) {
 				
-				masterError = unitError;
+				masterError =  "Unit error = " +unitError;
 			}else if(!costError.equals("")) {
 				
-				masterError = costError;
+				masterError =  "D error Cost " +costError;
 			} else if(model.doseDishNameAlreadyExist(view.getDishDetailsDishName())) {
 				
-				
-				
-				masterError = "name already taken";
+				masterError = "Dish name already taken";
 			}
 			
 			
@@ -2113,17 +2112,7 @@ if(model.getDeleteFrom().equals("StockList")) {
 				
 				if(output == null || output.isPresent() && output.get() == ButtonType.OK) {
 				
-				
-				
-				
-				
-				
-				
-				
-				
-				
-				
-				
+		
 				
 				model.setTestStockType(view.getDishDetailsIngrdeintName());
 
@@ -2612,7 +2601,7 @@ if(view.getMenuDetailsDishListSelectedItemIndex() != -1) {
 				view.MenuDetailsRestFindInput();
 				view.MenuDetailsLoad();
 				view.clearMenuDetailsListSelection();
-				
+				model.setSelectedDish(null);
 			}
 			
 

@@ -2209,12 +2209,12 @@ public void dishDetailsLoad() {
 	quanity.setCellValueFactory(new PropertyValueFactory<StockType, String>("quanity"));
 	
 	
+	ddp.setDishNameLabel("No dish name");
 	
 	ddp.setTableColumn(name);
 	ddp.setTableColumn(cost);
 	ddp.setTableColumn(quantityType);
 	ddp.setTableColumn(quanity);
-	
 	
 	
 	
