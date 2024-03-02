@@ -1317,7 +1317,7 @@ try {
 	 *         toStringDishDetails method called.
 	 */
 	/*
-	 * changed return type
+	 * changed how it works
 	 */
 	public ObservableList<StockType> getSelectedDishList() {
 
@@ -1326,7 +1326,12 @@ try {
 		
 		return FXCollections.observableArrayList(selectedDish.getHeldStock());
 	}
-
+	/*
+	 * new method
+	 */
+public String getSelctedDishDishName() {
+	return selectedDish.getDishName();
+}
 	/**
 	 * get the Dish object in the selectedDish variable
 	 * 
@@ -1360,13 +1365,17 @@ try {
 	 * @param index = int which is the location in the array list the item is to be
 	 *              removed from.
 	 */
-	public void selectedDishIngrednitnRemove(int index) {
-
+	/*
+	 * changed
+	 */
+	public void selectedDishIngrednitnRemove(StockType st) {
+/*
 		if (index + 1 <= dishStockId.size()) {
 			// dishStockIdToDelete.add(dishStockId.get(index));
 			dishStockId.remove(index);
 		}
-		selectedDish.removeIngredent(index);
+	*/
+		selectedDish.removeIngredent(st);
 	}
 
 	/**
@@ -2405,11 +2414,12 @@ try {
 		// bascially just purge all the rgianl connections and put new ones in its place
 		//db.deleteDish(orginalDishId);
 
-		db.updateDish(selectedDish.getName(), orginalDishId);
+		
 		
 		// if it borke its this one, cant figure out why its also used.
 		// db.saveDish(selectedDish.getName());
 		db.deleteTblDishStock(orginalDishId);
+		db.updateDish(selectedDish.getName(), orginalDishId);
 		ArrayList<StockType> st = selectedDish.getHeldStock();
 
 		int counter = 0;

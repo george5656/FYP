@@ -49,13 +49,14 @@ private VBox labels = new VBox(20);
 private VBox textFields = new VBox(20);
 private HBox controllsTop = new HBox(20);
 private HBox controllsBottom = new HBox(20);
+private Label txtSetDishName = new Label("No dish name");
 /**
  * default constructor
  */
 DishDetailsPage(){
 	super.setCenter(mainLayout);
 	mainLayout.getChildren().addAll(list,userInput);
-	list.getChildren().addAll(tvIngredients,txtErrorMessage);
+	list.getChildren().addAll(txtSetDishName,tvIngredients,txtErrorMessage);
 	userInput.getChildren().addAll(textInputAndLabel, controllsTop,controllsBottom);
 	textInputAndLabel.getChildren().addAll(labels, textFields);
 	labels.getChildren().addAll(txtDishName,txtIngredientName,txtQuantity,txtUnit,txtEstimatedCost);
@@ -130,7 +131,7 @@ DishDetailsPage(){
 	btnDelete.setFont(new Font(20));
 	btnCancel.setFont(new Font(20));
 	btnSave.setFont(new Font(20));
-	
+	txtSetDishName.setFont(new Font(20));
 	tfDishName.setFont(new Font(20));
 	tfIngredientName.setFont(new Font(20));
 	tfQuanity.setFont(new Font(20));
@@ -251,7 +252,7 @@ public void addReset() {
 	tfEstimatedCost.clear();
 	txtErrorMessage.setVisible(false);
 	tfDishName.clear();
-	//tfDishName.setText(tvIngredients.getItems().get(0));
+	tfDishName.setText(txtSetDishName.getText());
 
 }
 /**
@@ -266,9 +267,11 @@ public void resetWholePage() {
  * not it gets the string, which the user clicked on in the listView.
  * @return String
  */
-
-public String getSelectedValue() {
-	return tvIngredients.getSelectionModel().getSelectedItem().getName();
+/*
+ * changed output
+ */
+public StockType getSelectedValue() {
+	return tvIngredients.getSelectionModel().getSelectedItem();
 }
 /**
  * populates the input areas with the provided values.
@@ -316,5 +319,8 @@ public void clearTableColumn() {
  */
 public void setTableColumn(TableColumn<StockType,String> column) {
 	tvIngredients.getColumns().add(column);
+}
+public void setDishNameLabel(String dishName) {
+	txtSetDishName.setText(dishName);
 }
 }

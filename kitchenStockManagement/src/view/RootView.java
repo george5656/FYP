@@ -2323,8 +2323,9 @@ public String getDishDetailsEstimateCost() {
 /*
  * changed return type
  */
-public void setDishDetailsList(ObservableList<StockType> ingredents) {
+public void setDishDetailsList(ObservableList<StockType> ingredents,String dishName) {
 	ddp.setIngredentList(ingredents);
+	ddp.setDishNameLabel(dishName);
 }
 /**
  * clears all the input and listview on the dish details page.
@@ -2357,7 +2358,10 @@ public void dishDetailsAddReset() {
  * the list view is located in the dish details page
  * @return String which is the string the user has selected.
  */
-public String getDishDetailsSelectedItem() {
+/*
+ * changed output
+ */
+public StockType getDishDetailsSelectedItem() {
 	return ddp.getSelectedValue();
 }
 /**

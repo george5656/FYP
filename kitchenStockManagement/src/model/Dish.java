@@ -66,8 +66,12 @@ public ArrayList<String> getStockTypeAsString() {
  * 
  * @param index = int which represent the place in the ingrdents, where 
  */
-public void removeIngredent(int index) {
-	ingrdents.remove(index);
+/*
+ * chnaged
+ */
+public void removeIngredent(StockType st) {
+	
+	ingrdents.remove(st);
 }
 /**
  * sets the value in the dishName var
