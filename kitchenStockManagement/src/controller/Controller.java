@@ -2011,7 +2011,7 @@ if(model.getDeleteFrom().equals("StockList")) {
 
 				// populating the items
 				view.setStockDetailsName(model.getSelectedStockName());
-				view.setStockDetailsStorgeLocation(model.getSelectedStockStorgaeLocation());
+				view.setStockDetailsStorgeLocation(model.getSelectedStockStorgaeLocation().toLowerCase());
 				view.setStockDetailsQuanity(model.getSelectedStockQuanity());
 				view.setStockDetailsQuanityType(model.getSelectedStockQuanityType());
 				view.setStockDetailsExpiereDate(model.deFormatDate(model.getSelectedStockExpierDate()));
