@@ -2237,7 +2237,7 @@ if(model.getDeleteFrom().equals("StockList")) {
 				//done a head so can get the equal sign so know that all values are jus two place behind them
 				
 
-				view.setDishDetailsUserInput(view.getDishDetailsSelectedItem().getName(), view.getDishDetailsSelectedItem().getCost(), view.getDishDetailsSelectedItem().getQuanityType(), view.getDishDetailsSelectedItem().getQuanity());
+				view.setDishDetailsUserInput(view.getDishDetailsSelectedItem().getName(), view.getDishDetailsSelectedItem().getQuanity() , view.getDishDetailsSelectedItem().getQuanityType(), view.getDishDetailsSelectedItem().getCost());
 				
 				model.selectedDishIngrednitnRemove(view.getDishDetailsSelectedItem());
 				view.setDishDetailsList(model.getSelectedDishList(),model.getSelctedDishDishName());
@@ -2783,7 +2783,7 @@ if(view.getMenuDetailsDishListSelectedItemIndex() != -1) {
 				try {
 					PrintWriter pw = new PrintWriter(chosenLocation);
 					
-					pw.write("shopping list for\n menu name = " + model.getSelectedMenu().getName() + "\n");
+					pw.write("shopping list for\nmenu name = " + model.getSelectedMenu().getName() + "\n");
 					
 					model.getSelectedMenuStockType().forEach((StockType i) -> {
 						
