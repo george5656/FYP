@@ -92,8 +92,8 @@ public class BudgetDetailsPage extends BasicLayoutDetails {
 	public DatePicker getEndDate() {
 		return dpEndDate;
 	}
-	/*
-	 * new
+	/**
+	 * clears the set value in the data pickers
 	 */
 public void resetDatePickers() {
 	dpEndDate.setValue(null);

@@ -80,8 +80,5 @@ public int getId() {
 	StockType comparison = (StockType)obj;
 		return this.getStockName().equals(comparison.getStockName());
 	}
-/*
- * simply for the tableview
- */
 
 }

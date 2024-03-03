@@ -314,9 +314,9 @@ public class Controller {
 		}
 
 	}
-	/*
-	 * new method 
-	 * 
+	
+	/**
+	 * loads the menu Details page
 	 */
 	public void menuDetailsLoad() {
 		view.clearMenuDetailsListSelection();
@@ -326,6 +326,13 @@ public class Controller {
 	}
 	/*
 	 * new class
+	 */
+	/**
+	 * loads the menu details page.
+	 * does the normal menu details page load but also, 
+	 * removes any stock type that isn't in use the database.
+	 * @author Student
+	 *
 	 */
 	private class EHMenuDetailsLoadFromDishDetails implements EventHandler<ActionEvent> {
 
@@ -2285,21 +2292,13 @@ if(model.getDeleteFrom().equals("StockList")) {
 		}
 
 	}
+	
 	/**
-	 * loads the delete page. 
-	 * it checks the user has selected an item from the list view
-	 * if no item has been selected it make the error message label visible saying the issue
-	 * if an item has been selected it loads the delete confirmation page
-	 * with the name of the item to be deleted in it. 
-	 * 
-	 * 
+	 * loads the delete confirmation page with the selected info. 
+	 * if user hasn't made a selection it shows an error message 
 	 * @author Student
 	 *
 	 */
-	/*
-	 * edited how it works
-	 */
-	
 	private class EHDishDetailsBtnDelete implements EventHandler<ActionEvent> {
 
 		@Override
@@ -2336,9 +2335,6 @@ if(model.getDeleteFrom().equals("StockList")) {
 	 * in to the user input areas.
 	 * @author Student
 	 *
-	 */
-	/*
-	 * edited
 	 */
 	private class EHDishDetailsBtnEdit implements EventHandler<ActionEvent> {
 
