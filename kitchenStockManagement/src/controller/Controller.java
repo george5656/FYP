@@ -2869,10 +2869,12 @@ if(view.getMenuDetailsDishListSelectedItemIndex() != -1) {
 		public void handle(ActionEvent event)  {
 			String issueFrom = "";
 			String masterErrorMessage = "";
-			if(view.getMenuDetailsMenuListSize() == 0) {
+			/*
+			 * if(view.getMenuDetailsMenuListSize() == 0) {
 				issueFrom = "menu dishes list";
 				masterErrorMessage = "no data to output";
-			}
+			 }
+			*/
 			File chosenLocation = new FileChooser().showSaveDialog(null);
 			if (chosenLocation == null) {
 				masterErrorMessage = "no location selected";
@@ -2881,10 +2883,15 @@ if(view.getMenuDetailsDishListSelectedItemIndex() != -1) {
 			if(masterErrorMessage.equals("")) {
 			
 			
+				
 				try {
 					PrintWriter pw = new PrintWriter(chosenLocation);
 					
+					if(view.getMenuDetailsMenuListSize() != 0) {
+					
+					
 					pw.write("menu name = " + model.getSelectedMenu().getName() + "\n");
+					
 					
 					model.getSelectedMenuDishsAsString().forEach((String i) -> {
 						
@@ -2892,12 +2899,14 @@ if(view.getMenuDetailsDishListSelectedItemIndex() != -1) {
 						
 					});
 					//need else it wont write it
-					 pw.flush();
+					}
+					pw.flush();
 					pw.close();
 					
+				
+				
 				} catch (IOException e) {
 					
-					e.printStackTrace();
 				}
 					
 			} else {
@@ -2921,9 +2930,11 @@ if(view.getMenuDetailsDishListSelectedItemIndex() != -1) {
 		public void handle(ActionEvent event)  {
 			String issueFrom = "shopping list";
 			String masterErrorMessage = "";
+			/*
 			if(view.getMenuDetailsMenuListSize() == 0) {
 				masterErrorMessage = "no data to output";
 			}
+			*/
 			File chosenLocation = new FileChooser().showSaveDialog(null);
 			if (chosenLocation == null) {
 				masterErrorMessage = "no location selected";
@@ -2935,6 +2946,11 @@ if(view.getMenuDetailsDishListSelectedItemIndex() != -1) {
 				try {
 					PrintWriter pw = new PrintWriter(chosenLocation);
 					
+					if(view.getMenuDetailsMenuListSize() != 0) {
+						
+					
+					
+					
 					pw.write("shopping list for\nmenu name = " + model.getSelectedMenu().getName() + "\n");
 					
 					model.getSelectedMenuStockType().forEach((StockType i) -> {
@@ -2943,11 +2959,13 @@ if(view.getMenuDetailsDishListSelectedItemIndex() != -1) {
 						
 					});
 					//need else it wont write it
-					 pw.flush();
-						pw.close();
+					}
+					pw.flush();
+					pw.close();
+					
 				} catch (IOException e) {
 					
-					e.printStackTrace();
+					
 				}
 				
 			} else {
