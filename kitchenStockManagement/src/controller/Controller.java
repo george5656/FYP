@@ -2637,7 +2637,7 @@ if(model.getDeleteFrom().equals("StockList")) {
 				masterErrorMessage = "no item selected to be removed";
 			} else if (view.getMenuDetailsMenuListSelectedIndex() != -1 && view.getMenuDetailsShoppingListSelectedIndex() != -1) {
 				masterErrorMessage = "please only select from one list at a time";
-				//if happens need to deslect both list so user can then reselect a value they want to use.
+				view.unselectMenuDetailsMenuAndshoppingListSelection();
 			}
 			
 	

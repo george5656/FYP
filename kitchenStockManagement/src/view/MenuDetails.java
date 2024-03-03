@@ -413,6 +413,12 @@ private HBox fAndO = new HBox(20);
 		tvShopping.getColumns().add(column);
 	}
 	
-	
+	/*
+	 * new method
+	 */
+	public void unselectMenuAndshoppingList() {
+		tvShopping.getSelectionModel().clearSelection();
+		tvMenu.getSelectionModel().clearSelection();
+	}
 	
 }

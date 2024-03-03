@@ -1086,6 +1086,12 @@ public Dish getMenuDetailsMenuListSelecteditem() {
 public int getMenuDetailsShoppingListSelectedIndex() {
 	return menuDetails.getShoppingListSelectedIndex();
 }
+/*
+ * new method 
+ */
+public void unselectMenuDetailsMenuAndshoppingListSelection() {
+	menuDetails.unselectMenuAndshoppingList();
+}
 /**
  * gets the selected item from the menu list, list view but only the items name. 
  * selection from the menu details page. 
