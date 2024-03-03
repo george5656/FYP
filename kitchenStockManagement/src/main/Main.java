@@ -28,8 +28,8 @@ public class Main extends Application {
 			scene.getStylesheets().add( getClass().getResource("StockManegment.css").toString());
 		
 	}
-	/*
-	 * *tes
+	/**
+	 * sets up the stage and scene and shows it to the user.
 	 */
 	@Override
 	public void start(Stage primaryStage) throws Exception {

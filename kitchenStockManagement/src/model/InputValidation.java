@@ -31,7 +31,7 @@ public class InputValidation {
 	/**
 	 * function checks if the user input is validate and ok to use.
 	 * if the input size is below 50 and
-	 * if it only contains [a-zA-Z0-9 ]+
+	 * if it only contains [a-zA-Z0-9_ ]+
 	 * and that it doesn't contain any key words
 	 * @param userInput = a string of the user data want to check
 	 * @return String that says the error or just "" if no error 

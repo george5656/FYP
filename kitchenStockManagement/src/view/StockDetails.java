@@ -182,8 +182,9 @@ public void RemoveAddVarient() {
 public void setBtnLoadFromFileEventHandler(EventHandler<ActionEvent> event) {
 	btnFileLoad.setOnAction(event);
 }
-/*
- * new
+/**
+ * reset the dataPicker set value.
+ * sets the value to null
  */
 public void resetDatePicker() {
 	dpExpiereDate.setValue(null);

@@ -61,8 +61,11 @@ public Boolean getAdminStatus() {
 	return isAdmin;
 }
 
-/*
- * need for the tableview
+
+/**
+ * used for the table view, so can display if account is admin. 
+ * return value of isAdmina as a string.
+ * @return String which is either true or false 
  */
 public String getIsAdmin() {
 	return String.valueOf(isAdmin);

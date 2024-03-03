@@ -314,9 +314,9 @@ public class Controller {
 		}
 
 	}
-	/*
-	 * new method 
-	 * 
+	
+	/**
+	 * loads the menu Details page
 	 */
 	public void menuDetailsLoad() {
 		view.clearMenuDetailsListSelection();
@@ -326,6 +326,13 @@ public class Controller {
 	}
 	/*
 	 * new class
+	 */
+	/**
+	 * loads the menu details page.
+	 * does the normal menu details page load but also, 
+	 * removes any stock type that isn't in use the database.
+	 * @author Student
+	 *
 	 */
 	private class EHMenuDetailsLoadFromDishDetails implements EventHandler<ActionEvent> {
 
@@ -2285,21 +2292,13 @@ if(model.getDeleteFrom().equals("StockList")) {
 		}
 
 	}
+	
 	/**
-	 * loads the delete page. 
-	 * it checks the user has selected an item from the list view
-	 * if no item has been selected it make the error message label visible saying the issue
-	 * if an item has been selected it loads the delete confirmation page
-	 * with the name of the item to be deleted in it. 
-	 * 
-	 * 
+	 * loads the delete confirmation page with the selected info. 
+	 * if user hasn't made a selection it shows an error message 
 	 * @author Student
 	 *
 	 */
-	/*
-	 * edited how it works
-	 */
-	
 	private class EHDishDetailsBtnDelete implements EventHandler<ActionEvent> {
 
 		@Override
@@ -2336,9 +2335,6 @@ if(model.getDeleteFrom().equals("StockList")) {
 	 * in to the user input areas.
 	 * @author Student
 	 *
-	 */
-	/*
-	 * edited
 	 */
 	private class EHDishDetailsBtnEdit implements EventHandler<ActionEvent> {
 
@@ -2869,10 +2865,12 @@ if(view.getMenuDetailsDishListSelectedItemIndex() != -1) {
 		public void handle(ActionEvent event)  {
 			String issueFrom = "";
 			String masterErrorMessage = "";
-			if(view.getMenuDetailsMenuListSize() == 0) {
+			/*
+			 * if(view.getMenuDetailsMenuListSize() == 0) {
 				issueFrom = "menu dishes list";
 				masterErrorMessage = "no data to output";
-			}
+			 }
+			*/
 			File chosenLocation = new FileChooser().showSaveDialog(null);
 			if (chosenLocation == null) {
 				masterErrorMessage = "no location selected";
@@ -2881,10 +2879,15 @@ if(view.getMenuDetailsDishListSelectedItemIndex() != -1) {
 			if(masterErrorMessage.equals("")) {
 			
 			
+				
 				try {
 					PrintWriter pw = new PrintWriter(chosenLocation);
 					
+					if(view.getMenuDetailsMenuListSize() != 0) {
+					
+					
 					pw.write("menu name = " + model.getSelectedMenu().getName() + "\n");
+					
 					
 					model.getSelectedMenuDishsAsString().forEach((String i) -> {
 						
@@ -2892,12 +2895,14 @@ if(view.getMenuDetailsDishListSelectedItemIndex() != -1) {
 						
 					});
 					//need else it wont write it
-					 pw.flush();
+					}
+					pw.flush();
 					pw.close();
 					
+				
+				
 				} catch (IOException e) {
 					
-					e.printStackTrace();
 				}
 					
 			} else {
@@ -2921,9 +2926,11 @@ if(view.getMenuDetailsDishListSelectedItemIndex() != -1) {
 		public void handle(ActionEvent event)  {
 			String issueFrom = "shopping list";
 			String masterErrorMessage = "";
+			/*
 			if(view.getMenuDetailsMenuListSize() == 0) {
 				masterErrorMessage = "no data to output";
 			}
+			*/
 			File chosenLocation = new FileChooser().showSaveDialog(null);
 			if (chosenLocation == null) {
 				masterErrorMessage = "no location selected";
@@ -2935,6 +2942,11 @@ if(view.getMenuDetailsDishListSelectedItemIndex() != -1) {
 				try {
 					PrintWriter pw = new PrintWriter(chosenLocation);
 					
+					if(view.getMenuDetailsMenuListSize() != 0) {
+						
+					
+					
+					
 					pw.write("shopping list for\nmenu name = " + model.getSelectedMenu().getName() + "\n");
 					
 					model.getSelectedMenuStockType().forEach((StockType i) -> {
@@ -2943,11 +2955,13 @@ if(view.getMenuDetailsDishListSelectedItemIndex() != -1) {
 						
 					});
 					//need else it wont write it
-					 pw.flush();
-						pw.close();
+					}
+					pw.flush();
+					pw.close();
+					
 				} catch (IOException e) {
 					
-					e.printStackTrace();
+					
 				}
 				
 			} else {
