@@ -851,7 +851,7 @@ public void menuListLoad(ObservableList<Menu> data) {
 	menuListPage.setTableColumn(name);
 	
 	
-	
+	menuListPage.getErrorLabel().setVisible(false);
 	menuListPage.setObservableList(data);
 	menuListPage.resetFindInput();
 	this.getChildren().remove(0);
@@ -1005,6 +1005,18 @@ public String getMenuDetailsFindUserInput() {
 public String getMenuDetailsDishListSelectedItemValueIdOnly() {
 	return menuDetails.getDishListSelectedValue().getName();
 }
+/*
+ * new method
+ */
+public String getMenuDetailsShoppingListSelectedItemValueIdOnly() {
+	return menuDetails.getShoppingListSelectedValue().getName();
+}
+/*
+ * new method 
+ */
+public StockType getMenuDetailsShoppungListSelctedItem() {
+	return menuDetails.getShoppingListSelectedValue();
+}
 /**
  * gets the selected item from the Menu list, list view but only the items id. 
  * selection from the menu details page. 
@@ -1061,6 +1073,18 @@ public void setMenuDetailsBudgetValue(String amount) {
  */
 public int getMenuDetailsMenuListSelectedIndex() {
 	return menuDetails.getMenuListSelectedIndex();
+}
+/*
+ * new method
+ */
+public Dish getMenuDetailsMenuListSelecteditem() {
+	return menuDetails.getMenuListSelectedValue();
+}
+/*
+ * new method
+ */
+public int getMenuDetailsShoppingListSelectedIndex() {
+	return menuDetails.getShoppingListSelectedIndex();
 }
 /**
  * gets the selected item from the menu list, list view but only the items name. 
@@ -1476,7 +1500,18 @@ public String getBudgetDetailsInputtedEndDate() {
 public LocalDate getBudgetDetailsInputtedStartDateAsLocalDate() {
 	return bdp.getStartDate().getValue();
 }
-
+/*
+ * new
+ */
+public void resetBudgetDetailsPageDatePickers() {
+	bdp.resetDatePickers();
+}
+/*
+ * new
+ */
+public void resetStockDetailsPageDatePicker() {
+	sd.resetDatePicker();
+}
 /**
  * gets the user input for the end date.
  * user input comes form the budget details page.

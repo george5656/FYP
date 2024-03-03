@@ -20,12 +20,12 @@ import javafx.scene.text.Font;
  *
  */
 public class StockDetails extends BasicLayoutDetails {
-private Label txtStockName = new Label("StockName");
+private Label txtStockName = new Label("Stock Name");
 private Label txtStorageLocation = new Label("Storage Location");
 private Label txtQuanity = new Label("Quanity");
 private Label txtQuantityType = new Label("Quantity Type");
 private Label txtExpiereDate = new Label("Expiere Date");
-private Label txtCost = new Label("Cost");
+private Label txtCost = new Label("Cost Per Unit In Pounds");
 private TextField tfStockName = new TextField();
 private ComboBox<String> cbStorageLocation = new ComboBox<String>();
 private TextField tfQuanity = new TextField();
@@ -181,5 +181,11 @@ public void RemoveAddVarient() {
  */
 public void setBtnLoadFromFileEventHandler(EventHandler<ActionEvent> event) {
 	btnFileLoad.setOnAction(event);
+}
+/*
+ * new
+ */
+public void resetDatePicker() {
+	dpExpiereDate.setValue(null);
 }
 }

@@ -443,7 +443,6 @@ public class WritableDatabase {
 			if (result.next()) {
 				currentStock = new CurrentStock(result.getInt(1), result.getString(2), result.getDouble(4),
 						result.getString(8), result.getDate(5).toString(), result.getString(3), result.getDouble(7));
-System.out.println("hit1");
 			}
 			// }
 		} catch (SQLException e) {

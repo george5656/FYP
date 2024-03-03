@@ -84,8 +84,8 @@ public boolean doesItHoldDish(String item) {
  * removes a dish from the held dishes
  * @param place = int, which is the index (place in menu held arrayList<Dish>) of the dish to be removed.
  */
-public void removeADish(int place) {
-	heldDishes.remove(place);
+public void removeADish(Dish dish) {
+	heldDishes.remove(dish);
 	
 }
 /**

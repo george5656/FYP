@@ -36,7 +36,6 @@ public class Main extends Application {
 		primaryStage.setMinHeight(700);
 		primaryStage.setMinWidth(1200);
 		primaryStage.setTitle("kitchen stock management");
-		
 		primaryStage.setScene(scene);
 		
 		primaryStage.show();

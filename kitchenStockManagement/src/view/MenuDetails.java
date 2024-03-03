@@ -290,6 +290,12 @@ private HBox fAndO = new HBox(20);
 	public Dish getMenuListSelectedValue() {
 		return tvMenu.getSelectionModel().getSelectedItem();	
 	}
+	/*
+	 * new method
+	 */
+	public StockType getShoppingListSelectedValue() {
+		return tvShopping.getSelectionModel().getSelectedItem();
+	}
 	/**
 	 * sets the list that displays the dish in a menu to the inputed list.
 	 * list in the middle
@@ -330,6 +336,12 @@ private HBox fAndO = new HBox(20);
 	 */
 	public int getMenuListSelectedIndex() {
 		return tvMenu.getSelectionModel().getSelectedIndex();
+	}
+	/*
+	 * new method 
+	 */
+	public int getShoppingListSelectedIndex() {
+		return tvShopping.getSelectionModel().getSelectedIndex();
 	}
 	/**
 	 * gets the item selected in the menu list(middle one) but only the id of that item.

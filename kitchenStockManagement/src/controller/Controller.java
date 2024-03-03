@@ -216,7 +216,7 @@ public class Controller {
 		view.setDishDetailsBtnDeleteEventHandler(new EHDishDetailsBtnDelete());
 		view.setDishDetailsBtnEditEventHandler(new EHDishDetailsBtnEdit());
 		view.setDishDetailsBtnSaveEventHandler(new EHDishDetailsBtnSave());
-		view.setDishDetailsBtnCanceltHandler(new EHMenuDetailsLoad());
+		view.setDishDetailsBtnCanceltHandler(new EHMenuDetailsLoadFromDishDetails());
 		view.setDishDetailsBtnAboutEventHandler((ActionEvent event) -> {
 			model.makeInfoAlert("This is the page where you can make a new dish which will be shown in the menu list page").show();
 		});
@@ -314,6 +314,29 @@ public class Controller {
 		}
 
 	}
+	/*
+	 * new method 
+	 * 
+	 */
+	public void menuDetailsLoad() {
+		view.clearMenuDetailsListSelection();
+		view.MenuDetailsRestFindInput();
+		view.MenuDetailsLoad();
+		model.setSelectedDish(null);
+	}
+	/*
+	 * new class
+	 */
+	private class EHMenuDetailsLoadFromDishDetails implements EventHandler<ActionEvent> {
+
+		@Override
+		public void handle(ActionEvent event) {
+			model.removedDishDetailsEditedStock();
+			menuDetailsLoad();
+		}
+
+	}
+	
 	/**
 	 * class loads the menu details page.
 	 * @author Student
@@ -323,10 +346,7 @@ public class Controller {
 
 		@Override
 		public void handle(ActionEvent event) {
-			view.clearMenuDetailsListSelection();
-			view.MenuDetailsRestFindInput();
-			view.MenuDetailsLoad();
-			model.setSelectedDish(null);
+			menuDetailsLoad();
 		}
 
 	}
@@ -501,6 +521,7 @@ public class Controller {
 
 		@Override
 		public void handle(ActionEvent event) {
+			model.resetEddtedStockType();
 			view.clearDishDetailsPage();
 			model.setDishDetailsCameFromEdit(false);
 			model.setDishDetailsOrginalId(null);
@@ -522,6 +543,7 @@ public class Controller {
 	
 	private class EHMenuDetailsBtnEdit implements EventHandler<ActionEvent> {
 
+		
 		@Override
 		public void handle(ActionEvent event) {
 			
@@ -544,12 +566,10 @@ public class Controller {
 				model.setDishDetailsCameFromEdit(true);
 				//simply as could come from one of two lists
 				if(view.getMenuDetailsDishListSelectedItemIndex() != -1) {
-				model.setDishDetailsOrginalId(view.getMenuDetailsDishListSelectedItemValueIdOnly());
-				model.setDishStockId(view.getMenuDetailsDishListSelectedItemValueIdOnly());
-				model.setSelectedDish(model.getASpecificDish(view.getMenuDetailsDishListSelectedItemValueIdOnly()));
+					model.setDishDetailsOrginalId(view.getMenuDetailsDishListSelectedItemValueIdOnly());
+					model.setSelectedDish(model.getASpecificDish(view.getMenuDetailsDishListSelectedItemValueIdOnly()));
 				}else {
 					model.setDishDetailsOrginalId(view.getMenuDetailsMenuDishListSelectedItemValueIdOnly());
-					model.setDishStockId(view.getMenuDetailsMenuDishListSelectedItemValueIdOnly());
 					model.setSelectedDish(model.getASpecificDish(view.getMenuDetailsMenuDishListSelectedItemValueIdOnly()));
 				}
 				
@@ -562,7 +582,7 @@ public class Controller {
 				model.makeAlert(issueFrom, masterErrorMessage).show();
 				view.clearMenuDetailsListSelection();
 			}
-			
+			model.resetEddtedStockType();
 		}
 
 	}
@@ -1124,13 +1144,17 @@ model.createStock(model.getSelectedStockId(), view.getStorageLocation(), Double.
 						model.updateCurrentStock();
 					}
 					loadStockListPage();
+					view.resetStockDetailsPageDatePicker();
 			}
 				}else {
 					// if it fails the first if, eg validation of the inputs fails
 					Alert errorPopup = model.makeAlert("issue with " + issuesWith, masterErrorMessage);
 					errorPopup.show();
 			}
+			
+			
 		}
+	
 	}
 	/**
 	 * loads the stock list page.
@@ -1177,62 +1201,108 @@ model.createStock(model.getSelectedStockId(), view.getStorageLocation(), Double.
 
 		@Override
 		public void handle(ActionEvent event) {
-if(model.getDeleteFrom().equals("StockList")) {
+			if(model.getDeleteFrom().equals("StockList")) {
 			model.selectAStock(view.getSelectedStockId());
 			model.deleteStockType();
 			view.stockListLoad(model.getObservableListStringStockList());
-}else if (model.getDeleteFrom().equals("BudgteList")) {
-model.selectABudget(view.getSelectedBudgetId());
-model.deleteBudgetType();
-view.BudgetListLoad(model.getObservableListBudgetList());
-} else if(model.getDeleteFrom().equals("Account")) {
-	model.selectAAccount(view.getSelectedAccountName());
+			}else if (model.getDeleteFrom().equals("BudgteList")) {
+			model.selectABudget(view.getSelectedBudgetId());
+			model.deleteBudgetType();
+			view.BudgetListLoad(model.getObservableListBudgetList());
+			} else if(model.getDeleteFrom().equals("Account")) {
+				model.selectAAccount(view.getSelectedAccountName());
 	
-	model.deleteAccount();
+				model.deleteAccount();
 	
-	if(model.getLogedInAccountId().equals(model.getSelectedAccountUsername())) {
+				if(model.getLogedInAccountId().equals(model.getSelectedAccountUsername())) {
 		//deletes own account 
-		view.loginLoad();
-	}else {
-		view.accountListLoad(model.getObservableListAccountList());
-	}
-} else if(model.getDeleteFrom().equals("Storage")) {
-	model.selectAStorageLocation(view.getSelectedStorageId());
-	model.deleteSelectedStorage();
-	loadStorgaeLocationListPage();
+					view.loginLoad();
+				}else {
+					view.accountListLoad(model.getObservableListAccountList());
+				}
+			} else if(model.getDeleteFrom().equals("Storage")) {
+				model.selectAStorageLocation(view.getSelectedStorageId());
+				model.deleteSelectedStorage();
+				loadStorgaeLocationListPage();
 	
-} else if(model.getDeleteFrom().equals("MenuDetails")) {
-	if(view.getMenuDetailsDishListSelectedItemIndex() != -1) {
-		view.setMenuDetailsDishList(model.deleteADish(view.getMenuDetailsDishListSelectedItemValueIdOnly()));
-}else {
+			} else if(model.getDeleteFrom().equals("MenuDetails")) {
+				if(view.getMenuDetailsDishListSelectedItemIndex() != -1) {
+					view.setMenuDetailsDishList(model.deleteADish(view.getMenuDetailsDishListSelectedItemValueIdOnly()));
+				}else {
 	
-	view.setMenuDetailsDishList(model.deleteADish(view.getMenuDetailsMenuDishListSelectedItemValueIdOnly()));
+					view.setMenuDetailsDishList(model.deleteADish(view.getMenuDetailsMenuDishListSelectedItemValueIdOnly()));
 	
-	model.removeADishFromSelectedMenuDishes(view.getMenuDetailsMenuListSelectedIndex());
-	model.resetMenuDetailList();
-	view.setMenuDetailsMenuListItems(model.getSelectedMenuDishes());
-	view.setMenuDetailsDishList(model.getNotSelectedDishesAsString());
-	view.setMenuDetailsShoppingList(model.getSelectedMenuStockType());
-	view.setMenuDetailsBudgetValue(model.getBudgetSizeMinusTheShoppingList()+"");
+					model.removeADishFromSelectedMenuDishes(view.getMenuDetailsMenuListSelecteditem());
+					model.resetMenuDetailList();
+					view.setMenuDetailsMenuListItems(model.getSelectedMenuDishes());
+					view.setMenuDetailsDishList(model.getNotSelectedDishesAsString());
+					view.setMenuDetailsShoppingList(model.getSelectedMenuStockType());
+					view.setMenuDetailsBudgetValue(model.getBudgetSizeMinusTheShoppingList()+"");
 	
-}
+				}
 	//need to also remove from the temporary hold
 	
-	view.MenuDetailsLoad();
+				view.MenuDetailsLoad();
 	
-} else if (model.getDeleteFrom().equals("MenuList")) {
-	model.deleteSelectedMenu();
-	view.menuListLoad(model.getAllMenus());}
+			} else if (model.getDeleteFrom().equals("MenuList")) {
+				model.deleteSelectedMenu();
+				view.menuListLoad(model.getAllMenus());
+				
+			}else if(model.getDeleteFrom().equals("RemoveFromMenuList")) { 
+				
+				
+				model.removeADishFromSelectedMenuDishes(view.getMenuDetailsMenuListSelecteditem());
+				model.resetMenuDetailList();
+				view.setMenuDetailsMenuListItems(model.getSelectedMenuDishes());
+				view.setMenuDetailsDishList(model.getNotSelectedDishesAsString());
+				view.setMenuDetailsShoppingList(model.getSelectedMenuStockType());
+				view.setMenuDetailsBudgetValue(model.getBudgetSizeMinusTheShoppingList()+"");
+				
+				
+				view.MenuDetailsLoad();
+			}else if(model.getDeleteFrom().equals("RemoveFromShoppingList")) { 
+				
+				model.getSelectedMenuDishes().forEach(dish -> {
+					
+					if(dish.getHeldStock().contains(view.getMenuDetailsShoppungListSelctedItem())) {
+						model.removeADishFromSelectedMenuDishes(dish);
+						model.resetMenuDetailList();
+					}
+					
+				});
+				
+				
+			
+				view.setMenuDetailsMenuListItems(model.getSelectedMenuDishes());
+				view.setMenuDetailsDishList(model.getNotSelectedDishesAsString());
+				view.setMenuDetailsShoppingList(model.getSelectedMenuStockType());
+				view.setMenuDetailsBudgetValue(model.getBudgetSizeMinusTheShoppingList()+"");
+				
+				view.MenuDetailsLoad();
+			}else if(model.getDeleteFrom().equals("dishDetails")) { 
+				model.selectedDishIngrednitnRemove(view.getDishDetailsSelectedItem());
+				view.setDishDetailsList(model.getSelectedDishList(),model.getSelctedDishDishName());
+				view.setDishDetailsErrorMessageFalse();
+				
+				view.dishDetailsLoad();
+				
+		
+		}
+
+
+
+
 
 		}
 	}
-	
+
 	/**
 	 * loads the page where the user came from and
 	 * populates the corresponding list view with what the database holds.
 	 * @author Student
 	 *
 	 */
+	
 	private class EHDeleteBtnCancel implements EventHandler<ActionEvent> {
 
 		@Override
@@ -1246,11 +1316,13 @@ if(model.getDeleteFrom().equals("StockList")) {
 } else if(model.getDeleteFrom().equals("Storage")) {
 	loadStorgaeLocationListPage();
 	
-} else if(model.getDeleteFrom().equals("MenuDetails")) {
+} else if(model.getDeleteFrom().equals("MenuDetails")||model.getDeleteFrom().equals("RemoveFromShoppingList")||model.getDeleteFrom().equals("RemoveFromMenuList")) {
 	view.MenuDetailsLoad();
 
 } else if (model.getDeleteFrom().equals("MenuList")) {
 	view.menuListLoad(model.getAllMenus());
+}else if (model.getDeleteFrom().equals("dishDetails")) {
+	view.dishDetailsLoad();
 }
 
 		}
@@ -1684,9 +1756,23 @@ if(model.getDeleteFrom().equals("StockList")) {
  * @author Student
  *
  */
+	
 	private class EHBudgetDetailsBtnSave implements EventHandler<ActionEvent> {
+
+		
+	
+		
 		@Override
 		public void handle(ActionEvent event) {
+			
+			//used to inform the user the end and start date are the wrong way round 
+			Alert options = new Alert(AlertType.CONFIRMATION);
+			Optional<ButtonType> output = null;
+			options.setHeaderText("potential issue");
+			options.setContentText("the start date is after the end date");
+			
+			
+			
 			String masterError = "";
 			String issueTitle = "";
 			
@@ -1695,7 +1781,8 @@ if(model.getDeleteFrom().equals("StockList")) {
 			
 			String startDateErrorMessage = model.dateValidation(view.getBudgetDetailsInputtedStartDate(), view.getBudgetDetailsInputtedStartDateAsLocalDate());
 			String endDateErrorMessage = model.dateValidation(view.getBudgetDetailsInputtedEndDate(), view.getBudgetDetailsInputtedEndDateAsLocalDate());
-			
+
+		
 			
 			if(!nameErrorMessage.equals("")) {
 				masterError = nameErrorMessage;
@@ -1719,6 +1806,30 @@ if(model.getDeleteFrom().equals("StockList")) {
 			
 			
 			if(masterError.equals("")) {
+				
+				//is start date before end date
+				Boolean isdbed  = false; 
+						
+				if (view.getBudgetDetailsInputtedStartDateAsLocalDate().getYear() > view.getBudgetDetailsInputtedEndDateAsLocalDate().getYear()) {
+					isdbed = true;
+					
+				}else if(view.getBudgetDetailsInputtedStartDateAsLocalDate().getMonthValue() > view.getBudgetDetailsInputtedEndDateAsLocalDate().getMonthValue()) {
+						isdbed = true;
+					
+				}else if(view.getBudgetDetailsInputtedStartDateAsLocalDate().getDayOfMonth() > view.getBudgetDetailsInputtedEndDateAsLocalDate().getDayOfMonth()) {
+					isdbed=true;
+					
+				}
+				
+				if(isdbed) {
+					output = options.showAndWait();
+				}
+				
+				
+				
+				if(!isdbed || output.isPresent() && output.get() == ButtonType.OK) {
+				
+				
 			
 				if(model.getSelectedBudget() == null) {
 			model.addBudget(view.getBudgetDetailsInputtedName(), Double.parseDouble(view.getBudgetDetailsInputtedAmount()),
@@ -1731,15 +1842,18 @@ if(model.getDeleteFrom().equals("StockList")) {
 					
 				}
 				
-				
+			view.resetBudgetDetailsPageDatePickers();
 			loadBudgetListPage();
 			
+			}
+				
 			}else {
 				
 				 model.makeAlert(issueTitle, masterError).show();
 			
 			}
-		}
+			
+			}
 
 	}
 	
@@ -2007,7 +2121,7 @@ if(model.getDeleteFrom().equals("StockList")) {
 
 				// populating the items
 				view.setStockDetailsName(model.getSelectedStockName());
-				view.setStockDetailsStorgeLocation(model.getSelectedStockStorgaeLocation());
+				view.setStockDetailsStorgeLocation(model.getSelectedStockStorgaeLocation().toLowerCase());
 				view.setStockDetailsQuanity(model.getSelectedStockQuanity());
 				view.setStockDetailsQuanityType(model.getSelectedStockQuanityType());
 				view.setStockDetailsExpiereDate(model.deFormatDate(model.getSelectedStockExpierDate()));
@@ -2156,6 +2270,7 @@ if(model.getDeleteFrom().equals("StockList")) {
 				
 				
 				view.setDishDetailsList(model.getSelectedDishList(),model.getSelctedDishDishName());
+				
 				view.dishDetailsAddReset();
 			}
 			}else {
@@ -2184,6 +2299,7 @@ if(model.getDeleteFrom().equals("StockList")) {
 	/*
 	 * edited how it works
 	 */
+	
 	private class EHDishDetailsBtnDelete implements EventHandler<ActionEvent> {
 
 		@Override
@@ -2195,9 +2311,14 @@ if(model.getDeleteFrom().equals("StockList")) {
 			}
 			if(masterIssue.equals("")) {
 				
-				model.selectedDishIngrednitnRemove(view.getDishDetailsSelectedItem());
-				view.setDishDetailsList(model.getSelectedDishList(),model.getSelctedDishDishName());
-				view.setDishDetailsErrorMessageFalse();
+				model.setDeleteFrom("dishDetails");
+				view.deleteConfirmationLoad();
+				view.getDeleteConfirmationPage()
+				.setTxtConfirmMessage("Are you sure you wan to delete " + view.getDishDetailsSelectedItem().getName() + "?");
+
+				
+				
+				
 			}else {
 				
 			view.setDishDetailsErrorMessage(masterIssue);
@@ -2233,7 +2354,7 @@ if(model.getDeleteFrom().equals("StockList")) {
 				//done a head so can get the equal sign so know that all values are jus two place behind them
 				
 
-				view.setDishDetailsUserInput(view.getDishDetailsSelectedItem().getName(), view.getDishDetailsSelectedItem().getCost(), view.getDishDetailsSelectedItem().getQuanityType(), view.getDishDetailsSelectedItem().getQuanity());
+				view.setDishDetailsUserInput(view.getDishDetailsSelectedItem().getName(), view.getDishDetailsSelectedItem().getQuanity() , view.getDishDetailsSelectedItem().getQuanityType(), view.getDishDetailsSelectedItem().getCost());
 				
 				model.selectedDishIngrednitnRemove(view.getDishDetailsSelectedItem());
 				view.setDishDetailsList(model.getSelectedDishList(),model.getSelctedDishDishName());
@@ -2499,23 +2620,55 @@ if(model.getDeleteFrom().equals("StockList")) {
 	 * @author Student
 	 *
 	 */
+	
 	private class EHMenuDetailsBtnRemoveFromList implements EventHandler<ActionEvent> {
+
+
+
 
 		@Override
 		public void handle(ActionEvent event) {
-			if(view.getMenuDetailsMenuListSelectedIndex() == -1) {
-				Alert removeFromListError = model.makeAlert("menu list", "no item selected to be removed");
-				removeFromListError.show();
-			}else {
+			
+		
+			String masterErrorMessage ="";
+			
+			if(view.getMenuDetailsMenuListSelectedIndex() == -1 && view.getMenuDetailsShoppingListSelectedIndex() == -1) {
 				
+				masterErrorMessage = "no item selected to be removed";
+			} else if (view.getMenuDetailsMenuListSelectedIndex() != -1 && view.getMenuDetailsShoppingListSelectedIndex() != -1) {
+				masterErrorMessage = "please only select from one list at a time";
+				//if happens need to deslect both list so user can then reselect a value they want to use.
+			}
+			
+	
+			if(masterErrorMessage.equals("")) {
 				
+				if(view.getMenuDetailsMenuListSelectedIndex() == -1) {
+					model.setDeleteFrom("RemoveFromShoppingList");
+					view.deleteConfirmationLoad();
+					view.getDeleteConfirmationPage()
+					.setTxtConfirmMessage("Are you sure you wan to delete " + view.getMenuDetailsShoppingListSelectedItemValueIdOnly() + "?");
+
+				}else {
+					model.setDeleteFrom("RemoveFromMenuList");
+					view.deleteConfirmationLoad();
+					view.getDeleteConfirmationPage()
+					.setTxtConfirmMessage("Are you sure you wan to delete " + view.getMenuDetailsMenuDishListSelectedItemValueIdOnly() + "?");
+
+				}
 				
+				/*
+				//this should all got the delect confirmation page
 				model.removeADishFromSelectedMenuDishes(view.getMenuDetailsMenuListSelectedIndex());
 				model.resetMenuDetailList();
 				view.setMenuDetailsMenuListItems(model.getSelectedMenuDishes());
 				view.setMenuDetailsDishList(model.getNotSelectedDishesAsString());
 				view.setMenuDetailsShoppingList(model.getSelectedMenuStockType());
 				view.setMenuDetailsBudgetValue(model.getBudgetSizeMinusTheShoppingList()+"");
+			*/
+			}else {
+				Alert removeFromListError = model.makeAlert("lists", masterErrorMessage);
+				removeFromListError.show();
 			}
 			
 
@@ -2532,6 +2685,7 @@ if(model.getDeleteFrom().equals("StockList")) {
 	 * @author Student
 	 *
 	 */
+	
 	private class EHMenuDetailsBtnDeleteDishPermentlyFromList implements EventHandler<ActionEvent> {
 
 		@Override
@@ -2553,6 +2707,8 @@ if(model.getDeleteFrom().equals("StockList")) {
 if(view.getMenuDetailsDishListSelectedItemIndex() != -1) {
 				view.getDeleteConfirmationPage()
 						.setTxtConfirmMessage("Are you sure you wan to delete " + view.getMenuDetailsDishListSelectedItemValueIdOnly() + "?");
+
+
 }else {
 	view.getDeleteConfirmationPage()
 	.setTxtConfirmMessage("Are you sure you wan to delete " + view.getMenuDetailsMenuDishListSelectedItemValueIdOnly() + "?");
@@ -2779,7 +2935,7 @@ if(view.getMenuDetailsDishListSelectedItemIndex() != -1) {
 				try {
 					PrintWriter pw = new PrintWriter(chosenLocation);
 					
-					pw.write("shopping list for\n menu name = " + model.getSelectedMenu().getName() + "\n");
+					pw.write("shopping list for\nmenu name = " + model.getSelectedMenu().getName() + "\n");
 					
 					model.getSelectedMenuStockType().forEach((StockType i) -> {
 						
