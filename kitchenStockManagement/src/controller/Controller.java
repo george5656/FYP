@@ -545,11 +545,10 @@ public class Controller {
 				//simply as could come from one of two lists
 				if(view.getMenuDetailsDishListSelectedItemIndex() != -1) {
 				model.setDishDetailsOrginalId(view.getMenuDetailsDishListSelectedItemValueIdOnly());
-				model.setDishStockId(view.getMenuDetailsDishListSelectedItemValueIdOnly());
+				
 				model.setSelectedDish(model.getASpecificDish(view.getMenuDetailsDishListSelectedItemValueIdOnly()));
 				}else {
 					model.setDishDetailsOrginalId(view.getMenuDetailsMenuDishListSelectedItemValueIdOnly());
-					model.setDishStockId(view.getMenuDetailsMenuDishListSelectedItemValueIdOnly());
 					model.setSelectedDish(model.getASpecificDish(view.getMenuDetailsMenuDishListSelectedItemValueIdOnly()));
 				}
 				
@@ -1124,13 +1123,17 @@ model.createStock(model.getSelectedStockId(), view.getStorageLocation(), Double.
 						model.updateCurrentStock();
 					}
 					loadStockListPage();
+					view.resetStockDetailsPageDatePicker();
 			}
 				}else {
 					// if it fails the first if, eg validation of the inputs fails
 					Alert errorPopup = model.makeAlert("issue with " + issuesWith, masterErrorMessage);
 					errorPopup.show();
 			}
+			
+			
 		}
+	
 	}
 	/**
 	 * loads the stock list page.
@@ -1695,7 +1698,8 @@ if(model.getDeleteFrom().equals("StockList")) {
 			
 			String startDateErrorMessage = model.dateValidation(view.getBudgetDetailsInputtedStartDate(), view.getBudgetDetailsInputtedStartDateAsLocalDate());
 			String endDateErrorMessage = model.dateValidation(view.getBudgetDetailsInputtedEndDate(), view.getBudgetDetailsInputtedEndDateAsLocalDate());
-			
+
+		
 			
 			if(!nameErrorMessage.equals("")) {
 				masterError = nameErrorMessage;
@@ -1731,7 +1735,7 @@ if(model.getDeleteFrom().equals("StockList")) {
 					
 				}
 				
-				
+			view.resetBudgetDetailsPageDatePickers();
 			loadBudgetListPage();
 			
 			}else {

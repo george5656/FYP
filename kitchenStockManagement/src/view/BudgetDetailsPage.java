@@ -92,5 +92,11 @@ public class BudgetDetailsPage extends BasicLayoutDetails {
 	public DatePicker getEndDate() {
 		return dpEndDate;
 	}
-
+	/*
+	 * new
+	 */
+public void resetDatePickers() {
+	dpEndDate.setValue(null);
+	dpStartDate.setValue(null);
+}
 }

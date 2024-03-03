@@ -44,9 +44,7 @@ public class ModelRoot {
 	// so know which value to update
 	private String orginalDishId = null;
 
-	// i think these have been made redeunet
-	// ideas is store them here, so can just grab them when needed to.
-	private ArrayList<Integer> dishStockId = new ArrayList<>();
+
 	// private ArrayList<Integer> dishStockIdToDelete = new ArrayList<>();
 
 	private StockType testStockType;
@@ -1507,11 +1505,7 @@ public String getSelctedDishDishName() {
 	 * @param dishId = string that represent a dish id that want dishStockId var to
 	 *               represnet all of it dishStockId.
 	 */
-	public void setDishStockId(String dishId) {
-
-		dishStockId = db.getDishStockIdsForADish(dishId);
-
-	}
+	
 
 	/**
 	 * gets all the dishes that are like the input. gets all the dishes that are
@@ -1664,7 +1658,7 @@ public String getSelctedDishDishName() {
 	 */
 	public Boolean doesDishGoOverBudget(String dishId) {
 		ArrayList<StockType> selectedDishStockType = db.getASpecificDishes(dishId).getHeldStock();
-		Double remainingBudget = getBudgetSizeMinusTheShoppingList();
+		Double remainingBudget = Double.parseDouble(getBudgetSizeMinusTheShoppingList());
 		int counter = 0;
 		Double dishTotalCost = 0.00;
 		while (counter != selectedDishStockType.size()) {
@@ -1886,7 +1880,7 @@ public String getSelctedDishDishName() {
 	/*
 	 * changed
 	 */
-	public Double getBudgetSizeMinusTheShoppingList() {
+	public String getBudgetSizeMinusTheShoppingList() {
 		
 		Double BudgetAmount = selectedMenu.getBudget().getAmount();
 		Double totalCost = 0.00;
@@ -1907,7 +1901,7 @@ public String getSelctedDishDishName() {
 			totalCost = totalCost + (Double.parseDouble(quantity) * Double.parseDouble(cost));
 			
 		}
-		return BudgetAmount - totalCost;
+		return String.format("%.2f",BudgetAmount - totalCost);
 	}
 
 	/**

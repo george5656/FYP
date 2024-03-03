@@ -182,4 +182,10 @@ public void RemoveAddVarient() {
 public void setBtnLoadFromFileEventHandler(EventHandler<ActionEvent> event) {
 	btnFileLoad.setOnAction(event);
 }
+/*
+ * new
+ */
+public void resetDatePicker() {
+	dpExpiereDate.setValue(null);
+}
 }

@@ -1476,7 +1476,18 @@ public String getBudgetDetailsInputtedEndDate() {
 public LocalDate getBudgetDetailsInputtedStartDateAsLocalDate() {
 	return bdp.getStartDate().getValue();
 }
-
+/*
+ * new
+ */
+public void resetBudgetDetailsPageDatePickers() {
+	bdp.resetDatePickers();
+}
+/*
+ * new
+ */
+public void resetStockDetailsPageDatePicker() {
+	sd.resetDatePicker();
+}
 /**
  * gets the user input for the end date.
  * user input comes form the budget details page.
