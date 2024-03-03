@@ -44,7 +44,9 @@ public class ModelRoot {
 	// so know which value to update
 	private String orginalDishId = null;
 
-
+	private ArrayList<StockType> edditedStocktype = new ArrayList<>();
+	
+	
 	// private ArrayList<Integer> dishStockIdToDelete = new ArrayList<>();
 
 	private StockType testStockType;
@@ -1315,6 +1317,7 @@ try {
 		ArrayList<StockType> st = new ArrayList<>();
 		st.add(new StockType(ingrdeantName, cost, quantityType, quanity));
 		selectedDish = new Dish(name, st);
+		edditedStocktype.add(new StockType(ingrdeantName, cost, quantityType, quanity));
 	}
 
 	/**
@@ -1360,7 +1363,7 @@ public String getSelctedDishDishName() {
 	public void selectedDishIngrednitnAdd(String name, String cost, String quanityType, String quanity) {
 		StockType st = new StockType(name, cost, quanityType, quanity);
 		selectedDish.addStockType(st);
-
+		edditedStocktype.add(st);
 	}
 
 	/**
@@ -1376,14 +1379,19 @@ public String getSelctedDishDishName() {
 	/*
 	 * changed
 	 */
+	
 	public void selectedDishIngrednitnRemove(StockType st) {
-/*
-		if (index + 1 <= dishStockId.size()) {
-			// dishStockIdToDelete.add(dishStockId.get(index));
-			dishStockId.remove(index);
-		}
-	*/
+
+		/*idea is as need to delete stock type but also
+		 * have to juggle canlses, we put the stock to be deleted in here, 
+		 * needed as add makes new stock, when its clicekd, so could add, 
+		 * then hit cancle, 
+		 */
+		edditedStocktype.add(st);
+	
 		selectedDish.removeIngredent(st);
+		
+		
 	}
 
 	/**
@@ -1982,9 +1990,9 @@ public String getSelctedDishDishName() {
 	 * @param place = int, is the index of the item you want removed from the
 	 *              arrayLict<Dish> in the menu object that is in selectedMenu
 	 */
-	public void removeADishFromSelectedMenuDishes(int place) {
+	public void removeADishFromSelectedMenuDishes(Dish dish) {
 
-		selectedMenu.removeADish(place);
+		selectedMenu.removeADish(dish);
 	}
 
 //dish filter
@@ -2383,7 +2391,6 @@ public String getSelctedDishDishName() {
 			// so know where they end
 			int comma1 = value.indexOf(",");
 			int comma2 = value.indexOf(",", comma1 + 1);
-
 			String name = value.substring(equals1 + 2, comma1);
 			String quanity = value.substring(equals2 + 2, comma2);
 			String quanityType = value.substring(equals3 + 2);
@@ -2392,11 +2399,32 @@ public String getSelctedDishDishName() {
 			counter = counter + 1;
 			// so is shown as soon goes back
 
+			
+			
 		}
+		
+		removedDishDetailsEditedStock();
+		
 		resetMenuDetailList();
 		return getNotSelectedDishesAsString();
 	}
-
+/*
+ * new method
+ */
+	public void removedDishDetailsEditedStock() {
+		edditedStocktype.forEach(stockType -> {
+			if(!db.isStockTypeInUser(stockType.getName())) {
+				db.deleteSelectedStockType(stockType.getName());
+			}
+			});
+	}
+	/*
+	 * new method
+	 */
+	public void resetEddtedStockType() {
+		edditedStocktype = new ArrayList<>();
+	}
+	
 	/**
 	 * 
 	 * Updates the info in the database with the selectedDish details.

@@ -41,8 +41,8 @@ public class InputValidation {
 		if(userInput.length()>50) {
 			errorMessage = "user input to big";
 		}
-		if(!userInput.matches("[a-z0-9 ]+")&&!userInput.equals("")) {
-			errorMessage = "only a-z and 0-9 allowed";
+		if(!userInput.matches("[a-z0-9_ ]+")&&!userInput.equals("")) {
+			errorMessage = "only a-z, 0-9 and _ allowed";
 		}
 		if(userInput.contains("null")||userInput.contains("name")||userInput.contains("name")||userInput.contains("cost")) {
 			errorMessage = "a key word has been inputed and must be removed";
