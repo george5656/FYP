@@ -43,8 +43,8 @@ public class BasicLayoutDetails extends PaneMenu {
 		btnSave.setMaxSize(Double.MAX_VALUE, Double.MAX_VALUE);
 		btnCancel.setMaxSize(Double.MAX_VALUE, Double.MAX_VALUE);
 		
-		btnSave.setFont(new Font(20));
-		btnCancel.setFont(new Font(20));
+		btnSave.setFont(new Font(30));
+		btnCancel.setFont(new Font(30));
 		
 		VBox.setVgrow(labelsAndUserTextInput, Priority.ALWAYS);
 		VBox.setVgrow(buttons, Priority.ALWAYS);
@@ -61,8 +61,15 @@ public class BasicLayoutDetails extends PaneMenu {
 	 * gets the object in the the variable btnSave
 	 * @return Button object which is the one on btnSave
 	 */
-	public Button getbtnSave() {
+	public Button getBtnSave() {
 		return btnSave;
+	}
+	/**
+	 * gets the object in the the variable btnCancel
+	 * @return Button object which is the one on btnCancel
+	 */
+	public Button getBtnCancel() {
+		return btnCancel;
 	}
 	/**
 	 * get the VBox which is the label var.

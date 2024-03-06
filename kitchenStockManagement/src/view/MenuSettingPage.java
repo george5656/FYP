@@ -58,6 +58,7 @@ public MenuSettingPage() {
 	txtBudget.setFont(new Font(30));
 	tfName.setFont(new Font(30));
 	
+	
 	txtName.setAlignment(Pos.CENTER);
 	txtBudget.setAlignment(Pos.CENTER);
 }

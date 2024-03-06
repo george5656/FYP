@@ -36,9 +36,9 @@ public class DeleteConfirmationPage extends PaneMenu {
 		confirm.setMaxSize(Double.MAX_VALUE, Double.MAX_VALUE);
 		txtConfirmMessage.setMaxSize(Double.MAX_VALUE, Double.MAX_VALUE);
 		
-		cancel.setFont(new Font(20));
-		confirm.setFont(new Font(20));
-		txtConfirmMessage.setFont(new Font(20));
+		cancel.setFont(new Font(30));
+		confirm.setFont(new Font(30));
+		txtConfirmMessage.setFont(new Font(30));
 		
 		mainLayout.setAlignment(Pos.CENTER);
 		controls.setAlignment(Pos.CENTER);
