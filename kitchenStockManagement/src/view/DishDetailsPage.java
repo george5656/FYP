@@ -80,7 +80,7 @@ DishDetailsPage(){
 	
 	
 	HBox.setHgrow(list, Priority.ALWAYS);
-	HBox.setHgrow(userInput, Priority.ALWAYS);
+	HBox.setHgrow(userInput, Priority.SOMETIMES);
 	VBox.setVgrow(tvIngredients, Priority.ALWAYS);
 	VBox.setVgrow(txtErrorMessage, Priority.ALWAYS);
 	VBox.setVgrow(textInputAndLabel, Priority.ALWAYS);
