@@ -2,6 +2,8 @@ package view;
 
 
 
+import java.util.ArrayList;
+
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
@@ -42,6 +44,7 @@ public class ListPage<E> extends PaneMenu {
 	 */
 	public ListPage() {
 	tv.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
+
 		super.setCenter(mainLayout);
 		txtErrorMessage.setVisible(false);
 		mainLayout.getChildren().addAll(list,buttons);
@@ -189,11 +192,12 @@ public void resetFindInput() {
 }
 
 /**
- * adds the passed in table column to the table view
- * @param column TableColumn<E,String>
+ * adds the passed in table columns to the table view
+ * @param columns ArrayList<TableColumn<E,String>>
  */
-public void setTableColumn(TableColumn<E,String> column) {
-	tv.getColumns().add(column);
+public void setTableColumns(ArrayList<TableColumn<E,String>> columns) {
+	
+	tv.getColumns().addAll(columns);
 }
 
 /**

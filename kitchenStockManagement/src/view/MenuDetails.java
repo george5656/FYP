@@ -1,5 +1,7 @@
 package view;
 
+import java.util.ArrayList;
+
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
@@ -390,6 +392,7 @@ private HBox fAndO = new HBox(20);
 	
 	/**
 	 * sets the Table columns for the the dish list table view
+	 * sets them to the passed in ones.
 	 * @param column = TableColumn<Dish, String>
 	 */
 	public void setDishColumn(TableColumn<Dish, String> column) {
@@ -397,17 +400,19 @@ private HBox fAndO = new HBox(20);
 	}
 	/**
 	 * sets the Table columns for the the menu list table view
+	 * sets them to the passed in ones.
 	 * @param column = TableColumn<Dish, String>
 	 */
 	public void setMenuColumn(TableColumn<Dish, String> column) {
 		tvMenu.getColumns().add(column);
 	}
 	/**
-	 * sets the Table columns for the the shopping list table view
-	 * @param column = TableColumn<StockType, String>
+	 * sets the Table columns for the the shopping list table view.
+	 * sets them to the passed in ones.
+	 * @param column = ArrayList<TableColumn<StockType, String>>
 	 */
-	public void setShoppingColumn(TableColumn<StockType, String> column) {
-		tvShopping.getColumns().add(column);
+	public void setShoppingColumns(ArrayList<TableColumn<StockType, String>> columns) {
+		tvShopping.getColumns().addAll(columns);
 	}
 	
 	/**

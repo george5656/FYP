@@ -1,5 +1,7 @@
 package view;
 
+import java.util.ArrayList;
+
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
@@ -303,17 +305,17 @@ public void hideErrorMessage() {
 	txtErrorMessage.setVisible(false);
 }
 /**
- * cleats all the column in the table view
+ * clears all the column in the table view
  */
 public void clearTableColumn() {
 	tvIngredients.getColumns().clear();
 }
 /**
  * add table columns to the the table view
- * @param column = TableColumn<StockType,String>
+ * @param columns = ArrayList<TableColumn<StockType,String>>
  */
-public void setTableColumn(TableColumn<StockType,String> column) {
-	tvIngredients.getColumns().add(column);
+public void setTableColumns(ArrayList<TableColumn<StockType,String>> columns) {
+	tvIngredients.getColumns().addAll(columns);
 }
 /**
  * sets the dish name label text

@@ -313,6 +313,7 @@ public void stockListLoad(ObservableList<CurrentStock> data) {
 	TableColumn<CurrentStock, String> quantity = new TableColumn<>("Quantity");
 	TableColumn<CurrentStock, String> expiereDate = new TableColumn<>("Expiere Date");
 	
+	
 	name.setCellValueFactory(new PropertyValueFactory<CurrentStock, String>("name"));
 	cost.setCellValueFactory(new PropertyValueFactory<CurrentStock, String>("cost"));
 	quantityType.setCellValueFactory(new PropertyValueFactory<CurrentStock, String>("quanityType"));
@@ -320,13 +321,18 @@ public void stockListLoad(ObservableList<CurrentStock> data) {
 	quantity.setCellValueFactory(new PropertyValueFactory<CurrentStock, String>("quanity"));
 	expiereDate.setCellValueFactory(new PropertyValueFactory<CurrentStock, String>("expiereDate"));
 	
+	ArrayList<TableColumn<CurrentStock,String>> tableColumns = new ArrayList<>(); 
 	
-	stockListPage.setTableColumn(name);
-	stockListPage.setTableColumn(cost);
-	stockListPage.setTableColumn(quantityType);
-	stockListPage.setTableColumn(location);
-	stockListPage.setTableColumn(quantity);
-	stockListPage.setTableColumn(expiereDate);
+	tableColumns.add(name);
+	tableColumns.add(cost);
+	tableColumns.add(quantityType);
+	tableColumns.add(location);
+	tableColumns.add(quantity);
+	tableColumns.add(expiereDate);
+	
+	stockListPage.setTableColumns(tableColumns);
+	
+	
 	
 	stockListPage.getErrorLabel().setVisible(false);
 	stockListPage.setObservableList(data);
@@ -828,7 +834,14 @@ public void menuListLoad(ObservableList<Menu> data) {
 	
 	
 	
-	menuListPage.setTableColumn(name);
+	
+	
+ArrayList<TableColumn<Menu,String>> tableColumns = new ArrayList<>(); 
+	
+	tableColumns.add(name);
+
+	
+	menuListPage.setTableColumns(tableColumns);
 	
 	
 	menuListPage.getErrorLabel().setVisible(false);
@@ -943,11 +956,16 @@ public void MenuDetailsLoad() {
 
 	menuDetails.setDishColumn(dName);
 	menuDetails.setMenuColumn(mName);
-	menuDetails.setShoppingColumn(slName);
-	menuDetails.setShoppingColumn(slCost);
-	menuDetails.setShoppingColumn(slQuanityType);
-	menuDetails.setShoppingColumn(slQuanity);
 	
+	ArrayList<TableColumn<StockType, String>> shoppingColumns = new ArrayList<>();
+	
+	shoppingColumns.add(slName);
+	shoppingColumns.add(slCost);
+	shoppingColumns.add(slQuanityType);
+	shoppingColumns.add(slQuanity);
+	
+	menuDetails.setShoppingColumns(shoppingColumns);
+
 	
 	this.getChildren().remove(0);
 	this.getChildren().add(menuDetails);
@@ -1367,10 +1385,16 @@ public void BudgetListLoad(ObservableList<Budget> data) {
 	start.setCellValueFactory(new PropertyValueFactory<Budget, String>("startDate"));
 	end.setCellValueFactory(new PropertyValueFactory<Budget, String>("endDate"));
 	
-	budgetListPage.setTableColumn(id);
-	budgetListPage.setTableColumn(amount);
-	budgetListPage.setTableColumn(start);
-	budgetListPage.setTableColumn(end);
+
+	
+ArrayList<TableColumn<Budget,String>> tableColumns = new ArrayList<>(); 
+	
+	tableColumns.add(id);
+	tableColumns.add(amount);
+	tableColumns.add(start);
+	tableColumns.add(end);
+
+	budgetListPage.setTableColumns(tableColumns);
 	
 	budgetListPage.getErrorLabel().setVisible(false);
 	budgetListPage.setObservableList(data);
@@ -1735,9 +1759,16 @@ public void storgaeLocationListLoad(ObservableList<StorageLocation> storageLocat
 	available.setCellValueFactory(new PropertyValueFactory<StorageLocation, String>("isAvailble"));
 	
 	
-	storageLocationListPage.setTableColumn(name);
-	storageLocationListPage.setTableColumn(type);
-	storageLocationListPage.setTableColumn(available);
+
+ArrayList<TableColumn<StorageLocation,String>> tableColumns = new ArrayList<>(); 
+	
+	tableColumns.add(name);
+	tableColumns.add(type);
+	tableColumns.add(available);
+	
+	
+	storageLocationListPage.setTableColumns(tableColumns);
+	
 	
 	storageLocationListPage.getErrorLabel().setVisible(false);
 	storageLocationListPage.setObservableList(storageLocations);
@@ -2044,9 +2075,16 @@ public void accountListLoad(ObservableList<Account> data) {
 	
 	
 	
-	accountListPage.setTableColumn(username);
-	accountListPage.setTableColumn(isAccountAdmin);
+
 	
+	
+ArrayList<TableColumn<Account,String>> tableColumns = new ArrayList<>(); 
+	
+	tableColumns.add(username);
+	tableColumns.add(isAccountAdmin);
+	
+	
+	accountListPage.setTableColumns(tableColumns);
 	
 	accountListPage.getErrorLabel().setVisible(false);
 	accountListPage.setObservableList(data);
@@ -2244,10 +2282,14 @@ public void dishDetailsLoad() {
 	
 	ddp.setDishNameLabel("No dish name");
 	
-	ddp.setTableColumn(name);
-	ddp.setTableColumn(cost);
-	ddp.setTableColumn(quantityType);
-	ddp.setTableColumn(quanity);
+	
+	ArrayList<TableColumn<StockType, String>> tableColumns = new ArrayList<>();
+	tableColumns.add(name);
+	tableColumns.add(cost);
+	tableColumns.add(quantityType);
+	tableColumns.add(quanity);
+			
+	ddp.setTableColumns(tableColumns);
 	
 	
 	
