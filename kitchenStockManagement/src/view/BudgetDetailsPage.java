@@ -16,8 +16,8 @@ import javafx.scene.text.Font;
 public class BudgetDetailsPage extends BasicLayoutDetails {
 	private Label txtBudgetName = new Label("Budget Name");
 	private Label txtAmount = new Label("Amount");
-	private Label txtStartDate = new Label("start date");
-	private Label txtEndDate = new Label("end date");
+	private Label txtStartDate = new Label("Start Date");
+	private Label txtEndDate = new Label("End Date");
 	private TextField tfBudgetName = new TextField();
 	private TextField tfAmount = new TextField();
 	private DatePicker dpStartDate = new DatePicker();

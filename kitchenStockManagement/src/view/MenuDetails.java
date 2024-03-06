@@ -1,5 +1,9 @@
 package view;
 
+import java.util.ArrayList;
+
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
@@ -25,17 +29,17 @@ import model.StockType;
  */
 public class MenuDetails extends PaneMenu {
 	//feilds 
-	private Button btnAdd = new Button("add");
-	private Button btnEdit = new Button("edit");
-	private Button btnRemoveFromList = new Button("remove from list");
-	private Button btnLoadFromFileChooser = new Button("load from file chooser");
-	private Button btnNewDish = new Button("new dish");
-	private Button btnSettings = new Button("settings");
-	private Button btnDeleteDishPeremently = new Button("delete dish peremently");
-	private Button btnFind = new Button("find");
-	private Button btnFilter = new Button("filter");
-	private Button btnOutput = new Button("output list");
-	private Label txtBudget = new Label("Budget = not selected");
+	private Button btnAdd = new Button("Add");
+	private Button btnEdit = new Button("Edit");
+	private Button btnRemoveFromList = new Button("Remove From List");
+	private Button btnLoadFromFileChooser = new Button("Load From File Chooser");
+	private Button btnNewDish = new Button("New Dish");
+	private Button btnSettings = new Button("Settings");
+	private Button btnDeleteDishPeremently = new Button("Delete Dish Peremently");
+	private Button btnFind = new Button("Find");
+	private Button btnFilter = new Button("Filter");
+	private Button btnOutput = new Button("Output List");
+	private Label txtBudget = new Label("Budget = Not Selected");
 	//private Label txtErrorMessage = new Label("Error");
 	private TextField tfUserInput = new TextField();
 	private TableView<Dish> tvDishes = new TableView<>();
@@ -62,6 +66,25 @@ private HBox fAndO = new HBox(20);
 	 * default constructor
 	 */
 	public MenuDetails() {
+		
+		
+		tvDishes.setPrefWidth(100);
+		tvMenu.setPrefWidth(100);
+		tvShopping.setPrefWidth(400);
+		
+		
+		tvDishes.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
+		tvMenu.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
+		tvShopping.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
+		
+		
+		
+		tvDishes.widthProperty().addListener(new EHDishListSize());
+		tvMenu.widthProperty().addListener(new EHMenuListSize());
+		tvShopping.widthProperty().addListener(new EHShopingListSize());
+		
+		
+		
 		super.setCenter(mainLayout);
 		mainLayout.getChildren().addAll(lists,initialSplit);
 		initialSplit.getChildren().addAll(budgetAndFind,buttons);
@@ -168,9 +191,6 @@ private HBox fAndO = new HBox(20);
 	tvMenu.setPlaceholder(new Label("empty menu items list"));
 	tvShopping.setPlaceholder(new Label("empty shopping list"));
 	
-	tvDishes.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
-	tvMenu.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
-	tvShopping.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
 	
 	
 	}
@@ -252,12 +272,9 @@ private HBox fAndO = new HBox(20);
 		return tfUserInput.getText();
 	}
 	/**
-	 * sets the list that displays the dish to the inputed list.
-	 * list on the far left
-	 * @param dishes = ObservableList<String>,
-	 */
-	/*
-	 * changed
+	 * sets the table view underling data structure to the passed in one.
+	 * the table view is the dish one.
+	 * @param dishes = Observable<Dish>
 	 */
 	public void setDishes(ObservableList<Dish> dishes) {
 		tvDishes.getItems().clear();
@@ -271,61 +288,49 @@ private HBox fAndO = new HBox(20);
 		return tvDishes.getSelectionModel().getSelectedIndex();
 	}
 	/**
-	 * gets the item the use selected in the dish (far left) list view
-	 * @return String, which the user selected.
-	 */
-	/*
-	 * changed output
+	 * gets the item the use selected in the dish (far left) table view
+	 * @return Dish, which the user selected.
 	 */
 	public Dish getDishListSelectedValue() {
 		return tvDishes.getSelectionModel().getSelectedItem();	
 	}
 	/**
-	 * gets the item the use selected in the menu (middle) list view
-	 * @return String, which the user selected.
-	 */
-	/*
-	 * changed output
+	 * gets the item the use selected in the menu (middle) table view
+	 * @return Dish, which the user selected.
 	 */
 	public Dish getMenuListSelectedValue() {
 		return tvMenu.getSelectionModel().getSelectedItem();	
 	}
-	/*
-	 * new method
+	
+	/**
+	 * gets the item the use selected in the left (middle) table view
+	 * @return StockType, which the user selected.
 	 */
 	public StockType getShoppingListSelectedValue() {
 		return tvShopping.getSelectionModel().getSelectedItem();
 	}
+	
 	/**
-	 * sets the list that displays the dish in a menu to the inputed list.
-	 * list in the middle
-	 * @param items = ObservableList<String>,
-	 */
-	/*
-	 * changed input
+	 * sets the table view underling data structure of menu dish (middle one) to the passed in the data structure.
+	 * @param items = ObservableList<Dish>
 	 */
 	public void setMenuDishList(ObservableList<Dish> items) {
 		tvMenu.getItems().clear();
 		tvMenu.getItems().addAll(items);
 	}
+	
 	/**
-	 * sets the list that displays the stock that needs to be brought (shopping list) to the inputed list.
-	 * list on the far right.
-	 * @param items = ObservableList<String>,
-	 */
-	/*
-	 * changed input
+	 * sets the shopping list table view underling data structure,
+	 * to be the passed in one.
+	 * @param items = ObservableList<StockType>
 	 */
 	public void setShoppingListList(ObservableList<StockType> items) {
 		tvShopping.getItems().clear();
 		tvShopping.getItems().addAll(items);
 	}
 	/**
-	 * gets the underling data structure the shopping (far right) list has
-	 * @return ObservableList<String>
-	 */
-	/*
-	 * changed
+	 * gets the underling data structure the shopping (far right) table view
+	 * @return ObservableList<StockType>
 	 */
 	public ObservableList<StockType> getShoppingListList(){
 		return tvShopping.getItems();
@@ -337,22 +342,21 @@ private HBox fAndO = new HBox(20);
 	public int getMenuListSelectedIndex() {
 		return tvMenu.getSelectionModel().getSelectedIndex();
 	}
-	/*
-	 * new method 
+	
+	/**
+	 * gets the shopping list table view, selected item index
+	 * @return int
 	 */
 	public int getShoppingListSelectedIndex() {
 		return tvShopping.getSelectionModel().getSelectedIndex();
 	}
+	
 	/**
-	 * gets the item selected in the menu list(middle one) but only the id of that item.
-	 * the id is the id which is shown, eg after the dish name =
-	 * @return String, = just the selected item id. 
-	 */
-	/*
-	 * changed 
+	 * gets the menu table view, selected item name
+	 * @return String which is the Dish name that the user selected in the menu table
 	 */
 	public String getMenuListSelectedValueAsId() {
-		return tvMenu.getSelectionModel().getSelectedItem().getName();
+		return tvMenu.getSelectionModel().getSelectedItem().getDishName();
 	}
 	//so for output know if anything there to output or not
 	/**
@@ -394,7 +398,9 @@ private HBox fAndO = new HBox(20);
 		tvMenu.getSelectionModel().clearSelection();
 		tvDishes.getSelectionModel().clearSelection();
 	}
-	
+	/**
+	 * clears all the table columns from all the table views.
+	 */
 	public void clearTablesColumns() {
 	tvMenu.getColumns().clear();
 	tvDishes.getColumns().clear();
@@ -402,23 +408,101 @@ private HBox fAndO = new HBox(20);
 	}
 	
 	
-	
+	/**
+	 * sets the Table columns for the the dish list table view
+	 * sets them to the passed in ones.
+	 * @param column = TableColumn<Dish, String>
+	 */
 	public void setDishColumn(TableColumn<Dish, String> column) {
+		tvDishes.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
 		tvDishes.getColumns().add(column);
+		//ec = existing column
+		tvDishes.getColumns().forEach(ec -> {
+			ec.setSortable(false);
+			});
+		tvDishes.setColumnResizePolicy(TableView.UNCONSTRAINED_RESIZE_POLICY);
 	}
+	/**
+	 * sets the Table columns for the the menu list table view
+	 * sets them to the passed in ones.
+	 * @param column = TableColumn<Dish, String>
+	 */
 	public void setMenuColumn(TableColumn<Dish, String> column) {
+		tvMenu.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
 		tvMenu.getColumns().add(column);
+		tvMenu.getColumns().forEach(ec -> {
+			ec.setSortable(false);
+			});
+		tvMenu.setColumnResizePolicy(TableView.UNCONSTRAINED_RESIZE_POLICY);
 	}
-	public void setShoppingColumn(TableColumn<StockType, String> column) {
-		tvShopping.getColumns().add(column);
+	/**
+	 * sets the Table columns for the the shopping list table view.
+	 * sets them to the passed in ones.
+	 * @param column = ArrayList<TableColumn<StockType, String>>
+	 */
+	public void setShoppingColumns(ArrayList<TableColumn<StockType, String>> columns) {
+		tvShopping.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
+		tvShopping.getColumns().addAll(columns);
+		tvShopping.getColumns().forEach(column -> {
+			column.setSortable(false);
+			});
+		tvShopping.setColumnResizePolicy(TableView.UNCONSTRAINED_RESIZE_POLICY);
 	}
 	
-	/*
-	 * new method
+	/**
+	 * removes user selection from the tvShopping and tvMenu
 	 */
 	public void unselectMenuAndshoppingList() {
 		tvShopping.getSelectionModel().clearSelection();
 		tvMenu.getSelectionModel().clearSelection();
 	}
 	
+	
+	/**
+	 * simply resize the shopping list column when every the shopping list table 
+	 * view changes
+	 * @author Student
+	 *
+	 */
+	private class EHShopingListSize implements ChangeListener<Number> {
+
+		@Override
+		public void changed(ObservableValue<? extends Number> observable, Number oldValue, Number newValue) {
+			tvShopping.getColumns().forEach(x -> x.setPrefWidth(tvShopping.getWidth() / tvShopping.getColumns().size()) );
+			
+		}
+
+	}
+	/**
+	 * simply resize the dish list column when every the shopping list table 
+	 * view changes
+	 * @author Student
+	 *
+	 */
+	private class EHDishListSize implements ChangeListener<Number> {
+
+		@Override
+		public void changed(ObservableValue<? extends Number> observable, Number oldValue, Number newValue) {
+			tvDishes.getColumns().forEach(x -> x.setPrefWidth(tvDishes.getWidth()) );
+			
+		}
+
+	}
+	/**
+	 * simply resize the menu list column when every the shopping list table 
+	 * view changes
+	 * @author Student
+	 *
+	 */
+	private class EHMenuListSize implements ChangeListener<Number> {
+
+		@Override
+		public void changed(ObservableValue<? extends Number> observable, Number oldValue, Number newValue) {
+			tvMenu.getColumns().forEach(x ->{ x.setPrefWidth(tvMenu.getWidth());
+			
+			
+		});
+
+	}
+	}
 }

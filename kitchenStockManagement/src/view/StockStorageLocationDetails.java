@@ -20,14 +20,14 @@ import javafx.scene.text.Font;
  *
  */
 public class StockStorageLocationDetails extends BasicLayoutDetails{
-private Label txtStockStorageLocationName = new Label("name");
-private Label txtIsAvailbe = new Label("is available");
+private Label txtStockStorageLocationName = new Label("Name");
+private Label txtIsAvailbe = new Label("Is Available");
 private Label txtType = new Label("Type");
 private TextField tfName = new TextField();
 private TextField tfType = new TextField();
 private ToggleGroup tg = new ToggleGroup();
-private RadioButton rbYes = new RadioButton("yes");
-private RadioButton rbNo = new RadioButton("no");
+private RadioButton rbYes = new RadioButton("Yes");
+private RadioButton rbNo = new RadioButton("No");
 private ArrayList<Label> labelList = new ArrayList<>();
 private ArrayList<TextField> textFieldList = new ArrayList<>();
 private HBox radioButtonLayout = new HBox();

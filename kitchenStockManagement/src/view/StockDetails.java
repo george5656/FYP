@@ -34,7 +34,7 @@ private DatePicker dpExpiereDate = new DatePicker();
 private TextField tfCost = new TextField();
 private VBox labels;
 private VBox userTextInput;
-private Button btnFileLoad = new Button("load form file");
+private Button btnFileLoad = new Button("Load Form File");
 private HBox buttons;
 /**
  * default constructor

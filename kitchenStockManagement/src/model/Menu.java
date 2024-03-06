@@ -49,14 +49,10 @@ public void addItemToDishList(Dish item) {
 	heldDishes.add(item);
 }
 /**
- * get the all the held dish in the database and return them in there string format in an observable list.
- * each iteration in the Observable list is the output of a dish object toString method.
- * @return ObservableList<String>
+ * gets all the dish the menu holds
+ * @return ObservableList<Dish>
  */
-/*
- * chnaged
- */
-public ObservableList<Dish> getDishesAsObservableListOFString(){
+public ObservableList<Dish> getDishesAsObservableList(){
 	
 	return FXCollections.observableArrayList(heldDishes);
 }
@@ -74,7 +70,7 @@ public boolean doesItHoldDish(String item) {
 	
 	heldDishes.forEach((Dish i) -> {
 		
-		comparison.add(i.getName());
+		comparison.add(i.getDishName());
 		
 	});
 	
@@ -103,7 +99,7 @@ public ArrayList<String> getHeldDishesNames(){
 	ArrayList<String> dishesNames = new ArrayList<>();
 	heldDishes.forEach((Dish i) -> {
 	
-		dishesNames.add(i.getName());
+		dishesNames.add(i.getDishName());
 	
 	});
 	return dishesNames;

@@ -62,9 +62,6 @@ public class WritableDatabase {
 	 * 
 	 * @return ArrayList<CurrentStock>
 	 */
-	/*
-	 * changed
-	 */
 	public ArrayList<CurrentStock> getAllCurrentStock() {
 		PreparedStatement statement;
 		ArrayList<CurrentStock> currentStock = new ArrayList<>();
@@ -147,13 +144,7 @@ public class WritableDatabase {
 	 * the date from the tbl_stock_iteration
 	 * 
 	 * @param like = Sting which is wanting to stock that is like it.
-	 * @return ArrayList<String> = which is the stock iteration row which are like
-	 *         the parameter, and then converted to a currentStock object before
-	 *         having the toString method called and that is what is represented in
-	 *         the ArrayList<String.
-	 */
-	/*
-	 * changed output
+	 * @return ArrayList<CurrentStock> 
 	 */
 	public ArrayList<CurrentStock> getCurrentStockThatsLike(String like) {
 		PreparedStatement statement;
@@ -191,7 +182,7 @@ public class WritableDatabase {
 			// CurrentStock stock = data.getcurrentStock().get(0);
 			statement = mySqlDatabase.prepareStatement(
 					"Insert Into stock_mangemnet.tbl_stock_iteration (storageLocationId, stockTypeId, quanity, expiereDate) Values ( \'"
-							+ data.getStorageLocationId() + "\',\'" + data.getStockName() + "\',\'" + data.getQuanity()
+							+ data.getStorageLocationId() + "\',\'" + data.getName() + "\',\'" + data.getQuanity()
 							+ "\',\'" + data.getExpiereDate() + "\'); ");
 			statement.execute();
 		} catch (SQLException e) {
@@ -368,11 +359,7 @@ public class WritableDatabase {
 	 *
 	 * @param where = String, which is the where part of the MySQL statement. note
 	 *              the where word is not needed.
-	 * @return ArrayList<String> = all the currentStock that pass the where.
-	 *         each value is the output of a currentStock toString method.
-	 */
-	/*
-	 * changes output
+	 * @return ArrayList<CurrentStock>
 	 */
 	public ArrayList<CurrentStock> getCurrentStockThatMatchesWhere(String where) {
 		PreparedStatement statement;
@@ -466,7 +453,7 @@ public class WritableDatabase {
 
 			statement = mySqlDatabase.prepareStatement(
 					"Update stock_mangemnet.tbl_stock_iteration set tbl_stock_iteration.storageLocationId = \'"
-							+ data.getStorageLocationId() + "\', stockTypeId = \'" + data.getStockName()
+							+ data.getStorageLocationId() + "\', stockTypeId = \'" + data.getName()
 							+ "\', quanity = \'" + data.getQuanity() + "\', expiereDate = \'" + data.getExpiereDate()
 							+ "\' where stockIterationId = \"" + id + "\";");
 			statement.execute();
@@ -510,12 +497,9 @@ public class WritableDatabase {
  * each row contains all the values that are needed to make a budget object.
  * @param where = String, which is the where part of the MySQL statement. note
  *              the where word is not needed. 
- * @return ArrayList<String> = all the budgets that pass the where.
- *         each value is the output of a budget toString method.
+ * @return ArrayList<Budget>.
  */
-	/*
-	 * changed outputs
-	 */
+
 	public ArrayList<Budget> getBudgetsThatMatchesWhere(String where) {
 		PreparedStatement statement;
 		ArrayList<Budget> budgets = new ArrayList<>();
@@ -566,12 +550,9 @@ public class WritableDatabase {
 	 * the rows that are retrieved are the ones where the budgetId column, value is 
 	 * like eg % like % the inputed string like.
 	 * @param like = String, to indicate which budget to get. its seeing if the budgetId column value is like it.
-	 * @return ArrayList<String> = all the budgets that are like the inputed parameter.
-	 *         each value is the output of a budget toString method.
+	 * @return ArrayList<Budget>
 	 */
-	/*
-	 * changed output
-	 */
+
 	public ArrayList<Budget> getBudgetsThatsLike(String like) {
 		ArrayList<Budget> allBudgets = new ArrayList<>();
 		PreparedStatement statement;
@@ -680,12 +661,8 @@ public class WritableDatabase {
  * the rows that are retrieved are the ones where the username column, value is 
  * like eg % like % the inputed string like.
  * @param like = String, to indicate which Account to get. its seeing if the username column value is like it.
- * @return ArrayList<String> = all the Accounts that are like the inputed parameter.
- *         each value is the output of a Account toString method.
+ * @return ArrayList<Account>
  */
-	/*
-	 * changed output
-	 */
 	public ArrayList<Account> getAccountsThatsLike(String like) {
 		PreparedStatement statement;
 		ArrayList<Account> account = new ArrayList<>();
@@ -713,13 +690,9 @@ public class WritableDatabase {
 	 * each row contains all the values that are needed to make a account object.
 	 * @param where = String, which is the where part of the MySQL statement. note
 	 *              the where word is not needed. 
-	 * @return ArrayList<String> = all the accounts that pass the where.
-	 *         each value is the output of a account toString method. not the password is not added
-	 *         for security reasons.
+	 * @return ArrayList<Account>
 	 */
-	/*
-	 * changes output
-	 */
+
 	public ArrayList<Account> getAccountsThatMatchesWhere(String where) {
 		PreparedStatement statement;
 		ArrayList<Account> Accounts = new ArrayList<>();
@@ -927,12 +900,9 @@ public class WritableDatabase {
 	 * the rows that are retrieved are the ones where the storageLocationId column, value is 
 	 * like eg % like % the inputed string like.
 	 * @param like = String, to indicate which Account to get. its seeing if the storageLocationId column value is like it.
-	 * @return ArrayList<String> = all the Storage locations that are like the inputed parameter.
-	 *         each value is the output of a StorageLocation toString method.
+	 * @return ArrayList<StorageLocation>
 	 */
-	/*
-	 * changed output
-	 */
+
 	public ArrayList<StorageLocation> getStorageThatsLike(String like) {
 		PreparedStatement statement;
 		ArrayList<StorageLocation> storage = new ArrayList<>();
@@ -989,12 +959,9 @@ public class WritableDatabase {
 	 * 
 	 * @param where = String, which is the where part of the MySQL statement. note
 	 *              the where word is not needed.
-	 * @return ArrayList<String> = all the storage location that pass the where.
-	 *         each value is the output of a storage location toString method.
+	 * @return ArrayList<StorageLocation>
 	 */
-	/*
-	 * changed output
-	 */
+	
 	public ArrayList<StorageLocation> getStorgeThatMatchesWhere(String where) {
 		PreparedStatement statement;
 		ArrayList<StorageLocation> storage = new ArrayList<>();
@@ -1764,7 +1731,7 @@ if (input.getDishCost() >= minCost) {
 				try {
 					mySqlDatabase
 							.prepareStatement("Insert Into stock_mangemnet.tbl_menu_dishes (dishId, menuId) values ( \'"
-									+ i.getName() + "\', \'" + menu.getName() + "\');")
+									+ i.getDishName() + "\', \'" + menu.getName() + "\');")
 							.execute();
 
 				} catch (SQLException e) {
@@ -1863,11 +1830,13 @@ if (input.getDishCost() >= minCost) {
 
 		return menu;
 	}
-/*
- * new method 
- * used to know if the stock type is still needed
- * false means its not used again
- */
+
+	/**
+	 * user to identify if the passed stock type is used in the database outside of the 
+	 * stock type table.
+	 * @param stockType = string which is the stock type Id looking for
+	 * @return Boolean, = true = is used, false = isn't used.
+	 */
 	public Boolean isStockTypeInUser(String stockType) {
 		PreparedStatement statement;
 		Boolean output = false;
@@ -1897,8 +1866,9 @@ if (input.getDishCost() >= minCost) {
 		
 return output;
 	}
-	/*
-	 * new method
+	/**
+	 * delete a selected stock type
+	 * @param id = String which is the id of a stock type
 	 */
 	public void deleteSelectedStockType(String id) {
 		PreparedStatement statement;

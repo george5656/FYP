@@ -14,9 +14,9 @@ import javafx.scene.text.Font;
  *
  */
 public class AccountFilter extends BasicLayoutFilter {
-private Label txtIsAdmin = new Label("is admin");
-private RadioButton rbYes = new RadioButton("yes");
-private RadioButton rbNo = new RadioButton("no");
+private Label txtIsAdmin = new Label("Is Admin");
+private RadioButton rbYes = new RadioButton("Yes");
+private RadioButton rbNo = new RadioButton("No");
 private ToggleGroup tgYesAndNo = new ToggleGroup();
 private HBox toggleGroupLayout = new HBox();
 private VBox labels;

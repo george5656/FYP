@@ -16,11 +16,11 @@ import javafx.scene.text.Font;
 public class HomePage extends PaneMenu {
 //fields
 	private VBox layout = new VBox(20);
-	private Button btnStock = new Button("stock");
-	private Button btnBudget = new Button("budget");
-	private Button btnAccount = new Button("account");
-	private Button btnMenu = new Button("menu");
-	private Button btnStorage = new Button("storage");
+	private Button btnStock = new Button("Stock");
+	private Button btnBudget = new Button("Budget");
+	private Button btnAccount = new Button("Account");
+	private Button btnMenu = new Button("Menu");
+	private Button btnStorage = new Button("Storage");
 	//constructor 
 	public HomePage() {
 	super.setCenter(layout);
@@ -85,6 +85,12 @@ public class HomePage extends PaneMenu {
 	public void setBtnAccountEventHandler(EventHandler<ActionEvent> Event) {
 		btnAccount.setOnAction(Event);
 	}
+	/**
+	 * changes the layout of the home page to either, chef or admin, based on input.
+	 * admin gets the Storage, Account and budget added to it where as chef or not admin doesn't get 
+	 * them buttons shown.
+	 * @param isAdmin = Boolean  where true = is admin, false = isn't admin
+	 */
 	public void setHomePagetype(Boolean isAdmin) {
 		if(isAdmin && layout.getChildren().size()!=5) {
 			layout.getChildren().addAll(btnStorage,btnAccount,btnBudget);

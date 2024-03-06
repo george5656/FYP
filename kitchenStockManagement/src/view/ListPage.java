@@ -2,6 +2,10 @@ package view;
 
 
 
+import java.util.ArrayList;
+
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
@@ -25,11 +29,11 @@ import javafx.scene.text.Font;
  */
 public class ListPage<E> extends PaneMenu {
 	//fields 
-	private Button btnAdd = new Button("add");
-	private Button btnEdit = new Button("edit");
-	private Button btnDelete = new Button("delete");
-	private Button btnFilter = new Button("filter");
-	private Button btnFind = new Button("find");
+	private Button btnAdd = new Button("Add");
+	private Button btnEdit = new Button("Edit");
+	private Button btnDelete = new Button("Delete");
+	private Button btnFilter = new Button("Filter");
+	private Button btnFind = new Button("Find");
 	private TextField tfFind = new TextField();
 	private Label txtErrorMessage = new Label("Error");
 	private TableView<E> tv = new TableView<>();
@@ -41,7 +45,11 @@ public class ListPage<E> extends PaneMenu {
 	 * default constructor
 	 */
 	public ListPage() {
-	tv.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
+
+		tv.widthProperty().addListener(new EHTableColumSize());
+		// below to stop it changing size
+		tv.setPrefWidth(200);
+		
 		super.setCenter(mainLayout);
 		txtErrorMessage.setVisible(false);
 		mainLayout.getChildren().addAll(list,buttons);
@@ -131,16 +139,8 @@ public void setBtnEditEventHandler(EventHandler<ActionEvent> event) {
 	btnEdit.setOnAction(event);
 }
 /**
- * sets the listView to the passed in data. 
- * @param data = ObservableList<Sting>.
- */
-
-/*
- * comment need updating 
- * 
- * 
- * 
- * 
+ * adds the passed in data structure to the table view
+ * @param data = ObservableList<E> 
  */
 public void setObservableList(ObservableList<E> data) {
 	tv.setItems(data);
@@ -152,16 +152,10 @@ public void setObservableList(ObservableList<E> data) {
 public E getSelection() {
 	return tv.getSelectionModel().getSelectedItem();
 }
+
 /**
- * get the listView which is displayed on this page.
- * @return ListView<String>
- */
-/*
- * comment need updating 
- * 
- * 
- * 
- * 
+ * get the tableView that is displayed
+ * @return TableView<E>
  */
 public TableView<E> getSelectionNode(){
 	return tv;
@@ -201,18 +195,56 @@ public void setErrorMessage(String error) {
 public void resetFindInput() {
 	tfFind.clear();
 }
-/*
- * new column
+
+/**
+ * adds the passed in table columns to the table view
+ * @param columns ArrayList<TableColumn<E,String>>
  */
-public void setTableColumn(TableColumn<E,String> column) {
-	tv.getColumns().add(column);
+public void setTableColumns(ArrayList<TableColumn<E,String>> columns) {
+
+	tv.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
+	
+	tv.getColumns().addAll(columns);
+	
+	
+	tv.getColumns().forEach(column -> {
+		column.setSortable(false);
+		
+	});
+	//needs these as without it,when it reload the width may not change and not get triggered.
+	tv.setColumnResizePolicy(TableView.UNCONSTRAINED_RESIZE_POLICY);
+
 }
 
-
-/*
- * new column
+/**
+ * removed all table columns from the table view.
  */
 public void clearTableColumn() {
 	tv.getColumns().clear();
 }
+
+
+/**
+ * simply used to identify when the table view changes size and adjust all the columns accoridningly
+ * @author Student
+ *
+ */
+private class EHTableColumSize implements ChangeListener<Number> {
+
+	@Override
+	public void changed(ObservableValue<? extends Number> observable, Number oldValue, Number newValue) {
+		tv.getColumns().forEach(x -> x.setPrefWidth(tv.getWidth() / tv.getColumns().size()) );
+		
+	}
+
+}
+
+
+
+
+
+
+
+
+
 }

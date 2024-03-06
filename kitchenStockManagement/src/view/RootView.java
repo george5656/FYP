@@ -60,11 +60,8 @@ public class RootView extends VBox {
 	}
 /**
  * get the stock list page 
- * @return ListPage
+ * @return ListPage<CurrentStock>
  */
-	/*
-	 * output changed
-	 */
 public ListPage<CurrentStock> getStockListPage() {
 	return stockListPage;
 }
@@ -84,10 +81,7 @@ public StockDetails getStockDetails() {
 }
 /**
  * get the account list page 
- * @return ListPage
- */
-/*
- * output chnaged
+ * @return ListPage<Account>
  */
 public ListPage<Account> getAccountListPage() {
 	return accountListPage;
@@ -134,7 +128,9 @@ public MenuFilter getMenuFilter() {
 public MenuSettingPage getMenuSettingPage() {
 	return msp;
 }
+
 /**
+ * reset the menu setting page
  */
 public void clearMenuSettingPage() {
 	msp.resetPage();
@@ -302,21 +298,28 @@ public void setStockListBtnFilterEventHandler(EventHandler<ActionEvent> event) {
  * loads the stock list page
  * it removes any children from the root view VBox, and add self in place so is visible
  * it reset the stock list page
- * the inputed data is then shown in the list view. 
- * @param data = ObservableList<String> each iteration is a string representation of stock
+ * the inputed data is then shown in the table view,
+ * as well as making the tabeColumns and passing them to the table view.
+ * @param data = ObservableList<CurrentStock> each iteration is a string representation of stock
  */
-/*
- * multiple thinsg changed
- */
+
 public void stockListLoad(ObservableList<CurrentStock> data) {
+	stockListPage.setObservableList(data);
+
+	this.getChildren().remove(0);
+	this.getChildren().add(stockListPage);
+	VBox.setVgrow(stockListPage, Priority.ALWAYS);
+	
+	
 	stockListPage.clearTableColumn();
 	
-	TableColumn<CurrentStock, String> name = new TableColumn<>("name");
-	TableColumn<CurrentStock, String> cost = new TableColumn<>("cost");
-	TableColumn<CurrentStock, String> quantityType = new TableColumn<>("quantity type");
-	TableColumn<CurrentStock, String> location = new TableColumn<>("storage Location");
-	TableColumn<CurrentStock, String> quantity = new TableColumn<>("quantity");
-	TableColumn<CurrentStock, String> expiereDate = new TableColumn<>("expiere date");
+	
+	TableColumn<CurrentStock, String> name = new TableColumn<>("Name");
+	TableColumn<CurrentStock, String> cost = new TableColumn<>("Cost");
+	TableColumn<CurrentStock, String> quantityType = new TableColumn<>("Quantity Type");
+	TableColumn<CurrentStock, String> location = new TableColumn<>("Storage Location");
+	TableColumn<CurrentStock, String> quantity = new TableColumn<>("Quantity");
+	TableColumn<CurrentStock, String> expiereDate = new TableColumn<>("Expiere Date");
 	
 	name.setCellValueFactory(new PropertyValueFactory<CurrentStock, String>("name"));
 	cost.setCellValueFactory(new PropertyValueFactory<CurrentStock, String>("cost"));
@@ -325,26 +328,29 @@ public void stockListLoad(ObservableList<CurrentStock> data) {
 	quantity.setCellValueFactory(new PropertyValueFactory<CurrentStock, String>("quanity"));
 	expiereDate.setCellValueFactory(new PropertyValueFactory<CurrentStock, String>("expiereDate"));
 	
+	ArrayList<TableColumn<CurrentStock,String>> tableColumns = new ArrayList<>(); 
 	
-	stockListPage.setTableColumn(name);
-	stockListPage.setTableColumn(cost);
-	stockListPage.setTableColumn(quantityType);
-	stockListPage.setTableColumn(location);
-	stockListPage.setTableColumn(quantity);
-	stockListPage.setTableColumn(expiereDate);
+	tableColumns.add(name);
+	tableColumns.add(cost);
+	tableColumns.add(quantityType);
+	tableColumns.add(location);
+	tableColumns.add(quantity);
+	tableColumns.add(expiereDate);
 	
 	
+	
+	
+	
+	stockListPage.setTableColumns(tableColumns);
 
-
-
-
-	stockListPage.getErrorLabel().setVisible(false);
-	stockListPage.setObservableList(data);
+	
+	stockListPage.getErrorLabel().setVisible(false);	
 	stockListPage.resetFindInput();
-	this.getChildren().remove(0);
-	this.getChildren().add(stockListPage);
-	VBox.setVgrow(stockListPage, Priority.ALWAYS);
+	
+	
+	
 }
+
 /**
  * gets the item that is selected in the listview in the stock list page. 
  * @return String or null. if no item is selected null is returned, else it is the string that is selected.
@@ -352,7 +358,7 @@ public void stockListLoad(ObservableList<CurrentStock> data) {
 public String getStockListSelectedItem() {
 	
 	if(stockListPage.getSelectionNode().getSelectionModel().getSelectedItem()!= null) {
-	return stockListPage.getSelectionNode().getSelectionModel().getSelectedItem().getStockName();
+	return stockListPage.getSelectionNode().getSelectionModel().getSelectedItem().getName();
 	}else {
 		return "null";
 	}
@@ -381,12 +387,8 @@ public void setStockListBtnEditEventHandler(EventHandler<ActionEvent> event) {
 	stockListPage.setBtnEditEventHandler(event);
 }
 /**
- * gets selected value in the listView on the stock list page but only the id part.
- * use id and storage to identify where the id values starts and ends.
- * @return String which is the id of the stock selected in the listView
- */
-/*
- * complete changed it
+ * get the selected value in the table view from the stock list page but only the id part
+ * @return String, which is the id of the stock selected in the table view.
  */
 public String getSelectedStockId() {
 	
@@ -401,12 +403,10 @@ public String getStockListTfFindValue() {
 	return stockListPage.getTfFindValue();
 }
 /**
- * sets the list view in the stock list page 
- * @param data = ObservableList<String> each iteration is a string representation of stock
+ * sets the table view underling data structure in the stock list page 
+ * @param data = ObservableList<CurrentStock> 
  */
-/*
- * input changed
- */
+
 public void setStockListValues(ObservableList<CurrentStock> data) {
 stockListPage.setObservableList(data);
 }
@@ -784,12 +784,9 @@ public String getMenuListSelectedMenu() {
 	}
 }
 /**
- * get the menu which has been selected from the list view in the menu list page, but only gives its id.
+ * get the menu which has been selected from the table view in the menu list page, but only gives its id.
  * 
  * @return String = the selected menu id
- */
-/*
- * complete changed
  */
 public String getMenuListSelectedMenuId() {
 	return menuListPage.getSelectionNode().getSelectionModel().getSelectedItem().getName();
@@ -828,27 +825,24 @@ public void setMenuListErrorMessage(String error) {
 /**
  * loads the menu list page
  * it removes any children from the root view VBox, and add self in place so is visible
- * the inputed data is then shown in the list view. 
- * @param data = ObservableList<String> each iteration is a string representation of menus
- */
-/*
- * input changed
- */
+ * the inputed data is then shown in the table view.
+ * it also make the tableColumns and sets them up in the table view. 
+ * @param data = ObservableList<Menu> 
+*/
+
 public void menuListLoad(ObservableList<Menu> data) {
 	
 	
 	menuListPage.clearTableColumn();
 	
-	TableColumn<Menu, String> name = new TableColumn<>("menu name");
+	TableColumn<Menu, String> name = new TableColumn<>("Menu Name");
 	
+	name.setCellValueFactory(new PropertyValueFactory<Menu, String>("name"));	
+	ArrayList<TableColumn<Menu,String>> tableColumns = new ArrayList<>(); 
 	
-	
-	name.setCellValueFactory(new PropertyValueFactory<Menu, String>("name"));
-	
-	
-	
-	
-	menuListPage.setTableColumn(name);
+	tableColumns.add(name);
+
+	menuListPage.setTableColumns(tableColumns);
 	
 	
 	menuListPage.getErrorLabel().setVisible(false);
@@ -947,12 +941,12 @@ public void MenuDetailsLoad() {
 	
 	menuDetails.clearTablesColumns();
 	
-	TableColumn<Dish, String> dName = new TableColumn<>("name");
-	TableColumn<Dish, String> mName = new TableColumn<>("name");
-	TableColumn<StockType, String> slName = new TableColumn<>("name");
-	TableColumn<StockType, String> slCost = new TableColumn<>("cost");
-	TableColumn<StockType, String> slQuanityType = new TableColumn<>("quantity type");
-	TableColumn<StockType, String> slQuanity = new TableColumn<>("quantity");
+	TableColumn<Dish, String> dName = new TableColumn<>("All Dishes Names");
+	TableColumn<Dish, String> mName = new TableColumn<>("All Dishes In Menu Name");
+	TableColumn<StockType, String> slName = new TableColumn<>("Name");
+	TableColumn<StockType, String> slCost = new TableColumn<>("Cost");
+	TableColumn<StockType, String> slQuanityType = new TableColumn<>("Quantity Type");
+	TableColumn<StockType, String> slQuanity = new TableColumn<>("Quantity");
 	
 	dName.setCellValueFactory(new PropertyValueFactory<Dish, String>("dishName"));
 	mName.setCellValueFactory(new PropertyValueFactory<Dish, String>("dishName"));
@@ -963,11 +957,16 @@ public void MenuDetailsLoad() {
 
 	menuDetails.setDishColumn(dName);
 	menuDetails.setMenuColumn(mName);
-	menuDetails.setShoppingColumn(slName);
-	menuDetails.setShoppingColumn(slCost);
-	menuDetails.setShoppingColumn(slQuanityType);
-	menuDetails.setShoppingColumn(slQuanity);
 	
+	ArrayList<TableColumn<StockType, String>> shoppingColumns = new ArrayList<>();
+	
+	shoppingColumns.add(slName);
+	shoppingColumns.add(slCost);
+	shoppingColumns.add(slQuanityType);
+	shoppingColumns.add(slQuanity);
+	
+	menuDetails.setShoppingColumns(shoppingColumns);
+
 	
 	this.getChildren().remove(0);
 	this.getChildren().add(menuDetails);
@@ -1003,16 +1002,20 @@ public String getMenuDetailsFindUserInput() {
  * @return String = selected items id.
  */
 public String getMenuDetailsDishListSelectedItemValueIdOnly() {
-	return menuDetails.getDishListSelectedValue().getName();
+	return menuDetails.getDishListSelectedValue().getDishName();
 }
-/*
- * new method
+
+/**
+ * gets the selected value name in the menu details shopping list
+ * @return String = Name of the selected stock type from the shopping list
  */
 public String getMenuDetailsShoppingListSelectedItemValueIdOnly() {
 	return menuDetails.getShoppingListSelectedValue().getName();
 }
-/*
- * new method 
+
+/**
+ * get the selected value from the table view in the menu details shopping list 
+ * @return StockType
  */
 public StockType getMenuDetailsShoppungListSelctedItem() {
 	return menuDetails.getShoppingListSelectedValue();
@@ -1023,7 +1026,7 @@ public StockType getMenuDetailsShoppungListSelctedItem() {
  * @return String = selected items id.
  */
 public String getMenuDetailsMenuDishListSelectedItemValueIdOnly() {
-	return menuDetails.getMenuListSelectedValue().getName();
+	return menuDetails.getMenuListSelectedValue().getDishName();
 }
 /**
  * removes the user selection from the menu details lists.
@@ -1055,6 +1058,10 @@ public void setMenuDetailsMenuListItems(ObservableList<Dish> items) {
 public void resetMenuDetailsPage() {
 	menuDetails.resetMenuAndShoppingListContent();
 }
+/**
+ * clears the find text field user input.
+ * its located on the menu details page 
+ */
 public void MenuDetailsRestFindInput() {
 	menuDetails.clearFindUserInput();
 }
@@ -1074,20 +1081,28 @@ public void setMenuDetailsBudgetValue(String amount) {
 public int getMenuDetailsMenuListSelectedIndex() {
 	return menuDetails.getMenuListSelectedIndex();
 }
-/*
- * new method
+
+/**
+ * get the value that is selected, in the menu details menu table view
+ * @return Dish, which the underling data structure holds for that selected value.
  */
 public Dish getMenuDetailsMenuListSelecteditem() {
 	return menuDetails.getMenuListSelectedValue();
 }
-/*
- * new method
+
+/**
+ * get the index of the the item selected in the menu details shopping lst table view
+ * @return int
  */
 public int getMenuDetailsShoppingListSelectedIndex() {
 	return menuDetails.getShoppingListSelectedIndex();
 }
 /*
  * new method 
+ */
+/**
+ * unselects the user selection for the table views, menu and shopping list in the 
+ * menu details page.
  */
 public void unselectMenuDetailsMenuAndshoppingListSelection() {
 	menuDetails.unselectMenuAndshoppingList();
@@ -1352,31 +1367,35 @@ public void setBudgetListBtnAboutEventHandler(EventHandler<ActionEvent> event) {
  * loads the budget list page
  * it removes any children from the root view VBox, and add self in place so is visible
  * it reset the budget list page
- * the inputed data is then shown in the list view. 
- * @param data = ObservableList<String> each iteration is a string representation of budget
- */
-/*
- * input changed
+ * the inputed data is set as the table view, underling data structure,
+ * it also make the table columns for the table view. 
+ * @param data = ObservableList<Budget> 
  */
 
 public void BudgetListLoad(ObservableList<Budget> data) {
 	
 	budgetListPage.clearTableColumn();
 	
-	TableColumn<Budget, String> id = new TableColumn<>("id");
-	TableColumn<Budget, String> amount = new TableColumn<>("amount");
-	TableColumn<Budget, String> start = new TableColumn<>("start date");
-	TableColumn<Budget, String> end = new TableColumn<>("end date");
+	TableColumn<Budget, String> id = new TableColumn<>("Id");
+	TableColumn<Budget, String> amount = new TableColumn<>("Amount");
+	TableColumn<Budget, String> start = new TableColumn<>("Start Date");
+	TableColumn<Budget, String> end = new TableColumn<>("End Date");
 	
 	id.setCellValueFactory(new PropertyValueFactory<Budget, String>("budgetId"));
 	amount.setCellValueFactory(new PropertyValueFactory<Budget, String>("amount"));
 	start.setCellValueFactory(new PropertyValueFactory<Budget, String>("startDate"));
 	end.setCellValueFactory(new PropertyValueFactory<Budget, String>("endDate"));
 	
-	budgetListPage.setTableColumn(id);
-	budgetListPage.setTableColumn(amount);
-	budgetListPage.setTableColumn(start);
-	budgetListPage.setTableColumn(end);
+
+	
+ArrayList<TableColumn<Budget,String>> tableColumns = new ArrayList<>(); 
+	
+	tableColumns.add(id);
+	tableColumns.add(amount);
+	tableColumns.add(start);
+	tableColumns.add(end);
+
+	budgetListPage.setTableColumns(tableColumns);
 	
 	budgetListPage.getErrorLabel().setVisible(false);
 	budgetListPage.setObservableList(data);
@@ -1400,15 +1419,11 @@ public void setBudgetListErrorMessage(String error) {
 	budgetListPage.getErrorLabel().setText(error);
 	budgetListPage.getErrorLabel().setVisible(true);
 }
+
 /**
- * get the selected  budget id.
- * selection is made on the budget list view. 
- * it use words "id" and "amount" to identify where id is
- * 
- * @return String which is the selected budget id.
- */
-/*
- * complete changed
+ * get the id of the selected value, from the table view which is 
+ * located in the budget list page. 
+ * @return String, which is the id of the selected item.
  */
 public String getSelectedBudgetId() {
 	
@@ -1506,14 +1521,14 @@ public String getBudgetDetailsInputtedEndDate() {
 public LocalDate getBudgetDetailsInputtedStartDateAsLocalDate() {
 	return bdp.getStartDate().getValue();
 }
-/*
- * new
+/**
+ * reset the date picker value in the budget details page
  */
 public void resetBudgetDetailsPageDatePickers() {
 	bdp.resetDatePickers();
 }
-/*
- * new
+/**
+ * reset the date picker value in the stock details page
  */
 public void resetStockDetailsPageDatePicker() {
 	sd.resetDatePicker();
@@ -1726,29 +1741,35 @@ public void setStorgaeLocationListBtnFindEventHandler(EventHandler<ActionEvent> 
  * loads the storage location list page
  * it removes any children from the root view VBox, and add self in place so is visible
  * it reset the storage list page
- * the inputed data is then shown in the list view. 
- * @param storageLocations = ObservableList<String> each iteration is a string representation of a storage location.
+ *the input is the passed to the table view to be its underling data structure. 
+ *it also make the table columns for table view.
+ * @param storageLocations = ObservableList<StorageLocation>
  */
-/*
- * input changed
- */
+
 
 public void storgaeLocationListLoad(ObservableList<StorageLocation> storageLocations) {
 	
 	storageLocationListPage.clearTableColumn();
 	
-	TableColumn<StorageLocation, String> name = new TableColumn<>("name");
-	TableColumn<StorageLocation, String> type = new TableColumn<>("type");
-	TableColumn<StorageLocation, String> available = new TableColumn<>("is avaible");
+	TableColumn<StorageLocation, String> name = new TableColumn<>("Name");
+	TableColumn<StorageLocation, String> type = new TableColumn<>("Type");
+	TableColumn<StorageLocation, String> available = new TableColumn<>("Is Avaible");
 	
 	name.setCellValueFactory(new PropertyValueFactory<StorageLocation, String>("name"));
 	type.setCellValueFactory(new PropertyValueFactory<StorageLocation, String>("type"));
 	available.setCellValueFactory(new PropertyValueFactory<StorageLocation, String>("isAvailble"));
 	
 	
-	storageLocationListPage.setTableColumn(name);
-	storageLocationListPage.setTableColumn(type);
-	storageLocationListPage.setTableColumn(available);
+
+ArrayList<TableColumn<StorageLocation,String>> tableColumns = new ArrayList<>(); 
+	
+	tableColumns.add(name);
+	tableColumns.add(type);
+	tableColumns.add(available);
+	
+	
+	storageLocationListPage.setTableColumns(tableColumns);
+	
 	
 	storageLocationListPage.getErrorLabel().setVisible(false);
 	storageLocationListPage.setObservableList(storageLocations);
@@ -1798,6 +1819,12 @@ public String getStorageListSelectedItem() {
  */
 /*
  * complete changed
+ */
+/**
+ * get the selected item name.
+ * the selection is the one made in the storage location list page,
+ * by selecting an item in the table view.
+ * @return string, which is the selected value name.
  */
 public String getSelectedStorageId() {
 	
@@ -2016,14 +2043,13 @@ public String getAccountListSelectedItem() {
 /**
  * 
  * get the selected account name only
- * account is selected on the account list page in the list view.
- * it then take that value and get the account name it showed.
+ * account is selected on the account list page in the table view.
+ * it then gets the underling data structure item that was selected and gets 
+ * its name
  * 
- * @return String = account name only.
+ * @return String = account name.
  */
-/*
- * completely changed
- */
+
 public String getSelectedAccountName() {
 	
 	return accountListPage.getSelection().getUsername();
@@ -2034,17 +2060,15 @@ public String getSelectedAccountName() {
  * loads the account list page
  * it removes any children from the root view VBox, and add self in place so is visible
  * it reset the account list page
- * the inputed data is then shown in the list view. 
- * @param data = ObservableList<String> each iteration is a string representation of a account
- */
-/*
- * input chnaged
+ * the inputed data is set as the table view underling data.
+ * it also make the table columns which are set in the table view.
+ * @param data = ObservableList<Account> 
  */
 public void accountListLoad(ObservableList<Account> data) {
 	accountListPage.clearTableColumn();
 	
-	TableColumn<Account, String> username = new TableColumn<>("username");
-	TableColumn<Account, String> isAccountAdmin = new TableColumn<>("is account admin");
+	TableColumn<Account, String> username = new TableColumn<>("Username");
+	TableColumn<Account, String> isAccountAdmin = new TableColumn<>("Is Account Admin");
 	
 	
 	username.setCellValueFactory(new PropertyValueFactory<Account, String>("username"));
@@ -2052,9 +2076,16 @@ public void accountListLoad(ObservableList<Account> data) {
 	
 	
 	
-	accountListPage.setTableColumn(username);
-	accountListPage.setTableColumn(isAccountAdmin);
+
 	
+	
+ArrayList<TableColumn<Account,String>> tableColumns = new ArrayList<>(); 
+	
+	tableColumns.add(username);
+	tableColumns.add(isAccountAdmin);
+	
+	
+	accountListPage.setTableColumns(tableColumns);
 	
 	accountListPage.getErrorLabel().setVisible(false);
 	accountListPage.setObservableList(data);
@@ -2238,10 +2269,10 @@ public void dishDetailsLoad() {
 
 	ddp.clearTableColumn();
 	
-	TableColumn<StockType, String> name = new TableColumn<>("name");
-	TableColumn<StockType, String> cost = new TableColumn<>("cost");
-	TableColumn<StockType, String> quantityType = new TableColumn<>("quantity type");
-	TableColumn<StockType, String> quanity = new TableColumn<>("quantity");
+	TableColumn<StockType, String> name = new TableColumn<>("Name");
+	TableColumn<StockType, String> cost = new TableColumn<>("Cost");
+	TableColumn<StockType, String> quantityType = new TableColumn<>("Quantity Type");
+	TableColumn<StockType, String> quanity = new TableColumn<>("Quantity");
 	
 	
 	name.setCellValueFactory(new PropertyValueFactory<StockType, String>("name"));
@@ -2252,10 +2283,14 @@ public void dishDetailsLoad() {
 	
 	ddp.setDishNameLabel("No dish name");
 	
-	ddp.setTableColumn(name);
-	ddp.setTableColumn(cost);
-	ddp.setTableColumn(quantityType);
-	ddp.setTableColumn(quanity);
+	
+	ArrayList<TableColumn<StockType, String>> tableColumns = new ArrayList<>();
+	tableColumns.add(name);
+	tableColumns.add(cost);
+	tableColumns.add(quantityType);
+	tableColumns.add(quanity);
+			
+	ddp.setTableColumns(tableColumns);
 	
 	
 	
@@ -2271,6 +2306,9 @@ public void dishDetailsLoad() {
 public void setDishDetailsErrorMessage(String errorMessage) {
 	ddp.setErrorMessage(errorMessage);
 }
+/**
+ * hides the label that represent the error message on dish details page
+ */
 public void setDishDetailsErrorMessageFalse() {
 	ddp.hideErrorMessage();
 }
@@ -2357,11 +2395,10 @@ public String getDishDetailsEstimateCost() {
 	return ddp.getEstimatedCost();
 }
 /**
- * sets the dish details list view
- * @param ingredents = ObservableList<String> = the elements wants the list view to show
- */
-/*
- * changed return type
+ * sets the dish details page table view underling data structure, and the 
+ * label that displays the dish name to the dish name input parameter.
+ * @param ingredents = observableList<StockType>
+ * @param dishName = String this is the name of the dish name
  */
 public void setDishDetailsList(ObservableList<StockType> ingredents,String dishName) {
 	ddp.setIngredentList(ingredents);
@@ -2394,12 +2431,9 @@ public void dishDetailsAddReset() {
 	ddp.addReset();
 }
 /**
- * gets the item which has been selected in the list view.
- * the list view is located in the dish details page
- * @return String which is the string the user has selected.
- */
-/*
- * changed output
+ * gets the item which has been selected in the table view.
+ * the table view is located in the dish details page
+ * @return StockType
  */
 public StockType getDishDetailsSelectedItem() {
 	return ddp.getSelectedValue();

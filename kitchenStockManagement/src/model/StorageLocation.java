@@ -45,14 +45,15 @@ public class StorageLocation {
 	}
 /**
  * gets the value in isAvailble var
- * @return Boolean, true = is admin, false = isnt admin 
+ * @return Boolean, true = is Availble, false = isnt available 
  */
 	public Boolean getAvailbility() {
 		return isAvailble;
 	}
-	/*
-	 * need for the tableView
-	 */
+/**
+ * gets a string representation of the value in isAvailable
+ * @return Sting, which is either true or false
+ */
 	public String getIsAvailble() {
 		return String.valueOf(isAvailble);
 	}

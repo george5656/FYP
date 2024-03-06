@@ -18,14 +18,14 @@ import javafx.scene.text.Font;
  *
  */
 public class StockFilter extends BasicLayoutFilter {
-private Label txtStorageLocation = new Label("Storage location");
-private Label txtStockType = new Label("stock type");
-private Label txtMinQuanity = new Label("have more quantity than");
-private Label txtMaxQuanity = new Label("have less quantity than");
-private Label txtExpiereAfterDate = new Label("expires after");
-private Label txtExpiereBeforeDate = new Label("expires before");
-private Label txtAboveCost = new Label("cost more than");
-private Label txtBelowCost = new Label("cost less than");
+private Label txtStorageLocation = new Label("Storage Location");
+private Label txtStockType = new Label("Stock Type");
+private Label txtMinQuanity = new Label("Have More Quantity Than");
+private Label txtMaxQuanity = new Label("Have Less Quantity Than");
+private Label txtExpiereAfterDate = new Label("Expires After");
+private Label txtExpiereBeforeDate = new Label("Expires Before");
+private Label txtAboveCost = new Label("Cost More Than");
+private Label txtBelowCost = new Label("Cost Less Than");
 private TextField tfMinQuanity = new TextField();
 private TextField tfMaxQuanity = new TextField();
 private TextField tfAboveCost = new TextField();

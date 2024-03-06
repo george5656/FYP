@@ -16,10 +16,10 @@ import javafx.scene.text.Font;
  *
  */
 public class MenuFilter extends BasicLayoutFilter {
-private Label txtTotalCostBelow = new Label("total cost below");
-private Label txtTotalCostAbove = new Label("total cost above");
-private Label txtContainsDish = new Label("contains dish");
-private Label txtDoesntContainDish = new Label("doesn't contain dish");
+private Label txtTotalCostBelow = new Label("Total Cost Below");
+private Label txtTotalCostAbove = new Label("Total Cost Above");
+private Label txtContainsDish = new Label("Contains Dish");
+private Label txtDoesntContainDish = new Label("Doesn't Dontain Dish");
 private TextField tfTotalCostBelow = new TextField();
 private TextField tfTotalCostAbove = new TextField();
 private TextField tfContainsDish = new TextField();

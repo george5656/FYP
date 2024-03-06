@@ -40,15 +40,10 @@ public void addStockType(StockType st) {
  * gets the value from the dishName var.
  * @return String, that represent this dishes name.
  */
-public String getName() {
+public String getDishName() {
 	return dishName;
 }
-/*
- * for table view
- */
-public String getDishName() {
-return dishName;
-}
+
 /**
  * gets the stock type associated with the dish as a string. 
  * the format is the output of the toStringDishDetails() method in stockType class.

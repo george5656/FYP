@@ -23,9 +23,9 @@ public class PaneMenu extends BorderPane {
 	 */
 	// private ButtonBar mb = new ButtonBar();
 	private HBox mb = new HBox(0);
-	private Button btnHome = new Button("home");
-	private Button btnAbout = new Button("about");
-	private Button btnLogout = new Button("logout");
+	private Button btnHome = new Button("Home");
+	private Button btnAbout = new Button("About");
+	private Button btnLogout = new Button("Logout");
 	private ArrayList<Button> controls = new ArrayList<>();
 
 	/**
