@@ -96,7 +96,8 @@ public StockFilter() {
 		i.setAlignment(Pos.CENTER);
 	}
 
-	
+	getBtnCancel().setFont(new Font(20));
+	getBtnSave().setFont(new Font(20));
 }
 /**
  * get the min quantity textField.

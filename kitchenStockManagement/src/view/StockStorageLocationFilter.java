@@ -55,7 +55,8 @@ public StockStorageLocationFilter() {
 	rbNo.setMaxSize(Double.MAX_VALUE, Double.MAX_VALUE);
 	cbType.setMaxSize(Double.MAX_VALUE, Double.MAX_VALUE);
 	cbType.setPrefWidth(300);
-		
+	cbType.setId("sfCB");
+	
 	VBox.setVgrow(rbYes,Priority.ALWAYS);
 		VBox.setVgrow(rbNo,Priority.ALWAYS);
 		VBox.setVgrow(cbType,Priority.ALWAYS);
@@ -63,6 +64,7 @@ public StockStorageLocationFilter() {
 		VBox.setVgrow(toggleGroupLayout, Priority.ALWAYS);
 	rbYes.setFont(new Font(30));
 	rbNo.setFont(new Font(30));
+	
 	
 	rbYes.setAlignment(Pos.CENTER);
 	rbNo.setAlignment(Pos.CENTER);

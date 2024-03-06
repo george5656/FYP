@@ -10,9 +10,6 @@
 .combo-box .text-field {
 -fx-font-size: 20;
 }
-.combo-box .text-field .list-cell {
--fx-font-size: 20;
-}
 .combo-box .text-input .list-cell {
 -fx-font-size: 20;
 }
@@ -34,4 +31,5 @@
 .table-view .table-cell{
   -fx-alignment: CENTER;
 }
+
 

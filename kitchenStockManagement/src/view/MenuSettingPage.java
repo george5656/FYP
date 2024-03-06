@@ -54,9 +54,12 @@ public MenuSettingPage() {
 	cbBudget.setPrefWidth(300);
 	//cbBudget.setMaxSize(Double.MAX_VALUE, Double.MAX_VALUE);
 
+	
+	
 	txtName.setFont(new Font(30));
 	txtBudget.setFont(new Font(30));
 	tfName.setFont(new Font(30));
+	
 	
 	txtName.setAlignment(Pos.CENTER);
 	txtBudget.setAlignment(Pos.CENTER);

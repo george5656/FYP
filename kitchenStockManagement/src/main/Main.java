@@ -8,7 +8,7 @@ import model.ModelRoot;
 import view.RootView;
 /**
  * is the main method for the kitchen stock management system.
- * @author George
+ * @author Georgettest
  *
  */
 public class Main extends Application {

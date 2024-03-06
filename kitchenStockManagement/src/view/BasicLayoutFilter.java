@@ -11,7 +11,7 @@ import javafx.scene.control.Button;
  *
  */
 public class BasicLayoutFilter extends BasicLayoutDetails {
-	private Button btnApply = getbtnSave();
+	private Button btnApply = getBtnSave();
 	/**
 	 * default constructor, 
 	 * simply changes the save button text to apply
