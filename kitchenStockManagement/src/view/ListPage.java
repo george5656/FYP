@@ -4,6 +4,8 @@ package view;
 
 import java.util.ArrayList;
 
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
@@ -44,7 +46,10 @@ public class ListPage<E> extends PaneMenu {
 	 */
 	public ListPage() {
 
-
+		tv.widthProperty().addListener(new EHTableColumSize());
+		// below to stop it changing size
+		tv.setPrefWidth(200);
+		
 		super.setCenter(mainLayout);
 		txtErrorMessage.setVisible(false);
 		mainLayout.getChildren().addAll(list,buttons);
@@ -197,25 +202,17 @@ public void resetFindInput() {
  */
 public void setTableColumns(ArrayList<TableColumn<E,String>> columns) {
 
-	/*
-	 * this first policy means when the table view is made it 
-	*will make all the columns take up the full space of the table view, excally
-	*/
+	tv.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
 	
 	tv.getColumns().addAll(columns);
-	/*
-	 * this one (below) means now the tables columns can be grown and wont be limited
-	 * to the tableview size.
-	 */
-	tv.setColumnResizePolicy(TableView.UNCONSTRAINED_RESIZE_POLICY);
-	//pref width, simply so when it picks it will go to that but the user can change it
-	// needs to be proeproty so have the bind method front he beans library
-	// has to be divided as bind must be with a property so cant use / 
 	
 	
 	tv.getColumns().forEach(column -> {
 		column.setSortable(false);
+		
 	});
+	//needs these as without it,when it reload the width may not change and not get triggered.
+	tv.setColumnResizePolicy(TableView.UNCONSTRAINED_RESIZE_POLICY);
 
 }
 
@@ -225,5 +222,29 @@ public void setTableColumns(ArrayList<TableColumn<E,String>> columns) {
 public void clearTableColumn() {
 	tv.getColumns().clear();
 }
+
+
+/**
+ * simply used to identify when the table view changes size and adjust all the columns accoridningly
+ * @author Student
+ *
+ */
+private class EHTableColumSize implements ChangeListener<Number> {
+
+	@Override
+	public void changed(ObservableValue<? extends Number> observable, Number oldValue, Number newValue) {
+		tv.getColumns().forEach(x -> x.setPrefWidth(tv.getWidth() / tv.getColumns().size()) );
+		
+	}
+
+}
+
+
+
+
+
+
+
+
 
 }

@@ -837,20 +837,11 @@ public void menuListLoad(ObservableList<Menu> data) {
 	
 	TableColumn<Menu, String> name = new TableColumn<>("Menu Name");
 	
-	
-	
-	name.setCellValueFactory(new PropertyValueFactory<Menu, String>("name"));
-	
-	
-	
-	
-	
-	
-ArrayList<TableColumn<Menu,String>> tableColumns = new ArrayList<>(); 
+	name.setCellValueFactory(new PropertyValueFactory<Menu, String>("name"));	
+	ArrayList<TableColumn<Menu,String>> tableColumns = new ArrayList<>(); 
 	
 	tableColumns.add(name);
 
-	
 	menuListPage.setTableColumns(tableColumns);
 	
 	

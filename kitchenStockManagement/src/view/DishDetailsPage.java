@@ -2,6 +2,8 @@ package view;
 
 import java.util.ArrayList;
 
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
@@ -56,6 +58,13 @@ private Label txtSetDishName = new Label("No dish name");
  * default constructor
  */
 DishDetailsPage(){
+	
+	
+	
+	tvIngredients.widthProperty().addListener(new EHTableColumSize());
+	tvIngredients.setPrefWidth(200);
+	
+	
 	super.setCenter(mainLayout);
 	mainLayout.getChildren().addAll(list,userInput);
 	list.getChildren().addAll(txtSetDishName,tvIngredients,txtErrorMessage);
@@ -144,7 +153,7 @@ DishDetailsPage(){
  
 	
 	tvIngredients.setPlaceholder(new Label("No data"));
-	tvIngredients.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
+	
 }
 /**
  * sets the save button event handler 
@@ -221,8 +230,10 @@ public String getEstimatedCost() {
  * @param ingredents = ObservableList<StockType>, which values are shown in the tableView.
  */
 public void setIngredentList(ObservableList<StockType> ingredents) {
+	tvIngredients.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
 	tvIngredients.getItems().clear();
 	tvIngredients.getItems().addAll(ingredents);
+	tvIngredients.setColumnResizePolicy(TableView.UNCONSTRAINED_RESIZE_POLICY);
 }
 /**
  * get the index of the item selected in the listView
@@ -315,10 +326,12 @@ public void clearTableColumn() {
  * @param columns = ArrayList<TableColumn<StockType,String>>
  */
 public void setTableColumns(ArrayList<TableColumn<StockType,String>> columns) {
+	tvIngredients.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
 	tvIngredients.getColumns().addAll(columns);
 	tvIngredients.getColumns().forEach(column -> {
 		column.setSortable(false);
-	});
+		});
+	tvIngredients.setColumnResizePolicy(TableView.UNCONSTRAINED_RESIZE_POLICY);
 }
 /**
  * sets the dish name label text
@@ -326,5 +339,21 @@ public void setTableColumns(ArrayList<TableColumn<StockType,String>> columns) {
  */
 public void setDishNameLabel(String dishName) {
 	txtSetDishName.setText(dishName);
+}
+
+
+/**
+ * simply used to identify when the table view changes size and adjust all the columns accoridningly
+ * @author Student
+ *
+ */
+private class EHTableColumSize implements ChangeListener<Number> {
+
+	@Override
+	public void changed(ObservableValue<? extends Number> observable, Number oldValue, Number newValue) {
+		tvIngredients.getColumns().forEach(x -> x.setPrefWidth(tvIngredients.getWidth() / tvIngredients.getColumns().size()) );
+		
+	}
+
 }
 }

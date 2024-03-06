@@ -2,6 +2,8 @@ package view;
 
 import java.util.ArrayList;
 
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
@@ -64,6 +66,25 @@ private HBox fAndO = new HBox(20);
 	 * default constructor
 	 */
 	public MenuDetails() {
+		
+		
+		tvDishes.setPrefWidth(200);
+		tvMenu.setPrefWidth(200);
+		tvShopping.setPrefWidth(200);
+		
+		
+		tvDishes.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
+		tvMenu.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
+		tvShopping.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
+		
+		
+		
+		tvDishes.widthProperty().addListener(new EHDishListSize());
+		tvMenu.widthProperty().addListener(new EHMenuListSize());
+		tvShopping.widthProperty().addListener(new EHShopingListSize());
+		
+		
+		
 		super.setCenter(mainLayout);
 		mainLayout.getChildren().addAll(lists,initialSplit);
 		initialSplit.getChildren().addAll(budgetAndFind,buttons);
@@ -170,9 +191,6 @@ private HBox fAndO = new HBox(20);
 	tvMenu.setPlaceholder(new Label("empty menu items list"));
 	tvShopping.setPlaceholder(new Label("empty shopping list"));
 	
-	tvDishes.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
-	tvMenu.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
-	tvShopping.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
 	
 	
 	}
@@ -396,11 +414,13 @@ private HBox fAndO = new HBox(20);
 	 * @param column = TableColumn<Dish, String>
 	 */
 	public void setDishColumn(TableColumn<Dish, String> column) {
+		tvDishes.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
 		tvDishes.getColumns().add(column);
 		//ec = existing column
 		tvDishes.getColumns().forEach(ec -> {
 			ec.setSortable(false);
-		});
+			});
+		tvDishes.setColumnResizePolicy(TableView.UNCONSTRAINED_RESIZE_POLICY);
 	}
 	/**
 	 * sets the Table columns for the the menu list table view
@@ -408,10 +428,12 @@ private HBox fAndO = new HBox(20);
 	 * @param column = TableColumn<Dish, String>
 	 */
 	public void setMenuColumn(TableColumn<Dish, String> column) {
+		tvMenu.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
 		tvMenu.getColumns().add(column);
 		tvMenu.getColumns().forEach(ec -> {
 			ec.setSortable(false);
-		});
+			});
+		tvMenu.setColumnResizePolicy(TableView.UNCONSTRAINED_RESIZE_POLICY);
 	}
 	/**
 	 * sets the Table columns for the the shopping list table view.
@@ -419,10 +441,12 @@ private HBox fAndO = new HBox(20);
 	 * @param column = ArrayList<TableColumn<StockType, String>>
 	 */
 	public void setShoppingColumns(ArrayList<TableColumn<StockType, String>> columns) {
+		tvShopping.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
 		tvShopping.getColumns().addAll(columns);
 		tvShopping.getColumns().forEach(column -> {
 			column.setSortable(false);
-		});
+			});
+		tvShopping.setColumnResizePolicy(TableView.UNCONSTRAINED_RESIZE_POLICY);
 	}
 	
 	/**
@@ -433,4 +457,52 @@ private HBox fAndO = new HBox(20);
 		tvMenu.getSelectionModel().clearSelection();
 	}
 	
+	
+	/**
+	 * simply resize the shopping list column when every the shopping list table 
+	 * view changes
+	 * @author Student
+	 *
+	 */
+	private class EHShopingListSize implements ChangeListener<Number> {
+
+		@Override
+		public void changed(ObservableValue<? extends Number> observable, Number oldValue, Number newValue) {
+			tvShopping.getColumns().forEach(x -> x.setPrefWidth(tvShopping.getWidth() / tvShopping.getColumns().size()) );
+			
+		}
+
+	}
+	/**
+	 * simply resize the dish list column when every the shopping list table 
+	 * view changes
+	 * @author Student
+	 *
+	 */
+	private class EHDishListSize implements ChangeListener<Number> {
+
+		@Override
+		public void changed(ObservableValue<? extends Number> observable, Number oldValue, Number newValue) {
+			tvDishes.getColumns().forEach(x -> x.setPrefWidth(tvDishes.getWidth()) );
+			
+		}
+
+	}
+	/**
+	 * simply resize the menu list column when every the shopping list table 
+	 * view changes
+	 * @author Student
+	 *
+	 */
+	private class EHMenuListSize implements ChangeListener<Number> {
+
+		@Override
+		public void changed(ObservableValue<? extends Number> observable, Number oldValue, Number newValue) {
+			tvMenu.getColumns().forEach(x ->{ x.setPrefWidth(tvMenu.getWidth());
+			
+			
+		});
+
+	}
+	}
 }
