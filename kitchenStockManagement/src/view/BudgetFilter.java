@@ -18,12 +18,12 @@ import javafx.scene.text.Font;
  *
  */
 	public class BudgetFilter extends BasicLayoutFilter  {
-	private Label txtMinAmount = new Label("Budget has more than");
-	private Label txtMaxAmount = new Label("Budget has less than");
-	private Label txtStartBefore = new Label("Starts before");
-	private Label txtStartAfter = new Label("Starts after");
-	private Label txtEndsBefore = new Label("Ends before");
-	private Label txtEndsAfter = new Label("Ends after");
+	private Label txtMinAmount = new Label("Budget Has More Than");
+	private Label txtMaxAmount = new Label("Budget Has Less Than");
+	private Label txtStartBefore = new Label("Starts Before");
+	private Label txtStartAfter = new Label("Starts After");
+	private Label txtEndsBefore = new Label("Ends Before");
+	private Label txtEndsAfter = new Label("Ends After");
 	private TextField tfMinAmount = new TextField();
 	private TextField tfMaxAmount = new TextField();
 	private DatePicker dpStartBefore = new DatePicker();

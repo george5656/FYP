@@ -17,7 +17,7 @@ public class BasicLayoutFilter extends BasicLayoutDetails {
 	 * simply changes the save button text to apply
 	 */
 	public BasicLayoutFilter() {
-		 btnApply.setText("apply");
+		 btnApply.setText("Apply");
 	}
 	/**
 	 * sets the apply button event handler 

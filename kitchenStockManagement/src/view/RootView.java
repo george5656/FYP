@@ -306,12 +306,12 @@ public void setStockListBtnFilterEventHandler(EventHandler<ActionEvent> event) {
 public void stockListLoad(ObservableList<CurrentStock> data) {
 	stockListPage.clearTableColumn();
 	
-	TableColumn<CurrentStock, String> name = new TableColumn<>("name");
-	TableColumn<CurrentStock, String> cost = new TableColumn<>("cost");
-	TableColumn<CurrentStock, String> quantityType = new TableColumn<>("quantity type");
-	TableColumn<CurrentStock, String> location = new TableColumn<>("storage Location");
-	TableColumn<CurrentStock, String> quantity = new TableColumn<>("quantity");
-	TableColumn<CurrentStock, String> expiereDate = new TableColumn<>("expiere date");
+	TableColumn<CurrentStock, String> name = new TableColumn<>("Name");
+	TableColumn<CurrentStock, String> cost = new TableColumn<>("Cost");
+	TableColumn<CurrentStock, String> quantityType = new TableColumn<>("Quantity Type");
+	TableColumn<CurrentStock, String> location = new TableColumn<>("Storage Location");
+	TableColumn<CurrentStock, String> quantity = new TableColumn<>("Quantity");
+	TableColumn<CurrentStock, String> expiereDate = new TableColumn<>("Expiere Date");
 	
 	name.setCellValueFactory(new PropertyValueFactory<CurrentStock, String>("name"));
 	cost.setCellValueFactory(new PropertyValueFactory<CurrentStock, String>("cost"));
@@ -819,7 +819,7 @@ public void menuListLoad(ObservableList<Menu> data) {
 	
 	menuListPage.clearTableColumn();
 	
-	TableColumn<Menu, String> name = new TableColumn<>("menu name");
+	TableColumn<Menu, String> name = new TableColumn<>("Menu Name");
 	
 	
 	
@@ -927,12 +927,12 @@ public void MenuDetailsLoad() {
 	
 	menuDetails.clearTablesColumns();
 	
-	TableColumn<Dish, String> dName = new TableColumn<>("name");
-	TableColumn<Dish, String> mName = new TableColumn<>("name");
-	TableColumn<StockType, String> slName = new TableColumn<>("name");
-	TableColumn<StockType, String> slCost = new TableColumn<>("cost");
-	TableColumn<StockType, String> slQuanityType = new TableColumn<>("quantity type");
-	TableColumn<StockType, String> slQuanity = new TableColumn<>("quantity");
+	TableColumn<Dish, String> dName = new TableColumn<>("All Dishes Names");
+	TableColumn<Dish, String> mName = new TableColumn<>("All Dishes In Menu Name");
+	TableColumn<StockType, String> slName = new TableColumn<>("Name");
+	TableColumn<StockType, String> slCost = new TableColumn<>("Cost");
+	TableColumn<StockType, String> slQuanityType = new TableColumn<>("Quantity Type");
+	TableColumn<StockType, String> slQuanity = new TableColumn<>("Quantity");
 	
 	dName.setCellValueFactory(new PropertyValueFactory<Dish, String>("dishName"));
 	mName.setCellValueFactory(new PropertyValueFactory<Dish, String>("dishName"));
@@ -1357,10 +1357,10 @@ public void BudgetListLoad(ObservableList<Budget> data) {
 	
 	budgetListPage.clearTableColumn();
 	
-	TableColumn<Budget, String> id = new TableColumn<>("id");
-	TableColumn<Budget, String> amount = new TableColumn<>("amount");
-	TableColumn<Budget, String> start = new TableColumn<>("start date");
-	TableColumn<Budget, String> end = new TableColumn<>("end date");
+	TableColumn<Budget, String> id = new TableColumn<>("Id");
+	TableColumn<Budget, String> amount = new TableColumn<>("Amount");
+	TableColumn<Budget, String> start = new TableColumn<>("Start Date");
+	TableColumn<Budget, String> end = new TableColumn<>("End Date");
 	
 	id.setCellValueFactory(new PropertyValueFactory<Budget, String>("budgetId"));
 	amount.setCellValueFactory(new PropertyValueFactory<Budget, String>("amount"));
@@ -1726,9 +1726,9 @@ public void storgaeLocationListLoad(ObservableList<StorageLocation> storageLocat
 	
 	storageLocationListPage.clearTableColumn();
 	
-	TableColumn<StorageLocation, String> name = new TableColumn<>("name");
-	TableColumn<StorageLocation, String> type = new TableColumn<>("type");
-	TableColumn<StorageLocation, String> available = new TableColumn<>("is avaible");
+	TableColumn<StorageLocation, String> name = new TableColumn<>("Name");
+	TableColumn<StorageLocation, String> type = new TableColumn<>("Type");
+	TableColumn<StorageLocation, String> available = new TableColumn<>("Is Avaible");
 	
 	name.setCellValueFactory(new PropertyValueFactory<StorageLocation, String>("name"));
 	type.setCellValueFactory(new PropertyValueFactory<StorageLocation, String>("type"));
@@ -2035,8 +2035,8 @@ public String getSelectedAccountName() {
 public void accountListLoad(ObservableList<Account> data) {
 	accountListPage.clearTableColumn();
 	
-	TableColumn<Account, String> username = new TableColumn<>("username");
-	TableColumn<Account, String> isAccountAdmin = new TableColumn<>("is account admin");
+	TableColumn<Account, String> username = new TableColumn<>("Username");
+	TableColumn<Account, String> isAccountAdmin = new TableColumn<>("Is Account Admin");
 	
 	
 	username.setCellValueFactory(new PropertyValueFactory<Account, String>("username"));
@@ -2230,10 +2230,10 @@ public void dishDetailsLoad() {
 
 	ddp.clearTableColumn();
 	
-	TableColumn<StockType, String> name = new TableColumn<>("name");
-	TableColumn<StockType, String> cost = new TableColumn<>("cost");
-	TableColumn<StockType, String> quantityType = new TableColumn<>("quantity type");
-	TableColumn<StockType, String> quanity = new TableColumn<>("quantity");
+	TableColumn<StockType, String> name = new TableColumn<>("Name");
+	TableColumn<StockType, String> cost = new TableColumn<>("Cost");
+	TableColumn<StockType, String> quantityType = new TableColumn<>("Quantity Type");
+	TableColumn<StockType, String> quanity = new TableColumn<>("Quantity");
 	
 	
 	name.setCellValueFactory(new PropertyValueFactory<StockType, String>("name"));

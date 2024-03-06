@@ -18,13 +18,13 @@ import javafx.scene.text.Font;
  *
  */
 public class AccountDetails extends BasicLayoutDetails {
-	private Label txtUsername = new Label("username");
-	private Label txtPassword = new Label("password");
-	private Label txtIsAdmin = new Label("is admin");
+	private Label txtUsername = new Label("Username");
+	private Label txtPassword = new Label("Password");
+	private Label txtIsAdmin = new Label("Is Admin");
 	private TextField tfUserName = new TextField();
 	private PasswordField pfPassword = new PasswordField();
-	private RadioButton rbYes = new RadioButton("yes");
-	private RadioButton rbNo = new RadioButton("no");
+	private RadioButton rbYes = new RadioButton("Yes");
+	private RadioButton rbNo = new RadioButton("No");
 	private ToggleGroup tgYesAndNo = new ToggleGroup();
 	private ArrayList<Label> labelList = new ArrayList<>();
 	private HBox rbLayout = new HBox();

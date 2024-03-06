@@ -16,10 +16,10 @@ import javafx.scene.text.Font;
  *
  */
 public class FilterDishes extends BasicLayoutFilter {
-private Label txtTotalCostAbove = new Label("total cost more than");
-private Label txtTotalCostBelow = new Label("total cost less than");
-private Label txtNumberOfItemsBelow = new Label("number ingredieds below");
-private Label txtNumberOfItemsAbove = new Label("number ingredieds above");
+private Label txtTotalCostAbove = new Label("Total Cost More Than");
+private Label txtTotalCostBelow = new Label("Total Cost Less Than");
+private Label txtNumberOfItemsBelow = new Label("Number Ingredieds Below");
+private Label txtNumberOfItemsAbove = new Label("Number Ingredieds Above");
 private TextField tfTotalCostAbove = new TextField();
 private TextField tfTotalCostBelow = new TextField();
 private TextField tfNumberOfItemsBelow = new TextField();

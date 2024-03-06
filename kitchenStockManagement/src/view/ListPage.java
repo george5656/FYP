@@ -25,11 +25,11 @@ import javafx.scene.text.Font;
  */
 public class ListPage<E> extends PaneMenu {
 	//fields 
-	private Button btnAdd = new Button("add");
-	private Button btnEdit = new Button("edit");
-	private Button btnDelete = new Button("delete");
-	private Button btnFilter = new Button("filter");
-	private Button btnFind = new Button("find");
+	private Button btnAdd = new Button("Add");
+	private Button btnEdit = new Button("Edit");
+	private Button btnDelete = new Button("Delete");
+	private Button btnFilter = new Button("Filter");
+	private Button btnFind = new Button("Find");
 	private TextField tfFind = new TextField();
 	private Label txtErrorMessage = new Label("Error");
 	private TableView<E> tv = new TableView<>();

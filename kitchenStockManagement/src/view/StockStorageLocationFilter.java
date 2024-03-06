@@ -19,10 +19,10 @@ import javafx.scene.text.Font;
  *
  */
 public class StockStorageLocationFilter  extends BasicLayoutFilter {
-private Label txtIsAvailble = new Label("is available");
+private Label txtIsAvailble = new Label("Is Available");
 private Label txtType = new Label("Type");
-private RadioButton rbYes = new RadioButton("yes");
-private RadioButton rbNo = new RadioButton("no");
+private RadioButton rbYes = new RadioButton("Yes");
+private RadioButton rbNo = new RadioButton("No");
 private ToggleGroup tgYesAndNo = new ToggleGroup();
 private ComboBox<String> cbType = new ComboBox<>();
 private ArrayList<Label> labelList = new ArrayList<>();

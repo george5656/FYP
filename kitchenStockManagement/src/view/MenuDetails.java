@@ -25,17 +25,17 @@ import model.StockType;
  */
 public class MenuDetails extends PaneMenu {
 	//feilds 
-	private Button btnAdd = new Button("add");
-	private Button btnEdit = new Button("edit");
-	private Button btnRemoveFromList = new Button("remove from list");
-	private Button btnLoadFromFileChooser = new Button("load from file chooser");
-	private Button btnNewDish = new Button("new dish");
-	private Button btnSettings = new Button("settings");
-	private Button btnDeleteDishPeremently = new Button("delete dish peremently");
-	private Button btnFind = new Button("find");
-	private Button btnFilter = new Button("filter");
-	private Button btnOutput = new Button("output list");
-	private Label txtBudget = new Label("Budget = not selected");
+	private Button btnAdd = new Button("Add");
+	private Button btnEdit = new Button("Edit");
+	private Button btnRemoveFromList = new Button("Remove From List");
+	private Button btnLoadFromFileChooser = new Button("Load From File Chooser");
+	private Button btnNewDish = new Button("New Dish");
+	private Button btnSettings = new Button("Settings");
+	private Button btnDeleteDishPeremently = new Button("Delete Dish Peremently");
+	private Button btnFind = new Button("Find");
+	private Button btnFilter = new Button("Filter");
+	private Button btnOutput = new Button("Output List");
+	private Label txtBudget = new Label("Budget = Not Selected");
 	//private Label txtErrorMessage = new Label("Error");
 	private TextField tfUserInput = new TextField();
 	private TableView<Dish> tvDishes = new TableView<>();

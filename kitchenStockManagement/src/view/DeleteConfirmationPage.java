@@ -16,9 +16,9 @@ import javafx.scene.text.Font;
  *
  */
 public class DeleteConfirmationPage extends PaneMenu {
-	private Button cancel = new Button("cancel");
-	private Button confirm = new Button("confirm");
-	private Label txtConfirmMessage = new Label("are you sure want to delete ");
+	private Button cancel = new Button("Cancel");
+	private Button confirm = new Button("Confirm");
+	private Label txtConfirmMessage = new Label("Are you sure want to delete ");
 	private VBox mainLayout = new VBox(20);
 	private HBox controls = new HBox(20);
 	/**

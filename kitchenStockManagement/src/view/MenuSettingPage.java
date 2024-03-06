@@ -16,8 +16,8 @@ import javafx.scene.text.Font;
  *
  */
 public class MenuSettingPage extends BasicLayoutDetails {
-private Label txtName = new Label("menu name");
-private Label txtBudget = new Label("budget");
+private Label txtName = new Label("Menu Name");
+private Label txtBudget = new Label("Budget");
 private TextField tfName = new TextField();
 private ComboBox<String> cbBudget = new ComboBox<>();
 //private VBox comboBoxContainer = new VBox();

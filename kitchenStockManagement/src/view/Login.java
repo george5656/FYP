@@ -25,8 +25,8 @@ public class Login extends VBox {
 	private VBox textInput = new VBox(20);
 	private HBox controls = new HBox(20);
 	private Label txtTitle = new Label("Login");
-	private Label txtUsername = new Label("username");
-	private Label txtPassword = new Label("password");
+	private Label txtUsername = new Label("Username");
+	private Label txtPassword = new Label("Password");
 	private Button btnExit = new Button("Exit");
 	private Button btnLogin = new Button("Login");
 	private TextField tfUsername = new TextField();

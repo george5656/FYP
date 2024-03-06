@@ -16,11 +16,11 @@ import javafx.scene.text.Font;
 public class HomePage extends PaneMenu {
 //fields
 	private VBox layout = new VBox(20);
-	private Button btnStock = new Button("stock");
-	private Button btnBudget = new Button("budget");
-	private Button btnAccount = new Button("account");
-	private Button btnMenu = new Button("menu");
-	private Button btnStorage = new Button("storage");
+	private Button btnStock = new Button("Stock");
+	private Button btnBudget = new Button("Budget");
+	private Button btnAccount = new Button("Account");
+	private Button btnMenu = new Button("Menu");
+	private Button btnStorage = new Button("Storage");
 	//constructor 
 	public HomePage() {
 	super.setCenter(layout);
