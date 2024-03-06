@@ -68,9 +68,9 @@ private HBox fAndO = new HBox(20);
 	public MenuDetails() {
 		
 		
-		tvDishes.setPrefWidth(200);
-		tvMenu.setPrefWidth(200);
-		tvShopping.setPrefWidth(200);
+		tvDishes.setPrefWidth(100);
+		tvMenu.setPrefWidth(100);
+		tvShopping.setPrefWidth(400);
 		
 		
 		tvDishes.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
