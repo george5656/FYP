@@ -230,14 +230,10 @@ public class ModelRoot {
 
 	}
 
+	
 	/**
-	 * gets all the stock that are in the database, each one is returned as there
-	 * output of the toString function
-	 * 
-	 * @return ObservableList<String> = all the stock toString outputs.
-	 */
-	/*
-	 * changed how it works 
+	 *  get all the Current Stock that the database has in an observable list
+	 * @return ObservableList<CurrentStock>
 	 */
 	public ObservableList<CurrentStock> getObservableListStringStockList() {
 		db.getAllCurrentStock();
@@ -246,14 +242,10 @@ public class ModelRoot {
 
 	}
 
+	
 	/**
-	 * gets all the storage locations that are in the database, each one is returned
-	 * as there output of the toString function
-	 * 
-	 * @return ObservableList<String> = all the storage location toString outputs.
-	 */
-	/*
-	 * changed all of it
+	 * gets all the storage location the database has.
+	 * @return ObservableList<StorageLocation>
 	 */
 	public ObservableList<StorageLocation> getObservableListStringStorgaeLocationsList() {
 	
@@ -262,13 +254,9 @@ public class ModelRoot {
 	}
 
 	/**
-	 * gets all the accounts that are in the database, each one is returned as there
-	 * output of the toString function
+	 * gets all the accounts that are in the database, 
 	 * 
-	 * @return ObservableList<String> = all the accounts toString outputs.
-	 */
-	/*
-	 * complete changed
+	 * @return ObservableList<Account>
 	 */
 	public ObservableList<Account> getObservableListAccountList() {
 		
@@ -277,13 +265,9 @@ public class ModelRoot {
 	}
 
 	/**
-	 * gets all the budgets that are in the database, each one is returned as there
-	 * output of the toString function
+	 * gets all the budgets that are in the database, 
 	 * 
-	 * @return ObservableList<String> = all the budgets toString outputs.
-	 */
-	/*
-	 * complete changed how it works
+	 * @return ObservableList<Budget>
 	 */
 	public ObservableList<Budget> getObservableListBudgetList() {
 		
@@ -340,15 +324,10 @@ public class ModelRoot {
 
 	/**
 	 * gets all the budgets that are like the input. gets all the budgets that are
-	 * like the inputed string and turn it in to an observable list. the value in it
-	 * are the budgets but after it has done the toString method.
+	 * like the inputed string and turn it in to an observable list.
 	 * 
 	 * @param value = String that is what you want the budgets to be like
-	 * @return ObservableList<String> = the string is the budgets but after it has
-	 *         gone through the toString method.
-	 */
-	/*
-	 * changed output
+	 * @return ObservableList<Budget>
 	 */
 	public ObservableList<Budget> getBudgetThatsLike(String value) {
 		return FXCollections.observableArrayList(db.getBudgetsThatsLike(value));
@@ -461,7 +440,7 @@ public class ModelRoot {
 	 *         testStockType variable.
 	 */
 	public String getTestStockName() {
-		return testStockType.getStockName();
+		return testStockType.getName();
 	}
 
 	/**
@@ -525,10 +504,9 @@ public class ModelRoot {
 
 //delete 
 	/**
-	 * deletes the stock that is the selectedStock variable from the database
-	 */
-	/*
-	 * chnaged
+	 * delets the stock that is in the selectedStock variable from the database.
+	 * it also checks to see if that stock type is still in use or not, if it isnt 
+	 * in use it then deleted it from the database as well.
 	 */
 	public void deleteStockType() {
 		
@@ -575,11 +553,7 @@ public class ModelRoot {
 	 * get all the stock that matches the where statements.
 	 * 
 	 * @param value = String that is the where statements for the sql.
-	 * @return ObservableList<String> = the string is the stock but after it has
-	 *         gone through the toString method.
-	 */
-	/*
-	 * changed output
+	 * @return ObservableList<CurrentStock>
 	 */
 	public ObservableList<CurrentStock> getCurrentStockThatsMatchesWhere(String value) {
 		return FXCollections.observableArrayList(db.getCurrentStockThatMatchesWhere(value));
@@ -589,11 +563,7 @@ public class ModelRoot {
 	 * get all the budget that matches the where statements.
 	 * 
 	 * @param value = String that is the where statements for the sql.
-	 * @return ObservableList<String> = the string is the budget but after it has
-	 *         gone through the toString method.
-	 */
-	/*
-	 * changed out put
+	 * @return ObservableList<Budget>
 	 */
 	public ObservableList<Budget> getBudgetsThatMatchesWhere(String value) {
 		return FXCollections.observableArrayList(db.getBudgetsThatMatchesWhere(value));
@@ -603,11 +573,7 @@ public class ModelRoot {
 	 * get all the accounts that matches the where statements.
 	 * 
 	 * @param value = String that is the where statements for the sql.
-	 * @return ObservableList<String> = the string is the accounts but after it has
-	 *         gone through the toString method.
-	 */
-	/*
-	 * changed output
+	 * @return ObservableList<Account> 
 	 */
 	public ObservableList<Account> getAccountsThatMatchesWhere(String value) {
 		return FXCollections.observableArrayList(db.getAccountsThatMatchesWhere(value));
@@ -629,7 +595,7 @@ public class ModelRoot {
 	 * @return String that is the name of the stock that the model root holds
 	 */
 	public String getSelectedStockName() {
-		return selectedStock.getStockName();
+		return selectedStock.getName();
 	}
 
 	/**
@@ -1003,15 +969,10 @@ try {
 // accounts
 	/**
 	 * gets all the accounts that are like the input. gets all the accounts that are
-	 * like the inputed string and turn it in to an observable list. the value in it
-	 * are the accounts but after it has done the toString method.
+	 * like the inputed string and turn it in to an observable list.
 	 * 
 	 * @param value = String that is what you want the accounts to be like
-	 * @return ObservableList<String> = the string is the account but after it has
-	 *         gone through the toString method.
-	 */
-	/*
-	 * changed ouput
+	 * @return ObservableList<Account> 
 	 */
 	public ObservableList<Account> getAccountsThatsLike(String value) {
 		return FXCollections.observableArrayList(db.getAccountsThatsLike(value));
@@ -1126,15 +1087,10 @@ try {
 	/**
 	 * gets all the storage locations that are like the input. gets all the storage
 	 * locations that are like the inputed string and turn it in to an observable
-	 * list. the value in it are the storage location but after it has done the
-	 * toString method.
+	 * list.
 	 * 
 	 * @param value = String that is what you want the storage location to be like
-	 * @return ObservableList<String> = the string is the storage location but after
-	 *         it has gone through the toString method.
-	 */
-	/*
-	 * changed output
+	 * @return ObservableList<StorageLocation>
 	 */
 	public ObservableList<StorageLocation> getStorageThatsLike(String value) {
 		return FXCollections.observableArrayList(db.getStorageThatsLike(value));
@@ -1155,12 +1111,8 @@ try {
 	 * gets all the storage locations that are in the database that pass the where.
 	 * 
 	 * @param where = String which is the where part of the MySQL select statement.
-	 * @return ObservableList<String> all the storage locations that match the
-	 *         where, and each iteration is just a storage location result of there
-	 *         toString method.
-	 */
-	/*
-	 * changed output
+	 * @return ObservableList<StorageLocation> all the storage locations that match the
+	 *         where.
 	 */
 	public ObservableList<StorageLocation> getStorageWhere(String where) {
 		return FXCollections.observableArrayList(db.getStorgeThatMatchesWhere(where));
@@ -1288,15 +1240,9 @@ try {
 	/**
 	 * gets all the dish the database has.
 	 * 
-	 * @return ObservableList<String>, each value is the output of a dish using its
-	 *         toString method.
-	 */
-	/*
-	 * changed
+	 * @return ObservableList<Dish>
 	 */
 	public ObservableList<Dish> getAllDishes() {
-		
-
 		return FXCollections.observableArrayList(db.getAllCurrentDishes());
 	}
 
@@ -1321,24 +1267,16 @@ try {
 	}
 
 	/**
-	 * gets the stock type from the seletcedDish var. first gives name of the dish
-	 * then gives the stock type that it holds.
-	 * 
-	 * @return ObservableList<Sting> = all the stock type output of there
-	 *         toStringDishDetails method called.
-	 */
-	/*
-	 * changed how it works
+	 * gets all the held stock from the selectedDish var
+	 * @return IbservableList<StockType>
 	 */
 	public ObservableList<StockType> getSelectedDishList() {
 
-		
-		//dishDetails.add(selectedDish.getName());
-		
 		return FXCollections.observableArrayList(selectedDish.getHeldStock());
 	}
-	/*
-	 * new method
+	/**
+	 * gets the selectedDish var Dish name
+	 * @return String which is the selected dish name
 	 */
 public String getSelctedDishDishName() {
 	return selectedDish.getDishName();
@@ -1366,20 +1304,11 @@ public String getSelctedDishDishName() {
 		edditedStocktype.add(st);
 	}
 
+
 	/**
-	 * input an id of the dish stock to be removed form SelectedDish. removed from
-	 * dishStockId so is not shown to the user in the dish details page listview. is
-	 * then removed from selectedDish, as that is what the dish is being made is.
-	 * all delete is done premently when user hits the dish details save, so this is
-	 * just storing the changes till the user hits the view button.
-	 * 
-	 * @param index = int which is the location in the array list the item is to be
-	 *              removed from.
+	 * adds the passed in stock type to edditesStockType and removed it from the selectdDish.
+	 * @param st = StockType
 	 */
-	/*
-	 * changed
-	 */
-	
 	public void selectedDishIngrednitnRemove(StockType st) {
 
 		/*idea is as need to delete stock type but also
@@ -1420,13 +1349,13 @@ public String getSelctedDishDishName() {
 
 		// if swap break as the null hit false so doesnt try the other side so dont get
 		// null pointer exception.
-		if (selectedDish != null && selectedDish.getName().equals(id)) {
+		if (selectedDish != null && selectedDish.getDishName().equals(id)) {
 			// so are just self so no issue
 		} else {
 			int counter = 0;
 			while (counter != currentDish.size()) {
 
-				if (currentDish.get(counter).getName().equals(id)) {
+				if (currentDish.get(counter).getDishName().equals(id)) {
 					output = true;
 				}
 				counter = counter + 1;
@@ -1449,7 +1378,7 @@ public String getSelctedDishDishName() {
 	 */
 	public Boolean hasDishDetailsChangedTheDishName(String name) {
 		Boolean output = false;
-		if (!selectedDish.getName().equals(name)) {
+		if (!selectedDish.getDishName().equals(name)) {
 			output = true;
 		}
 		return output;
@@ -1506,26 +1435,11 @@ public String getSelctedDishDishName() {
 	}
 
 	/**
-	 * sets the dishStockId to all the stockId that related to the dish inputed.
-	 * dishStockId is a ArrayList<Int> as its just the ID of the dishStockId from
-	 * the database
-	 * 
-	 * @param dishId = string that represent a dish id that want dishStockId var to
-	 *               represnet all of it dishStockId.
-	 */
-	
-
-	/**
 	 * gets all the dishes that are like the input. gets all the dishes that are
-	 * like the inputed string and turn it in to an observable list. the value in it
-	 * are the dishes but after it has done the toString method.
+	 * like the inputed string and turn it in to an observable list.
 	 * 
 	 * @param like = String that is what you want the dishes to be like
-	 * @return ObservableList<String> = the string is the dishes but after it has
-	 *         gone through the toString method.
-	 */
-	/*
-	 * changed output
+	 * @return ObservableList<Dish>
 	 */
 	public ObservableList<Dish> getAllDishesThatAreLike(String like) {
 		return FXCollections.observableArrayList(db.getAllCurrentDishesThatLike(like));
@@ -1619,15 +1533,11 @@ public String getSelctedDishDishName() {
 	/**
 	 * get all the dish that are not part of the selectedMenu ArrayList<Dish>.
 	 * 
-	 * @return ObservableList<String>, the string is just the dish output from the
-	 *         toString method.
-	 */
-	/*
-	 * changed output
+	 * @return ObservableList<Disj>
 	 */
 	public ObservableList<Dish> getNotSelectedDishesAsString() {
 		
-		return FXCollections.observableArrayList(getNotSelectedDishesAsArrayListString());
+		return FXCollections.observableArrayList(getNotSelectedDishesAsArrayList());
 	}
 
 	/**
@@ -1692,15 +1602,11 @@ public String getSelctedDishDishName() {
 	/**
 	 * get all the dishes that the selectedMenu object holds.
 	 * 
-	 * @return ObservableList<String>, string as each iteration is the output of the
-	 *         dish toString method.
-	 */
-	/*
-	 * changed
+	 * @return ObservableList<Dish>
 	 */
 	public ObservableList<Dish> getSelectedMenuDishes() {
 
-		return selectedMenu.getDishesAsObservableListOFString();
+		return selectedMenu.getDishesAsObservableList();
 
 	}
 
@@ -1711,12 +1617,7 @@ public String getSelctedDishDishName() {
 	 * by needed means it wont go off before the budget end date, and only the amount that is needed
 	 * so what is needed minus what got in stock.
 	 * 
-	 * @return ObservableList<String> = StockType after it has done it
-	 *         toStringDishDetails Method
-	 */
-	
-	/*
-	 * changed output
+	 * @return ObservableList<StockType> 
 	 */
 	public ObservableList<StockType> getSelectedMenuStockType() {
 		
@@ -1758,7 +1659,7 @@ public String getSelctedDishDishName() {
 							CurrentStock cs = currentStock.get(counter3);
 							
 							
-							if(cs.getStockName().equals(st.getStockName())) {
+							if(cs.getName().equals(st.getName())) {
 								//so know know got one that mmatches
 								allCSThatMatchOneGot.add(cs);
 								indexTracker.add(counter3);
@@ -1860,7 +1761,7 @@ public String getSelctedDishDishName() {
 			
 		}else {
 			
-			shoppingListNoDuplicates.add( new StockType(stfl.getStockName(), stfl.getCost(),
+			shoppingListNoDuplicates.add( new StockType(stfl.getName(), stfl.getCost(),
 							stfl.getQuanityType(), stfl.getQuanity()));
 		}
 		
@@ -1882,11 +1783,9 @@ public String getSelctedDishDishName() {
 	
 
 	/**
-	 *get how much the budget has remaining after the, the items in the shopping list have been removed.
-	 * @return Double = how much the budget is left after the shopping list cost have been removed.
-	 */
-	/*
-	 * changed
+	 *  *get how much the budget has remaining after the, the items in the shopping list have been removed.
+	 * @return String = how much the budget is left after the shopping list cost have been removed, as a 
+	 * String to two decimal places
 	 */
 	public String getBudgetSizeMinusTheShoppingList() {
 		
@@ -1913,16 +1812,12 @@ public String getSelctedDishDishName() {
 	}
 
 	/**
-	 * converts all the dishes in the not selectedDishes variable to string.
+	 * gets all the dish that aren't selected, by comparing what the datbase has 
+	 * and what the selected menu holds
 	 * 
-	 * @return ArrayList<String> = all the dish that are not part of the menu, the
-	 *         dish object are strings by using there toString methods and there
-	 *         output is what is in the ArrayList
+	 * @return ArrayList<Dish> = all the dish that are not part of the menu.
 	 */
-	/*
-	 * changed output
-	 */
-	public ArrayList<Dish> getNotSelectedDishesAsArrayListString() {
+	public ArrayList<Dish> getNotSelectedDishesAsArrayList() {
 		
 	
 		notSelectedDishes.clear();
@@ -1949,15 +1844,10 @@ public String getSelctedDishDishName() {
 	/**
 	 * gets all the dishes that are not selected (apart of the menu) but are like
 	 * the input. gets all the dishes that are not selected (apart of the menu) but
-	 * are like the inputed string and turn it in to an observable list. the value
-	 * in it are the dishes but after it has done the toString method.
+	 * are like the inputed string and turn it in to an observable list.
 	 * 
 	 * @param userInput = String that is what you want the dishes to be like
-	 * @return ObservableList<String> = the string is the dishes but after it has
-	 *         gone through the toString method.
-	 */
-	/*
-	 * chnaged
+	 * @return ObservableList<Dish>
 	 */
 	public ObservableList<Dish> getNotSelectedDishesThatAreLikeMenuDetailsFind(String userInput) {
 		
@@ -1965,7 +1855,7 @@ public String getSelctedDishDishName() {
 		
 		ArrayList<Dish> notSelectedDishes = new ArrayList<>();
 		
-		getNotSelectedDishesAsArrayListString().forEach((Dish i) -> {
+		getNotSelectedDishesAsArrayList().forEach((Dish i) -> {
 			notSelectedDishes.add(i);
 		});
 		
@@ -1973,7 +1863,7 @@ public String getSelctedDishDishName() {
 		ArrayList<Dish> output = new ArrayList<Dish>();
 		notSelectedDishes.forEach((Dish i) -> {
 
-			if (i.getName().contains(userInput)) {
+			if (i.getDishName().contains(userInput)) {
 				output.add(i);
 			}
 
@@ -2012,12 +1902,9 @@ public String getSelctedDishDishName() {
 	 * @param minCost          = String which is a Double in a string format, note
 	 *                         can be "null"(string not special data type) if dont
 	 *                         want to filter it
-	 * @return ObservaleList<String> = all the dishes that pass all the filters, the
-	 *         dish are respreented by there toString output.
+	 * @return ObservaleList<Dish> = all the dishes that pass all the filters,
 	 */
-/*
- * changed output
- */
+
 	public ObservableList<Dish> getDishFilterResults(String maxNumberOfItems, String minNumberOfItems, String maxCost,
 			String minCost) {
 		
@@ -2131,7 +2018,7 @@ public String getSelctedDishDishName() {
 //tcb are just the first letter of the label correcdeing to its input
 	/**
 	 * use the database to get a list of all the menus, the menu got are based of
-	 * the inputs. the output is a string represention in an observable list.
+	 * the inputs.
 	 * 
 	 * @param tcb String. Double in a string format, the min value the menu total
 	 *            will be
@@ -2140,11 +2027,7 @@ public String getSelctedDishDishName() {
 	 * @param cd  String. a name of a dish type they want to be present in the menu
 	 * @param dcd String. a name of a dish type they dont want to be present in the
 	 *            menu
-	 * @return ObservableList Of the menu items that pass all the filters in there
-	 *         string format.
-	 */
-	/*
-	 * changed output
+	 * @return ObservableList<Menu> Of the menu items that pass all the filters
 	 */
 	public ObservableList<Menu> getMenuFilterResults(String tcb, String tca, String cd, String dcd) {
 
@@ -2282,31 +2165,21 @@ public String getSelctedDishDishName() {
 
 //menu list 
 	/**
-	 * get all the menu that the database holds. the menu are represented as the
-	 * output of there toString method
+	 * get all the menu that the database holds. 
 	 * 
-	 * @return ObservableList<String> = each entity is a menu, its represented by
-	 *         its output of the toString method.
+	 * @return ObservableList<Menu>
 	 */
-/*
- * complete changed how it workes
- */
 	public ObservableList<Menu> getAllMenus() {
 		
 		return FXCollections.observableArrayList(db.getAllMenu());
 	}
 
+
 	/**
-	 * gets all the menus that are like the input. gets all the menu that are like
-	 * the inputed string and turn it in to an observable list. the value in it are
-	 * the menus but after it has done the toString method.
-	 * 
-	 * @param like = String that is what you want the menus to be like
-	 * @return ObservableList<String> = the string is the menus but after it has
-	 *         gone through the toString method.
-	 */
-	/*
-	 * complete changed it
+	 * use the database method, getAllMenuThatAreLike to return all the menus that are like the inputed
+	 * parameter
+	 * @param like = String which is the menu name you want
+	 * @return ObservableList<String>
 	 */
 	public ObservableList<Menu> getAllMenusThatAreLike(String like) {
 		
@@ -2352,7 +2225,7 @@ public String getSelctedDishDishName() {
 		ArrayList<String> output = new ArrayList<>();
 		db.getAllCurrentDishes().forEach((Dish i) -> {
 
-			output.add(i.getName());
+			output.add(i.getDishName());
 
 		});
 
@@ -2364,17 +2237,14 @@ public String getSelctedDishDishName() {
 	 * selectedDish var. it used the toString = and, to to identify where each value
 	 * is in the stock array list the dish holds.
 	 * 
-	 * ObservableList<String> = all the dishes not in the menu dish list and with
+	 * ObservableList<Dish> = all the dishes not in the menu dish list and with
 	 * the to sting method applied to them, it also has the newly added dish
-	 */
-	/*
-	 * changed output
 	 */
 	public ObservableList<Dish> saveDishDetails() {
 
 		// selectedDish is the one making
 
-		db.saveDish(selectedDish.getName());
+		db.saveDish(selectedDish.getDishName());
 
 		ArrayList<StockType> st = selectedDish.getHeldStock();
 
@@ -2395,7 +2265,7 @@ public String getSelctedDishDishName() {
 			String quanity = value.substring(equals2 + 2, comma2);
 			String quanityType = value.substring(equals3 + 2);
 
-			db.saveDishStockConnection(name, selectedDish.getName(), quanity, quanityType);
+			db.saveDishStockConnection(name, selectedDish.getDishName(), quanity, quanityType);
 			counter = counter + 1;
 			// so is shown as soon goes back
 
@@ -2408,9 +2278,11 @@ public String getSelctedDishDishName() {
 		resetMenuDetailList();
 		return getNotSelectedDishesAsString();
 	}
-/*
- * new method
- */
+
+	/**
+	 * removes all dish that are in the edditedStockType var, if they aren't used in the 
+	 * database in anywhere but Stock type
+	 */
 	public void removedDishDetailsEditedStock() {
 		edditedStocktype.forEach(stockType -> {
 			if(!db.isStockTypeInUser(stockType.getName())) {
@@ -2418,8 +2290,9 @@ public String getSelctedDishDishName() {
 			}
 			});
 	}
-	/*
-	 * new method
+
+	/**
+	 * clears the edditedStockType var by seating it to a new arrayList
 	 */
 	public void resetEddtedStockType() {
 		edditedStocktype = new ArrayList<>();
@@ -2432,12 +2305,9 @@ public String getSelctedDishDishName() {
 	 * it used the orginalDishId var to idenitfy the dish, it then used the
 	 * selectedDish (Dish object) var details to updates it
 	 * 
-	 * @return ObservableList<String> = all the dishes not in the menu dish list and
+	 * @return ObservableList<Dish> = all the dishes not in the menu dish list and
 	 *         with the to sting method applied to them, it also has the update dish
 	 *         info in it without the old details.
-	 */
-	/*
-	 * changed output
 	 */
 	public ObservableList<Dish> updateDishDetails() {
 
@@ -2454,7 +2324,7 @@ public String getSelctedDishDishName() {
 		ArrayList<StockType> orginalDishStock = db.getASpecificDishes(orginalDishId).getHeldStock();
 		
 		db.deleteTblDishStock(orginalDishId);
-		db.updateDish(selectedDish.getName(), orginalDishId);
+		db.updateDish(selectedDish.getDishName(), orginalDishId);
 		ArrayList<StockType> st = selectedDish.getHeldStock();
 
 		int counter = 0;
@@ -2478,7 +2348,7 @@ public String getSelctedDishDishName() {
 			String quanity = value.substring(equals2 + 2, comma2);
 			String quanityType = value.substring(equals3 + 2);
 
-			db.saveDishStockConnection(name, selectedDish.getName(), quanity, quanityType);
+			db.saveDishStockConnection(name, selectedDish.getDishName(), quanity, quanityType);
 			
 			counter = counter + 1;
 			// so is shown as soon goes back
@@ -2496,41 +2366,25 @@ public String getSelctedDishDishName() {
 		return getNotSelectedDishesAsString();
 	}
 
+	
 	/**
-	 * removes a dish from the database. use the passed in id to identify a dish to
-	 * be deleted. when removed it updates the not selectedDishes and then returns
-	 * the not selected dishes var a string
-	 * 
-	 * @param id = String which represent a dish id that is in the database.
-	 * @return ObservableList<String> = all the dishes not in the menu dish list and
-	 *         with the to sting method applied to them
-	 */
-	/*
-	 * changed and what it does
+	 * delets a dish and then checks if its stockType is need anywhere else if it isn't,
+	 * the stock type is then also deleted.
+	 * @param id = string which is the dish to be deleted
+	 * @return ObservableList<Dish> = which are all the not selectedDish that haven't been deleted.
 	 */
 	public ObservableList<Dish> deleteADish(String id) {
 		
-		
-
-		
 //dtbd = dish to be deleted
 		Dish dtbd  = db.getASpecificDishes(id);
-		
 		db.deleteSelectedDish(id);
-		
 		dtbd.getHeldStock().forEach(st -> {
 			if(!db.isStockTypeInUser(st.getName())) {
 				db.deleteSelectedStockType(st.getName());
 			}
-			
 		});
-		
-		
 		resetMenuDetailList();
 		return getNotSelectedDishesAsString();
-		
-		
-		
 	}
 
 	/**

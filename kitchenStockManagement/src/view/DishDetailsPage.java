@@ -215,11 +215,8 @@ public String getEstimatedCost() {
 	return tfEstimatedCost.getText();
 }
 /**
- * sets the lisView to show the inputed observableList
- * @param ingredents = ObservableList<String>, which values are shown in the listView.
- */
-/*
- * input chnaged
+ * sets the tableView to show the inputed observableList
+ * @param ingredents = ObservableList<StockType>, which values are shown in the tableView.
  */
 public void setIngredentList(ObservableList<StockType> ingredents) {
 	tvIngredients.getItems().clear();
@@ -263,12 +260,9 @@ public void resetWholePage() {
 	tfDishName.clear();
 }
 /**
- * get the item that is selected. 
- * not it gets the string, which the user clicked on in the listView.
- * @return String
- */
-/*
- * changed output
+ * get the item that is selected in the table view.
+ * note gets the value held in the underlining data structure
+ * @return StockType
  */
 public StockType getSelectedValue() {
 	return tvIngredients.getSelectionModel().getSelectedItem();
@@ -308,18 +302,23 @@ txtErrorMessage.setVisible(true);
 public void hideErrorMessage() {
 	txtErrorMessage.setVisible(false);
 }
-/*
- * new column
+/**
+ * cleats all the column in the table view
  */
 public void clearTableColumn() {
 	tvIngredients.getColumns().clear();
 }
-/*
- * new column
+/**
+ * add table columns to the the table view
+ * @param column = TableColumn<StockType,String>
  */
 public void setTableColumn(TableColumn<StockType,String> column) {
 	tvIngredients.getColumns().add(column);
 }
+/**
+ * sets the dish name label text
+ * @param dishName = String which represent the dish name.
+ */
 public void setDishNameLabel(String dishName) {
 	txtSetDishName.setText(dishName);
 }

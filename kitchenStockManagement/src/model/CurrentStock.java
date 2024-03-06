@@ -78,7 +78,7 @@ public int getId() {
 @Override
 	public boolean equals(Object obj) {
 	StockType comparison = (StockType)obj;
-		return this.getStockName().equals(comparison.getStockName());
+		return this.getName().equals(comparison.getName());
 	}
 
 }

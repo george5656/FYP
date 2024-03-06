@@ -131,16 +131,8 @@ public void setBtnEditEventHandler(EventHandler<ActionEvent> event) {
 	btnEdit.setOnAction(event);
 }
 /**
- * sets the listView to the passed in data. 
- * @param data = ObservableList<Sting>.
- */
-
-/*
- * comment need updating 
- * 
- * 
- * 
- * 
+ * adds the passed in data structure to the table view
+ * @param data = ObservableList<E> 
  */
 public void setObservableList(ObservableList<E> data) {
 	tv.setItems(data);
@@ -152,16 +144,10 @@ public void setObservableList(ObservableList<E> data) {
 public E getSelection() {
 	return tv.getSelectionModel().getSelectedItem();
 }
+
 /**
- * get the listView which is displayed on this page.
- * @return ListView<String>
- */
-/*
- * comment need updating 
- * 
- * 
- * 
- * 
+ * get the tableView that is displayed
+ * @return TableView<E>
  */
 public TableView<E> getSelectionNode(){
 	return tv;
@@ -201,16 +187,17 @@ public void setErrorMessage(String error) {
 public void resetFindInput() {
 	tfFind.clear();
 }
-/*
- * new column
+
+/**
+ * adds the passed in table column to the table view
+ * @param column TableColumn<E,String>
  */
 public void setTableColumn(TableColumn<E,String> column) {
 	tv.getColumns().add(column);
 }
 
-
-/*
- * new column
+/**
+ * removed all table columns from the table view.
  */
 public void clearTableColumn() {
 	tv.getColumns().clear();

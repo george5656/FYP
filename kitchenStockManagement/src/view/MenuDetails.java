@@ -252,12 +252,9 @@ private HBox fAndO = new HBox(20);
 		return tfUserInput.getText();
 	}
 	/**
-	 * sets the list that displays the dish to the inputed list.
-	 * list on the far left
-	 * @param dishes = ObservableList<String>,
-	 */
-	/*
-	 * changed
+	 * sets the table view underling data structure to the passed in one.
+	 * the table view is the dish one.
+	 * @param dishes = Observable<Dish>
 	 */
 	public void setDishes(ObservableList<Dish> dishes) {
 		tvDishes.getItems().clear();
@@ -271,61 +268,49 @@ private HBox fAndO = new HBox(20);
 		return tvDishes.getSelectionModel().getSelectedIndex();
 	}
 	/**
-	 * gets the item the use selected in the dish (far left) list view
-	 * @return String, which the user selected.
-	 */
-	/*
-	 * changed output
+	 * gets the item the use selected in the dish (far left) table view
+	 * @return Dish, which the user selected.
 	 */
 	public Dish getDishListSelectedValue() {
 		return tvDishes.getSelectionModel().getSelectedItem();	
 	}
 	/**
-	 * gets the item the use selected in the menu (middle) list view
-	 * @return String, which the user selected.
-	 */
-	/*
-	 * changed output
+	 * gets the item the use selected in the menu (middle) table view
+	 * @return Dish, which the user selected.
 	 */
 	public Dish getMenuListSelectedValue() {
 		return tvMenu.getSelectionModel().getSelectedItem();	
 	}
-	/*
-	 * new method
+	
+	/**
+	 * gets the item the use selected in the left (middle) table view
+	 * @return StockType, which the user selected.
 	 */
 	public StockType getShoppingListSelectedValue() {
 		return tvShopping.getSelectionModel().getSelectedItem();
 	}
+	
 	/**
-	 * sets the list that displays the dish in a menu to the inputed list.
-	 * list in the middle
-	 * @param items = ObservableList<String>,
-	 */
-	/*
-	 * changed input
+	 * sets the table view underling data structure of menu dish (middle one) to the passed in the data structure.
+	 * @param items = ObservableList<Dish>
 	 */
 	public void setMenuDishList(ObservableList<Dish> items) {
 		tvMenu.getItems().clear();
 		tvMenu.getItems().addAll(items);
 	}
+	
 	/**
-	 * sets the list that displays the stock that needs to be brought (shopping list) to the inputed list.
-	 * list on the far right.
-	 * @param items = ObservableList<String>,
-	 */
-	/*
-	 * changed input
+	 * sets the shopping list table view underling data structure,
+	 * to be the passed in one.
+	 * @param items = ObservableList<StockType>
 	 */
 	public void setShoppingListList(ObservableList<StockType> items) {
 		tvShopping.getItems().clear();
 		tvShopping.getItems().addAll(items);
 	}
 	/**
-	 * gets the underling data structure the shopping (far right) list has
-	 * @return ObservableList<String>
-	 */
-	/*
-	 * changed
+	 * gets the underling data structure the shopping (far right) table view
+	 * @return ObservableList<StockType>
 	 */
 	public ObservableList<StockType> getShoppingListList(){
 		return tvShopping.getItems();
@@ -337,22 +322,21 @@ private HBox fAndO = new HBox(20);
 	public int getMenuListSelectedIndex() {
 		return tvMenu.getSelectionModel().getSelectedIndex();
 	}
-	/*
-	 * new method 
+	
+	/**
+	 * gets the shopping list table view, selected item index
+	 * @return int
 	 */
 	public int getShoppingListSelectedIndex() {
 		return tvShopping.getSelectionModel().getSelectedIndex();
 	}
+	
 	/**
-	 * gets the item selected in the menu list(middle one) but only the id of that item.
-	 * the id is the id which is shown, eg after the dish name =
-	 * @return String, = just the selected item id. 
-	 */
-	/*
-	 * changed 
+	 * gets the menu table view, selected item name
+	 * @return String which is the Dish name that the user selected in the menu table
 	 */
 	public String getMenuListSelectedValueAsId() {
-		return tvMenu.getSelectionModel().getSelectedItem().getName();
+		return tvMenu.getSelectionModel().getSelectedItem().getDishName();
 	}
 	//so for output know if anything there to output or not
 	/**
@@ -394,7 +378,9 @@ private HBox fAndO = new HBox(20);
 		tvMenu.getSelectionModel().clearSelection();
 		tvDishes.getSelectionModel().clearSelection();
 	}
-	
+	/**
+	 * clears all the table columns from all the table views.
+	 */
 	public void clearTablesColumns() {
 	tvMenu.getColumns().clear();
 	tvDishes.getColumns().clear();
@@ -402,19 +388,30 @@ private HBox fAndO = new HBox(20);
 	}
 	
 	
-	
+	/**
+	 * sets the Table columns for the the dish list table view
+	 * @param column = TableColumn<Dish, String>
+	 */
 	public void setDishColumn(TableColumn<Dish, String> column) {
 		tvDishes.getColumns().add(column);
 	}
+	/**
+	 * sets the Table columns for the the menu list table view
+	 * @param column = TableColumn<Dish, String>
+	 */
 	public void setMenuColumn(TableColumn<Dish, String> column) {
 		tvMenu.getColumns().add(column);
 	}
+	/**
+	 * sets the Table columns for the the shopping list table view
+	 * @param column = TableColumn<StockType, String>
+	 */
 	public void setShoppingColumn(TableColumn<StockType, String> column) {
 		tvShopping.getColumns().add(column);
 	}
 	
-	/*
-	 * new method
+	/**
+	 * removes user selection from the tvShopping and tvMenu
 	 */
 	public void unselectMenuAndshoppingList() {
 		tvShopping.getSelectionModel().clearSelection();

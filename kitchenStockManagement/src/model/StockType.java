@@ -42,15 +42,10 @@ public StockType(String name, String cost, String quanityType,String quanity) {
  * get the name associated with the object stock type
  * @return String = the value in the name variable .
  */
- public String getStockName() {
-	 return name;
- }
- /*
-  * added simply for the table column as need this to be able to find them
-  */
  public String getName() {
 	 return name;
  }
+ 
  /**
   * get the cost associated with this stock type object. 
   * note its cost per unit
@@ -134,6 +129,6 @@ public StockType(String name, String cost, String quanityType,String quanity) {
 	public boolean equals(Object obj) {
 	 //down cast as is only used in the inteneded area 
 	 StockType comparion = (StockType) obj;
-		return this.getStockName().equals(comparion.getStockName());
+		return this.getName().equals(comparion.getName());
 	}
 }

@@ -60,11 +60,8 @@ public class RootView extends VBox {
 	}
 /**
  * get the stock list page 
- * @return ListPage
+ * @return ListPage<CurrentStock>
  */
-	/*
-	 * output changed
-	 */
 public ListPage<CurrentStock> getStockListPage() {
 	return stockListPage;
 }
@@ -84,10 +81,7 @@ public StockDetails getStockDetails() {
 }
 /**
  * get the account list page 
- * @return ListPage
- */
-/*
- * output chnaged
+ * @return ListPage<Account>
  */
 public ListPage<Account> getAccountListPage() {
 	return accountListPage;
@@ -134,7 +128,9 @@ public MenuFilter getMenuFilter() {
 public MenuSettingPage getMenuSettingPage() {
 	return msp;
 }
+
 /**
+ * reset the menu setting page
  */
 public void clearMenuSettingPage() {
 	msp.resetPage();
@@ -302,12 +298,11 @@ public void setStockListBtnFilterEventHandler(EventHandler<ActionEvent> event) {
  * loads the stock list page
  * it removes any children from the root view VBox, and add self in place so is visible
  * it reset the stock list page
- * the inputed data is then shown in the list view. 
- * @param data = ObservableList<String> each iteration is a string representation of stock
+ * the inputed data is then shown in the table view,
+ * as well as making the tabeColumns and passing them to the table view.
+ * @param data = ObservableList<CurrentStock> each iteration is a string representation of stock
  */
-/*
- * multiple thinsg changed
- */
+
 public void stockListLoad(ObservableList<CurrentStock> data) {
 	stockListPage.clearTableColumn();
 	
@@ -333,11 +328,6 @@ public void stockListLoad(ObservableList<CurrentStock> data) {
 	stockListPage.setTableColumn(quantity);
 	stockListPage.setTableColumn(expiereDate);
 	
-	
-
-
-
-
 	stockListPage.getErrorLabel().setVisible(false);
 	stockListPage.setObservableList(data);
 	stockListPage.resetFindInput();
@@ -352,7 +342,7 @@ public void stockListLoad(ObservableList<CurrentStock> data) {
 public String getStockListSelectedItem() {
 	
 	if(stockListPage.getSelectionNode().getSelectionModel().getSelectedItem()!= null) {
-	return stockListPage.getSelectionNode().getSelectionModel().getSelectedItem().getStockName();
+	return stockListPage.getSelectionNode().getSelectionModel().getSelectedItem().getName();
 	}else {
 		return "null";
 	}
@@ -381,12 +371,8 @@ public void setStockListBtnEditEventHandler(EventHandler<ActionEvent> event) {
 	stockListPage.setBtnEditEventHandler(event);
 }
 /**
- * gets selected value in the listView on the stock list page but only the id part.
- * use id and storage to identify where the id values starts and ends.
- * @return String which is the id of the stock selected in the listView
- */
-/*
- * complete changed it
+ * get the selected value in the table view from the stock list page but only the id part
+ * @return String, which is the id of the stock selected in the table view.
  */
 public String getSelectedStockId() {
 	
@@ -401,12 +387,10 @@ public String getStockListTfFindValue() {
 	return stockListPage.getTfFindValue();
 }
 /**
- * sets the list view in the stock list page 
- * @param data = ObservableList<String> each iteration is a string representation of stock
+ * sets the table view underling data structure in the stock list page 
+ * @param data = ObservableList<CurrentStock> 
  */
-/*
- * input changed
- */
+
 public void setStockListValues(ObservableList<CurrentStock> data) {
 stockListPage.setObservableList(data);
 }
@@ -784,12 +768,9 @@ public String getMenuListSelectedMenu() {
 	}
 }
 /**
- * get the menu which has been selected from the list view in the menu list page, but only gives its id.
+ * get the menu which has been selected from the table view in the menu list page, but only gives its id.
  * 
  * @return String = the selected menu id
- */
-/*
- * complete changed
  */
 public String getMenuListSelectedMenuId() {
 	return menuListPage.getSelectionNode().getSelectionModel().getSelectedItem().getName();
@@ -828,12 +809,11 @@ public void setMenuListErrorMessage(String error) {
 /**
  * loads the menu list page
  * it removes any children from the root view VBox, and add self in place so is visible
- * the inputed data is then shown in the list view. 
- * @param data = ObservableList<String> each iteration is a string representation of menus
- */
-/*
- * input changed
- */
+ * the inputed data is then shown in the table view.
+ * it also make the tableColumns and sets them up in the table view. 
+ * @param data = ObservableList<Menu> 
+*/
+
 public void menuListLoad(ObservableList<Menu> data) {
 	
 	
@@ -1003,16 +983,20 @@ public String getMenuDetailsFindUserInput() {
  * @return String = selected items id.
  */
 public String getMenuDetailsDishListSelectedItemValueIdOnly() {
-	return menuDetails.getDishListSelectedValue().getName();
+	return menuDetails.getDishListSelectedValue().getDishName();
 }
-/*
- * new method
+
+/**
+ * gets the selected value name in the menu details shopping list
+ * @return String = Name of the selected stock type from the shopping list
  */
 public String getMenuDetailsShoppingListSelectedItemValueIdOnly() {
 	return menuDetails.getShoppingListSelectedValue().getName();
 }
-/*
- * new method 
+
+/**
+ * get the selected value from the table view in the menu details shopping list 
+ * @return StockType
  */
 public StockType getMenuDetailsShoppungListSelctedItem() {
 	return menuDetails.getShoppingListSelectedValue();
@@ -1023,7 +1007,7 @@ public StockType getMenuDetailsShoppungListSelctedItem() {
  * @return String = selected items id.
  */
 public String getMenuDetailsMenuDishListSelectedItemValueIdOnly() {
-	return menuDetails.getMenuListSelectedValue().getName();
+	return menuDetails.getMenuListSelectedValue().getDishName();
 }
 /**
  * removes the user selection from the menu details lists.
@@ -1055,6 +1039,10 @@ public void setMenuDetailsMenuListItems(ObservableList<Dish> items) {
 public void resetMenuDetailsPage() {
 	menuDetails.resetMenuAndShoppingListContent();
 }
+/**
+ * clears the find text field user input.
+ * its located on the menu details page 
+ */
 public void MenuDetailsRestFindInput() {
 	menuDetails.clearFindUserInput();
 }
@@ -1074,20 +1062,28 @@ public void setMenuDetailsBudgetValue(String amount) {
 public int getMenuDetailsMenuListSelectedIndex() {
 	return menuDetails.getMenuListSelectedIndex();
 }
-/*
- * new method
+
+/**
+ * get the value that is selected, in the menu details menu table view
+ * @return Dish, which the underling data structure holds for that selected value.
  */
 public Dish getMenuDetailsMenuListSelecteditem() {
 	return menuDetails.getMenuListSelectedValue();
 }
-/*
- * new method
+
+/**
+ * get the index of the the item selected in the menu details shopping lst table view
+ * @return int
  */
 public int getMenuDetailsShoppingListSelectedIndex() {
 	return menuDetails.getShoppingListSelectedIndex();
 }
 /*
  * new method 
+ */
+/**
+ * unselects the user selection for the table views, menu and shopping list in the 
+ * menu details page.
  */
 public void unselectMenuDetailsMenuAndshoppingListSelection() {
 	menuDetails.unselectMenuAndshoppingList();
@@ -1352,11 +1348,9 @@ public void setBudgetListBtnAboutEventHandler(EventHandler<ActionEvent> event) {
  * loads the budget list page
  * it removes any children from the root view VBox, and add self in place so is visible
  * it reset the budget list page
- * the inputed data is then shown in the list view. 
- * @param data = ObservableList<String> each iteration is a string representation of budget
- */
-/*
- * input changed
+ * the inputed data is set as the table view, underling data structure,
+ * it also make the table columns for the table view. 
+ * @param data = ObservableList<Budget> 
  */
 
 public void BudgetListLoad(ObservableList<Budget> data) {
@@ -1400,15 +1394,11 @@ public void setBudgetListErrorMessage(String error) {
 	budgetListPage.getErrorLabel().setText(error);
 	budgetListPage.getErrorLabel().setVisible(true);
 }
+
 /**
- * get the selected  budget id.
- * selection is made on the budget list view. 
- * it use words "id" and "amount" to identify where id is
- * 
- * @return String which is the selected budget id.
- */
-/*
- * complete changed
+ * get the id of the selected value, from the table view which is 
+ * located in the budget list page. 
+ * @return String, which is the id of the selected item.
  */
 public String getSelectedBudgetId() {
 	
@@ -1506,14 +1496,14 @@ public String getBudgetDetailsInputtedEndDate() {
 public LocalDate getBudgetDetailsInputtedStartDateAsLocalDate() {
 	return bdp.getStartDate().getValue();
 }
-/*
- * new
+/**
+ * reset the date picker value in the budget details page
  */
 public void resetBudgetDetailsPageDatePickers() {
 	bdp.resetDatePickers();
 }
-/*
- * new
+/**
+ * reset the date picker value in the stock details page
  */
 public void resetStockDetailsPageDatePicker() {
 	sd.resetDatePicker();
@@ -1726,12 +1716,11 @@ public void setStorgaeLocationListBtnFindEventHandler(EventHandler<ActionEvent> 
  * loads the storage location list page
  * it removes any children from the root view VBox, and add self in place so is visible
  * it reset the storage list page
- * the inputed data is then shown in the list view. 
- * @param storageLocations = ObservableList<String> each iteration is a string representation of a storage location.
+ *the input is the passed to the table view to be its underling data structure. 
+ *it also make the table columns for table view.
+ * @param storageLocations = ObservableList<StorageLocation>
  */
-/*
- * input changed
- */
+
 
 public void storgaeLocationListLoad(ObservableList<StorageLocation> storageLocations) {
 	
@@ -1798,6 +1787,12 @@ public String getStorageListSelectedItem() {
  */
 /*
  * complete changed
+ */
+/**
+ * get the selected item name.
+ * the selection is the one made in the storage location list page,
+ * by selecting an item in the table view.
+ * @return string, which is the selected value name.
  */
 public String getSelectedStorageId() {
 	
@@ -2016,14 +2011,13 @@ public String getAccountListSelectedItem() {
 /**
  * 
  * get the selected account name only
- * account is selected on the account list page in the list view.
- * it then take that value and get the account name it showed.
+ * account is selected on the account list page in the table view.
+ * it then gets the underling data structure item that was selected and gets 
+ * its name
  * 
- * @return String = account name only.
+ * @return String = account name.
  */
-/*
- * completely changed
- */
+
 public String getSelectedAccountName() {
 	
 	return accountListPage.getSelection().getUsername();
@@ -2034,11 +2028,9 @@ public String getSelectedAccountName() {
  * loads the account list page
  * it removes any children from the root view VBox, and add self in place so is visible
  * it reset the account list page
- * the inputed data is then shown in the list view. 
- * @param data = ObservableList<String> each iteration is a string representation of a account
- */
-/*
- * input chnaged
+ * the inputed data is set as the table view underling data.
+ * it also make the table columns which are set in the table view.
+ * @param data = ObservableList<Account> 
  */
 public void accountListLoad(ObservableList<Account> data) {
 	accountListPage.clearTableColumn();
@@ -2271,6 +2263,9 @@ public void dishDetailsLoad() {
 public void setDishDetailsErrorMessage(String errorMessage) {
 	ddp.setErrorMessage(errorMessage);
 }
+/**
+ * hides the label that represent the error message on dish details page
+ */
 public void setDishDetailsErrorMessageFalse() {
 	ddp.hideErrorMessage();
 }
@@ -2357,11 +2352,10 @@ public String getDishDetailsEstimateCost() {
 	return ddp.getEstimatedCost();
 }
 /**
- * sets the dish details list view
- * @param ingredents = ObservableList<String> = the elements wants the list view to show
- */
-/*
- * changed return type
+ * sets the dish details page table view underling data structure, and the 
+ * label that displays the dish name to the dish name input parameter.
+ * @param ingredents = observableList<StockType>
+ * @param dishName = String this is the name of the dish name
  */
 public void setDishDetailsList(ObservableList<StockType> ingredents,String dishName) {
 	ddp.setIngredentList(ingredents);
@@ -2394,12 +2388,9 @@ public void dishDetailsAddReset() {
 	ddp.addReset();
 }
 /**
- * gets the item which has been selected in the list view.
- * the list view is located in the dish details page
- * @return String which is the string the user has selected.
- */
-/*
- * changed output
+ * gets the item which has been selected in the table view.
+ * the table view is located in the dish details page
+ * @return StockType
  */
 public StockType getDishDetailsSelectedItem() {
 	return ddp.getSelectedValue();

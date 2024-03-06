@@ -85,6 +85,12 @@ public class HomePage extends PaneMenu {
 	public void setBtnAccountEventHandler(EventHandler<ActionEvent> Event) {
 		btnAccount.setOnAction(Event);
 	}
+	/**
+	 * changes the layout of the home page to either, chef or admin, based on input.
+	 * admin gets the Storage, Account and budget added to it where as chef or not admin doesn't get 
+	 * them buttons shown.
+	 * @param isAdmin = Boolean  where true = is admin, false = isn't admin
+	 */
 	public void setHomePagetype(Boolean isAdmin) {
 		if(isAdmin && layout.getChildren().size()!=5) {
 			layout.getChildren().addAll(btnStorage,btnAccount,btnBudget);
