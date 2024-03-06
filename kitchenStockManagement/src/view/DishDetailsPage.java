@@ -316,6 +316,9 @@ public void clearTableColumn() {
  */
 public void setTableColumns(ArrayList<TableColumn<StockType,String>> columns) {
 	tvIngredients.getColumns().addAll(columns);
+	tvIngredients.getColumns().forEach(column -> {
+		column.setSortable(false);
+	});
 }
 /**
  * sets the dish name label text

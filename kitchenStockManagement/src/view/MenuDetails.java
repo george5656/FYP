@@ -397,6 +397,10 @@ private HBox fAndO = new HBox(20);
 	 */
 	public void setDishColumn(TableColumn<Dish, String> column) {
 		tvDishes.getColumns().add(column);
+		//ec = existing column
+		tvDishes.getColumns().forEach(ec -> {
+			ec.setSortable(false);
+		});
 	}
 	/**
 	 * sets the Table columns for the the menu list table view
@@ -405,6 +409,9 @@ private HBox fAndO = new HBox(20);
 	 */
 	public void setMenuColumn(TableColumn<Dish, String> column) {
 		tvMenu.getColumns().add(column);
+		tvMenu.getColumns().forEach(ec -> {
+			ec.setSortable(false);
+		});
 	}
 	/**
 	 * sets the Table columns for the the shopping list table view.
@@ -413,6 +420,9 @@ private HBox fAndO = new HBox(20);
 	 */
 	public void setShoppingColumns(ArrayList<TableColumn<StockType, String>> columns) {
 		tvShopping.getColumns().addAll(columns);
+		tvShopping.getColumns().forEach(column -> {
+			column.setSortable(false);
+		});
 	}
 	
 	/**

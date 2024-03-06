@@ -304,7 +304,15 @@ public void setStockListBtnFilterEventHandler(EventHandler<ActionEvent> event) {
  */
 
 public void stockListLoad(ObservableList<CurrentStock> data) {
+	stockListPage.setObservableList(data);
+
+	this.getChildren().remove(0);
+	this.getChildren().add(stockListPage);
+	VBox.setVgrow(stockListPage, Priority.ALWAYS);
+	
+	
 	stockListPage.clearTableColumn();
+	
 	
 	TableColumn<CurrentStock, String> name = new TableColumn<>("Name");
 	TableColumn<CurrentStock, String> cost = new TableColumn<>("Cost");
@@ -312,7 +320,6 @@ public void stockListLoad(ObservableList<CurrentStock> data) {
 	TableColumn<CurrentStock, String> location = new TableColumn<>("Storage Location");
 	TableColumn<CurrentStock, String> quantity = new TableColumn<>("Quantity");
 	TableColumn<CurrentStock, String> expiereDate = new TableColumn<>("Expiere Date");
-	
 	
 	name.setCellValueFactory(new PropertyValueFactory<CurrentStock, String>("name"));
 	cost.setCellValueFactory(new PropertyValueFactory<CurrentStock, String>("cost"));
@@ -330,17 +337,20 @@ public void stockListLoad(ObservableList<CurrentStock> data) {
 	tableColumns.add(quantity);
 	tableColumns.add(expiereDate);
 	
+	
+	
+	
+	
 	stockListPage.setTableColumns(tableColumns);
+
 	
-	
-	
-	stockListPage.getErrorLabel().setVisible(false);
-	stockListPage.setObservableList(data);
+	stockListPage.getErrorLabel().setVisible(false);	
 	stockListPage.resetFindInput();
-	this.getChildren().remove(0);
-	this.getChildren().add(stockListPage);
-	VBox.setVgrow(stockListPage, Priority.ALWAYS);
+	
+	
+	
 }
+
 /**
  * gets the item that is selected in the listview in the stock list page. 
  * @return String or null. if no item is selected null is returned, else it is the string that is selected.

@@ -43,7 +43,7 @@ public class ListPage<E> extends PaneMenu {
 	 * default constructor
 	 */
 	public ListPage() {
-	tv.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
+
 
 		super.setCenter(mainLayout);
 		txtErrorMessage.setVisible(false);
@@ -196,8 +196,27 @@ public void resetFindInput() {
  * @param columns ArrayList<TableColumn<E,String>>
  */
 public void setTableColumns(ArrayList<TableColumn<E,String>> columns) {
+
+	/*
+	 * this first policy means when the table view is made it 
+	*will make all the columns take up the full space of the table view, excally
+	*/
 	
 	tv.getColumns().addAll(columns);
+	/*
+	 * this one (below) means now the tables columns can be grown and wont be limited
+	 * to the tableview size.
+	 */
+	tv.setColumnResizePolicy(TableView.UNCONSTRAINED_RESIZE_POLICY);
+	//pref width, simply so when it picks it will go to that but the user can change it
+	// needs to be proeproty so have the bind method front he beans library
+	// has to be divided as bind must be with a property so cant use / 
+	
+	
+	tv.getColumns().forEach(column -> {
+		column.setSortable(false);
+	});
+
 }
 
 /**
@@ -206,4 +225,5 @@ public void setTableColumns(ArrayList<TableColumn<E,String>> columns) {
 public void clearTableColumn() {
 	tv.getColumns().clear();
 }
+
 }
