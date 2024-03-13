@@ -304,6 +304,33 @@ public class RootView extends VBox {
 	}
 
 	/**
+	 * sets the alert page about button event handler
+	 * 
+	 * @param event = Event handler<ActionEvent>
+	 */
+	public void setAlertBtnAboutEventHandler(EventHandler<ActionEvent> event) {
+		alert.setAboutEventHandler(event);
+	}
+
+	/**
+	 * sets the admin recommedation page about button event handler
+	 * 
+	 * @param event = Event handler<ActionEvent>
+	 */
+	public void setAdminRecommedationBtnAboutEventHandler(EventHandler<ActionEvent> event) {
+		recommedationAdmin.setAboutEventHandler(event);
+	}
+
+	/**
+	 * sets the chef recommedation page about button event handler
+	 * 
+	 * @param event = Event handler<ActionEvent>
+	 */
+	public void setChefRecommedationBtnAboutEventHandler(EventHandler<ActionEvent> event) {
+		recommedationChef.setAboutEventHandler(event);
+	}
+
+	/**
 	 * sets the menu button event handler
 	 * 
 	 * @param event = Event handler<ActionEvent>

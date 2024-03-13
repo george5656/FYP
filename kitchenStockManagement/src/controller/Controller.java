@@ -245,12 +245,20 @@ public class Controller {
 
 		view.setAdminRecommedationBtnCancel(new EHHomeLoad());
 		view.setAdminRecommedationBtnSave(new EHAdminRecommidationSave());
+		view.setAdminRecommedationBtnAboutEventHandler((ActionEvent event) -> {
+			model.makeInfoAlert("write a message to be sent to the chefs").show();
+		});
 
 		view.setAlertBtnBack(new EHHomeLoad());
+		view.setAlertBtnAboutEventHandler((ActionEvent event) -> {
+			model.makeInfoAlert("show all the stock that is need so that every menu can be done").show();
+		});
 
 		view.setChefRecommedaitonBtnBackEventHandler(new EHHomeLoad());
 		view.setChefRecommedaitonBtnDeleteEventHandler(new EHChefRecommedationBtnDelete());
-
+		view.setChefRecommedationBtnAboutEventHandler((ActionEvent event) -> {
+			model.makeInfoAlert("shows all the recommendations made by admin").show();
+		});
 	}
 
 	/**
