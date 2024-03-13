@@ -28,6 +28,7 @@ public class ModelRoot {
 	private ArrayList<Account> accounts = new ArrayList<>();
 	private ArrayList<StorageLocation> sl = new ArrayList<>();
 	private ArrayList<Budget> budget = new ArrayList<>();
+	//below so know what got when deteming if need more stock or not
 	private ArrayList<CurrentStock> currentStock = new ArrayList<>();
 	private ArrayList<Dish> currentDish = new ArrayList<>();
 	private ArrayList<Menu> currentMenus = new ArrayList<>();
@@ -1619,167 +1620,230 @@ public String getSelctedDishDishName() {
 	 * 
 	 * @return ObservableList<StockType> 
 	 */
+	
+	/*
+	 * 
+	 * 
+	 * 
+	 * 
+	 * 
+	 * editted
+	 */
+	
 	public ObservableList<StockType> getSelectedMenuStockType() {
-		
-		//needed so know what got
 		currentStock = db.getAllCurrentStock();
 		
-		 Budget currentBudget = selectedMenu.getBudget();
 		
-		ArrayList<Dish> dishes = new ArrayList<>();
-		// so not sharing the same memory location
-		selectedMenu.getHeldDishes().forEach((Dish i) -> dishes.add(i));
-		//simply a containe for the shopping list
-		ArrayList<StockType> output = new ArrayList<>();
-		ArrayList<Integer> indexTracker = new ArrayList<>();
-		ArrayList<StockType> shoppingList = new ArrayList<>();
-		// not this is for removing any duplicates that may be present.
-				ArrayList<StockType> shoppingListNoDuplicates = new ArrayList<>();
-		int counter = 0;
-		int counter2 = 0;
-		int counter3 = 0;
-		Boolean addToShoppingList = false;
+			return getAMenusNeedStock(selectedMenu);
 		
-		while (counter != dishes.size()) {
-			//so each dish we get the dishStock it contains
-			ArrayList<StockType> dishStock = dishes.get(counter).getHeldStock();
-			//so go over the loop of all the dish stock
-			while (counter2 != dishStock.size()) {
-				StockType st= dishStock.get(counter2);
-				
-				
-					if(!currentStock.contains(st)) {
-						// so know have no stock that matches it so can just simply, 
+		
+		
+		
+		}
+		
+		
+public ObservableList<StockType> getAllNeedStock() {
+	//the getall current stocj isn't done in get a menus need stock,
+	//so that the method can be run multiple times,
+	//and if say need two apples for two diffrenet menu, i
+	//if the current stock reset all time it would say have enough,
+	//when actually still need one apple.
+	currentStock = db.getAllCurrentStock();
+
+	ObservableList<StockType> output = FXCollections.observableArrayList(new ArrayList<>());
+	
+	db.getAllMenu().forEach(menu -> {
+		
+		getAMenusNeedStock(menu).forEach(s -> {
+			if(output.contains(s)) {
+				output.forEach(heldS->{
+					if(heldS.equals(s)) {
+						heldS.setQuanity(
+								(Double.parseDouble(s.getQuanity()) + Double.parseDouble(heldS.getQuanity()))
+										+ "");
+					}
+					
+				});
+			}else {
+				output.add(s);
+			}
+			
+			
+		});
+		
+		
+	});
+	return output;
+	
+}
+
+
+
+
+
+public ObservableList<StockType> getAMenusNeedStock(Menu menu) 
+{
+		//selectedMenu
+		Menu inputtedMenu = menu;
+	
+	
+	 Budget currentBudget = inputtedMenu.getBudget();
+	
+	ArrayList<Dish> dishes = new ArrayList<>();
+	// so not sharing the same memory location
+	inputtedMenu.getHeldDishes().forEach((Dish i) -> dishes.add(i));
+	//simply a containe for the shopping list
+	ArrayList<StockType> output = new ArrayList<>();
+	ArrayList<Integer> indexTracker = new ArrayList<>();
+	ArrayList<StockType> shoppingList = new ArrayList<>();
+	// not this is for removing any duplicates that may be present.
+			ArrayList<StockType> shoppingListNoDuplicates = new ArrayList<>();
+	int counter = 0;
+	int counter2 = 0;
+	int counter3 = 0;
+	Boolean addToShoppingList = false;
+	
+	while (counter != dishes.size()) {
+		//so each dish we get the dishStock it contains
+		ArrayList<StockType> dishStock = dishes.get(counter).getHeldStock();
+		//so go over the loop of all the dish stock
+		while (counter2 != dishStock.size()) {
+			StockType st= dishStock.get(counter2);
+			
+			
+				if(!currentStock.contains(st)) {
+					// so know have no stock that matches it so can just simply, 
+					
+					shoppingList.add(st);
+				}else {
+					ArrayList<CurrentStock> allCSThatMatchOneGot = new ArrayList<>();
+				// so know there is a match for the name. 
+					while(counter3 != currentStock.size() ) {
+						CurrentStock cs = currentStock.get(counter3);
 						
-						shoppingList.add(st);
-					}else {
-						ArrayList<CurrentStock> allCSThatMatchOneGot = new ArrayList<>();
-					// so know there is a match for the name. 
-						while(counter3 != currentStock.size() ) {
-							CurrentStock cs = currentStock.get(counter3);
+						
+						if(cs.getName().equals(st.getName())) {
+							//so know know got one that matches
+							allCSThatMatchOneGot.add(cs);
+							indexTracker.add(counter3);
 							
+						}
+						counter3 = counter3 + 1;
+					}
+					//for the index tracker to know which one to get
+					int counter4 = 0;
+					// so know got all the ones that are like the stock type want to compare can work on it.
+					//stfl = stock type for eash loop
+					
+					for(CurrentStock stfl : allCSThatMatchOneGot) {
+						
+						// idea is we just start deleting the st values
+						// what left gets added as that what needed
+						
+						if(formatDateToInt(stfl.getExpiereDate()) >= formatDateToInt(currentBudget.getEndDate())) {
+	
 							
-							if(cs.getName().equals(st.getName())) {
-								//so know know got one that mmatches
-								allCSThatMatchOneGot.add(cs);
-								indexTracker.add(counter3);
+							// so if the food expier on or after the date got its fine
+							Double stDouble = Double.parseDouble(st.getQuanity());
+							
+							Double stflDouble = Double.parseDouble(stfl.getQuanity());
+							
+							if(stDouble < stflDouble) {
 								
+							// so if have the stock in as it needed quantity, 
+							// is less than what got in, can just for get about it.
+							// do need to decrease it from the list so it not effecting the future stuff.
+								stfl.setQuanity(stflDouble-stDouble+"");
+								// so is now holding one with less stock
+								currentStock.set(indexTracker.get(counter4), stfl);
+								//as filled it so don't need to keep going.
+							addToShoppingList= false;
+								break;
+							}else if(stDouble.equals(stflDouble)) {
+								
+							// as have all the stock can can forget about it but need
+							//to edit current stock so future stock not effected
+								currentStock.remove(stfl);
+								//currentStock.remove(indexTracker.get(counter4));
+								addToShoppingList = false;
+								break;
+							}else {
+								
+								// the stock isn't enough to remove it all so both need to be decreased. 
+								//order of operations so don't need brackets
+								
+								st.setQuanity(stDouble - stflDouble + "");
+								// as not enough to remove it so implies self is smaller so would be removed
+								currentStock.remove(stfl);
+								addToShoppingList = true;
 							}
-							counter3 = counter3 + 1;
+							
+							
+							
+							//st.setQuanity(""+(Double.parseDouble(st.getQuanity())-Double.parseDouble(stfl.getQuanity())));
 						}
-						//for the index tracker to know which one to get
-						int counter4 = 0;
-						// so know got all the ones that are like the stock type want to compare can work on it.
-						//stfl = stock type for eash loop
+						counter4 = counter4 +1;
+						addToShoppingList = true;
 						
-						for(CurrentStock stfl : allCSThatMatchOneGot) {
-							
-							// idea is we just start deleting the st values
-							// what left gets added as that what needed
-							
-							if(formatDateToInt(stfl.getExpiereDate()) >= formatDateToInt(currentBudget.getEndDate())) {
-		
-								
-								// so if the food expier on or after the date got its fine
-								Double stDouble = Double.parseDouble(st.getQuanity());
-								
-								Double stflDouble = Double.parseDouble(stfl.getQuanity());
-								
-								if(stDouble < stflDouble) {
-									
-								// so if have the stock in as it needed quantity, 
-								// is less than what got in, can just for get about it.
-								// do need to decrease it from the list so it not effecting the future stuff.
-									stfl.setQuanity(stflDouble-stDouble+"");
-									// so is now holding one with less stock
-									currentStock.set(indexTracker.get(counter4), stfl);
-									//as filled it so don't need to keep going.
-								addToShoppingList= false;
-									break;
-								}else if(stDouble.equals(stflDouble)) {
-									
-								// as have all the stock can can forget about it but need
-								//to edit current stock so future stock not effected
-									currentStock.remove(stfl);
-									//currentStock.remove(indexTracker.get(counter4));
-									addToShoppingList = false;
-									break;
-								}else {
-									
-									// the stock isn't enough to remove it all so both need to be decreased. 
-									//order of operations so don't need brackets
-									
-									st.setQuanity(stDouble - stflDouble + "");
-									// as not enough to remove it so implies self is smaller so would be removed
-									currentStock.remove(stfl);
-									addToShoppingList = true;
-								}
-								
-								
-								
-								//st.setQuanity(""+(Double.parseDouble(st.getQuanity())-Double.parseDouble(stfl.getQuanity())));
-							}
-							counter4 = counter4 +1;
-							addToShoppingList = true;
-							
-						}
-						counter4 = 0;
-						if(addToShoppingList == true) {
-							
-						shoppingList.add(st);
-						}
+					}
+					counter4 = 0;
+					if(addToShoppingList == true) {
 						
-						
-						
-						
+					shoppingList.add(st);
 					}
 					
 					
-				counter3 = 0;	
-				counter2 = counter2 + 1;
-			}	
-			counter2 =0;
-			counter = counter + 1;
-		}
+					
+					
+				}
+				
+				
+			counter3 = 0;	
+			counter2 = counter2 + 1;
+		}	
+		counter2 =0;
+		counter = counter + 1;
+	}
+	
+	
+
+	for(StockType stfl: shoppingList) {
+	
+		if(shoppingListNoDuplicates.contains(stfl)) {
+			
+			shoppingListNoDuplicates.forEach((StockType i) -> {
+			// so if the one that equals it, it does this
+			if (i.equals(stfl)) {
+				
+
+				i.setQuanity(
+						(Double.parseDouble(i.getQuanity()) + Double.parseDouble(stfl.getQuanity()))
+								+ "");
+			}
+		});
 		
+	}else {
+		
+		shoppingListNoDuplicates.add( new StockType(stfl.getName(), stfl.getCost(),
+						stfl.getQuanityType(), stfl.getQuanity()));
+	}
+	
+	
+	}
+	
+	// convert it all to a string to be outputed
+		shoppingListNoDuplicates.forEach((StockType i) -> {output.add(i);
+			
+		});	
+		
+		
+		return FXCollections.observableArrayList(output);
+	
+	
+	}
+	
 		
 	
-		for(StockType stfl: shoppingList) {
-		
-			if(shoppingListNoDuplicates.contains(stfl)) {
-				
-				shoppingListNoDuplicates.forEach((StockType i) -> {
-				// so if the one that equals it, it does this
-				if (i.equals(stfl)) {
-					
-
-					i.setQuanity(
-							(Double.parseDouble(i.getQuanity()) + Double.parseDouble(stfl.getQuanity()))
-									+ "");
-				}
-			});
-			
-		}else {
-			
-			shoppingListNoDuplicates.add( new StockType(stfl.getName(), stfl.getCost(),
-							stfl.getQuanityType(), stfl.getQuanity()));
-		}
-		
-		
-		}
-		
-		// convert it all to a string to be outputed
-			shoppingListNoDuplicates.forEach((StockType i) -> {output.add(i);
-				
-			});	
-			
-			currentStock = db.getAllCurrentStock();
-			return FXCollections.observableArrayList(output);
-		
-		
-		}
-		
-		
 	
 
 	/**
@@ -1799,6 +1863,7 @@ public String getSelctedDishDishName() {
 		ObservableList<String> sli = FXCollections.observableArrayList(valueHold);
 				
 	//slis =shopping list items string
+		
 		for(String slis : sli) {
 			
 			String quantity  = slis.substring(slis.indexOf("quanity")+9);
@@ -1808,6 +1873,8 @@ public String getSelctedDishDishName() {
 			totalCost = totalCost + (Double.parseDouble(quantity) * Double.parseDouble(cost));
 			
 		}
+		
+		
 		return String.format("%.2f",BudgetAmount - totalCost);
 	}
 
@@ -2199,18 +2266,24 @@ public String getSelctedDishDishName() {
 	public Boolean doesMenuNameAlreadyExist(String name) {
 
 		currentMenus = db.getAllMenu();
+	
 		Boolean output = false;
 		Integer count = 0;
 		// so can still use own name
-		if (!selectedMenu.getName().equals(name)) {
+		
+		
+		
+	
 
 			while (currentMenus.size() != count) {
 				if (currentMenus.get(count).getName().equals(name)) {
+					if (selectedMenu.equals(null)||!selectedMenu.getName().equals(name)) {
 					output = true;
-				}
+					}
+					}
 				count = count + 1;
 			}
-		}
+		
 
 		return output;
 	}
@@ -2514,7 +2587,18 @@ public String getSelctedDishDishName() {
 		return db.hasTheStockTypeQuanityTypeChanged(quanityType, id);
 	}
 	
+	public void saveRecommedationToDatabase(String recommedation) {
+		
+		db.saveRecommedation(recommedation);
+	}
 	
+	public ObservableList<Recommedation> getAllRecommedation(){
+		
+		return FXCollections.observableArrayList( db.getAllRecommendations());
+			
+	}
 	
-	
+	public void deleteARecommedation(String id) {
+		db.deleteRecommedation(id);
+	}
 }

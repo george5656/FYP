@@ -19,12 +19,12 @@ public class Main extends Application {
 	 * where the root V,M,c and scene are made
 	 * and the css file is connected to the scene.
 	 */
+	
 	@Override
 	public void init() {
 		view = new RootView();
 		new Controller(new ModelRoot(), view);
-	 scene = new Scene(view,1200,600);
-		
+		scene = new Scene(view,1200,600);
 			scene.getStylesheets().add( getClass().getResource("StockManegment.css").toString());
 		
 	}

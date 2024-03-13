@@ -21,10 +21,17 @@ public class HomePage extends PaneMenu {
 	private Button btnAccount = new Button("Account");
 	private Button btnMenu = new Button("Menu");
 	private Button btnStorage = new Button("Storage");
+	private Button btnAlert = new Button("Low Stock");
+	private Button btnRecommedationChef = new Button("Recommedation");
+	private Button btnRecommedationAdmion = new Button("Recommedation");
+	
 	//constructor 
+	/**
+	 * default constructor
+	 */
 	public HomePage() {
 	super.setCenter(layout);
-		layout.getChildren().addAll(btnStock,btnMenu,btnStorage,btnAccount,btnBudget);
+		layout.getChildren().addAll(btnStock,btnMenu);
 		layout.setAlignment(Pos.CENTER);
 		
 		VBox.setVgrow(btnStock, Priority.ALWAYS);
@@ -32,6 +39,9 @@ public class HomePage extends PaneMenu {
 		VBox.setVgrow(btnAccount, Priority.ALWAYS);
 		VBox.setVgrow(btnMenu, Priority.ALWAYS);
 		VBox.setVgrow(btnStorage, Priority.ALWAYS);
+		VBox.setVgrow(btnAlert, Priority.ALWAYS);
+		VBox.setVgrow(btnRecommedationChef, Priority.ALWAYS);
+		VBox.setVgrow(btnRecommedationAdmion, Priority.ALWAYS);
 		
 		layout.setFillWidth(true);
 		
@@ -40,6 +50,9 @@ public class HomePage extends PaneMenu {
 		btnAccount.setMaxSize(Double.MAX_VALUE, Double.MAX_VALUE);
 		btnMenu.setMaxSize(Double.MAX_VALUE, Double.MAX_VALUE);
 		btnStorage.setMaxSize(Double.MAX_VALUE, Double.MAX_VALUE);
+		btnAlert.setMaxSize(Double.MAX_VALUE, Double.MAX_VALUE);
+		btnRecommedationChef.setMaxSize(Double.MAX_VALUE, Double.MAX_VALUE);
+		btnRecommedationAdmion.setMaxSize(Double.MAX_VALUE, Double.MAX_VALUE);
 		 
 	layout.setPadding(new Insets(20,20,20,20));
 	
@@ -48,6 +61,9 @@ public class HomePage extends PaneMenu {
 	btnAccount.setFont(new Font(30));
 	btnMenu.setFont(new Font(30));
 	btnStorage.setFont(new Font(30));
+	btnAlert.setFont(new Font(30));
+	btnRecommedationChef.setFont(new Font(30));
+	btnRecommedationAdmion.setFont(new Font(30));
 	
 	}
 	/**
@@ -78,6 +94,15 @@ public class HomePage extends PaneMenu {
 	public void setBtnStorageEventHandler(EventHandler<ActionEvent> Event) {
 		btnStorage.setOnAction(Event);
 	}
+	public void setBtnAlertEventHandler(EventHandler<ActionEvent> Event) {
+		btnAlert.setOnAction(Event);
+	}
+	public void setBtnChefRecommedationEventHandler(EventHandler<ActionEvent> Event) {
+		btnRecommedationChef.setOnAction(Event);
+	}
+	public void setBtnAdminRecommedatiobEventHandler(EventHandler<ActionEvent> Event) {
+		btnRecommedationAdmion.setOnAction(Event);
+	}
 	/**
 	 * sets the account button event handler 
 	 * @param event = Event handler<ActionEvent> 
@@ -85,21 +110,21 @@ public class HomePage extends PaneMenu {
 	public void setBtnAccountEventHandler(EventHandler<ActionEvent> Event) {
 		btnAccount.setOnAction(Event);
 	}
-	/**
-	 * changes the layout of the home page to either, chef or admin, based on input.
-	 * admin gets the Storage, Account and budget added to it where as chef or not admin doesn't get 
-	 * them buttons shown.
-	 * @param isAdmin = Boolean  where true = is admin, false = isn't admin
-	 */
+	
+	
+	
 	public void setHomePagetype(Boolean isAdmin) {
-		if(isAdmin && layout.getChildren().size()!=5) {
-			layout.getChildren().addAll(btnStorage,btnAccount,btnBudget);
-		}else if((!isAdmin) && layout.getChildren().size()!=2) {
+		if(isAdmin && layout.getChildren().size()!=7) {
+			layout.getChildren().addAll(btnStorage,btnAccount,btnBudget,btnAlert,btnRecommedationAdmion);
+			layout.getChildren().remove(btnRecommedationChef);
+		}else if((!isAdmin) && layout.getChildren().size()!=3) {
 			//if alt way around get error as recounts list
-			layout.getChildren().remove(4);
-			layout.getChildren().remove(3);
-			layout.getChildren().remove(2);
-			
+			layout.getChildren().remove(btnStorage);
+			layout.getChildren().remove(btnAccount);
+			layout.getChildren().remove(btnBudget);
+			layout.getChildren().remove(btnAlert);
+			layout.getChildren().remove(btnRecommedationAdmion);
+			layout.getChildren().add(btnRecommedationChef);
 			
 			
 		}

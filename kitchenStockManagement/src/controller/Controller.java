@@ -44,13 +44,16 @@ public class Controller {
 		//login
 		view.setLoginBtnExit(new EHExit());
 		view.setLoginBtnLogin(new EHLogin());
-		
+	
 		//home page
 		view.setHomeBtnStockEventHandler(new EHStockListLaod());
 		view.setHomeBtnMenuEventHandler(new EHMenuListLoad());
 		view.setHomeBtnAccountEventHandler(new EHAccountListLoad());
 		view.setHomeBtnBudgetEventHandler(new EHBudgetListLoad());
 		view.setHomeBtnStorageEventHandler(new EHStorageListLoad());
+		view.setHomeBtnAlertEventHandler(new EHAlertLoadFromHomePage());
+		view.setHomeBtnChefRecommedationtEventHandler(new EHChefRecommedationLoadFromHomePage());
+		view.setHomeBtnAdminRecommedationEventHandler(new EHAdminRecommidationLoadFromHomePage());
 		view.setHomeBtnAboutEventHandler((ActionEvent event) -> {
 			model.makeInfoAlert("this is the main navigation page, click a button to go somewhere").show();
 		});
@@ -237,6 +240,17 @@ public class Controller {
 		view.setOutputBtnAboutEventHandler((ActionEvent event) -> {
 			model.makeInfoAlert("pick if you would like to save to the database or to a text document").show();
 		});
+		
+		
+		
+		view.setAdminRecommedationBtnCancel(new EHHomeLoad());
+		view.setAdminRecommedationBtnSave(new EHAdminRecommidationSave());
+		
+		view.setAlertBtnBack(new EHHomeLoad());
+		
+		view.setChefRecommedaitonBtnBackEventHandler(new EHHomeLoad());
+		view.setChefRecommedaitonBtnDeleteEventHandler(new EHChefRecommedationBtnDelete());
+		
 	}
 
 	/**
@@ -1204,6 +1218,7 @@ model.createStock(model.getSelectedStockId(), view.getStorageLocation(), Double.
  * @author Student
  *
  */
+	
 	private class EHDeleteBtnConfirm implements EventHandler<ActionEvent> {
 
 		@Override
@@ -1294,6 +1309,9 @@ model.createStock(model.getSelectedStockId(), view.getStorageLocation(), Double.
 				view.dishDetailsLoad();
 				
 		
+		}else if(model.getDeleteFrom().equals("ChefRecommedation")) {
+			model.deleteARecommedation(view.getChefRecommedationSelectedItemId());
+			view.chefRecommedationLoad(model.getAllRecommedation());
 		}
 
 
@@ -1330,6 +1348,9 @@ if(model.getDeleteFrom().equals("StockList")) {
 	view.menuListLoad(model.getAllMenus());
 }else if (model.getDeleteFrom().equals("dishDetails")) {
 	view.dishDetailsLoad();
+}else if(model.getDeleteFrom().equals("ChefRecommedation")) {
+	view.chefRecommedationLoad(model.getAllRecommedation());
+	
 }
 
 		}
@@ -2527,7 +2548,7 @@ if(model.getDeleteFrom().equals("StockList")) {
 			} else if(view.getMenuSettingBudgetIndex() == -1) {
 				issueFrom = "budget";
 				masterError = "no budget selected";
-			}else if(model.doesBudgetNameAlreadyExist(view.getMenuSettingName())) {
+			}else if(model.doesMenuNameAlreadyExist(view.getMenuSettingName())) {
 				issueFrom = "name";
 				masterError = "name already taken";
 						
@@ -2535,7 +2556,9 @@ if(model.getDeleteFrom().equals("StockList")) {
 			
 			
 			if(masterError.equals("")) {
+				
 				view.resetMenuDetailsPage();
+				
 				view.setMenuDetailsDishList(model.getAllDishes());
 				
 				
@@ -2544,7 +2567,9 @@ if(model.getDeleteFrom().equals("StockList")) {
 				model.setSelectedMenu(view.getMenuSettingName(), view.getMenuSettingSelectedBudgetOption());
 				
 				view.MenuDetailsLoad();
+				
 				view.setMenuDetailsBudgetValue(model.getBudgetSizeMinusTheShoppingList() +"");
+				
 			}else {
 				Alert menuSettingErrorMessage = model.makeAlert(issueFrom, masterError);
 						menuSettingErrorMessage.show();
@@ -3083,6 +3108,87 @@ if(view.getMenuDetailsDishListSelectedItemIndex() != -1) {
 			}
 		
 		}
+	}
+	
+	
+	
+	
+	
+	private class EHAlertLoadFromHomePage implements EventHandler<ActionEvent> {
+
+		@Override
+		public void handle(ActionEvent event) {
+			view.alertPageLoad(model.getAllNeedStock());
+		}
+
+	
+	}
+	private class EHChefRecommedationLoadFromHomePage implements EventHandler<ActionEvent> {
+
+		@Override
+		public void handle(ActionEvent event) {
+			view.chefRecommedationLoad(model.getAllRecommedation());
+			
+		}
+
+	
+	}
+	private class EHAdminRecommidationLoadFromHomePage implements EventHandler<ActionEvent> {
+
+		@Override
+		public void handle(ActionEvent event) {
+			view.adminRecommedationLoad();;
+		}
+
+	
+	}
+	
+	private class EHAdminRecommidationSave implements EventHandler<ActionEvent> {
+
+		@Override
+		public void handle(ActionEvent event) {
+			String errorMessage = ""; 
+			errorMessage = model.stringMustBePresetValidation(view.getAdminRecommedationTextContent());
+			if(errorMessage.equals("")) {
+			model.saveRecommedationToDatabase(view.getAdminRecommedationTextContent());
+			view.homePageMenuLoad(model.getLoggedInAccountAdminStatus());
+			}else {
+				Alert dishDetailsErrorMessage = model.makeAlert("input issue", errorMessage);
+				dishDetailsErrorMessage.show();
+			}
+			
+			
+		}
+
+	
+	}
+	private class EHChefRecommedationBtnDelete implements EventHandler<ActionEvent> {
+
+		@Override
+		public void handle(ActionEvent event) {
+			
+			String masterIssue = "";
+			if(view.getChefRecommedationSelectedItemId().equals("null")) {
+				masterIssue = "no item selected";
+			}
+			if(masterIssue.equals("")) {
+				
+				model.setDeleteFrom("ChefRecommedation");
+				view.deleteConfirmationLoad();
+				view.getDeleteConfirmationPage()
+				.setTxtConfirmMessage("Are you sure you wan to delete the recommedation ?");
+				
+				
+				
+				
+			}else {
+				
+			
+				Alert dishDetailsErrorMessage = model.makeAlert("selection issue", masterIssue);
+				dishDetailsErrorMessage.show();
+			}
+		}
+
 	}
 	
 }

@@ -15,6 +15,7 @@ import model.Budget;
 import model.CurrentStock;
 import model.Dish;
 import model.Menu;
+import model.Recommedation;
 import model.StockType;
 import model.StorageLocation;
 
@@ -48,6 +49,10 @@ public class RootView extends VBox {
 	private MenuFilter mf = new MenuFilter();
 	private MenuSettingPage msp = new MenuSettingPage();
 	private Output output = new Output();
+	private AlertPage alert = new AlertPage();
+	private Recommendations recommedationAdmin = new Recommendations();
+	private RecommendationChefView recommedationChef = new RecommendationChefView();
+	
 	/**
 	 * default constructor
 	 */
@@ -163,6 +168,9 @@ public ArrayList<PaneMenu> getAllView(){
 	all.add(mf);
 	all.add(msp);
 	all.add(output);
+	all.add(alert);
+	all.add(recommedationChef);
+	all.add(recommedationAdmin);
 	
 	return all;
 }
@@ -174,6 +182,24 @@ public ArrayList<PaneMenu> getAllView(){
 public void setLoginBtnExit(EventHandler<ActionEvent> event) {
 	login.setBtnExitEventHandler(event);
 }
+
+
+
+public void setAdminRecommedationBtnCancel(EventHandler<ActionEvent> event) {
+	recommedationAdmin.setBtnCancel(event);
+}
+public void setAdminRecommedationBtnSave(EventHandler<ActionEvent> event) {
+	recommedationAdmin.setBtnSave(event);
+}
+public String getAdminRecommedationTextContent() {
+	return recommedationAdmin.getRecommedation();
+}
+
+
+public void setAlertBtnBack(EventHandler<ActionEvent> event) {
+	alert.setBtnBack(event);
+}
+
 /**
  * sets the login button event handler 
  * @param event = Event handler<ActionEvent> 
@@ -350,6 +376,60 @@ public void stockListLoad(ObservableList<CurrentStock> data) {
 	
 	
 }
+
+
+
+
+
+
+
+public void alertPageLoad(ObservableList<StockType> data) {
+	this.getChildren().remove(0);
+	this.getChildren().add(alert);
+	VBox.setVgrow(alert, Priority.ALWAYS);
+	alert.setTableDataInfo(data);
+	
+}
+
+public void chefRecommedationLoad(ObservableList<Recommedation> data) {
+	this.getChildren().remove(0);
+	this.getChildren().add(recommedationChef);
+	VBox.setVgrow(recommedationChef, Priority.ALWAYS);
+	recommedationChef.setData(data);
+	recommedationChef.clearUserSelection();
+}
+public void adminRecommedationLoad() {
+	this.getChildren().remove(0);
+	this.getChildren().add(recommedationAdmin);
+	VBox.setVgrow(recommedationAdmin, Priority.ALWAYS);
+	recommedationAdmin.clear();
+}
+
+
+public void setHomeBtnAlertEventHandler(EventHandler<ActionEvent> event) {
+	homePage.setBtnAlertEventHandler(event);
+}
+public void setHomeBtnChefRecommedationtEventHandler(EventHandler<ActionEvent> event) {
+	homePage.setBtnChefRecommedationEventHandler(event);
+}
+public void setHomeBtnAdminRecommedationEventHandler(EventHandler<ActionEvent> event) {
+	homePage.setBtnAdminRecommedatiobEventHandler(event);
+}
+
+
+
+public void setChefRecommedaitonBtnBackEventHandler(EventHandler<ActionEvent> event) {
+	recommedationChef.setBtnBack(event);
+}
+public void setChefRecommedaitonBtnDeleteEventHandler(EventHandler<ActionEvent> event) {
+	recommedationChef.setBtnDelete(event);
+}
+
+
+public String getChefRecommedationSelectedItemId() {
+	return recommedationChef.getSelectedItemId();
+}
+
 
 /**
  * gets the item that is selected in the listview in the stock list page. 

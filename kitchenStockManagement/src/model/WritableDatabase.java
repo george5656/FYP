@@ -1882,5 +1882,63 @@ return output;
 			e.printStackTrace();
 		}
 	}
+
 	
+	
+	
+	
+	
+	
+	
+	public void saveRecommedation(String recommedation) {
+
+		PreparedStatement statement;
+		try {
+
+			statement = mySqlDatabase
+					.prepareStatement("Insert into stock_mangemnet.tbl_recommedation (recommedation) values (\'" + recommedation + "\');");
+			statement.execute();
+
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
+	}
+	
+	public ArrayList<Recommedation> getAllRecommendations() {
+		PreparedStatement statement;
+		ArrayList<Recommedation> recommedation = new ArrayList<>();
+		try {
+			statement = mySqlDatabase.prepareStatement(
+					"select * from stock_mangemnet.tbl_recommedation;");
+			ResultSet result = statement.executeQuery();
+			// if(result.first()) {
+			while (result.next()) {
+				Recommedation input = new Recommedation(result.getInt(1),result.getString(2));
+				
+				recommedation.add(input);
+			}
+			// }
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
+		return recommedation;
+	}
+	
+	
+	public void deleteRecommedation(String id) {
+		PreparedStatement statement;
+		try {
+			statement = mySqlDatabase.prepareStatement(
+					"Delete from stock_mangemnet.tbl_recommedation where tbl_recommedation.ID = \'"
+							+ id + "\';");
+			statement.execute();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
 }
