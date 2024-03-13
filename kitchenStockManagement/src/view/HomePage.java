@@ -94,12 +94,24 @@ public class HomePage extends PaneMenu {
 	public void setBtnStorageEventHandler(EventHandler<ActionEvent> Event) {
 		btnStorage.setOnAction(Event);
 	}
+	/**
+	 * sets the Alert button event handler 
+	 * @param event = Event handler<ActionEvent> 
+	 */
 	public void setBtnAlertEventHandler(EventHandler<ActionEvent> Event) {
 		btnAlert.setOnAction(Event);
 	}
+	/**
+	 * sets the recommendation button event handler on none admin accocunts  
+	 * @param event = Event handler<ActionEvent> 
+	 */
 	public void setBtnChefRecommedationEventHandler(EventHandler<ActionEvent> Event) {
 		btnRecommedationChef.setOnAction(Event);
 	}
+	/**
+	 * sets the recommedation button event handler on admin accounts 
+	 * @param event = Event handler<ActionEvent> 
+	 */
 	public void setBtnAdminRecommedatiobEventHandler(EventHandler<ActionEvent> Event) {
 		btnRecommedationAdmion.setOnAction(Event);
 	}
@@ -112,7 +124,11 @@ public class HomePage extends PaneMenu {
 	}
 	
 	
-	
+	/**
+	 * removes or adds button to the home page as needed, so that the account type can only,
+	 * see the ones it allowed to see. it determines what to show based on the passed in value.
+	 * @param isAdmin = Boolean, true = is admin, false = isn't admin.
+	 */
 	public void setHomePagetype(Boolean isAdmin) {
 		if(isAdmin && layout.getChildren().size()!=7) {
 			layout.getChildren().addAll(btnStorage,btnAccount,btnBudget,btnAlert,btnRecommedationAdmion);

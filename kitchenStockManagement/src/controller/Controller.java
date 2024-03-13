@@ -3113,7 +3113,12 @@ if(view.getMenuDetailsDishListSelectedItemIndex() != -1) {
 	
 	
 	
-	
+	/**
+	 * event handler for loading the alert page, and pass in all all the need stock.
+	 * need stock being the stock that a menu need but doesn't have.
+	 * @author Student
+	 *
+	 */
 	private class EHAlertLoadFromHomePage implements EventHandler<ActionEvent> {
 
 		@Override
@@ -3123,6 +3128,12 @@ if(view.getMenuDetailsDishListSelectedItemIndex() != -1) {
 
 	
 	}
+	/**
+	 * loads the chefs recommendation page and pass in to it all the recommendations
+	 * from the database.
+	 * @author Student
+	 *
+	 */
 	private class EHChefRecommedationLoadFromHomePage implements EventHandler<ActionEvent> {
 
 		@Override
@@ -3133,16 +3144,27 @@ if(view.getMenuDetailsDishListSelectedItemIndex() != -1) {
 
 	
 	}
+	/**
+	 * loads the  admin recommendation page
+	 * @author Student
+	 *
+	 */
 	private class EHAdminRecommidationLoadFromHomePage implements EventHandler<ActionEvent> {
 
 		@Override
 		public void handle(ActionEvent event) {
-			view.adminRecommedationLoad();;
+			view.adminRecommedationLoad();
 		}
 
 	
 	}
 	
+	/**
+	 * event handler for the admin recommendation save button. 
+	 * it saves the data to the database then loads the home page
+	 * @author Student
+	 *
+	 */
 	private class EHAdminRecommidationSave implements EventHandler<ActionEvent> {
 
 		@Override
@@ -3162,6 +3184,13 @@ if(view.getMenuDetailsDishListSelectedItemIndex() != -1) {
 
 	
 	}
+	/**
+	 * event handler for the chef recommendation delete button, 
+	 * it loads the delete confirmation page if an item has been selected, 
+	 * else it shows an error message.
+	 * @author Student
+	 *
+	 */
 	private class EHChefRecommedationBtnDelete implements EventHandler<ActionEvent> {
 
 		@Override

@@ -1612,22 +1612,12 @@ public String getSelctedDishDishName() {
 	}
 
 // done for remove and add as it just get its from the list so updates it all
-	/**
-	 * idea is that it get all the stockType that needs to be order.
-	 * so it only returns one of every stock type and with the quantity, that is needed.
-	 * by needed means it wont go off before the budget end date, and only the amount that is needed
-	 * so what is needed minus what got in stock.
-	 * 
-	 * @return ObservableList<StockType> 
-	 */
 	
-	/*
-	 * 
-	 * 
-	 * 
-	 * 
-	 * 
-	 * editted
+	
+	/**
+	 * gets all the needed stock for the selectedMenu,
+	 * does this by delegating to getAMenusNeedstock
+	 * @return ObservableList<StockType>
 	 */
 	
 	public ObservableList<StockType> getSelectedMenuStockType() {
@@ -1641,7 +1631,13 @@ public String getSelctedDishDishName() {
 		
 		}
 		
-		
+	/**
+	 * this gets all the need stock, eg the stock that a menu needs but the database doesn't have.
+	 * it gets it for every menu, and merges them in to one list.
+	 * 
+	 * @return ObservableList<StockType>
+	 */
+	
 public ObservableList<StockType> getAllNeedStock() {
 	//the getall current stocj isn't done in get a menus need stock,
 	//so that the method can be run multiple times,
@@ -1680,6 +1676,12 @@ public ObservableList<StockType> getAllNeedStock() {
 
 
 
+/**
+ * it gets all the stock that the passed in menu needs that is nto currently in the database, or will
+ * expirere before the menu is finished (menu time is based on budget it has)
+ * @param menu = Menu
+ * @return ObservableList<StockType> 
+ */
 
 public ObservableList<StockType> getAMenusNeedStock(Menu menu) 
 {
@@ -2586,18 +2588,28 @@ public ObservableList<StockType> getAMenusNeedStock(Menu menu)
 	public String hasTheStockTypeQuanityTypeChanged(String quanityType, String id) {
 		return db.hasTheStockTypeQuanityTypeChanged(quanityType, id);
 	}
-	
+	/**
+	 * it save the inputted string to the database in the table recommendations
+	 * @param recommedation = String
+	 */
 	public void saveRecommedationToDatabase(String recommedation) {
 		
 		db.saveRecommedation(recommedation);
 	}
-	
+	/**
+	 * get all data as Recommendation from the database table recommendation
+	 * @return ObservableList<Recommedation>
+	 */
 	public ObservableList<Recommedation> getAllRecommedation(){
 		
 		return FXCollections.observableArrayList( db.getAllRecommendations());
 			
 	}
-	
+	/**
+	 * delete a row from the database table recommendations, 
+	 * row deleted is the one where the row primary key matches the inputted string.
+	 * @param id = String
+	 */
 	public void deleteARecommedation(String id) {
 		db.deleteRecommedation(id);
 	}

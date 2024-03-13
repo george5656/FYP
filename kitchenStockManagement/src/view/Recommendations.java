@@ -21,7 +21,9 @@ private TextArea input = new TextArea();
 private Label title = new Label("create a recommendation"); 
 
 
-
+/**
+ * default constructor
+ */
 public Recommendations() {
 	super.setCenter(layout);
 	layout.setAlignment(Pos.CENTER);
@@ -52,17 +54,30 @@ cancel.setMaxSize(Double.MAX_VALUE, Double.MAX_VALUE);
 	title.setUnderline(true);
 }
 
-
+/**
+ * get the user input
+ * @return String
+ */
 public String getRecommedation() {
 	return input.getText();
 }
-
+/**
+ * sets the button btnSave event handler
+ * @param event = EventHandler<ActionEvent> event
+ */
 public void setBtnSave(EventHandler<ActionEvent> event) {
 save.setOnAction(event);
 }
+/**
+ * sets the button btnCancel event handler
+ * @param event = EventHandler<ActionEvent> event
+ */
 public void setBtnCancel(EventHandler<ActionEvent> event) {
 	cancel.setOnAction(event);
 }
+/**
+ * clears the user input
+ */
 public void clear() {
 	input.clear();
 }

@@ -1885,10 +1885,10 @@ return output;
 
 	
 	
-	
-	
-	
-	
+	/**
+	 * creates a new row and save the inputed string in the recommendation table in the database
+	 * @param recommedation String
+	 */
 	
 	public void saveRecommedation(String recommedation) {
 
@@ -1905,7 +1905,10 @@ return output;
 		}
 
 	}
-	
+	/**
+	 * gets all the row from the table recommendation in the database as Recommendation objects
+	 * @return ArrayList<Recommedation>
+	 */
 	public ArrayList<Recommedation> getAllRecommendations() {
 		PreparedStatement statement;
 		ArrayList<Recommedation> recommedation = new ArrayList<>();
@@ -1928,7 +1931,10 @@ return output;
 		return recommedation;
 	}
 	
-	
+	/**
+	 * deletes a row in table recommendation where the passed in parameter matches the row primary key
+	 * @param id = String
+	 */
 	public void deleteRecommedation(String id) {
 		PreparedStatement statement;
 		try {

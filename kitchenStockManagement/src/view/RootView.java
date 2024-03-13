@@ -184,17 +184,31 @@ public void setLoginBtnExit(EventHandler<ActionEvent> event) {
 }
 
 
-
+/**
+ * set the event handler for btnCancel on the recommedation page,
+ * @param event = EventHandler<ActionEvent> event
+ */
 public void setAdminRecommedationBtnCancel(EventHandler<ActionEvent> event) {
 	recommedationAdmin.setBtnCancel(event);
 }
+/**
+ * set the event handler for btnSave on the recommedation page,
+ * @param event = EventHandler<ActionEvent> event
+ */
 public void setAdminRecommedationBtnSave(EventHandler<ActionEvent> event) {
 	recommedationAdmin.setBtnSave(event);
 }
+/**
+ * gets the user input from the recommendation page
+ * @return String
+ */
 public String getAdminRecommedationTextContent() {
 	return recommedationAdmin.getRecommedation();
 }
-
+/**
+ * sets the event handler for btnBavk on the alert page
+ * @param event = EventHandler<ActionEvent> event
+ */
 
 public void setAlertBtnBack(EventHandler<ActionEvent> event) {
 	alert.setBtnBack(event);
@@ -382,7 +396,10 @@ public void stockListLoad(ObservableList<CurrentStock> data) {
 
 
 
-
+/**
+ * loads the alert page and set the table view underling data structure to be the passed in one
+ * @param data = ObservableList<StockType> data
+ */
 public void alertPageLoad(ObservableList<StockType> data) {
 	this.getChildren().remove(0);
 	this.getChildren().add(alert);
@@ -390,7 +407,10 @@ public void alertPageLoad(ObservableList<StockType> data) {
 	alert.setTableDataInfo(data);
 	
 }
-
+/**
+ * loads the chef Recommedation page and set the table view underling data structure to be the passed in one
+ * @param data = ObservableList<Recommedation> data
+ */
 public void chefRecommedationLoad(ObservableList<Recommedation> data) {
 	this.getChildren().remove(0);
 	this.getChildren().add(recommedationChef);
@@ -398,6 +418,9 @@ public void chefRecommedationLoad(ObservableList<Recommedation> data) {
 	recommedationChef.setData(data);
 	recommedationChef.clearUserSelection();
 }
+/**
+ * loads the Admin Recommendation page.
+ */
 public void adminRecommedationLoad() {
 	this.getChildren().remove(0);
 	this.getChildren().add(recommedationAdmin);
@@ -405,27 +428,48 @@ public void adminRecommedationLoad() {
 	recommedationAdmin.clear();
 }
 
-
+/**
+ * set the event handler for the alert button on the home page
+ * @param event = EventHandler<ActionEvent> event
+ */
 public void setHomeBtnAlertEventHandler(EventHandler<ActionEvent> event) {
 	homePage.setBtnAlertEventHandler(event);
 }
+/**
+ * set the event handler for the chef recommedation button on the home page
+ * @param event = EventHandler<ActionEvent> event
+ */
 public void setHomeBtnChefRecommedationtEventHandler(EventHandler<ActionEvent> event) {
 	homePage.setBtnChefRecommedationEventHandler(event);
 }
+/**
+ * set the event handler for the admin recommendation button on the home page
+ * @param event = EventHandler<ActionEvent> event
+ */
 public void setHomeBtnAdminRecommedationEventHandler(EventHandler<ActionEvent> event) {
 	homePage.setBtnAdminRecommedatiobEventHandler(event);
 }
 
 
-
+/**
+ * sets the event handler for the button back on the chef accommodation page
+ * @param event = EventHandler<ActionEvent> event
+ */
 public void setChefRecommedaitonBtnBackEventHandler(EventHandler<ActionEvent> event) {
 	recommedationChef.setBtnBack(event);
 }
+/**
+ * sets the event handler for the button delete on the chef accommodation page
+ * @param event = EventHandler<ActionEvent> event
+ */
 public void setChefRecommedaitonBtnDeleteEventHandler(EventHandler<ActionEvent> event) {
 	recommedationChef.setBtnDelete(event);
 }
 
-
+/**
+ * gets the id of the selected recommendation from the recommendation chef page
+ * @return String which is a "null" if no item is selected.
+ */
 public String getChefRecommedationSelectedItemId() {
 	return recommedationChef.getSelectedItemId();
 }
