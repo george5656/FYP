@@ -7,10 +7,10 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
-
 /**
  * class for the database mySqlDatabase, and database queries
- * @author George 
+ * 
+ * @author George
  */
 public class WritableDatabase {
 	// fields
@@ -73,7 +73,7 @@ public class WritableDatabase {
 			while (result.next()) {
 				CurrentStock input = new CurrentStock(result.getInt(1), result.getString(2), result.getDouble(4),
 						result.getString(8), result.getDate(5).toString(), result.getString(3), result.getDouble(7));
-				
+
 				currentStock.add(input);
 			}
 			// }
@@ -84,26 +84,31 @@ public class WritableDatabase {
 
 		return currentStock;
 	}
+
 	/**
-	 * identifies if the stored cost for the stockType is different to the inputed one.
-	 * @param cost = String which are seeing if it it very from the one in the database
-	 * @param id = String which is the id of a stockType in the database.
-	 * @return String = if no change to inputed cost get "" else get what the database holds for the cost 
+	 * identifies if the stored cost for the stockType is different to the inputed
+	 * one.
+	 * 
+	 * @param cost = String which are seeing if it it very from the one in the
+	 *             database
+	 * @param id   = String which is the id of a stockType in the database.
+	 * @return String = if no change to inputed cost get "" else get what the
+	 *         database holds for the cost
 	 */
-	
+
 	public String hasTheStockTypeCostChanged(String cost, String id) {
 		PreparedStatement statement;
 		String output = "";
 		try {
 			statement = mySqlDatabase.prepareStatement(
-					"select * from stock_mangemnet.tbl_stock_type where tbl_stock_type.stockTypeId = \'"+id+"\';");
+					"select * from stock_mangemnet.tbl_stock_type where tbl_stock_type.stockTypeId = \'" + id + "\';");
 			ResultSet result = statement.executeQuery();
 			// if(result.first()) {
-			while(result.next()) {
-			if(!result.getString(2).equals(cost)) {
-				output = result.getString(2);
+			while (result.next()) {
+				if (!result.getString(2).equals(cost)) {
+					output = result.getString(2);
+				}
 			}
-			 }
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -111,27 +116,32 @@ public class WritableDatabase {
 
 		return output;
 	}
+
 	/**
-	 * identifies if the stored quanityType for the stockType is different to the inputed one.
-	 * @param quanityType = String which are seeing if it it very from the one in the database
-	 * @param id = String which is the id of a stockType in the database.
-	 * @return String = if no change to inputed quanityType get "" else get what the database holds for the quanityType 
+	 * identifies if the stored quanityType for the stockType is different to the
+	 * inputed one.
+	 * 
+	 * @param quanityType = String which are seeing if it it very from the one in
+	 *                    the database
+	 * @param id          = String which is the id of a stockType in the database.
+	 * @return String = if no change to inputed quanityType get "" else get what the
+	 *         database holds for the quanityType
 	 */
-	
+
 	public String hasTheStockTypeQuanityTypeChanged(String quanityType, String id) {
 		PreparedStatement statement;
 		String output = "";
 		try {
 			statement = mySqlDatabase.prepareStatement(
-					"select * from stock_mangemnet.tbl_stock_type where tbl_stock_type.stockTypeId = \'"+id+"\';");
+					"select * from stock_mangemnet.tbl_stock_type where tbl_stock_type.stockTypeId = \'" + id + "\';");
 			ResultSet result = statement.executeQuery();
 			// if(result.first()) {
-			while(result.next()) {
-			if(!result.getString(3).equals(quanityType)) {
-				output = result.getString(3);
+			while (result.next()) {
+				if (!result.getString(3).equals(quanityType)) {
+					output = result.getString(3);
+				}
+
 			}
-			
-			 }
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -139,12 +149,13 @@ public class WritableDatabase {
 
 		return output;
 	}
+
 	/**
 	 * gets current stock thats stock type Id is like the passed in parameter. gets
 	 * the date from the tbl_stock_iteration
 	 * 
 	 * @param like = Sting which is wanting to stock that is like it.
-	 * @return ArrayList<CurrentStock> 
+	 * @return ArrayList<CurrentStock>
 	 */
 	public ArrayList<CurrentStock> getCurrentStockThatsLike(String like) {
 		PreparedStatement statement;
@@ -307,12 +318,15 @@ public class WritableDatabase {
 		}
 
 	}
+
 	/**
-	 * updates the cost value of a row in the table tbl_stock_type with the passed in parameters. 
+	 * updates the cost value of a row in the table tbl_stock_type with the passed
+	 * in parameters.
 	 * 
 	 * @param stockTypeId = String which is the pk of a row
-	 * @param cost = String which is a double in a string format. this the value that will be saved in the column 
-	 * cost, of the row that matches the stockTypeId parameter.
+	 * @param cost        = String which is a double in a string format. this the
+	 *                    value that will be saved in the column cost, of the row
+	 *                    that matches the stockTypeId parameter.
 	 */
 	public void updateStockTypeCost(String stockTypeId, String cost) {
 		PreparedStatement statement;
@@ -328,12 +342,15 @@ public class WritableDatabase {
 		}
 
 	}
+
 	/**
-	 * updates the quantity type value of a row in the table tbl_stock_type with the passed in parameters. 
+	 * updates the quantity type value of a row in the table tbl_stock_type with the
+	 * passed in parameters.
 	 * 
-	 * @param stockTypeId = String which is the pk of a row
-	 * @param quantityType = String which is the value that will be saved in the column 
-	 * quantityType, of the row that matches the stockTypeId parameter.
+	 * @param stockTypeId  = String which is the pk of a row
+	 * @param quantityType = String which is the value that will be saved in the
+	 *                     column quantityType, of the row that matches the
+	 *                     stockTypeId parameter.
 	 */
 	public void updateStockTypeQuanityType(String stockTypeId, String quantityType) {
 		PreparedStatement statement;
@@ -350,12 +367,13 @@ public class WritableDatabase {
 		}
 
 	}
+
 	/**
 	 *
-	 * gets all the Current stock the database hold that pass the where. 
-	 * the current stock objects are made from values the database holds in the 
-	 * tbl_stock_iteration and tbl_stock_type tables, and each primary key in the 
-	 * tbl_stock_iteration implies a current stock iteration. 
+	 * gets all the Current stock the database hold that pass the where. the current
+	 * stock objects are made from values the database holds in the
+	 * tbl_stock_iteration and tbl_stock_type tables, and each primary key in the
+	 * tbl_stock_iteration implies a current stock iteration.
 	 *
 	 * @param where = String, which is the where part of the MySQL statement. note
 	 *              the where word is not needed.
@@ -408,25 +426,28 @@ public class WritableDatabase {
 
 		return currentStock;
 	}
+
 	/**
 	 * gets a specific current stock object that matches the passed in id parameter.
-	 * Current stock is made up of values from row in table tbl_stock_iteration and tbl_stock_type.
-	 * the values are the one where the table tbl_stock_iteration column stockIterationId is the same 
-	 * as the passed in parameter id.
-	 * it uses the row data to make a currentStock object which is then passed back.
+	 * Current stock is made up of values from row in table tbl_stock_iteration and
+	 * tbl_stock_type. the values are the one where the table tbl_stock_iteration
+	 * column stockIterationId is the same as the passed in parameter id. it uses
+	 * the row data to make a currentStock object which is then passed back.
+	 * 
 	 * @param id = String which is the primary key of the CurrentStock object wanted
-	 * @return CurrentStock = current stockObject which values relate to the passed in id parameter.
+	 * @return CurrentStock = current stockObject which values relate to the passed
+	 *         in id parameter.
 	 */
 	public CurrentStock getSpecificCurrentStock(String id) {
 		PreparedStatement statement;
 		CurrentStock currentStock = new CurrentStock(-1, "null", -1.0, "null", "null", "null", -1.0);
 		try {
-				statement = mySqlDatabase.prepareStatement(
+			statement = mySqlDatabase.prepareStatement(
 					"select * from stock_mangemnet.tbl_stock_iteration, stock_mangemnet.tbl_stock_type where (tbl_stock_iteration.stockIterationId = \""
 							+ id + "\") and tbl_stock_iteration.stockTypeId = tbl_stock_type.stockTypeId;");
 			ResultSet result = statement.executeQuery();
 			// if(result.first()) {
-			
+
 			if (result.next()) {
 				currentStock = new CurrentStock(result.getInt(1), result.getString(2), result.getDouble(4),
 						result.getString(8), result.getDate(5).toString(), result.getString(3), result.getDouble(7));
@@ -439,13 +460,16 @@ public class WritableDatabase {
 
 		return currentStock;
 	}
-/**
- * updates a row in the table tbl_stock_iteration.
- * the row that is updates is the one where the primary key is the same as the parameter id.
- * the new values are the values the parameter data has.
- * @param data = CurrentStock object, which methods are called to get the values to be saved
- * @param id = int, the pk of the row to be updated.
- */
+
+	/**
+	 * updates a row in the table tbl_stock_iteration. the row that is updates is
+	 * the one where the primary key is the same as the parameter id. the new values
+	 * are the values the parameter data has.
+	 * 
+	 * @param data = CurrentStock object, which methods are called to get the values
+	 *             to be saved
+	 * @param id   = int, the pk of the row to be updated.
+	 */
 	public void updateStockIteration(CurrentStock data, int id) {
 		PreparedStatement statement;
 
@@ -453,8 +477,8 @@ public class WritableDatabase {
 
 			statement = mySqlDatabase.prepareStatement(
 					"Update stock_mangemnet.tbl_stock_iteration set tbl_stock_iteration.storageLocationId = \'"
-							+ data.getStorageLocationId() + "\', stockTypeId = \'" + data.getName()
-							+ "\', quanity = \'" + data.getQuanity() + "\', expiereDate = \'" + data.getExpiereDate()
+							+ data.getStorageLocationId() + "\', stockTypeId = \'" + data.getName() + "\', quanity = \'"
+							+ data.getQuanity() + "\', expiereDate = \'" + data.getExpiereDate()
 							+ "\' where stockIterationId = \"" + id + "\";");
 			statement.execute();
 
@@ -491,14 +515,16 @@ public class WritableDatabase {
 
 		return allBudgets;
 	}
-/**
- * gets budget objects that pass all the where input. 
- * a budget is simply the data that is in the table tbl_budget, and 
- * each row contains all the values that are needed to make a budget object.
- * @param where = String, which is the where part of the MySQL statement. note
- *              the where word is not needed. 
- * @return ArrayList<Budget>.
- */
+
+	/**
+	 * gets budget objects that pass all the where input. a budget is simply the
+	 * data that is in the table tbl_budget, and each row contains all the values
+	 * that are needed to make a budget object.
+	 * 
+	 * @param where = String, which is the where part of the MySQL statement. note
+	 *              the where word is not needed.
+	 * @return ArrayList<Budget>.
+	 */
 
 	public ArrayList<Budget> getBudgetsThatMatchesWhere(String where) {
 		PreparedStatement statement;
@@ -543,13 +569,15 @@ public class WritableDatabase {
 		}
 
 	}
+
 	/**
-	 * gets all budget that are like the inputed string.
-	 * a budget is simply the data that is in the table tbl_budget, and 
-	 * each row contains all the values that are needed to make a budget object.
-	 * the rows that are retrieved are the ones where the budgetId column, value is 
-	 * like eg % like % the inputed string like.
-	 * @param like = String, to indicate which budget to get. its seeing if the budgetId column value is like it.
+	 * gets all budget that are like the inputed string. a budget is simply the data
+	 * that is in the table tbl_budget, and each row contains all the values that
+	 * are needed to make a budget object. the rows that are retrieved are the ones
+	 * where the budgetId column, value is like eg % like % the inputed string like.
+	 * 
+	 * @param like = String, to indicate which budget to get. its seeing if the
+	 *             budgetId column value is like it.
 	 * @return ArrayList<Budget>
 	 */
 
@@ -575,14 +603,16 @@ public class WritableDatabase {
 
 		return allBudgets;
 	}
+
 	// all check that id already exists so this should be fine
 	/**
-	 * gets a specific budget from the database.
-	 * a budget is simply the data that is in the table tbl_budget, and 
-	 * each row contains all the values that are needed to make a budget object.
-	 * the data the budget object has is the data in the row where the inputed id is the same as 
-	 * the budgetId value.
-	 * @param id = String, which is the primary key of the row values want the object to have.
+	 * gets a specific budget from the database. a budget is simply the data that is
+	 * in the table tbl_budget, and each row contains all the values that are needed
+	 * to make a budget object. the data the budget object has is the data in the
+	 * row where the inputed id is the same as the budgetId value.
+	 * 
+	 * @param id = String, which is the primary key of the row values want the
+	 *           object to have.
 	 * @return Budget object, with the values from the database.
 	 */
 	public Budget getSpecificBudget(String id) {
@@ -606,12 +636,16 @@ public class WritableDatabase {
 
 		return budget;
 	}
-/**
- * updates the a row in the tbl_budget table.
- * the row updates is the one that primary key matches the orginalId.
- * @param userInput = Budget object, which methods are called to get the new values for the row
- * @param orginalId = String, which is the primary key of a row in the table, so know which one to update. 
- */
+
+	/**
+	 * updates the a row in the tbl_budget table. the row updates is the one that
+	 * primary key matches the orginalId.
+	 * 
+	 * @param userInput = Budget object, which methods are called to get the new
+	 *                  values for the row
+	 * @param orginalId = String, which is the primary key of a row in the table, so
+	 *                  know which one to update.
+	 */
 	public void updateABudget(Budget userInput, String orginalId) {
 		PreparedStatement statement;
 
@@ -654,15 +688,18 @@ public class WritableDatabase {
 
 		return allAccounts;
 	}
-/**
- * gets all Accounts that are like the inputed string.
- * An account is simply the data that is in the table tbl_account_details, and 
- * each row contains all the values that are needed to make a Account object.
- * the rows that are retrieved are the ones where the username column, value is 
- * like eg % like % the inputed string like.
- * @param like = String, to indicate which Account to get. its seeing if the username column value is like it.
- * @return ArrayList<Account>
- */
+
+	/**
+	 * gets all Accounts that are like the inputed string. An account is simply the
+	 * data that is in the table tbl_account_details, and each row contains all the
+	 * values that are needed to make a Account object. the rows that are retrieved
+	 * are the ones where the username column, value is like eg % like % the inputed
+	 * string like.
+	 * 
+	 * @param like = String, to indicate which Account to get. its seeing if the
+	 *             username column value is like it.
+	 * @return ArrayList<Account>
+	 */
 	public ArrayList<Account> getAccountsThatsLike(String like) {
 		PreparedStatement statement;
 		ArrayList<Account> account = new ArrayList<>();
@@ -684,12 +721,14 @@ public class WritableDatabase {
 
 		return account;
 	}
+
 	/**
-	 * gets Account objects that pass all the where input. 
-	 * a account is simply the data that is in the table tbl_account_details, and 
-	 * each row contains all the values that are needed to make a account object.
+	 * gets Account objects that pass all the where input. a account is simply the
+	 * data that is in the table tbl_account_details, and each row contains all the
+	 * values that are needed to make a account object.
+	 * 
 	 * @param where = String, which is the where part of the MySQL statement. note
-	 *              the where word is not needed. 
+	 *              the where word is not needed.
 	 * @return ArrayList<Account>
 	 */
 
@@ -788,43 +827,48 @@ public class WritableDatabase {
 			e.printStackTrace();
 		}
 	}
-	
+
 	/**
-	 * checks to see if there is more than one admin class left.
-	 * the point of this is to let the controller know if, the user can delete the account.
-	 * this is needed as if the last admin delete a class, then there is no admin left which can add
-	 * new classes.
-	 * @return Boolean, true = is more than one admin left, false = there isn't more than admin left
+	 * checks to see if there is more than one admin class left. the point of this
+	 * is to let the controller know if, the user can delete the account. this is
+	 * needed as if the last admin delete a class, then there is no admin left which
+	 * can add new classes.
+	 * 
+	 * @return Boolean, true = is more than one admin left, false = there isn't more
+	 *         than admin left
 	 */
 	public Boolean areThereOtherAdminAccounts() {
 		PreparedStatement statement;
 		Integer counter = 0;
 		try {
-			statement = mySqlDatabase.prepareStatement("select * from stock_mangemnet.tbl_account_details where tbl_account_details.isAdmin = \'1\';");
+			statement = mySqlDatabase.prepareStatement(
+					"select * from stock_mangemnet.tbl_account_details where tbl_account_details.isAdmin = \'1\';");
 			ResultSet result = statement.executeQuery();
 			while (result.next()) {
-				counter = counter +1;
+				counter = counter + 1;
 			}
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		
-		if(counter > 1) {
+
+		if (counter > 1) {
 			return true;
-		}else {
+		} else {
 			return false;
 		}
-		
-		
+
 	}
-	
-/**
- * updates the a row in the tbl_account_details table.
- * the row updates is the one that primary key matches the orginalId.
- * @param userInput = Account object, which methods are called to get the new values for the row
- * @param orginalId = String, which is the primary key of a row in the table, so know which one to update. 
- */
+
+	/**
+	 * updates the a row in the tbl_account_details table. the row updates is the
+	 * one that primary key matches the orginalId.
+	 * 
+	 * @param userInput = Account object, which methods are called to get the new
+	 *                  values for the row
+	 * @param orginalId = String, which is the primary key of a row in the table, so
+	 *                  know which one to update.
+	 */
 	public void updateAAccount(Account userInput, String orginalId) {
 		PreparedStatement statement;
 		int adminStatus = 0;
@@ -869,13 +913,18 @@ public class WritableDatabase {
 
 		return allSl;
 	}
-/**
- * returns if a row in the database, already has the same primary key/storageLocationId.
- * it checks the tbl_storage_location table, looking at the row storageLocationId. and sees if any of the rows
- * has the same value as the String which has been passed in. 
- * @param storagelocation = String, which is the primary key you want to see if already exists in the database.
- * @return Boolean, true = it is already in database, false = it isn't already in the database.
- */
+
+	/**
+	 * returns if a row in the database, already has the same primary
+	 * key/storageLocationId. it checks the tbl_storage_location table, looking at
+	 * the row storageLocationId. and sees if any of the rows has the same value as
+	 * the String which has been passed in.
+	 * 
+	 * @param storagelocation = String, which is the primary key you want to see if
+	 *                        already exists in the database.
+	 * @return Boolean, true = it is already in database, false = it isn't already
+	 *         in the database.
+	 */
 	public Boolean StorgaeLocationExists(String storagelocation) {
 		PreparedStatement statement;
 		try {
@@ -893,13 +942,16 @@ public class WritableDatabase {
 		return false;
 
 	}
+
 	/**
-	 * gets all storage locations that are like the inputed string.
-	 * A storage location is simply the data that is in the table tbl_storage_location, and 
-	 * each row contains all the values that are needed to make a storageLocation object.
-	 * the rows that are retrieved are the ones where the storageLocationId column, value is 
-	 * like eg % like % the inputed string like.
-	 * @param like = String, to indicate which Account to get. its seeing if the storageLocationId column value is like it.
+	 * gets all storage locations that are like the inputed string. A storage
+	 * location is simply the data that is in the table tbl_storage_location, and
+	 * each row contains all the values that are needed to make a storageLocation
+	 * object. the rows that are retrieved are the ones where the storageLocationId
+	 * column, value is like eg % like % the inputed string like.
+	 * 
+	 * @param like = String, to indicate which Account to get. its seeing if the
+	 *             storageLocationId column value is like it.
 	 * @return ArrayList<StorageLocation>
 	 */
 
@@ -961,7 +1013,7 @@ public class WritableDatabase {
 	 *              the where word is not needed.
 	 * @return ArrayList<StorageLocation>
 	 */
-	
+
 	public ArrayList<StorageLocation> getStorgeThatMatchesWhere(String where) {
 		PreparedStatement statement;
 		ArrayList<StorageLocation> storage = new ArrayList<>();
@@ -1010,13 +1062,17 @@ public class WritableDatabase {
 		}
 
 	}
+
 	/**
-	 * updates a row in the tbl_storage_location table. 
-	 * @param name = String, which is the new storageLocationId row value
-	 * @param type = String, which is the new type row value 
-	 * @param isAvailble = Boolean, which is the new isAvailble value, true =is available, false = isn't available. 
-	 * @param orginalId = String which identifies, the row for which to update, as it should match a value that already 
-	 * in the row stirageLocationId
+	 * updates a row in the tbl_storage_location table.
+	 * 
+	 * @param name       = String, which is the new storageLocationId row value
+	 * @param type       = String, which is the new type row value
+	 * @param isAvailble = Boolean, which is the new isAvailble value, true =is
+	 *                   available, false = isn't available.
+	 * @param orginalId  = String which identifies, the row for which to update, as
+	 *                   it should match a value that already in the row
+	 *                   stirageLocationId
 	 */
 	public void updateStorage(String name, String type, Boolean isAvailble, String orginalId) {
 		PreparedStatement statement;
@@ -1086,15 +1142,17 @@ public class WritableDatabase {
 			e.printStackTrace();
 		}
 	}
-/**
- * user to know if account is admin.
- * checks the the table tbl_account_details looking at row is admin.
- * if the value is 1 thats a true(as MySQL doesn't have boolean) and true = is admin, 
- * if the value is 0 thats a false = isn't admin. 
- * checks the row where the userName /primary key equals the passed in parameter id.
- * @param id = String, this a primary key in the database
- * @return boolean, true = is admin, false = isn't admin.
- */
+
+	/**
+	 * user to know if account is admin. checks the the table tbl_account_details
+	 * looking at row is admin. if the value is 1 thats a true(as MySQL doesn't have
+	 * boolean) and true = is admin, if the value is 0 thats a false = isn't admin.
+	 * checks the row where the userName /primary key equals the passed in parameter
+	 * id.
+	 * 
+	 * @param id = String, this a primary key in the database
+	 * @return boolean, true = is admin, false = isn't admin.
+	 */
 	public Boolean isAccountAdmin(String id) {
 		PreparedStatement statement;
 		try {
@@ -1151,15 +1209,19 @@ public class WritableDatabase {
 
 		return dish;
 	}
+
 	/**
-	 *  get all the dish objects that are like the passed in parameter. 
-	 *  each dish object is values are retrieved from the database. 
-	 *  the tables it gets the data from are the tbl_dish, tbl_dish_stock and tbl_stock_type
-	 *  it uses the data from these tables to populate each of the dish object in the arrayList<Dish>
-	 * the rows that are retrieved are the ones where the dishId column, value is 
+	 * get all the dish objects that are like the passed in parameter. each dish
+	 * object is values are retrieved from the database. the tables it gets the data
+	 * from are the tbl_dish, tbl_dish_stock and tbl_stock_type it uses the data
+	 * from these tables to populate each of the dish object in the arrayList<Dish>
+	 * the rows that are retrieved are the ones where the dishId column, value is
 	 * like eg % like % the inputed string like.
-	 * @param like = String, to indicate which dishes to get. its seeing if the tbl_dish column value is like it.
-	 * @return ArrayList<Dish> = all the dishes that dishId are like the passed in value.
+	 * 
+	 * @param like = String, to indicate which dishes to get. its seeing if the
+	 *             tbl_dish column value is like it.
+	 * @return ArrayList<Dish> = all the dishes that dishId are like the passed in
+	 *         value.
 	 */
 	public ArrayList<Dish> getAllCurrentDishesThatLike(String like) {
 		PreparedStatement statement;
@@ -1193,14 +1255,16 @@ public class WritableDatabase {
 
 		return dish;
 	}
-/**
- * gets a specific dish from the database.
- * when say get a dish from a database, mean make a dish object and use the data in the database
- * to create it and sets it values. 
- * the values it gets are where the dishId parameter equals a value in the dishId column in the tbl_dish table. 
- * @param dishId = String which represent a primary key, in he tbl_dish table
- * @return Dish object, with its values gotten from the database.
- */
+
+	/**
+	 * gets a specific dish from the database. when say get a dish from a database,
+	 * mean make a dish object and use the data in the database to create it and
+	 * sets it values. the values it gets are where the dishId parameter equals a
+	 * value in the dishId column in the tbl_dish table.
+	 * 
+	 * @param dishId = String which represent a primary key, in he tbl_dish table
+	 * @return Dish object, with its values gotten from the database.
+	 */
 	public Dish getASpecificDishes(String dishId) {
 		PreparedStatement statement;
 		PreparedStatement statement2;
@@ -1234,15 +1298,21 @@ public class WritableDatabase {
 
 		return dish;
 	}
-/**
- * makes a row in the table tbl_dish_stock.
- * each row represents the connection between tbl_stock_Type and tbl_dish table.
- * the values inputed are the ones passed in to the parameters.
- * @param stockType = String, populates the stockTypeId column, should be a pk in the table tbl_stock_Type. 
- * @param dishName = String, populates the dishId column, should be a pk in the table tbl_dish.
- * @param quanityNeeded = String, which is a double in a string format, populates the quanityOfStockNeeded column.
- * @param unit = String, populates the quantityOfStockNeedUnitType column.
- */
+
+	/**
+	 * makes a row in the table tbl_dish_stock. each row represents the connection
+	 * between tbl_stock_Type and tbl_dish table. the values inputed are the ones
+	 * passed in to the parameters.
+	 * 
+	 * @param stockType     = String, populates the stockTypeId column, should be a
+	 *                      pk in the table tbl_stock_Type.
+	 * @param dishName      = String, populates the dishId column, should be a pk in
+	 *                      the table tbl_dish.
+	 * @param quanityNeeded = String, which is a double in a string format,
+	 *                      populates the quanityOfStockNeeded column.
+	 * @param unit          = String, populates the quantityOfStockNeedUnitType
+	 *                      column.
+	 */
 	public void saveDishStockConnection(String stockType, String dishName, String quanityNeeded, String unit) {
 		PreparedStatement statement;
 		try {
@@ -1257,11 +1327,12 @@ public class WritableDatabase {
 			e.printStackTrace();
 		}
 	}
-/**
- * makes a new row in tbl_dish.
- * the value it saves is the inputer parameter.
- * @param dishName = String, which is to be saved in the column dishId
- */
+
+	/**
+	 * makes a new row in tbl_dish. the value it saves is the inputer parameter.
+	 * 
+	 * @param dishName = String, which is to be saved in the column dishId
+	 */
 	public void saveDish(String dishName) {
 
 		PreparedStatement statement;
@@ -1277,11 +1348,14 @@ public class WritableDatabase {
 		}
 
 	}
+
 	/**
-	 * updates a row in the table tbl_dish.
-	 * the row that it updates is the one where the primary key of it matches the passed in parameter orginalDishName.
-	 * @param newDishName = String the new dishId column value
-	 * @param orginalDishName = String the original dishId so know which column to update. 
+	 * updates a row in the table tbl_dish. the row that it updates is the one where
+	 * the primary key of it matches the passed in parameter orginalDishName.
+	 * 
+	 * @param newDishName     = String the new dishId column value
+	 * @param orginalDishName = String the original dishId so know which column to
+	 *                        update.
 	 */
 	public void updateDish(String newDishName, String orginalDishName) {
 
@@ -1298,13 +1372,16 @@ public class WritableDatabase {
 		}
 
 	}
-/**
- * delete a row from the table tbl_dish and all the corresponding row in tbl_dish_stock.
- * note, no call directly to tbl_dish_stock as the FK has them cascade when the dishId is deleted. 
- * uses the passed in parameter to identify the row in tbl_dish where the dishId column has a row which 
- * has that value.
- * @param orginalDishName = String which is the primary key of the row wanted to be deleted.
- */
+
+	/**
+	 * delete a row from the table tbl_dish and all the corresponding row in
+	 * tbl_dish_stock. note, no call directly to tbl_dish_stock as the FK has them
+	 * cascade when the dishId is deleted. uses the passed in parameter to identify
+	 * the row in tbl_dish where the dishId column has a row which has that value.
+	 * 
+	 * @param orginalDishName = String which is the primary key of the row wanted to
+	 *                        be deleted.
+	 */
 	public void deleteDish(String orginalDishName) {
 
 		PreparedStatement statement;
@@ -1320,10 +1397,12 @@ public class WritableDatabase {
 		}
 
 	}
+
 	/**
-	 * delete multiple row from the tbl_dish_stock table.
-	 * row delete are based of if the dishID column matches the passed in parameter
-	 * @param orginalDishName = String which indicate which row to delete. 
+	 * delete multiple row from the tbl_dish_stock table. row delete are based of if
+	 * the dishID column matches the passed in parameter
+	 * 
+	 * @param orginalDishName = String which indicate which row to delete.
 	 */
 	public void deleteTblDishStock(String orginalDishName) {
 
@@ -1340,13 +1419,16 @@ public class WritableDatabase {
 		}
 
 	}
-/**
- * gets only the column dishStockId where the row in tbl_dish_stock table equals the passed in parameter dishId.
- * 
- * @param dishId = String which represent the dishId you want the stockType to have.
- * @return ArrayList<Integer> = all the dishStockIds the database where row dishId matches the passed in 
- * parameter dishId.
- */
+
+	/**
+	 * gets only the column dishStockId where the row in tbl_dish_stock table equals
+	 * the passed in parameter dishId.
+	 * 
+	 * @param dishId = String which represent the dishId you want the stockType to
+	 *               have.
+	 * @return ArrayList<Integer> = all the dishStockIds the database where row
+	 *         dishId matches the passed in parameter dishId.
+	 */
 	public ArrayList<Integer> getDishStockIdsForADish(String dishId) {
 		PreparedStatement statement;
 
@@ -1368,13 +1450,17 @@ public class WritableDatabase {
 
 		return ids;
 	}
-/**
- * gets all the dishes which the number of stockType associated with it is less than the passed in parameter number.
- * 
- * 
- * @param numberOfMaxItems = int, which is the max number so x <= numberOfMaxItems
- * @return ArryaList<Dish>, all dish that have less needed stock type then the number numberOFMaxItems is.
- */
+
+	/**
+	 * gets all the dishes which the number of stockType associated with it is less
+	 * than the passed in parameter number.
+	 * 
+	 * 
+	 * @param numberOfMaxItems = int, which is the max number so x <=
+	 *                         numberOfMaxItems
+	 * @return ArryaList<Dish>, all dish that have less needed stock type then the
+	 *         number numberOFMaxItems is.
+	 */
 	public ArrayList<Dish> getDishWithLessThanSetItems(int numberOfMaxItems) {
 
 		PreparedStatement statement;
@@ -1422,12 +1508,16 @@ public class WritableDatabase {
 		return dish;
 
 	}
+
 	/**
-	 * gets all the dishes which the number of stockType associated with it is more than the passed in parameter number.
+	 * gets all the dishes which the number of stockType associated with it is more
+	 * than the passed in parameter number.
 	 * 
 	 * 
-	 * @param numberOfMinItems = int, which is the min number so x >= numberOfMinItems
-	 * @return ArryaList<Dish>, all dish that have more needed stock type then the number numberOfMinItems is.
+	 * @param numberOfMinItems = int, which is the min number so x >=
+	 *                         numberOfMinItems
+	 * @return ArryaList<Dish>, all dish that have more needed stock type then the
+	 *         number numberOfMinItems is.
 	 */
 	public ArrayList<Dish> getDishWithMoreThanSetItems(int numberOfMinItems) {
 
@@ -1476,14 +1566,17 @@ public class WritableDatabase {
 		return dish;
 
 	}
-	
-/**
- * gets all dishes where the total cost of all there needed stock type is not any more than the max cost parameter.
- * 
- * 
- * @param maxCost = Double, which is the max cost the total stock can be so x <= maxCost
- * @return ArrayList<Dish> all dishes where the cost of the needed stock is less then the maxCost parmeter.
- */
+
+	/**
+	 * gets all dishes where the total cost of all there needed stock type is not
+	 * any more than the max cost parameter.
+	 * 
+	 * 
+	 * @param maxCost = Double, which is the max cost the total stock can be so x <=
+	 *                maxCost
+	 * @return ArrayList<Dish> all dishes where the cost of the needed stock is less
+	 *         then the maxCost parmeter.
+	 */
 	public ArrayList<Dish> getDishThatCostNotAbove(Double maxCost) {
 
 		PreparedStatement statement;
@@ -1507,7 +1600,8 @@ public class WritableDatabase {
 
 				stockType = new ArrayList<>();
 				while (result3.next()) {
-					stockType.add(new StockType(result3.getString(6), result3.getString(7), result3.getString(8), result3.getString(4)));
+					stockType.add(new StockType(result3.getString(6), result3.getString(7), result3.getString(8),
+							result3.getString(4)));
 				}
 				Dish input = new Dish(result.getString(1), stockType);
 
@@ -1528,11 +1622,14 @@ public class WritableDatabase {
 	}
 
 	/**
-	 * gets all dishes where the total cost of all there needed stock type is no less than the minCost parameter.
+	 * gets all dishes where the total cost of all there needed stock type is no
+	 * less than the minCost parameter.
 	 * 
 	 * 
-	 * @param minCost = Double, which is the min cost the total stock can be so x >= minCost
-	 * @return ArrayList<Dish> all dishes where the cost of the needed stock is more then the maxCost parmeter.
+	 * @param minCost = Double, which is the min cost the total stock can be so x >=
+	 *                minCost
+	 * @return ArrayList<Dish> all dishes where the cost of the needed stock is more
+	 *         then the maxCost parmeter.
 	 */
 	public ArrayList<Dish> getDishThatCostNotBellow(Double minCost) {
 
@@ -1557,15 +1654,16 @@ public class WritableDatabase {
 
 				stockType = new ArrayList<>();
 				while (result3.next()) {
-					stockType.add(new StockType(result3.getString(6), result3.getString(7), result3.getString(8), result3.getString(4)));
+					stockType.add(new StockType(result3.getString(6), result3.getString(7), result3.getString(8),
+							result3.getString(4)));
 				}
-				
+
 				Dish input = new Dish(result.getString(1), stockType);
 
 				// where it is deiced if they are added or not.
 
-if (input.getDishCost() >= minCost) {
-					
+				if (input.getDishCost() >= minCost) {
+
 					dish.add(input);
 				}
 
@@ -1633,14 +1731,18 @@ if (input.getDishCost() >= minCost) {
 
 		return menu;
 	}
-/**
- * gets a list of menu where menu id is like the inputed parameter like.
- * the menu objects values are populated by the database values. 
- * this method gets all the menus, where row has a like value eg %like%, in the menuId column 
- * of the tbl_menu table. 
- * @param like = String that you want all the returned menu menuId/name to be like.
- * @return ArrayList<Menu> = which are the menu who name/menuId is like the pameter like.
- */
+
+	/**
+	 * gets a list of menu where menu id is like the inputed parameter like. the
+	 * menu objects values are populated by the database values. this method gets
+	 * all the menus, where row has a like value eg %like%, in the menuId column of
+	 * the tbl_menu table.
+	 * 
+	 * @param like = String that you want all the returned menu menuId/name to be
+	 *             like.
+	 * @return ArrayList<Menu> = which are the menu who name/menuId is like the
+	 *         pameter like.
+	 */
 	public ArrayList<Menu> getAllMenuThatAreLike(String like) {
 
 		PreparedStatement statementMenu;
@@ -1712,12 +1814,13 @@ if (input.getDishCost() >= minCost) {
 			e.printStackTrace();
 		}
 	}
-	
+
 	/**
-	 * save the menu object. 
-	 * use the passed in parameter Menu to make new rows in the tables, 
-	 * tbl_menu and tbl_menu_dishes
-	 * @param menu = Menu object which methods are used to get the values which populate the tables.
+	 * save the menu object. use the passed in parameter Menu to make new rows in
+	 * the tables, tbl_menu and tbl_menu_dishes
+	 * 
+	 * @param menu = Menu object which methods are used to get the values which
+	 *             populate the tables.
 	 */
 	public void saveMenu(Menu menu) {
 		PreparedStatement statement;
@@ -1770,14 +1873,16 @@ if (input.getDishCost() >= minCost) {
 			e.printStackTrace();
 		}
 	}
-/**
- * gets a specific menu. 
- * it makes a menu object which is returned, it gets the menu values from the database.
- * the details it gets are the one where the menuId column found in the tbl_menu table, matches the 
- * the inputed parameter id.
- * @param id = String which is an id of the menu you want.
- * @return Menu object.
- */
+
+	/**
+	 * gets a specific menu. it makes a menu object which is returned, it gets the
+	 * menu values from the database. the details it gets are the one where the
+	 * menuId column found in the tbl_menu table, matches the the inputed parameter
+	 * id.
+	 * 
+	 * @param id = String which is an id of the menu you want.
+	 * @return Menu object.
+	 */
 	public Menu getAMenuFromId(String id) {
 
 		PreparedStatement statementMenu;
@@ -1832,8 +1937,9 @@ if (input.getDishCost() >= minCost) {
 	}
 
 	/**
-	 * user to identify if the passed stock type is used in the database outside of the 
-	 * stock type table.
+	 * user to identify if the passed stock type is used in the database outside of
+	 * the stock type table.
+	 * 
 	 * @param stockType = string which is the stock type Id looking for
 	 * @return Boolean, = true = is used, false = isn't used.
 	 */
@@ -1842,40 +1948,42 @@ if (input.getDishCost() >= minCost) {
 		Boolean output = false;
 		ResultSet result;
 		try {
-			statement = mySqlDatabase
-					.prepareStatement("SELECT * FROM stock_mangemnet.tbl_stock_iteration where tbl_stock_iteration.stocktypeid = \"" + stockType + "\";");
+			statement = mySqlDatabase.prepareStatement(
+					"SELECT * FROM stock_mangemnet.tbl_stock_iteration where tbl_stock_iteration.stocktypeid = \""
+							+ stockType + "\";");
 			result = statement.executeQuery();
-			if(result.next()) {
+			if (result.next()) {
 				output = true;
-			}else {
-				
-				
-				statement = mySqlDatabase
-						.prepareStatement("SELECT * FROM stock_mangemnet.tbl_dish_stock where tbl_dish_stock.stocktypeid = \"" + stockType + "\";");
-				 result = statement.executeQuery();
-				
-				 if(result.next()) {
-						output = true;
-					}
-				
+			} else {
+
+				statement = mySqlDatabase.prepareStatement(
+						"SELECT * FROM stock_mangemnet.tbl_dish_stock where tbl_dish_stock.stocktypeid = \"" + stockType
+								+ "\";");
+				result = statement.executeQuery();
+
+				if (result.next()) {
+					output = true;
+				}
+
 			}
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		
-return output;
+
+		return output;
 	}
+
 	/**
 	 * delete a selected stock type
+	 * 
 	 * @param id = String which is the id of a stock type
 	 */
 	public void deleteSelectedStockType(String id) {
 		PreparedStatement statement;
 		try {
 			statement = mySqlDatabase.prepareStatement(
-					"Delete from stock_mangemnet.tbl_stock_type where tbl_stock_type.stockTypeId = \'"
-							+ id + "\';");
+					"Delete from stock_mangemnet.tbl_stock_type where tbl_stock_type.stockTypeId = \'" + id + "\';");
 			statement.execute();
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
@@ -1883,20 +1991,21 @@ return output;
 		}
 	}
 
-	
-	
 	/**
-	 * creates a new row and save the inputed string in the recommendation table in the database
+	 * creates a new row and save the inputed string in the recommendation table in
+	 * the database
+	 * 
 	 * @param recommedation String
 	 */
-	
+
 	public void saveRecommedation(String recommedation) {
 
 		PreparedStatement statement;
 		try {
 
 			statement = mySqlDatabase
-					.prepareStatement("Insert into stock_mangemnet.tbl_recommedation (recommedation) values (\'" + recommedation + "\');");
+					.prepareStatement("Insert into stock_mangemnet.tbl_recommedation (recommedation) values (\'"
+							+ recommedation + "\');");
 			statement.execute();
 
 		} catch (SQLException e) {
@@ -1905,21 +2014,23 @@ return output;
 		}
 
 	}
+
 	/**
-	 * gets all the row from the table recommendation in the database as Recommendation objects
+	 * gets all the row from the table recommendation in the database as
+	 * Recommendation objects
+	 * 
 	 * @return ArrayList<Recommedation>
 	 */
 	public ArrayList<Recommedation> getAllRecommendations() {
 		PreparedStatement statement;
 		ArrayList<Recommedation> recommedation = new ArrayList<>();
 		try {
-			statement = mySqlDatabase.prepareStatement(
-					"select * from stock_mangemnet.tbl_recommedation;");
+			statement = mySqlDatabase.prepareStatement("select * from stock_mangemnet.tbl_recommedation;");
 			ResultSet result = statement.executeQuery();
 			// if(result.first()) {
 			while (result.next()) {
-				Recommedation input = new Recommedation(result.getInt(1),result.getString(2));
-				
+				Recommedation input = new Recommedation(result.getInt(1), result.getString(2));
+
 				recommedation.add(input);
 			}
 			// }
@@ -1930,17 +2041,18 @@ return output;
 
 		return recommedation;
 	}
-	
+
 	/**
-	 * deletes a row in table recommendation where the passed in parameter matches the row primary key
+	 * deletes a row in table recommendation where the passed in parameter matches
+	 * the row primary key
+	 * 
 	 * @param id = String
 	 */
 	public void deleteRecommedation(String id) {
 		PreparedStatement statement;
 		try {
 			statement = mySqlDatabase.prepareStatement(
-					"Delete from stock_mangemnet.tbl_recommedation where tbl_recommedation.ID = \'"
-							+ id + "\';");
+					"Delete from stock_mangemnet.tbl_recommedation where tbl_recommedation.ID = \'" + id + "\';");
 			statement.execute();
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block

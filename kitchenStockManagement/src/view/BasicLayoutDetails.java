@@ -9,9 +9,12 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.Priority;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Font;
+
 /**
- * Intend to be extend class, so the generic functions can be made once and not multiple times 
- * the class provides, two button at the bottom a cancle and save, as well as two VBox next to each other.
+ * Intend to be extend class, so the generic functions can be made once and not
+ * multiple times the class provides, two button at the bottom a cancle and
+ * save, as well as two VBox next to each other.
+ * 
  * @author Student
  *
  */
@@ -23,84 +26,96 @@ public class BasicLayoutDetails extends PaneMenu {
 	private VBox labels = new VBox(20);
 	private VBox userTextInput = new VBox(20);
 	private HBox buttons = new HBox(20);
-/**
- * default constructor
- */
+
+	/**
+	 * default constructor
+	 */
 	public BasicLayoutDetails() {
 		super.setCenter(mainLayout);
-		mainLayout.getChildren().addAll(labelsAndUserTextInput,buttons);
-		labelsAndUserTextInput.getChildren().addAll(labels,userTextInput);
-		buttons.getChildren().addAll(btnCancel,btnSave);
-	
-		mainLayout.setPadding(new Insets(20,20,20,20));
-		
+		mainLayout.getChildren().addAll(labelsAndUserTextInput, buttons);
+		labelsAndUserTextInput.getChildren().addAll(labels, userTextInput);
+		buttons.getChildren().addAll(btnCancel, btnSave);
+
+		mainLayout.setPadding(new Insets(20, 20, 20, 20));
+
 		mainLayout.setAlignment(Pos.CENTER);
 		labelsAndUserTextInput.setAlignment(Pos.CENTER);
 		labels.setAlignment(Pos.CENTER);
 		userTextInput.setAlignment(Pos.CENTER);
 		buttons.setAlignment(Pos.CENTER);
-		
+
 		btnSave.setMaxSize(Double.MAX_VALUE, Double.MAX_VALUE);
 		btnCancel.setMaxSize(Double.MAX_VALUE, Double.MAX_VALUE);
-		
+
 		btnSave.setFont(new Font(30));
 		btnCancel.setFont(new Font(30));
-		
+
 		VBox.setVgrow(labelsAndUserTextInput, Priority.ALWAYS);
 		VBox.setVgrow(buttons, Priority.ALWAYS);
 		HBox.setHgrow(labels, Priority.ALWAYS);
-		HBox.setHgrow(userTextInput, Priority.ALWAYS );
+		HBox.setHgrow(userTextInput, Priority.ALWAYS);
 		HBox.setHgrow(btnCancel, Priority.ALWAYS);
 		HBox.setHgrow(btnSave, Priority.ALWAYS);
-	
-		
-		
-		
+
 	}
+
 	/**
 	 * gets the object in the the variable btnSave
+	 * 
 	 * @return Button object which is the one on btnSave
 	 */
 	public Button getBtnSave() {
 		return btnSave;
 	}
+
 	/**
 	 * gets the object in the the variable btnCancel
+	 * 
 	 * @return Button object which is the one on btnCancel
 	 */
 	public Button getBtnCancel() {
 		return btnCancel;
 	}
+
 	/**
 	 * get the VBox which is the label var.
+	 * 
 	 * @return VBox
 	 */
 	public VBox getLabels() {
-		return labels; 
+		return labels;
 	}
+
 	/**
 	 * get the VBox which is the userTextInput var.
+	 * 
 	 * @return VBox
 	 */
 	public VBox getUserTextInput() {
-		return userTextInput; 
+		return userTextInput;
 	}
+
 	/**
-	 * sets the save button event handler 
-	 * @param event = Event handler<ActionEvent> 
+	 * sets the save button event handler
+	 * 
+	 * @param event = Event handler<ActionEvent>
 	 */
 	public void setBtnSaveEventHandler(EventHandler<ActionEvent> event) {
 		btnSave.setOnAction(event);
 	}
+
 	/**
-	 * sets the  cancel event handler 
-	 * @param event = Event handler<ActionEvent> 
+	 * sets the cancel event handler
+	 * 
+	 * @param event = Event handler<ActionEvent>
 	 */
 	public void setBtnCancelEventHandler(EventHandler<ActionEvent> event) {
 		btnCancel.setOnAction(event);
 	}
+
 	/**
 	 * gets the HBox which holds the buttons controllers
+	 * 
 	 * @return HBox
 	 */
 	public HBox getButtonPane() {

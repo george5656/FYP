@@ -12,8 +12,11 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.Priority;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Font;
+
 /**
- * a page of the application, that is used for the user to make an edit an account details
+ * a page of the application, that is used for the user to make an edit an
+ * account details
+ * 
  * @author Student
  *
  */
@@ -30,9 +33,10 @@ public class AccountDetails extends BasicLayoutDetails {
 	private HBox rbLayout = new HBox();
 	private VBox labels;
 	private VBox userTextInput;
-/**
- * Default constructor
- */
+
+	/**
+	 * Default constructor
+	 */
 	public AccountDetails() {
 		labels = getLabels();
 		userTextInput = getUserTextInput();
@@ -71,47 +75,57 @@ public class AccountDetails extends BasicLayoutDetails {
 	}
 
 	/**
-	 * gets the user input for username.
-	 * the user input was the input the user put in the user name section.
+	 * gets the user input for username. the user input was the input the user put
+	 * in the user name section.
+	 * 
 	 * @return String
 	 */
 	public String getUsername() {
 		return tfUserName.getText();
 	}
+
 	/**
-	 * gets the user input for password.
-	 * the user input was the input the user put in the password section.
+	 * gets the user input for password. the user input was the input the user put
+	 * in the password section.
+	 * 
 	 * @return String
 	 */
 	public String getPassword() {
 		return pfPassword.getText();
 	}
-/**
- * get if the radio button yes has been selected or not.
- * @return Boolean, true = is selected, false = isn't selected.
- */
+
+	/**
+	 * get if the radio button yes has been selected or not.
+	 * 
+	 * @return Boolean, true = is selected, false = isn't selected.
+	 */
 	public Boolean isAdminYesSelected() {
 		return rbYes.isSelected();
 	}
+
 	/**
 	 * get if the radio button no has been selected or not.
+	 * 
 	 * @return Boolean, true = is selected, false = isn't selected.
 	 */
 	public Boolean isAdminNoSelected() {
 		return rbNo.isSelected();
 	}
+
 	/**
-	 * Set the textFiled value to the passed in parameter. 
-	 * the textField is the one associated with the username
+	 * Set the textFiled value to the passed in parameter. the textField is the one
+	 * associated with the username
+	 * 
 	 * @param username String
 	 */
 	public void setUsername(String username) {
 		tfUserName.setText(username);
 	}
-/**
- * 
- * @param adminStatus = boolean, true = rbYes selected, false = rbNo selected.
- */
+
+	/**
+	 * 
+	 * @param adminStatus = boolean, true = rbYes selected, false = rbNo selected.
+	 */
 	public void setAdminStatus(Boolean adminStatus) {
 		if (adminStatus == true) {
 			rbYes.setSelected(true);
@@ -119,10 +133,11 @@ public class AccountDetails extends BasicLayoutDetails {
 			rbNo.setSelected(true);
 		}
 	}
-/**
- * clears the page of all the user input.
- * all text fields are cleared and all radio button, unselected.
- */
+
+	/**
+	 * clears the page of all the user input. all text fields are cleared and all
+	 * radio button, unselected.
+	 */
 	public void resetPage() {
 		tfUserName.setText("");
 		pfPassword.setText("");
