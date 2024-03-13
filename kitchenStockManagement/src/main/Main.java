@@ -6,28 +6,32 @@ import javafx.scene.Scene;
 import javafx.stage.Stage;
 import model.ModelRoot;
 import view.RootView;
+
 /**
  * is the main method for the kitchen stock management system.
+ * 
  * @author Georgettest
  *
  */
 public class Main extends Application {
 // fields
 	private RootView view;
-	private Scene scene ;
+	private Scene scene;
+
 	/**
-	 * where the root V,M,c and scene are made
-	 * and the css file is connected to the scene.
+	 * where the root V,M,c and scene are made and the css file is connected to the
+	 * scene.
 	 */
+
 	@Override
 	public void init() {
 		view = new RootView();
 		new Controller(new ModelRoot(), view);
-	 scene = new Scene(view,1200,600);
-		
-			scene.getStylesheets().add( getClass().getResource("StockManegment.css").toString());
-		
+		scene = new Scene(view, 1200, 600);
+		scene.getStylesheets().add(getClass().getResource("StockManegment.css").toString());
+
 	}
+
 	/**
 	 * sets up the stage and scene and shows it to the user.
 	 */
@@ -37,19 +41,18 @@ public class Main extends Application {
 		primaryStage.setMinWidth(1200);
 		primaryStage.setTitle("kitchen stock management");
 		primaryStage.setScene(scene);
-		
+
 		primaryStage.show();
 	}
 
-
 	/**
 	 * starts the application
+	 * 
 	 * @param args
 	 */
 	public static void main(String[] args) {
 
-			launch("kitchen stock management");
+		launch("kitchen stock management");
 	}
 
-	
 }

@@ -28,6 +28,7 @@ public class ModelRoot {
 	private ArrayList<Account> accounts = new ArrayList<>();
 	private ArrayList<StorageLocation> sl = new ArrayList<>();
 	private ArrayList<Budget> budget = new ArrayList<>();
+	// below so know what got when deteming if need more stock or not
 	private ArrayList<CurrentStock> currentStock = new ArrayList<>();
 	private ArrayList<Dish> currentDish = new ArrayList<>();
 	private ArrayList<Menu> currentMenus = new ArrayList<>();
@@ -45,8 +46,7 @@ public class ModelRoot {
 	private String orginalDishId = null;
 
 	private ArrayList<StockType> edditedStocktype = new ArrayList<>();
-	
-	
+
 	// private ArrayList<Integer> dishStockIdToDelete = new ArrayList<>();
 
 	private StockType testStockType;
@@ -230,47 +230,47 @@ public class ModelRoot {
 
 	}
 
-	
 	/**
-	 *  get all the Current Stock that the database has in an observable list
+	 * get all the Current Stock that the database has in an observable list
+	 * 
 	 * @return ObservableList<CurrentStock>
 	 */
 	public ObservableList<CurrentStock> getObservableListStringStockList() {
 		db.getAllCurrentStock();
-		
+
 		return FXCollections.observableArrayList(db.getAllCurrentStock());
 
 	}
 
-	
 	/**
 	 * gets all the storage location the database has.
+	 * 
 	 * @return ObservableList<StorageLocation>
 	 */
 	public ObservableList<StorageLocation> getObservableListStringStorgaeLocationsList() {
-	
+
 		return FXCollections.observableArrayList(db.getAllStorageLocations());
 
 	}
 
 	/**
-	 * gets all the accounts that are in the database, 
+	 * gets all the accounts that are in the database,
 	 * 
 	 * @return ObservableList<Account>
 	 */
 	public ObservableList<Account> getObservableListAccountList() {
-		
+
 		return FXCollections.observableArrayList(db.getAllAccounts());
 
 	}
 
 	/**
-	 * gets all the budgets that are in the database, 
+	 * gets all the budgets that are in the database,
 	 * 
 	 * @return ObservableList<Budget>
 	 */
 	public ObservableList<Budget> getObservableListBudgetList() {
-		
+
 		return FXCollections.observableArrayList(db.getAllBudgets());
 
 	}
@@ -504,20 +504,19 @@ public class ModelRoot {
 
 //delete 
 	/**
-	 * delets the stock that is in the selectedStock variable from the database.
-	 * it also checks to see if that stock type is still in use or not, if it isnt 
-	 * in use it then deleted it from the database as well.
+	 * delets the stock that is in the selectedStock variable from the database. it
+	 * also checks to see if that stock type is still in use or not, if it isnt in
+	 * use it then deleted it from the database as well.
 	 */
 	public void deleteStockType() {
-		
+
 		Integer id = selectedStock.getId();
 		db.deleteSelectedStock(id.toString());
-		
-		if(!db.isStockTypeInUser(selectedStock.getName())) {
+
+		if (!db.isStockTypeInUser(selectedStock.getName())) {
 			db.deleteSelectedStockType(selectedStock.getName());
 		}
-		
-		
+
 	}
 
 	/**
@@ -573,7 +572,7 @@ public class ModelRoot {
 	 * get all the accounts that matches the where statements.
 	 * 
 	 * @param value = String that is the where statements for the sql.
-	 * @return ObservableList<Account> 
+	 * @return ObservableList<Account>
 	 */
 	public ObservableList<Account> getAccountsThatMatchesWhere(String value) {
 		return FXCollections.observableArrayList(db.getAccountsThatMatchesWhere(value));
@@ -710,88 +709,79 @@ public class ModelRoot {
 			Scanner sc = new Scanner(new File(uri)).useDelimiter("[\"\n, \r]+");
 
 			while (sc.hasNext()) {
-try {
-				String storageLocationId = sc.next();
-				
-				
-				Double quantity = Double.parseDouble(sc.next());
-				
-				String quantityType = sc.next();
-				
-				String expiereDate = sc.next();
-				
-				//just checking that the data is correct
-				
-				if(expiereDate.length() != 10) {
-					errorMessage = "issue with file";
-					break;
-				}
-				if(!expiereDate.matches("[0-9-]+")) {
-					errorMessage = "issue with file";
-					break;	
-				}
-				
-				//index of first dash
-				int iofd = expiereDate.indexOf("-");
-				int iosd = expiereDate.indexOf("-", iofd+1);
-				
-				
-				if(iofd == -1) {
-					errorMessage = "issue with file";
-					break;	
-				}else if(iosd == -1) {
-					errorMessage = "issue with file";
-					break;
-				} else if(expiereDate.subSequence(0, iofd).length() != 4) {
-					errorMessage = "issue with file";
-					break;
-				}else if(expiereDate.subSequence(iofd+1, iosd).length() != 2) {
-					errorMessage = "issue with file";
-					break;
-				}else if(expiereDate.subSequence(iosd+1, expiereDate.length()).length() != 2) {
-					errorMessage = "issue with file";
-					break;
-				}
-				
-				String name = sc.next();
-				
-					
-				Double cost = Double.parseDouble(sc.next());
-				
-				
-				// to see if storag locaiton exists.
-				if (!db.StorgaeLocationExists(storageLocationId)) {
-					errorMessage = "storage location doesn't exists";
+				try {
+					String storageLocationId = sc.next();
 
-				} else if (db.StockTypeExists(name) == null) {
-					addStockType(name, cost.toString(), quantityType);
-				} else {
-					updateStockTypeCost(name, cost.toString());
-					updateStockTypeQuanityType(name, quantityType);
-				}
+					Double quantity = Double.parseDouble(sc.next());
 
-				if (errorMessage.equals("")) {
-					createStock(-1, storageLocationId, quantity, quantityType, expiereDate, name, cost);
-					addCurrentStock();
+					String quantityType = sc.next();
+
+					String expiereDate = sc.next();
+
+					// just checking that the data is correct
+
+					if (expiereDate.length() != 10) {
+						errorMessage = "issue with file";
+						break;
+					}
+					if (!expiereDate.matches("[0-9-]+")) {
+						errorMessage = "issue with file";
+						break;
+					}
+
+					// index of first dash
+					int iofd = expiereDate.indexOf("-");
+					int iosd = expiereDate.indexOf("-", iofd + 1);
+
+					if (iofd == -1) {
+						errorMessage = "issue with file";
+						break;
+					} else if (iosd == -1) {
+						errorMessage = "issue with file";
+						break;
+					} else if (expiereDate.subSequence(0, iofd).length() != 4) {
+						errorMessage = "issue with file";
+						break;
+					} else if (expiereDate.subSequence(iofd + 1, iosd).length() != 2) {
+						errorMessage = "issue with file";
+						break;
+					} else if (expiereDate.subSequence(iosd + 1, expiereDate.length()).length() != 2) {
+						errorMessage = "issue with file";
+						break;
+					}
+
+					String name = sc.next();
+
+					Double cost = Double.parseDouble(sc.next());
+
+					// to see if storag locaiton exists.
+					if (!db.StorgaeLocationExists(storageLocationId)) {
+						errorMessage = "storage location doesn't exists";
+
+					} else if (db.StockTypeExists(name) == null) {
+						addStockType(name, cost.toString(), quantityType);
+					} else {
+						updateStockTypeCost(name, cost.toString());
+						updateStockTypeQuanityType(name, quantityType);
+					}
+
+					if (errorMessage.equals("")) {
+						createStock(-1, storageLocationId, quantity, quantityType, expiereDate, name, cost);
+						addCurrentStock();
+					}
+
+				} catch (Exception e) {
+					errorMessage = "issue with file";
+					break;
 				}
-			
-}catch (Exception e) {
-	errorMessage = "issue with file";
-	break;
-}
 //bellow is the while loop end
-}
+			}
 
- 
-			
-			
-			
-			
 		} catch (FileNotFoundException e) {
 
 			e.printStackTrace();
 			errorMessage = "issue with file";
-			
+
 		}
 
 		return errorMessage;
@@ -813,6 +803,7 @@ try {
 		String day = date.substring(0, 2);
 		return year + "-" + month + "-" + day;
 	}
+
 	/**
 	 * format the date so that it can be compared, against other dates
 	 * 
@@ -824,8 +815,9 @@ try {
 		String year = date.substring(0, 4);
 		String month = date.substring(5, 7);
 		String day = date.substring(8, 10);
-		return Integer.parseInt(year + month  + day);
+		return Integer.parseInt(year + month + day);
 	}
+
 	/**
 	 * format a string to be the data picker format. take a MySQL string output that
 	 * represent the date and format it to be the same format as the data picker.
@@ -972,7 +964,7 @@ try {
 	 * like the inputed string and turn it in to an observable list.
 	 * 
 	 * @param value = String that is what you want the accounts to be like
-	 * @return ObservableList<Account> 
+	 * @return ObservableList<Account>
 	 */
 	public ObservableList<Account> getAccountsThatsLike(String value) {
 		return FXCollections.observableArrayList(db.getAccountsThatsLike(value));
@@ -1025,14 +1017,15 @@ try {
 	 *           exists.
 	 * @return Boolean, true = account already exist, false = doesnt already exist.
 	 */
-	
+
 	public Boolean doesAccountNameAlreadyExist(String id) {
 		accounts = db.getAllAccounts();
 		Boolean exist = false;
 		int counter = 0;
 		while (accounts.size() != counter) {
 
-			if (accounts.get(counter).getUsername().toLowerCase().equals(id) && !id.equals(selectedAccount.getUsername()) ) {
+			if (accounts.get(counter).getUsername().toLowerCase().equals(id)
+					&& !id.equals(selectedAccount.getUsername())) {
 				exist = true;
 
 			}
@@ -1111,8 +1104,8 @@ try {
 	 * gets all the storage locations that are in the database that pass the where.
 	 * 
 	 * @param where = String which is the where part of the MySQL select statement.
-	 * @return ObservableList<StorageLocation> all the storage locations that match the
-	 *         where.
+	 * @return ObservableList<StorageLocation> all the storage locations that match
+	 *         the where.
 	 */
 	public ObservableList<StorageLocation> getStorageWhere(String where) {
 		return FXCollections.observableArrayList(db.getStorgeThatMatchesWhere(where));
@@ -1268,19 +1261,23 @@ try {
 
 	/**
 	 * gets all the held stock from the selectedDish var
+	 * 
 	 * @return IbservableList<StockType>
 	 */
 	public ObservableList<StockType> getSelectedDishList() {
 
 		return FXCollections.observableArrayList(selectedDish.getHeldStock());
 	}
+
 	/**
 	 * gets the selectedDish var Dish name
+	 * 
 	 * @return String which is the selected dish name
 	 */
-public String getSelctedDishDishName() {
-	return selectedDish.getDishName();
-}
+	public String getSelctedDishDishName() {
+		return selectedDish.getDishName();
+	}
+
 	/**
 	 * get the Dish object in the selectedDish variable
 	 * 
@@ -1304,23 +1301,23 @@ public String getSelctedDishDishName() {
 		edditedStocktype.add(st);
 	}
 
-
 	/**
-	 * adds the passed in stock type to edditesStockType and removed it from the selectdDish.
+	 * adds the passed in stock type to edditesStockType and removed it from the
+	 * selectdDish.
+	 * 
 	 * @param st = StockType
 	 */
 	public void selectedDishIngrednitnRemove(StockType st) {
 
-		/*idea is as need to delete stock type but also
-		 * have to juggle canlses, we put the stock to be deleted in here, 
-		 * needed as add makes new stock, when its clicekd, so could add, 
-		 * then hit cancle, 
+		/*
+		 * idea is as need to delete stock type but also have to juggle canlses, we put
+		 * the stock to be deleted in here, needed as add makes new stock, when its
+		 * clicekd, so could add, then hit cancle,
 		 */
 		edditedStocktype.add(st);
-	
+
 		selectedDish.removeIngredent(st);
-		
-		
+
 	}
 
 	/**
@@ -1457,7 +1454,6 @@ public String getSelctedDishDishName() {
 		selectABudget(budgetId);
 		selectedMenu = new Menu(name, selectedBudget, new ArrayList<>());
 	}
-	
 
 	/**
 	 * sets selectedMenu variable to a menu object that is already in the database.
@@ -1536,7 +1532,7 @@ public String getSelctedDishDishName() {
 	 * @return ObservableList<Disj>
 	 */
 	public ObservableList<Dish> getNotSelectedDishesAsString() {
-		
+
 		return FXCollections.observableArrayList(getNotSelectedDishesAsArrayList());
 	}
 
@@ -1559,7 +1555,7 @@ public String getSelctedDishDishName() {
 	 */
 	public void addDishToSelectedMenu(String dishId) {
 		selectedMenu.addItemToDishList(db.getASpecificDishes(dishId));
-		
+
 	}
 
 	/**
@@ -1611,230 +1607,267 @@ public String getSelctedDishDishName() {
 	}
 
 // done for remove and add as it just get its from the list so updates it all
+
 	/**
-	 * idea is that it get all the stockType that needs to be order.
-	 * so it only returns one of every stock type and with the quantity, that is needed.
-	 * by needed means it wont go off before the budget end date, and only the amount that is needed
-	 * so what is needed minus what got in stock.
+	 * gets all the needed stock for the selectedMenu, does this by delegating to
+	 * getAMenusNeedstock
 	 * 
-	 * @return ObservableList<StockType> 
+	 * @return ObservableList<StockType>
 	 */
+
 	public ObservableList<StockType> getSelectedMenuStockType() {
-		
-		//needed so know what got
 		currentStock = db.getAllCurrentStock();
-		
-		 Budget currentBudget = selectedMenu.getBudget();
-		
+
+		return getAMenusNeedStock(selectedMenu);
+
+	}
+
+	/**
+	 * this gets all the need stock, eg the stock that a menu needs but the database
+	 * doesn't have. it gets it for every menu, and merges them in to one list.
+	 * 
+	 * @return ObservableList<StockType>
+	 */
+
+	public ObservableList<StockType> getAllNeedStock() {
+		// the getall current stocj isn't done in get a menus need stock,
+		// so that the method can be run multiple times,
+		// and if say need two apples for two diffrenet menu, i
+		// if the current stock reset all time it would say have enough,
+		// when actually still need one apple.
+		currentStock = db.getAllCurrentStock();
+
+		ObservableList<StockType> output = FXCollections.observableArrayList(new ArrayList<>());
+
+		db.getAllMenu().forEach(menu -> {
+
+			getAMenusNeedStock(menu).forEach(s -> {
+				if (output.contains(s)) {
+					output.forEach(heldS -> {
+						if (heldS.equals(s)) {
+							heldS.setQuanity(
+									(Double.parseDouble(s.getQuanity()) + Double.parseDouble(heldS.getQuanity())) + "");
+						}
+
+					});
+				} else {
+					output.add(s);
+				}
+
+			});
+
+		});
+		return output;
+
+	}
+
+	/**
+	 * it gets all the stock that the passed in menu needs that is nto currently in
+	 * the database, or will expirere before the menu is finished (menu time is
+	 * based on budget it has)
+	 * 
+	 * @param menu = Menu
+	 * @return ObservableList<StockType>
+	 */
+
+	public ObservableList<StockType> getAMenusNeedStock(Menu menu) {
+		// selectedMenu
+		Menu inputtedMenu = menu;
+
+		Budget currentBudget = inputtedMenu.getBudget();
+
 		ArrayList<Dish> dishes = new ArrayList<>();
 		// so not sharing the same memory location
-		selectedMenu.getHeldDishes().forEach((Dish i) -> dishes.add(i));
-		//simply a containe for the shopping list
+		inputtedMenu.getHeldDishes().forEach((Dish i) -> dishes.add(i));
+		// simply a containe for the shopping list
 		ArrayList<StockType> output = new ArrayList<>();
 		ArrayList<Integer> indexTracker = new ArrayList<>();
 		ArrayList<StockType> shoppingList = new ArrayList<>();
 		// not this is for removing any duplicates that may be present.
-				ArrayList<StockType> shoppingListNoDuplicates = new ArrayList<>();
+		ArrayList<StockType> shoppingListNoDuplicates = new ArrayList<>();
 		int counter = 0;
 		int counter2 = 0;
 		int counter3 = 0;
 		Boolean addToShoppingList = false;
-		
+
 		while (counter != dishes.size()) {
-			//so each dish we get the dishStock it contains
+			// so each dish we get the dishStock it contains
 			ArrayList<StockType> dishStock = dishes.get(counter).getHeldStock();
-			//so go over the loop of all the dish stock
+			// so go over the loop of all the dish stock
 			while (counter2 != dishStock.size()) {
-				StockType st= dishStock.get(counter2);
-				
-				
-					if(!currentStock.contains(st)) {
-						// so know have no stock that matches it so can just simply, 
-						
-						shoppingList.add(st);
-					}else {
-						ArrayList<CurrentStock> allCSThatMatchOneGot = new ArrayList<>();
-					// so know there is a match for the name. 
-						while(counter3 != currentStock.size() ) {
-							CurrentStock cs = currentStock.get(counter3);
-							
-							
-							if(cs.getName().equals(st.getName())) {
-								//so know know got one that mmatches
-								allCSThatMatchOneGot.add(cs);
-								indexTracker.add(counter3);
-								
-							}
-							counter3 = counter3 + 1;
+				StockType st = dishStock.get(counter2);
+
+				if (!currentStock.contains(st)) {
+					// so know have no stock that matches it so can just simply,
+
+					shoppingList.add(st);
+				} else {
+					ArrayList<CurrentStock> allCSThatMatchOneGot = new ArrayList<>();
+					// so know there is a match for the name.
+					while (counter3 != currentStock.size()) {
+						CurrentStock cs = currentStock.get(counter3);
+
+						if (cs.getName().equals(st.getName())) {
+							// so know know got one that matches
+							allCSThatMatchOneGot.add(cs);
+							indexTracker.add(counter3);
+
 						}
-						//for the index tracker to know which one to get
-						int counter4 = 0;
-						// so know got all the ones that are like the stock type want to compare can work on it.
-						//stfl = stock type for eash loop
-						
-						for(CurrentStock stfl : allCSThatMatchOneGot) {
-							
-							// idea is we just start deleting the st values
-							// what left gets added as that what needed
-							
-							if(formatDateToInt(stfl.getExpiereDate()) >= formatDateToInt(currentBudget.getEndDate())) {
-		
-								
-								// so if the food expier on or after the date got its fine
-								Double stDouble = Double.parseDouble(st.getQuanity());
-								
-								Double stflDouble = Double.parseDouble(stfl.getQuanity());
-								
-								if(stDouble < stflDouble) {
-									
-								// so if have the stock in as it needed quantity, 
+						counter3 = counter3 + 1;
+					}
+					// for the index tracker to know which one to get
+					int counter4 = 0;
+					// so know got all the ones that are like the stock type want to compare can
+					// work on it.
+					// stfl = stock type for eash loop
+
+					for (CurrentStock stfl : allCSThatMatchOneGot) {
+
+						// idea is we just start deleting the st values
+						// what left gets added as that what needed
+
+						if (formatDateToInt(stfl.getExpiereDate()) >= formatDateToInt(currentBudget.getEndDate())) {
+
+							// so if the food expier on or after the date got its fine
+							Double stDouble = Double.parseDouble(st.getQuanity());
+
+							Double stflDouble = Double.parseDouble(stfl.getQuanity());
+
+							if (stDouble < stflDouble) {
+
+								// so if have the stock in as it needed quantity,
 								// is less than what got in, can just for get about it.
 								// do need to decrease it from the list so it not effecting the future stuff.
-									stfl.setQuanity(stflDouble-stDouble+"");
-									// so is now holding one with less stock
-									currentStock.set(indexTracker.get(counter4), stfl);
-									//as filled it so don't need to keep going.
-								addToShoppingList= false;
-									break;
-								}else if(stDouble.equals(stflDouble)) {
-									
+								stfl.setQuanity(stflDouble - stDouble + "");
+								// so is now holding one with less stock
+								currentStock.set(indexTracker.get(counter4), stfl);
+								// as filled it so don't need to keep going.
+								addToShoppingList = false;
+								break;
+							} else if (stDouble.equals(stflDouble)) {
+
 								// as have all the stock can can forget about it but need
-								//to edit current stock so future stock not effected
-									currentStock.remove(stfl);
-									//currentStock.remove(indexTracker.get(counter4));
-									addToShoppingList = false;
-									break;
-								}else {
-									
-									// the stock isn't enough to remove it all so both need to be decreased. 
-									//order of operations so don't need brackets
-									
-									st.setQuanity(stDouble - stflDouble + "");
-									// as not enough to remove it so implies self is smaller so would be removed
-									currentStock.remove(stfl);
-									addToShoppingList = true;
-								}
-								
-								
-								
-								//st.setQuanity(""+(Double.parseDouble(st.getQuanity())-Double.parseDouble(stfl.getQuanity())));
+								// to edit current stock so future stock not effected
+								currentStock.remove(stfl);
+								// currentStock.remove(indexTracker.get(counter4));
+								addToShoppingList = false;
+								break;
+							} else {
+
+								// the stock isn't enough to remove it all so both need to be decreased.
+								// order of operations so don't need brackets
+
+								st.setQuanity(stDouble - stflDouble + "");
+								// as not enough to remove it so implies self is smaller so would be removed
+								currentStock.remove(stfl);
+								addToShoppingList = true;
 							}
-							counter4 = counter4 +1;
-							addToShoppingList = true;
-							
+
+							// st.setQuanity(""+(Double.parseDouble(st.getQuanity())-Double.parseDouble(stfl.getQuanity())));
 						}
-						counter4 = 0;
-						if(addToShoppingList == true) {
-							
-						shoppingList.add(st);
-						}
-						
-						
-						
-						
+						counter4 = counter4 + 1;
+						addToShoppingList = true;
+
 					}
-					
-					
-				counter3 = 0;	
+					counter4 = 0;
+					if (addToShoppingList == true) {
+
+						shoppingList.add(st);
+					}
+
+				}
+
+				counter3 = 0;
 				counter2 = counter2 + 1;
-			}	
-			counter2 =0;
+			}
+			counter2 = 0;
 			counter = counter + 1;
 		}
-		
-		
-	
-		for(StockType stfl: shoppingList) {
-		
-			if(shoppingListNoDuplicates.contains(stfl)) {
-				
+
+		for (StockType stfl : shoppingList) {
+
+			if (shoppingListNoDuplicates.contains(stfl)) {
+
 				shoppingListNoDuplicates.forEach((StockType i) -> {
-				// so if the one that equals it, it does this
-				if (i.equals(stfl)) {
-					
+					// so if the one that equals it, it does this
+					if (i.equals(stfl)) {
 
-					i.setQuanity(
-							(Double.parseDouble(i.getQuanity()) + Double.parseDouble(stfl.getQuanity()))
-									+ "");
-				}
-			});
-			
-		}else {
-			
-			shoppingListNoDuplicates.add( new StockType(stfl.getName(), stfl.getCost(),
-							stfl.getQuanityType(), stfl.getQuanity()));
+						i.setQuanity((Double.parseDouble(i.getQuanity()) + Double.parseDouble(stfl.getQuanity())) + "");
+					}
+				});
+
+			} else {
+
+				shoppingListNoDuplicates
+						.add(new StockType(stfl.getName(), stfl.getCost(), stfl.getQuanityType(), stfl.getQuanity()));
+			}
+
 		}
-		
-		
-		}
-		
+
 		// convert it all to a string to be outputed
-			shoppingListNoDuplicates.forEach((StockType i) -> {output.add(i);
-				
-			});	
-			
-			currentStock = db.getAllCurrentStock();
-			return FXCollections.observableArrayList(output);
-		
-		
-		}
-		
-		
-	
+		shoppingListNoDuplicates.forEach((StockType i) -> {
+			output.add(i);
 
-	/**
-	 *  *get how much the budget has remaining after the, the items in the shopping list have been removed.
-	 * @return String = how much the budget is left after the shopping list cost have been removed, as a 
-	 * String to two decimal places
-	 */
-	public String getBudgetSizeMinusTheShoppingList() {
-		
-		Double BudgetAmount = selectedMenu.getBudget().getAmount();
-		Double totalCost = 0.00;
-		
-		ArrayList<String> valueHold = new ArrayList<>();
-		getSelectedMenuStockType().forEach((StockType i) -> {valueHold.add(i.toStringDishDetails());});
-		
-		//sli = shopping list items
-		ObservableList<String> sli = FXCollections.observableArrayList(valueHold);
-				
-	//slis =shopping list items string
-		for(String slis : sli) {
-			
-			String quantity  = slis.substring(slis.indexOf("quanity")+9);
-			String cost = slis.substring(slis.indexOf("cost")+7,slis.indexOf("quantity")-2);
-			
-			
-			totalCost = totalCost + (Double.parseDouble(quantity) * Double.parseDouble(cost));
-			
-		}
-		return String.format("%.2f",BudgetAmount - totalCost);
+		});
+
+		return FXCollections.observableArrayList(output);
+
 	}
 
 	/**
-	 * gets all the dish that aren't selected, by comparing what the datbase has 
-	 * and what the selected menu holds
+	 * *get how much the budget has remaining after the, the items in the shopping
+	 * list have been removed.
+	 * 
+	 * @return String = how much the budget is left after the shopping list cost
+	 *         have been removed, as a String to two decimal places
+	 */
+	public String getBudgetSizeMinusTheShoppingList() {
+
+		Double BudgetAmount = selectedMenu.getBudget().getAmount();
+		Double totalCost = 0.00;
+
+		ArrayList<String> valueHold = new ArrayList<>();
+		getSelectedMenuStockType().forEach((StockType i) -> {
+			valueHold.add(i.toStringDishDetails());
+		});
+
+		// sli = shopping list items
+		ObservableList<String> sli = FXCollections.observableArrayList(valueHold);
+
+		// slis =shopping list items string
+
+		for (String slis : sli) {
+
+			String quantity = slis.substring(slis.indexOf("quanity") + 9);
+			String cost = slis.substring(slis.indexOf("cost") + 7, slis.indexOf("quantity") - 2);
+
+			totalCost = totalCost + (Double.parseDouble(quantity) * Double.parseDouble(cost));
+
+		}
+
+		return String.format("%.2f", BudgetAmount - totalCost);
+	}
+
+	/**
+	 * gets all the dish that aren't selected, by comparing what the datbase has and
+	 * what the selected menu holds
 	 * 
 	 * @return ArrayList<Dish> = all the dish that are not part of the menu.
 	 */
 	public ArrayList<Dish> getNotSelectedDishesAsArrayList() {
-		
-	
+
 		notSelectedDishes.clear();
-		
+
 		db.getAllCurrentDishes().forEach((Dish i) -> {
-			//sub string so isn't dish name = ****
-			if (selectedMenu == null || !selectedMenu.doesItHoldDish(i.toString().substring(i.toString().indexOf("=")+2))) {
+			// sub string so isn't dish name = ****
+			if (selectedMenu == null
+					|| !selectedMenu.doesItHoldDish(i.toString().substring(i.toString().indexOf("=") + 2))) {
 				notSelectedDishes.add(i);
 
 			}
 
 		});
-		
-		
-		
-	
-		
+
 		return notSelectedDishes;
 	}
 
@@ -1850,16 +1883,13 @@ public String getSelctedDishDishName() {
 	 * @return ObservableList<Dish>
 	 */
 	public ObservableList<Dish> getNotSelectedDishesThatAreLikeMenuDetailsFind(String userInput) {
-		
-		
-		
+
 		ArrayList<Dish> notSelectedDishes = new ArrayList<>();
-		
+
 		getNotSelectedDishesAsArrayList().forEach((Dish i) -> {
 			notSelectedDishes.add(i);
 		});
-		
-		
+
 		ArrayList<Dish> output = new ArrayList<Dish>();
 		notSelectedDishes.forEach((Dish i) -> {
 
@@ -1907,7 +1937,7 @@ public String getSelctedDishDishName() {
 
 	public ObservableList<Dish> getDishFilterResults(String maxNumberOfItems, String minNumberOfItems, String maxCost,
 			String minCost) {
-		
+
 		ArrayList<Dish> maxni = null;
 		ArrayList<Dish> minni = null;
 		ArrayList<Dish> maxc = null;
@@ -1917,23 +1947,23 @@ public String getSelctedDishDishName() {
 
 		if (!maxNumberOfItems.equals("null")) {
 			// as first one dont need to worry about the others
-			
+
 			maxni = db.getDishWithLessThanSetItems(Integer.parseInt(maxNumberOfItems));
 
 		}
 
 		if (!minNumberOfItems.equals("null")) {
-		
+
 			minni = db.getDishWithMoreThanSetItems(Integer.parseInt(minNumberOfItems));
 
 		}
 		if (!maxCost.equals("null")) {
-		
+
 			maxc = db.getDishThatCostNotAbove(Double.parseDouble(maxCost));
 
 		}
 		if (!minCost.equals("null")) {
-		
+
 			minc = db.getDishThatCostNotBellow(Double.parseDouble(minCost));
 
 		}
@@ -2152,7 +2182,6 @@ public String getSelctedDishDishName() {
 
 		}
 
-		
 		master.forEach((Menu i) -> {
 
 			output.add(i);
@@ -2165,24 +2194,24 @@ public String getSelctedDishDishName() {
 
 //menu list 
 	/**
-	 * get all the menu that the database holds. 
+	 * get all the menu that the database holds.
 	 * 
 	 * @return ObservableList<Menu>
 	 */
 	public ObservableList<Menu> getAllMenus() {
-		
+
 		return FXCollections.observableArrayList(db.getAllMenu());
 	}
 
-
 	/**
-	 * use the database method, getAllMenuThatAreLike to return all the menus that are like the inputed
-	 * parameter
+	 * use the database method, getAllMenuThatAreLike to return all the menus that
+	 * are like the inputed parameter
+	 * 
 	 * @param like = String which is the menu name you want
 	 * @return ObservableList<String>
 	 */
 	public ObservableList<Menu> getAllMenusThatAreLike(String like) {
-		
+
 		return FXCollections.observableArrayList(db.getAllMenuThatAreLike(like));
 	}
 
@@ -2199,17 +2228,18 @@ public String getSelctedDishDishName() {
 	public Boolean doesMenuNameAlreadyExist(String name) {
 
 		currentMenus = db.getAllMenu();
+
 		Boolean output = false;
 		Integer count = 0;
 		// so can still use own name
-		if (!selectedMenu.getName().equals(name)) {
 
-			while (currentMenus.size() != count) {
-				if (currentMenus.get(count).getName().equals(name)) {
+		while (currentMenus.size() != count) {
+			if (currentMenus.get(count).getName().equals(name)) {
+				if (selectedMenu.equals(null) || !selectedMenu.getName().equals(name)) {
 					output = true;
 				}
-				count = count + 1;
 			}
+			count = count + 1;
 		}
 
 		return output;
@@ -2237,8 +2267,8 @@ public String getSelctedDishDishName() {
 	 * selectedDish var. it used the toString = and, to to identify where each value
 	 * is in the stock array list the dish holds.
 	 * 
-	 * ObservableList<Dish> = all the dishes not in the menu dish list and with
-	 * the to sting method applied to them, it also has the newly added dish
+	 * ObservableList<Dish> = all the dishes not in the menu dish list and with the
+	 * to sting method applied to them, it also has the newly added dish
 	 */
 	public ObservableList<Dish> saveDishDetails() {
 
@@ -2269,26 +2299,24 @@ public String getSelctedDishDishName() {
 			counter = counter + 1;
 			// so is shown as soon goes back
 
-			
-			
 		}
-		
+
 		removedDishDetailsEditedStock();
-		
+
 		resetMenuDetailList();
 		return getNotSelectedDishesAsString();
 	}
 
 	/**
-	 * removes all dish that are in the edditedStockType var, if they aren't used in the 
-	 * database in anywhere but Stock type
+	 * removes all dish that are in the edditedStockType var, if they aren't used in
+	 * the database in anywhere but Stock type
 	 */
 	public void removedDishDetailsEditedStock() {
 		edditedStocktype.forEach(stockType -> {
-			if(!db.isStockTypeInUser(stockType.getName())) {
+			if (!db.isStockTypeInUser(stockType.getName())) {
 				db.deleteSelectedStockType(stockType.getName());
 			}
-			});
+		});
 	}
 
 	/**
@@ -2297,7 +2325,7 @@ public String getSelctedDishDishName() {
 	public void resetEddtedStockType() {
 		edditedStocktype = new ArrayList<>();
 	}
-	
+
 	/**
 	 * 
 	 * Updates the info in the database with the selectedDish details.
@@ -2313,25 +2341,21 @@ public String getSelctedDishDishName() {
 
 		// selectedDish is the one making
 
-		// bascially just purge all the orgianl connections and put new ones in its place
-		//db.deleteDish(orginalDishId);
+		// bascially just purge all the orgianl connections and put new ones in its
+		// place
+		// db.deleteDish(orginalDishId);
 
-		
-		
 		// if it borke its this one, cant figure out why its also used.
 		// db.saveDish(selectedDish.getName());
-		
+
 		ArrayList<StockType> orginalDishStock = db.getASpecificDishes(orginalDishId).getHeldStock();
-		
+
 		db.deleteTblDishStock(orginalDishId);
 		db.updateDish(selectedDish.getDishName(), orginalDishId);
 		ArrayList<StockType> st = selectedDish.getHeldStock();
 
 		int counter = 0;
-		
-		
-		
-		
+
 		while (counter != st.size()) {
 
 			String value = st.get(counter).toString();
@@ -2349,37 +2373,38 @@ public String getSelctedDishDishName() {
 			String quanityType = value.substring(equals3 + 2);
 
 			db.saveDishStockConnection(name, selectedDish.getDishName(), quanity, quanityType);
-			
+
 			counter = counter + 1;
 			// so is shown as soon goes back
 
 		}
-		
+
 		orginalDishStock.forEach(stockType -> {
-			if(!db.isStockTypeInUser(stockType.getName())) {
+			if (!db.isStockTypeInUser(stockType.getName())) {
 				db.deleteSelectedStockType(stockType.getName());
 			}
-			
+
 		});
-		
+
 		resetMenuDetailList();
 		return getNotSelectedDishesAsString();
 	}
 
-	
 	/**
-	 * delets a dish and then checks if its stockType is need anywhere else if it isn't,
-	 * the stock type is then also deleted.
+	 * delets a dish and then checks if its stockType is need anywhere else if it
+	 * isn't, the stock type is then also deleted.
+	 * 
 	 * @param id = string which is the dish to be deleted
-	 * @return ObservableList<Dish> = which are all the not selectedDish that haven't been deleted.
+	 * @return ObservableList<Dish> = which are all the not selectedDish that
+	 *         haven't been deleted.
 	 */
 	public ObservableList<Dish> deleteADish(String id) {
-		
+
 //dtbd = dish to be deleted
-		Dish dtbd  = db.getASpecificDishes(id);
+		Dish dtbd = db.getASpecificDishes(id);
 		db.deleteSelectedDish(id);
 		dtbd.getHeldStock().forEach(st -> {
-			if(!db.isStockTypeInUser(st.getName())) {
+			if (!db.isStockTypeInUser(st.getName())) {
 				db.deleteSelectedStockType(st.getName());
 			}
 		});
@@ -2490,31 +2515,69 @@ public String getSelctedDishDishName() {
 
 	/**
 	 * checks if the database has more than one admin account
+	 * 
 	 * @return Boolean, true = is more than one, false = there isn't more than one.
 	 */
 	public boolean doesTheDatabaseHaveMoreThanOneAdminLeft() {
 		return db.areThereOtherAdminAccounts();
 	}
+
 	/**
-	 * identifies if the stored cost for the stockType is different to the inputed one.
-	 * @param cost = String which are seeing if it it very from the one in the database
-	 * @param id = String which is the id of a stockType in the database.
-	 * @return String = if no change to inputed cost get "" else get what the database holds for the cost 
+	 * identifies if the stored cost for the stockType is different to the inputed
+	 * one.
+	 * 
+	 * @param cost = String which are seeing if it it very from the one in the
+	 *             database
+	 * @param id   = String which is the id of a stockType in the database.
+	 * @return String = if no change to inputed cost get "" else get what the
+	 *         database holds for the cost
 	 */
 	public String hasTheStockTypeCostChanged(String cost, String id) {
 		return db.hasTheStockTypeCostChanged(cost, id);
 	}
+
 	/**
-	 * identifies if the stored quanityType for the stockType is different to the inputed one.
-	 * @param quanityType = String which are seeing if it it very from the one in the database
-	 * @param id = String which is the id of a stockType in the database.
-	 * @return String = if no change to inputed quanityType get "" else get what the database holds for the quanityType 
+	 * identifies if the stored quanityType for the stockType is different to the
+	 * inputed one.
+	 * 
+	 * @param quanityType = String which are seeing if it it very from the one in
+	 *                    the database
+	 * @param id          = String which is the id of a stockType in the database.
+	 * @return String = if no change to inputed quanityType get "" else get what the
+	 *         database holds for the quanityType
 	 */
 	public String hasTheStockTypeQuanityTypeChanged(String quanityType, String id) {
 		return db.hasTheStockTypeQuanityTypeChanged(quanityType, id);
 	}
-	
-	
-	
-	
+
+	/**
+	 * it save the inputted string to the database in the table recommendations
+	 * 
+	 * @param recommedation = String
+	 */
+	public void saveRecommedationToDatabase(String recommedation) {
+
+		db.saveRecommedation(recommedation);
+	}
+
+	/**
+	 * get all data as Recommendation from the database table recommendation
+	 * 
+	 * @return ObservableList<Recommedation>
+	 */
+	public ObservableList<Recommedation> getAllRecommedation() {
+
+		return FXCollections.observableArrayList(db.getAllRecommendations());
+
+	}
+
+	/**
+	 * delete a row from the database table recommendations, row deleted is the one
+	 * where the row primary key matches the inputted string.
+	 * 
+	 * @param id = String
+	 */
+	public void deleteARecommedation(String id) {
+		db.deleteRecommedation(id);
+	}
 }
