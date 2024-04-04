@@ -551,12 +551,12 @@ public class RootView extends VBox {
 	}
 
 	/**
-	 * gets the id of the selected recommendation from the recommendation chef page
+	 * gets the selected recommendation from the recommendation chef page
 	 * 
-	 * @return String which is a "null" if no item is selected.
+	 * @return Recommedation = the user selected one.
 	 */
-	public String getChefRecommedationSelectedItemId() {
-		return recommedationChef.getSelectedItemId();
+	public Recommedation getChefRecommedationSelectedItem() {
+		return recommedationChef.getSelectedItem();
 	}
 
 	/**
@@ -1275,7 +1275,7 @@ public class RootView extends VBox {
 		menuDetails.clearTablesColumns();
 
 		TableColumn<Dish, String> dName = new TableColumn<>("All Dishes Names");
-		TableColumn<Dish, String> mName = new TableColumn<>("All Dishes In Menu Name");
+		TableColumn<Dish, String> mName = new TableColumn<>("All Dishes In The Menu");
 		TableColumn<StockType, String> slName = new TableColumn<>("Name");
 		TableColumn<StockType, String> slCost = new TableColumn<>("Cost");
 		TableColumn<StockType, String> slQuanityType = new TableColumn<>("Quantity Type");
@@ -1467,15 +1467,7 @@ public class RootView extends VBox {
 		menuDetails.unselectMenuAndshoppingList();
 	}
 
-	/**
-	 * gets the selected item from the menu list, list view but only the items name.
-	 * selection from the menu details page.
-	 * 
-	 * @return String = selected items name.
-	 */
-	public String getMenuDetailsMenuListSelectedValueName() {
-		return menuDetails.getMenuListSelectedValueAsId();
-	}
+	
 
 	/**
 	 * get the size of the menu list. list located on the menu details page.
@@ -3022,15 +3014,7 @@ public class RootView extends VBox {
 		return ddp.getSelectedIndex();
 	}
 
-	/**
-	 * get the id of the item selected in the list view which is in dish details
-	 * page,
-	 * 
-	 * @return String = the id of the selected item
-	 */
-	public String getDishDetaulsSelectedId() {
-		return ddp.getSelectedId();
-	}
+	
 
 	/**
 	 * clears all the input areas of the dish details page

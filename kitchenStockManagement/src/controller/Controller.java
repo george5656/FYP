@@ -1349,7 +1349,7 @@ public class Controller {
 				view.dishDetailsLoad();
 
 			} else if (model.getDeleteFrom().equals("ChefRecommedation")) {
-				model.deleteARecommedation(view.getChefRecommedationSelectedItemId());
+				model.deleteARecommedation(view.getChefRecommedationSelectedItem().getId() + "");
 				view.chefRecommedationLoad(model.getAllRecommedation());
 			}
 
@@ -3245,7 +3245,7 @@ public class Controller {
 		public void handle(ActionEvent event) {
 
 			String masterIssue = "";
-			if (view.getChefRecommedationSelectedItemId().equals("null")) {
+			if (view.getChefRecommedationSelectedItem() == null) {
 				masterIssue = "no item selected";
 			}
 			if (masterIssue.equals("")) {

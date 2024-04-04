@@ -264,17 +264,6 @@ public class DishDetailsPage extends PaneMenu {
 	}
 
 	/**
-	 * get the id of the selected item. when say id mean the value that is shown
-	 * after the name =
-	 * 
-	 * @return String = the id of the item selected in the listView.
-	 */
-	public String getSelectedId() {
-		return tvIngredients.getSelectionModel().getSelectedItem().getName();
-
-	}
-
-	/**
 	 * resets all the input areas. removes all input and values in input areas
 	 */
 	public void addReset() {

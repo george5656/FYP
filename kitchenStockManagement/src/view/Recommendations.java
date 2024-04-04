@@ -18,7 +18,7 @@ public class Recommendations extends PaneMenu {
 	private VBox layout = new VBox(20);
 	private HBox buttons = new HBox(20);
 	private TextArea input = new TextArea();
-	private Label title = new Label("create a recommendation");
+	private Label title = new Label("Create A Recommendation");
 
 	/**
 	 * default constructor

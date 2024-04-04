@@ -28,7 +28,7 @@ public class Main extends Application {
 		view = new RootView();
 		new Controller(new ModelRoot(), view);
 		scene = new Scene(view, 1200, 600);
-		scene.getStylesheets().add(getClass().getResource("StockManegment.css").toString());
+		scene.getStylesheets().add(getClass().getResource("../view/StockManegment.css").toString());
 
 	}
 
