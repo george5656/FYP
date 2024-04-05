@@ -74,14 +74,21 @@ public class RootView extends VBox {
 	}
 
 	/**
-	 * gets the deleteCOnfirmationPage object
+	 * gets the deleteConfirmationPage object
 	 * 
 	 * @return DeleteConfirmationPage
 	 */
 	public DeleteConfirmationPage getDeleteConfirmationPage() {
 		return dcp;
 	}
-
+	/**
+	 * sets the deleteConfirmation page up 
+	 * 
+	 * @param name = String, which is whats added to the text shown to indicate what the user is deleting.
+	 */
+public void setDeleteConfirmationPage(String name) {
+	dcp.setTxtConfirmMessage("Are you sure you wan to delete " + name + "?");
+}
 	/**
 	 * gets the stockDetails page
 	 * 
@@ -558,20 +565,17 @@ public class RootView extends VBox {
 	public Recommedation getChefRecommedationSelectedItem() {
 		return recommedationChef.getSelectedItem();
 	}
-
+ 
 	/**
 	 * gets the item that is selected in the listview in the stock list page.
 	 * 
-	 * @return String or null. if no item is selected null is returned, else it is
-	 *         the string that is selected.
+	 * @return StockType which is the selected stock type
 	 */
-	public String getStockListSelectedItem() {
+	public StockType getStockListSelectedItem() {
 
-		if (stockListPage.getSelectionNode().getSelectionModel().getSelectedItem() != null) {
-			return stockListPage.getSelectionNode().getSelectionModel().getSelectedItem().getName();
-		} else {
-			return "null";
-		}
+		
+			return stockListPage.getSelectionNode().getSelectionModel().getSelectedItem();
+		
 	}
 
 	/**
@@ -604,14 +608,13 @@ public class RootView extends VBox {
 	}
 
 	/**
-	 * get the selected value in the table view from the stock list page but only
-	 * the id part
+	 * get the selected value in the table view from the stock list page 
 	 * 
-	 * @return String, which is the id of the stock selected in the table view.
+	 * @return CurrentStock, which is the stock selected in the table view.
 	 */
-	public String getSelectedStockId() {
+	public CurrentStock getSelectedStock() {
 
-		return String.valueOf(stockListPage.getSelection().getId());
+		return stockListPage.getSelection();
 	}
 
 	/**

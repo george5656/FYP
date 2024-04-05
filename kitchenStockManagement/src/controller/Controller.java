@@ -351,9 +351,6 @@ public class Controller {
 		model.setSelectedDish(null);
 	}
 
-	/*
-	 * new class
-	 */
 	/**
 	 * loads the menu details page. does the normal menu details page load but also,
 	 * removes any stock type that isn't in use the database.
@@ -426,12 +423,11 @@ public class Controller {
 		@Override
 		public void handle(ActionEvent event) {
 
-			if (!view.getStockListSelectedItem().equals("null")) {
+			if (view.getStockListSelectedItem() != null) {
 
-				model.selectAStock(view.getSelectedStockId());
-
-				view.getDeleteConfirmationPage()
-						.setTxtConfirmMessage("Are you sure you wan to delete " + model.getSelectedStockName() + "?");
+				model.selectAStock(view.getSelectedStock());
+				view.setDeleteConfirmationPage(model.getSelectedStockName());
+				
 				model.setDeleteFrom("StockList");
 				view.deleteConfirmationLoad();
 			} else {
@@ -461,9 +457,8 @@ public class Controller {
 
 				model.selectABudget(view.getSelectedBudgetId());
 
-				view.getDeleteConfirmationPage()
-						.setTxtConfirmMessage("Are you sure you wan to delete " + view.getSelectedBudgetId() + "?");
-
+				view.setDeleteConfirmationPage(view.getSelectedBudgetId() );
+				
 				model.setDeleteFrom("BudgteList");
 
 				view.deleteConfirmationLoad();
@@ -501,8 +496,9 @@ public class Controller {
 					// this is the final check, making sure the last admin cant just delete there
 					// account
 					if (model.doesTheDatabaseHaveMoreThanOneAdminLeft()) {
-						view.getDeleteConfirmationPage().setTxtConfirmMessage(
-								"Are you sure you wan to delete " + model.getSelectedAccountUsername() + "?");
+						
+						view.setDeleteConfirmationPage(model.getSelectedAccountUsername() );
+						
 						model.setDeleteFrom("Account");
 						view.deleteConfirmationLoad();
 					} else {
@@ -538,9 +534,8 @@ public class Controller {
 			if (!view.getStorageListSelectedItem().equals("null")) {
 
 				model.selectAStorageLocation(view.getSelectedStorageId());
-
-				view.getDeleteConfirmationPage()
-						.setTxtConfirmMessage("Are you sure you wan to delete " + model.getSelectedStorageName() + "?");
+				view.setDeleteConfirmationPage(model.getSelectedStorageName());
+			
 				model.setDeleteFrom("Storage");
 				view.deleteConfirmationLoad();
 			} else {
@@ -1013,8 +1008,8 @@ public class Controller {
 			if (model.getSelectedMenu() == null) {
 				view.menuSettingsLoad("null", "null");
 			} else {
-				view.menuSettingsLoad(model.getSelectedMenu().getBudget().getBudgetId(),
-						model.getSelectedMenu().getName());
+				view.menuSettingsLoad(model.getSelectedMenuBudgetId(),
+						model.getSelectedMenuName());
 			}
 
 		}
@@ -1266,7 +1261,7 @@ public class Controller {
 		@Override
 		public void handle(ActionEvent event) {
 			if (model.getDeleteFrom().equals("StockList")) {
-				model.selectAStock(view.getSelectedStockId());
+				model.selectAStock(view.getSelectedStock());
 				model.deleteStockType();
 				view.stockListLoad(model.getObservableListStringStockList());
 			} else if (model.getDeleteFrom().equals("BudgteList")) {
@@ -2201,9 +2196,9 @@ public class Controller {
 		public void handle(ActionEvent event) {
 
 			resetStockDetailsPage();
-			if (!(view.getStockListSelectedItem().equals("null"))) {
+			if (!(view.getStockListSelectedItem() == null)) {
 
-				model.selectAStock(view.getSelectedStockId());
+				model.selectAStock(view.getSelectedStock());
 
 				// reformatting the text so the save isn't in a diffrente format
 

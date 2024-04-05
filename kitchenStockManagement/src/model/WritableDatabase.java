@@ -49,7 +49,7 @@ public class WritableDatabase {
 				output = true;
 			}
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
+			 
 			e.printStackTrace();
 		}
 
@@ -78,7 +78,7 @@ public class WritableDatabase {
 			}
 			// }
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
+			 
 			e.printStackTrace();
 		}
 
@@ -110,7 +110,7 @@ public class WritableDatabase {
 				}
 			}
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
+			 
 			e.printStackTrace();
 		}
 
@@ -143,7 +143,7 @@ public class WritableDatabase {
 
 			}
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
+			 
 			e.printStackTrace();
 		}
 
@@ -173,7 +173,7 @@ public class WritableDatabase {
 			}
 			// }
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
+			 
 			e.printStackTrace();
 		}
 
@@ -197,7 +197,7 @@ public class WritableDatabase {
 							+ "\',\'" + data.getExpiereDate() + "\'); ");
 			statement.execute();
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
+			 
 			e.printStackTrace();
 		}
 
@@ -217,7 +217,7 @@ public class WritableDatabase {
 							+ id + "\';");
 			statement.execute();
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
+			 
 			e.printStackTrace();
 		}
 	}
@@ -235,7 +235,7 @@ public class WritableDatabase {
 					"Delete from stock_mangemnet.tbl_budget where tbl_budget.budgetId = \'" + id + "\';");
 			statement.execute();
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
+			 
 			e.printStackTrace();
 		}
 	}
@@ -259,7 +259,7 @@ public class WritableDatabase {
 				storageLocations.add(results.getString(1));
 			}
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
+			 
 			e.printStackTrace();
 		}
 
@@ -286,7 +286,7 @@ public class WritableDatabase {
 				stockTypeIteration = new StockType(results.getString(1), results.getString(2), results.getString(3));
 			}
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
+			 
 			e.printStackTrace();
 		}
 		return stockTypeIteration;
@@ -313,7 +313,7 @@ public class WritableDatabase {
 			statement.execute();
 
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
+			 
 			e.printStackTrace();
 		}
 
@@ -337,7 +337,7 @@ public class WritableDatabase {
 			statement.execute();
 
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
+			 
 			e.printStackTrace();
 		}
 
@@ -362,7 +362,7 @@ public class WritableDatabase {
 			statement.execute();
 
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
+			 
 			e.printStackTrace();
 		}
 
@@ -395,7 +395,7 @@ public class WritableDatabase {
 			}
 			// }
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
+			 
 			e.printStackTrace();
 		}
 
@@ -420,7 +420,7 @@ public class WritableDatabase {
 			}
 			// }
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
+			 
 			e.printStackTrace();
 		}
 
@@ -454,7 +454,7 @@ public class WritableDatabase {
 			}
 			// }
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
+			 
 			e.printStackTrace();
 		}
 
@@ -483,7 +483,7 @@ public class WritableDatabase {
 			statement.execute();
 
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
+			 
 			e.printStackTrace();
 		}
 	}
@@ -509,7 +509,7 @@ public class WritableDatabase {
 			}
 			// }
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
+			 
 			e.printStackTrace();
 		}
 
@@ -540,7 +540,7 @@ public class WritableDatabase {
 			}
 			// }
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
+			 
 			e.printStackTrace();
 		}
 
@@ -564,7 +564,7 @@ public class WritableDatabase {
 
 			// }
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
+			 
 			e.printStackTrace();
 		}
 
@@ -597,7 +597,7 @@ public class WritableDatabase {
 			}
 			// }
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
+			 
 			e.printStackTrace();
 		}
 
@@ -630,7 +630,7 @@ public class WritableDatabase {
 			}
 			// }
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
+			 
 			e.printStackTrace();
 		}
 
@@ -657,7 +657,7 @@ public class WritableDatabase {
 			statement.execute();
 
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
+			 
 			e.printStackTrace();
 		}
 	}
@@ -682,7 +682,7 @@ public class WritableDatabase {
 			}
 			// }
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
+			 
 			e.printStackTrace();
 		}
 
@@ -715,7 +715,7 @@ public class WritableDatabase {
 			}
 			// }
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
+			 
 			e.printStackTrace();
 		}
 
@@ -746,7 +746,7 @@ public class WritableDatabase {
 			}
 			// }
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
+			 
 			e.printStackTrace();
 		}
 
@@ -772,7 +772,7 @@ public class WritableDatabase {
 			statement.execute();
 
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
+			 
 			e.printStackTrace();
 		}
 
@@ -802,7 +802,7 @@ public class WritableDatabase {
 			}
 			// }
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
+			 
 			e.printStackTrace();
 		}
 
@@ -823,7 +823,7 @@ public class WritableDatabase {
 							+ "\';");
 			statement.execute();
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
+			 
 			e.printStackTrace();
 		}
 	}
@@ -848,7 +848,7 @@ public class WritableDatabase {
 				counter = counter + 1;
 			}
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
+			 
 			e.printStackTrace();
 		}
 
@@ -882,7 +882,7 @@ public class WritableDatabase {
 			statement.execute();
 
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
+			 
 			e.printStackTrace();
 		}
 	}
@@ -907,7 +907,7 @@ public class WritableDatabase {
 			}
 			// }
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
+			 
 			e.printStackTrace();
 		}
 
@@ -936,7 +936,7 @@ public class WritableDatabase {
 				return true;
 			}
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
+			 
 			e.printStackTrace();
 		}
 		return false;
@@ -971,7 +971,7 @@ public class WritableDatabase {
 			}
 			// }
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
+			 
 			e.printStackTrace();
 		}
 
@@ -998,7 +998,7 @@ public class WritableDatabase {
 			}
 			// }
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
+			 
 			e.printStackTrace();
 		}
 
@@ -1029,7 +1029,7 @@ public class WritableDatabase {
 			}
 			// }
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
+			 
 			e.printStackTrace();
 		}
 
@@ -1057,7 +1057,7 @@ public class WritableDatabase {
 			statement.execute();
 
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
+			 
 			e.printStackTrace();
 		}
 
@@ -1089,7 +1089,7 @@ public class WritableDatabase {
 			statement.execute();
 
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
+			 
 			e.printStackTrace();
 		}
 
@@ -1116,7 +1116,7 @@ public class WritableDatabase {
 			}
 			// }
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
+			 
 			e.printStackTrace();
 		}
 
@@ -1138,7 +1138,7 @@ public class WritableDatabase {
 							+ id + "\';");
 			statement.execute();
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
+			 
 			e.printStackTrace();
 		}
 	}
@@ -1164,7 +1164,7 @@ public class WritableDatabase {
 				return results.getBoolean(3);
 			}
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
+			 
 			e.printStackTrace();
 		}
 		return false;
@@ -1203,7 +1203,7 @@ public class WritableDatabase {
 			}
 
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
+			 
 			e.printStackTrace();
 		}
 
@@ -1249,7 +1249,7 @@ public class WritableDatabase {
 			}
 
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
+			 
 			e.printStackTrace();
 		}
 
@@ -1292,7 +1292,7 @@ public class WritableDatabase {
 			}
 
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
+			 
 			e.printStackTrace();
 		}
 
@@ -1323,7 +1323,7 @@ public class WritableDatabase {
 			statement.execute();
 
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
+			 
 			e.printStackTrace();
 		}
 	}
@@ -1343,7 +1343,7 @@ public class WritableDatabase {
 			statement.execute();
 
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
+			 
 			e.printStackTrace();
 		}
 
@@ -1367,7 +1367,7 @@ public class WritableDatabase {
 			statement.execute();
 
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
+			 
 			e.printStackTrace();
 		}
 
@@ -1392,7 +1392,7 @@ public class WritableDatabase {
 			statement.execute();
 
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
+			 
 			e.printStackTrace();
 		}
 
@@ -1414,7 +1414,7 @@ public class WritableDatabase {
 			statement.execute();
 
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
+			 
 			e.printStackTrace();
 		}
 
@@ -1444,7 +1444,7 @@ public class WritableDatabase {
 			}
 
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
+			 
 			e.printStackTrace();
 		}
 
@@ -1501,7 +1501,7 @@ public class WritableDatabase {
 			}
 
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
+			 
 			e.printStackTrace();
 		}
 
@@ -1559,7 +1559,7 @@ public class WritableDatabase {
 			}
 
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
+			 
 			e.printStackTrace();
 		}
 
@@ -1613,7 +1613,7 @@ public class WritableDatabase {
 			}
 
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
+			 
 			e.printStackTrace();
 		}
 
@@ -1670,7 +1670,7 @@ public class WritableDatabase {
 			}
 
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
+			 
 			e.printStackTrace();
 		}
 
@@ -1725,7 +1725,7 @@ public class WritableDatabase {
 
 			}
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
+			 
 			e.printStackTrace();
 		}
 
@@ -1789,7 +1789,7 @@ public class WritableDatabase {
 
 			}
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
+			 
 			e.printStackTrace();
 		}
 
@@ -1810,7 +1810,7 @@ public class WritableDatabase {
 					.prepareStatement("Delete from stock_mangemnet.tbl_dish where tbl_dish.dishId = \'" + id + "\';");
 			statement.execute();
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
+			 
 			e.printStackTrace();
 		}
 	}
@@ -1838,14 +1838,14 @@ public class WritableDatabase {
 							.execute();
 
 				} catch (SQLException e) {
-					// TODO Auto-generated catch block
+					 
 					e.printStackTrace();
 				}
 
 			});
 
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
+			 
 			e.printStackTrace();
 		}
 	}
@@ -1869,7 +1869,7 @@ public class WritableDatabase {
 			statement.execute();
 
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
+			 
 			e.printStackTrace();
 		}
 	}
@@ -1929,7 +1929,7 @@ public class WritableDatabase {
 
 			}
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
+			 
 			e.printStackTrace();
 		}
 
@@ -1967,7 +1967,7 @@ public class WritableDatabase {
 
 			}
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
+			 
 			e.printStackTrace();
 		}
 
@@ -1986,7 +1986,7 @@ public class WritableDatabase {
 					"Delete from stock_mangemnet.tbl_stock_type where tbl_stock_type.stockTypeId = \'" + id + "\';");
 			statement.execute();
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
+			 
 			e.printStackTrace();
 		}
 	}
@@ -2009,7 +2009,7 @@ public class WritableDatabase {
 			statement.execute();
 
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
+			 
 			e.printStackTrace();
 		}
 
@@ -2035,7 +2035,7 @@ public class WritableDatabase {
 			}
 			// }
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
+			 
 			e.printStackTrace();
 		}
 
@@ -2055,7 +2055,7 @@ public class WritableDatabase {
 					"Delete from stock_mangemnet.tbl_recommedation where tbl_recommedation.ID = \'" + id + "\';");
 			statement.execute();
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
+			 
 			e.printStackTrace();
 		}
 	}

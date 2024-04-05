@@ -9,7 +9,6 @@ import java.security.NoSuchAlgorithmException;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Scanner;
-
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.scene.control.Alert;
@@ -580,12 +579,13 @@ public class ModelRoot {
 
 	// current stock
 	/**
-	 * makes the modelRoot hold the stock that matches the id you inputted
+	 * makes the modelRoot hold the stock that is passed in
 	 * 
-	 * @param id = a string which is the id of the stock you want to select
+	 * @param cs = CurrentStock
 	 */
-	public void selectAStock(String id) {
-		selectedStock = db.getSpecificCurrentStock(id);
+	
+	public void selectAStock(CurrentStock cs) {
+		selectedStock = db.getSpecificCurrentStock(String.valueOf(cs.getId()));
 	}
 
 	/**
@@ -1490,7 +1490,20 @@ public class ModelRoot {
 	public Menu getSelectedMenu() {
 		return selectedMenu;
 	}
-
+/**
+ * get the budget in the selected menu var id
+ * @return String
+ */
+	public String getSelectedMenuBudgetId() {
+		return selectedMenu.getBudget().getBudgetId();
+	}
+	/**
+	 * get the selected menu name
+	 * @return String
+	 */
+	public String getSelectedMenuName() {
+		return selectedMenu.getName();
+	}
 //either just populate the list, or comapres against the picked one
 
 	/**
