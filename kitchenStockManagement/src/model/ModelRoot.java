@@ -757,7 +757,7 @@ public class ModelRoot {
 					if (!db.StorgaeLocationExists(storageLocationId)) {
 						errorMessage = "storage location doesn't exists";
 
-					} else if (db.StockTypeExists(name) == null) {
+					} else if (db.StockTypeExists(name).getName().equals("null")) {
 						addStockType(name, cost.toString(), quantityType);
 					} else {
 						updateStockTypeCost(name, cost.toString());

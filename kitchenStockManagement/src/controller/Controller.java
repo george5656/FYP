@@ -1081,6 +1081,7 @@ public class Controller {
 	 * @author Student
 	 *
 	 */
+	
 	private class EHStockDetailsBtnSave implements EventHandler<ActionEvent> {
 
 		@Override
@@ -2158,6 +2159,7 @@ public class Controller {
 	 * @author Student
 	 *
 	 */
+	
 	private class EHStockDetailsBtnLoadFromFile implements EventHandler<ActionEvent> {
 
 		@Override

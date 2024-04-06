@@ -271,7 +271,7 @@ public class WritableDatabase {
 	 * type or not.
 	 * 
 	 * @param stockTypeId
-	 * @return true = exist, false = dosent exist
+	 * @return StockType, where all values are null in string format if not found. 
 	 */
 	public StockType StockTypeExists(String stockTypeId) {
 		PreparedStatement statement;
