@@ -1,7 +1,6 @@
 package model;
 
 import java.io.File;
-
 import java.io.FileNotFoundException;
 import java.net.URI;
 import java.security.MessageDigest;

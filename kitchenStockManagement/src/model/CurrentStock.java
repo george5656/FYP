@@ -83,7 +83,7 @@ public class CurrentStock extends StockType {
 	}
 
 	/**
-	 * is used to compare two stock type. has down cast so if not a stock type will
+	 * is used to compare two stock type. has down cast so if not a StockType will
 	 * cause an issue.
 	 * 
 	 * @return Boolean, true = is equal, false = isn't equal.

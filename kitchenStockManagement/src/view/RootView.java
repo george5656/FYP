@@ -1213,8 +1213,37 @@ public void setDeleteConfirmationPage(String name) {
 	public void setMenuDetailsBtnFindEventHandler(EventHandler<ActionEvent> event) {
 		menuDetails.setBtnFindEventHandler(event);
 	}
-
 	/**
+	 * gets the item selected in the combo box on the stock filter page
+	 * @return = string which is the storage location selected
+	 */
+	public String getStockFilterStorageLocationSelectedItemAsString() {
+	 return getStockFilter()
+	.getCbStorageLocation().getSelectionModel().getSelectedItem().toString();
+	}
+	/**
+	 * gets the item selected in the stock type combo box on the stock filter page
+	 * @return = String which is the selected value in the stock combo box.
+	 */
+	public String getStockFilterStockTypeSelctedItemAsString() {
+	return getStockFilter().getCbStockType().getSelectionModel().getSelectedItem().toString();
+	}
+	/**
+	 * gets the stockFiler user input for min quantity, 
+	 * @return String
+	 */
+	public String getStockFilterMinQuanity() {
+	return getStockFilter().getTfMinQunaity().getText();
+	}
+	
+	/**
+	 * gets the StockFilter user input for max quantity 
+	 * @return String
+	 */
+	public String getStockFilterMaxQuanity() {
+	return getStockFilter().getTfMaxQuanity().getText();
+	}
+			/**
 	 * sets the menu Details new dish button event handler
 	 * 
 	 * @param event = Event handler<ActionEvent>
@@ -1839,7 +1868,13 @@ public void setDeleteConfirmationPage(String name) {
 		budgetListPage.getErrorLabel().setText(error);
 		budgetListPage.getErrorLabel().setVisible(true);
 	}
-
+	/**
+	 * sets the label on delete confirmation page to the passed in text 
+	 * @param message = String, which is the message the delete confirmation page shows
+	 */
+public void setDeleteConfrimationPageText(String message) {
+	getDeleteConfirmationPage().setTxtConfirmMessage(message);
+}
 	/**
 	 * get the id of the selected value, from the table view which is located in the
 	 * budget list page.
@@ -2307,16 +2342,7 @@ public void setDeleteConfirmationPage(String name) {
 		}
 	}
 
-	/**
-	 * gets the selected storage location id. selection is made in the storage
-	 * location list page. the id that is given is not the index id, but the id that
-	 * is shown in the list view/ what the string displays.
-	 * 
-	 * @return String = selected storage id
-	 */
-	/*
-	 * complete changed
-	 */
+	
 	/**
 	 * get the selected item name. the selection is the one made in the storage
 	 * location list page, by selecting an item in the table view.
