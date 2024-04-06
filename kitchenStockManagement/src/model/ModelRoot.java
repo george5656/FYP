@@ -905,9 +905,11 @@ public class ModelRoot {
 	 * @return Boolean = true = it already exists, false = it doesnt exists in the
 	 *         database.
 	 */
+
 	public Boolean doesBudgetNameAlreadyExist(String id) {
 		Boolean exist = false;
 		int counter = 0;
+		budget = db.getAllBudgets();
 		while (budget.size() != counter) {
 			if (budget.get(counter).getBudgetId().equals(id)) {
 				exist = true;
