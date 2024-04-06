@@ -20,9 +20,9 @@ public class RecommendationChefView extends PaneMenu {
 	private HBox buttons = new HBox(20);
 
 	private TableView<Recommedation> tvRecommendation = new TableView<>();
-	private TableColumn<Recommedation, String> tcRecommendation = new TableColumn<>("recommendation");
-	private Button delete = new Button("delete");
-	private Button back = new Button("back");
+	private TableColumn<Recommedation, String> tcRecommendation = new TableColumn<>("Recommendation");
+	private Button delete = new Button("Delete");
+	private Button back = new Button("Back");
 
 	/**
 	 * default constructor
@@ -74,16 +74,13 @@ public class RecommendationChefView extends PaneMenu {
 	}
 
 	/**
-	 * get the selected item Id
-	 * 
-	 * @return String, which is "null"(as a string) if no item has been selected.
+	 * returns the recommendation that the user selected.
+	 * @return Recommendation = the one the user selected.
 	 */
-	public String getSelectedItemId() {
-		if (tvRecommendation.getSelectionModel().isEmpty()) {
-			return "null";
-		} else {
-			return tvRecommendation.getSelectionModel().getSelectedItem().getId() + "";
-		}
+	public Recommedation getSelectedItem() {
+		
+			return tvRecommendation.getSelectionModel().getSelectedItem();
+		
 	}
 
 	/**

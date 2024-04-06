@@ -74,14 +74,21 @@ public class RootView extends VBox {
 	}
 
 	/**
-	 * gets the deleteCOnfirmationPage object
+	 * gets the deleteConfirmationPage object
 	 * 
 	 * @return DeleteConfirmationPage
 	 */
 	public DeleteConfirmationPage getDeleteConfirmationPage() {
 		return dcp;
 	}
-
+	/**
+	 * sets the deleteConfirmation page up 
+	 * 
+	 * @param name = String, which is whats added to the text shown to indicate what the user is deleting.
+	 */
+public void setDeleteConfirmationPage(String name) {
+	dcp.setTxtConfirmMessage("Are you sure you wan to delete " + name + "?");
+}
 	/**
 	 * gets the stockDetails page
 	 * 
@@ -551,27 +558,24 @@ public class RootView extends VBox {
 	}
 
 	/**
-	 * gets the id of the selected recommendation from the recommendation chef page
+	 * gets the selected recommendation from the recommendation chef page
 	 * 
-	 * @return String which is a "null" if no item is selected.
+	 * @return Recommedation = the user selected one.
 	 */
-	public String getChefRecommedationSelectedItemId() {
-		return recommedationChef.getSelectedItemId();
+	public Recommedation getChefRecommedationSelectedItem() {
+		return recommedationChef.getSelectedItem();
 	}
-
+ 
 	/**
 	 * gets the item that is selected in the listview in the stock list page.
 	 * 
-	 * @return String or null. if no item is selected null is returned, else it is
-	 *         the string that is selected.
+	 * @return StockType which is the selected stock type
 	 */
-	public String getStockListSelectedItem() {
+	public StockType getStockListSelectedItem() {
 
-		if (stockListPage.getSelectionNode().getSelectionModel().getSelectedItem() != null) {
-			return stockListPage.getSelectionNode().getSelectionModel().getSelectedItem().getName();
-		} else {
-			return "null";
-		}
+		
+			return stockListPage.getSelectionNode().getSelectionModel().getSelectedItem();
+		
 	}
 
 	/**
@@ -604,14 +608,13 @@ public class RootView extends VBox {
 	}
 
 	/**
-	 * get the selected value in the table view from the stock list page but only
-	 * the id part
+	 * get the selected value in the table view from the stock list page 
 	 * 
-	 * @return String, which is the id of the stock selected in the table view.
+	 * @return CurrentStock, which is the stock selected in the table view.
 	 */
-	public String getSelectedStockId() {
+	public CurrentStock getSelectedStock() {
 
-		return String.valueOf(stockListPage.getSelection().getId());
+		return stockListPage.getSelection();
 	}
 
 	/**
@@ -1210,8 +1213,37 @@ public class RootView extends VBox {
 	public void setMenuDetailsBtnFindEventHandler(EventHandler<ActionEvent> event) {
 		menuDetails.setBtnFindEventHandler(event);
 	}
-
 	/**
+	 * gets the item selected in the combo box on the stock filter page
+	 * @return = string which is the storage location selected
+	 */
+	public String getStockFilterStorageLocationSelectedItemAsString() {
+	 return getStockFilter()
+	.getCbStorageLocation().getSelectionModel().getSelectedItem().toString();
+	}
+	/**
+	 * gets the item selected in the stock type combo box on the stock filter page
+	 * @return = String which is the selected value in the stock combo box.
+	 */
+	public String getStockFilterStockTypeSelctedItemAsString() {
+	return getStockFilter().getCbStockType().getSelectionModel().getSelectedItem().toString();
+	}
+	/**
+	 * gets the stockFiler user input for min quantity, 
+	 * @return String
+	 */
+	public String getStockFilterMinQuanity() {
+	return getStockFilter().getTfMinQunaity().getText();
+	}
+	
+	/**
+	 * gets the StockFilter user input for max quantity 
+	 * @return String
+	 */
+	public String getStockFilterMaxQuanity() {
+	return getStockFilter().getTfMaxQuanity().getText();
+	}
+			/**
 	 * sets the menu Details new dish button event handler
 	 * 
 	 * @param event = Event handler<ActionEvent>
@@ -1275,7 +1307,7 @@ public class RootView extends VBox {
 		menuDetails.clearTablesColumns();
 
 		TableColumn<Dish, String> dName = new TableColumn<>("All Dishes Names");
-		TableColumn<Dish, String> mName = new TableColumn<>("All Dishes In Menu Name");
+		TableColumn<Dish, String> mName = new TableColumn<>("All Dishes In The Menu");
 		TableColumn<StockType, String> slName = new TableColumn<>("Name");
 		TableColumn<StockType, String> slCost = new TableColumn<>("Cost");
 		TableColumn<StockType, String> slQuanityType = new TableColumn<>("Quantity Type");
@@ -1467,15 +1499,7 @@ public class RootView extends VBox {
 		menuDetails.unselectMenuAndshoppingList();
 	}
 
-	/**
-	 * gets the selected item from the menu list, list view but only the items name.
-	 * selection from the menu details page.
-	 * 
-	 * @return String = selected items name.
-	 */
-	public String getMenuDetailsMenuListSelectedValueName() {
-		return menuDetails.getMenuListSelectedValueAsId();
-	}
+	
 
 	/**
 	 * get the size of the menu list. list located on the menu details page.
@@ -1844,7 +1868,13 @@ public class RootView extends VBox {
 		budgetListPage.getErrorLabel().setText(error);
 		budgetListPage.getErrorLabel().setVisible(true);
 	}
-
+	/**
+	 * sets the label on delete confirmation page to the passed in text 
+	 * @param message = String, which is the message the delete confirmation page shows
+	 */
+public void setDeleteConfrimationPageText(String message) {
+	getDeleteConfirmationPage().setTxtConfirmMessage(message);
+}
 	/**
 	 * get the id of the selected value, from the table view which is located in the
 	 * budget list page.
@@ -2312,16 +2342,7 @@ public class RootView extends VBox {
 		}
 	}
 
-	/**
-	 * gets the selected storage location id. selection is made in the storage
-	 * location list page. the id that is given is not the index id, but the id that
-	 * is shown in the list view/ what the string displays.
-	 * 
-	 * @return String = selected storage id
-	 */
-	/*
-	 * complete changed
-	 */
+	
 	/**
 	 * get the selected item name. the selection is the one made in the storage
 	 * location list page, by selecting an item in the table view.
@@ -3022,15 +3043,7 @@ public class RootView extends VBox {
 		return ddp.getSelectedIndex();
 	}
 
-	/**
-	 * get the id of the item selected in the list view which is in dish details
-	 * page,
-	 * 
-	 * @return String = the id of the selected item
-	 */
-	public String getDishDetaulsSelectedId() {
-		return ddp.getSelectedId();
-	}
+	
 
 	/**
 	 * clears all the input areas of the dish details page

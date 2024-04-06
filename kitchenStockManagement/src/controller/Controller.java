@@ -7,7 +7,6 @@ import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.Optional;
 import java.util.Scanner;
-
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.scene.control.Alert;
@@ -351,9 +350,6 @@ public class Controller {
 		model.setSelectedDish(null);
 	}
 
-	/*
-	 * new class
-	 */
 	/**
 	 * loads the menu details page. does the normal menu details page load but also,
 	 * removes any stock type that isn't in use the database.
@@ -426,12 +422,11 @@ public class Controller {
 		@Override
 		public void handle(ActionEvent event) {
 
-			if (!view.getStockListSelectedItem().equals("null")) {
+			if (view.getStockListSelectedItem() != null) {
 
-				model.selectAStock(view.getSelectedStockId());
-
-				view.getDeleteConfirmationPage()
-						.setTxtConfirmMessage("Are you sure you wan to delete " + model.getSelectedStockName() + "?");
+				model.selectAStock(view.getSelectedStock());
+				view.setDeleteConfirmationPage(model.getSelectedStockName());
+				
 				model.setDeleteFrom("StockList");
 				view.deleteConfirmationLoad();
 			} else {
@@ -461,9 +456,8 @@ public class Controller {
 
 				model.selectABudget(view.getSelectedBudgetId());
 
-				view.getDeleteConfirmationPage()
-						.setTxtConfirmMessage("Are you sure you wan to delete " + view.getSelectedBudgetId() + "?");
-
+				view.setDeleteConfirmationPage(view.getSelectedBudgetId() );
+				
 				model.setDeleteFrom("BudgteList");
 
 				view.deleteConfirmationLoad();
@@ -501,8 +495,9 @@ public class Controller {
 					// this is the final check, making sure the last admin cant just delete there
 					// account
 					if (model.doesTheDatabaseHaveMoreThanOneAdminLeft()) {
-						view.getDeleteConfirmationPage().setTxtConfirmMessage(
-								"Are you sure you wan to delete " + model.getSelectedAccountUsername() + "?");
+						
+						view.setDeleteConfirmationPage(model.getSelectedAccountUsername() );
+						
 						model.setDeleteFrom("Account");
 						view.deleteConfirmationLoad();
 					} else {
@@ -538,9 +533,8 @@ public class Controller {
 			if (!view.getStorageListSelectedItem().equals("null")) {
 
 				model.selectAStorageLocation(view.getSelectedStorageId());
-
-				view.getDeleteConfirmationPage()
-						.setTxtConfirmMessage("Are you sure you wan to delete " + model.getSelectedStorageName() + "?");
+				view.setDeleteConfirmationPage(model.getSelectedStorageName());
+			
 				model.setDeleteFrom("Storage");
 				view.deleteConfirmationLoad();
 			} else {
@@ -1013,8 +1007,8 @@ public class Controller {
 			if (model.getSelectedMenu() == null) {
 				view.menuSettingsLoad("null", "null");
 			} else {
-				view.menuSettingsLoad(model.getSelectedMenu().getBudget().getBudgetId(),
-						model.getSelectedMenu().getName());
+				view.menuSettingsLoad(model.getSelectedMenuBudgetId(),
+						model.getSelectedMenuName());
 			}
 
 		}
@@ -1266,7 +1260,7 @@ public class Controller {
 		@Override
 		public void handle(ActionEvent event) {
 			if (model.getDeleteFrom().equals("StockList")) {
-				model.selectAStock(view.getSelectedStockId());
+				model.selectAStock(view.getSelectedStock());
 				model.deleteStockType();
 				view.stockListLoad(model.getObservableListStringStockList());
 			} else if (model.getDeleteFrom().equals("BudgteList")) {
@@ -1349,7 +1343,7 @@ public class Controller {
 				view.dishDetailsLoad();
 
 			} else if (model.getDeleteFrom().equals("ChefRecommedation")) {
-				model.deleteARecommedation(view.getChefRecommedationSelectedItemId());
+				model.deleteARecommedation(view.getChefRecommedationSelectedItem().getId() + "");
 				view.chefRecommedationLoad(model.getAllRecommedation());
 			}
 
@@ -1540,28 +1534,28 @@ public class Controller {
 			if (masterErrorMessage.equals("")) {
 				String whereClause = "";
 				// so if the user didn't input a value it not added
-
+				
 				if (!view.getStockFilterStorgaeLocation().equals("null")) {
 					whereClause = whereClause
-							+ "tbl_stock_iteration.storageLocationId = \"" + view.getStockFilter()
-									.getCbStorageLocation().getSelectionModel().getSelectedItem().toString()
+							+ "tbl_stock_iteration.storageLocationId = \"" + view.getStockFilterStorageLocationSelectedItemAsString()
 							+ "\" And ";
+					
 				}
-
+					
 				if (!view.getStockFilterStockType().equals("null")) {
 					whereClause = whereClause + "tbl_stock_iteration.stockTypeId = \""
-							+ view.getStockFilter().getCbStockType().getSelectionModel().getSelectedItem().toString()
+							+ view.getStockFilterStockTypeSelctedItemAsString()
 							+ "\" And ";
 				}
 
 				if (!view.getStockFilterTfMinQunaity().equals("")) {
 					whereClause = whereClause + "tbl_stock_iteration.quanity >= \""
-							+ view.getStockFilter().getTfMinQunaity().getText() + "\" And ";
+							+ view.getStockFilterMinQuanity() + "\" And ";
 				}
 
 				if (!view.getStockFilterTfMaxQunaity().equals("")) {
 					whereClause = whereClause + "tbl_stock_iteration.quanity <= \""
-							+ view.getStockFilter().getTfMaxQuanity().getText() + "\" And ";
+							+ view.getStockFilterMaxQuanity() + "\" And ";
 
 				}
 				boolean expiresAfterToRun = model.dateValidation(view.getStockFilterDpAfterDateText(),
@@ -1585,12 +1579,12 @@ public class Controller {
 
 				if (!view.getStockFilterAboveCost().equals("")) {
 					whereClause = whereClause + "tbl_stock_type.cost >= \""
-							+ view.getStockFilter().getTfAboveCost().getText() + "\" And ";
+							+ view.getStockFilterAboveCost() + "\" And ";
 
 				}
 				if (!view.getStockFilterBelowCost().equals("")) {
 					whereClause = whereClause + "tbl_stock_type.cost <= \""
-							+ view.getStockFilter().getTfAboveCost().getText() + "\" And ";
+							+ view.getStockFilterAboveCost() + "\" And ";
 
 				}
 				// so doesn't run and crash if none put in, and also remove that \"and\" have at
@@ -2201,9 +2195,9 @@ public class Controller {
 		public void handle(ActionEvent event) {
 
 			resetStockDetailsPage();
-			if (!(view.getStockListSelectedItem().equals("null"))) {
+			if (!(view.getStockListSelectedItem() == null)) {
 
-				model.selectAStock(view.getSelectedStockId());
+				model.selectAStock(view.getSelectedStock());
 
 				// reformatting the text so the save isn't in a diffrente format
 
@@ -2391,7 +2385,7 @@ public class Controller {
 
 				model.setDeleteFrom("dishDetails");
 				view.deleteConfirmationLoad();
-				view.getDeleteConfirmationPage().setTxtConfirmMessage(
+				view.setDeleteConfrimationPageText(
 						"Are you sure you wan to delete " + view.getDishDetailsSelectedItem().getName() + "?");
 
 			} else {
@@ -2534,7 +2528,7 @@ public class Controller {
 
 				// model.selectAStock(view.getSelectedStockId());
 
-				view.getDeleteConfirmationPage().setTxtConfirmMessage(
+				view.setDeleteConfrimationPageText(
 						"Are you sure you wan to delete " + view.getMenuListSelectedMenuId() + "?");
 				model.setDeleteFrom("MenuList");
 				view.deleteConfirmationLoad();
@@ -2725,13 +2719,13 @@ public class Controller {
 				if (view.getMenuDetailsMenuListSelectedIndex() == -1) {
 					model.setDeleteFrom("RemoveFromShoppingList");
 					view.deleteConfirmationLoad();
-					view.getDeleteConfirmationPage().setTxtConfirmMessage("Are you sure you wan to delete "
+					view.setDeleteConfrimationPageText("Are you sure you wan to delete "
 							+ view.getMenuDetailsShoppingListSelectedItemValueIdOnly() + "?");
 
 				} else {
 					model.setDeleteFrom("RemoveFromMenuList");
 					view.deleteConfirmationLoad();
-					view.getDeleteConfirmationPage().setTxtConfirmMessage("Are you sure you wan to delete "
+					view.setDeleteConfrimationPageText("Are you sure you wan to delete "
 							+ view.getMenuDetailsMenuDishListSelectedItemValueIdOnly() + "?");
 
 				}
@@ -2783,11 +2777,11 @@ public class Controller {
 			if (masterErrorMessage.equals("")) {
 
 				if (view.getMenuDetailsDishListSelectedItemIndex() != -1) {
-					view.getDeleteConfirmationPage().setTxtConfirmMessage("Are you sure you wan to delete "
+					view.setDeleteConfrimationPageText("Are you sure you wan to delete "
 							+ view.getMenuDetailsDishListSelectedItemValueIdOnly() + "?");
 
 				} else {
-					view.getDeleteConfirmationPage().setTxtConfirmMessage("Are you sure you wan to delete "
+					view.setDeleteConfrimationPageText("Are you sure you wan to delete "
 							+ view.getMenuDetailsMenuDishListSelectedItemValueIdOnly() + "?");
 
 				}
@@ -3245,15 +3239,14 @@ public class Controller {
 		public void handle(ActionEvent event) {
 
 			String masterIssue = "";
-			if (view.getChefRecommedationSelectedItemId().equals("null")) {
+			if (view.getChefRecommedationSelectedItem() == null) {
 				masterIssue = "no item selected";
 			}
 			if (masterIssue.equals("")) {
 
 				model.setDeleteFrom("ChefRecommedation");
 				view.deleteConfirmationLoad();
-				view.getDeleteConfirmationPage()
-						.setTxtConfirmMessage("Are you sure you wan to delete the recommedation ?");
+				view.setDeleteConfrimationPageText("Are you sure you wan to delete the recommedation ?");
 
 			} else {
 

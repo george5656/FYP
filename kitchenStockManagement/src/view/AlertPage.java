@@ -19,7 +19,7 @@ public class AlertPage extends PaneMenu {
 	private Button back = new Button("Back");
 	private TableView<StockType> lowStock = new TableView<>();
 	private TableColumn<StockType, String> name = new TableColumn<>("Name");
-	private TableColumn<StockType, String> quanityType = new TableColumn<>("QuanityType");
+	private TableColumn<StockType, String> quanityType = new TableColumn<>("Quanity Type");
 	private TableColumn<StockType, String> quantity = new TableColumn<>("Quanity");
 
 	/**

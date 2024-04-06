@@ -375,15 +375,6 @@ public class MenuDetails extends PaneMenu {
 		return tvShopping.getSelectionModel().getSelectedIndex();
 	}
 
-	/**
-	 * gets the menu table view, selected item name
-	 * 
-	 * @return String which is the Dish name that the user selected in the menu
-	 *         table
-	 */
-	public String getMenuListSelectedValueAsId() {
-		return tvMenu.getSelectionModel().getSelectedItem().getDishName();
-	}
 
 	// so for output know if anything there to output or not
 	/**
