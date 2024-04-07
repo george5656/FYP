@@ -1025,8 +1025,11 @@ public class ModelRoot {
 		int counter = 0;
 		while (accounts.size() != counter) {
 
-			if (accounts.get(counter).getUsername().toLowerCase().equals(id)
-					&& !id.equals(selectedAccount.getUsername())) {
+			
+			if (accounts.get(counter).getUsername().toLowerCase().equals(id.toLowerCase())
+					&& (selectedAccount == null || !id.equals(selectedAccount.getUsername()))
+					
+					) {
 				exist = true;
 
 			}

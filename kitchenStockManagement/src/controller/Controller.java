@@ -494,7 +494,7 @@ public class Controller {
 						|| model.getSelectedAccountUsername().equals(model.getLogedInAccountId()))) {
 					// this is the final check, making sure the last admin cant just delete there
 					// account
-					if (model.doesTheDatabaseHaveMoreThanOneAdminLeft()) {
+					if (model.doesTheDatabaseHaveMoreThanOneAdminLeft() || model.getSelectedAccountAdminStatus().equals(false) ) {
 						
 						view.setDeleteConfirmationPage(model.getSelectedAccountUsername() );
 						
