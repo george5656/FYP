@@ -1985,6 +1985,13 @@ public class Controller {
 
 				} else {
 
+					if(model.wasLoggedInAccountEditted(view.getAccountDetailsUserName())) {
+					if (!model.doesTheDatabaseHaveMoreThanOneAdminLeft()) {
+						model.makeAlert("admin issue", "last admin cant remove admin status").show();
+						return;
+					}
+					}
+					
 					model.updateAccount(view.getAccountDetailsUserName(),
 							model.hash(view.getAccountDetailsUserPassword()), adminStatus);
 					
