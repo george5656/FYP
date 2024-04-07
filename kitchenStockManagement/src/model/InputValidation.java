@@ -169,13 +169,33 @@ public class InputValidation {
 		if (!input.equals("") && valuePresent == null) {
 			errorMessage = "no data found, if some does exists try selecting it and preesing enter";
 		}
-
+	
 		if (input.equals("")) {
 			errorMessage = "error no date";
 		}
 		return errorMessage;
 	}
-
+	
+	/**
+	 * extension on to dateValidation.
+	 * 
+	 * the additional check it does it makes sure that both the datapicker and the textbox 
+	 * have the same value if not it return an error. this is done by the string being the textbox input
+	 * and the localdate being the value the datapicker holds.
+	 * 
+	 * @param input = String
+	 * @param valuePresent  = LocalDate
+	 * @return String that say what error is, if no error get "";
+	 */
+	public String dateValidationAndCheckValuesmatch(String input, LocalDate valuePresent) {
+		errorMessage = dateValidation(input, valuePresent);
+		if(!input.equals(valuePresent.toString())) {
+			errorMessage = "text and selected value very, make sure they match.";
+		}
+		return errorMessage;
+	}
+	
+	
 	/**
 	 * this is designed to work with a datePicker. this checks that the datepicker
 	 * has registered the input. this is done by making sure that the locaclDate and
@@ -192,7 +212,8 @@ public class InputValidation {
 		if (!input.equals("") && valuePresent == null) {
 			errorMessage = "no data found, if some does exists try selecting it and preesing enter";
 		}
-
+		
+		
 		return errorMessage;
 	}
 }

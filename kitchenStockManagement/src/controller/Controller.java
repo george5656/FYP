@@ -1855,9 +1855,9 @@ public class Controller {
 			String amountErrorMessage = model
 					.doubleMustBePresetValidation(view.getBudgetDetailsInputtedAmount().toString());
 
-			String startDateErrorMessage = model.dateValidation(view.getBudgetDetailsInputtedStartDate(),
+			String startDateErrorMessage = model.dateValidationPlusCheckSame(view.getBudgetDetailsInputtedStartDate(),
 					view.getBudgetDetailsInputtedStartDateAsLocalDate());
-			String endDateErrorMessage = model.dateValidation(view.getBudgetDetailsInputtedEndDate(),
+			String endDateErrorMessage = model.dateValidationPlusCheckSame(view.getBudgetDetailsInputtedEndDate(),
 					view.getBudgetDetailsInputtedEndDateAsLocalDate());
 
 			if (!nameErrorMessage.equals("")) {

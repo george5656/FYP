@@ -33,6 +33,7 @@ public class BudgetDetailsPage extends BasicLayoutDetails {
 	 * default constructor
 	 */
 	public BudgetDetailsPage() {
+		
 		labels = getLabels();
 		userTextInput = getUserTextInput();
 		labelList.add(txtBudgetName);

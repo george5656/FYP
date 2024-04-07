@@ -171,6 +171,26 @@ public class ModelRoot {
 	}
 
 	/**
+	 * extension on to dateValidation.
+	 * 
+	 * the additional check it does it makes sure that both the datapicker and the textbox 
+	 * have the same value if not it return an error. this is done by the string being the textbox input
+	 * and the localdate being the value the datapicker holds. it also check if the localDate has any value at all
+	 * 
+	 * @param input = String
+	 * @param date  = LocalDate
+	 * @return String that say what error is, if no error get "";
+	 */
+	public String dateValidationPlusCheckSame(String input, LocalDate date) {
+		if(input.length()!=10) {
+			return "incorrect date";
+		} else if(date == null) {
+			return "no date selected in data picker";
+		}
+		return validation.dateValidationAndCheckValuesmatch(formatDate(input), date);
+	}
+
+	/**
 	 * Validates the inputs and returns an error message if something is wrong.
 	 * check if the date and input have data if one does but the other doesnt that
 	 * impels they have inputed into a datePicker info manually but not hit enter so
@@ -2535,7 +2555,7 @@ public boolean wasLoggedInAccountEditted(String username) {
 			return output.toString();
 
 		} catch (NoSuchAlgorithmException e) {
-			// TODO Auto-generated catch block
+			
 			e.printStackTrace();
 		}
 		return null;
