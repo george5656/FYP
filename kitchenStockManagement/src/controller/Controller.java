@@ -1987,6 +1987,19 @@ public class Controller {
 
 					model.updateAccount(view.getAccountDetailsUserName(),
 							model.hash(view.getAccountDetailsUserPassword()), adminStatus);
+					
+					if(model.wasLoggedInAccountEditted(view.getAccountDetailsUserName())) {
+						model.setLogedInAccount(view.getAccountDetailsUserName());
+						model.checkAdminStatusInDb(view.getAccountDetailsUserName());
+
+						view.homePageMenuLoad(model.getLoggedInAccountAdminStatus());
+						
+					}
+					
+					
+					
+					
+					
 				}
 				loadAccountListPage();
 			} else {

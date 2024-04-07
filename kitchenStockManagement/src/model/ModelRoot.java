@@ -1078,8 +1078,20 @@ public class ModelRoot {
 	public void updateAccount(String username, String password, Boolean adminStatus) {
 
 		db.updateAAccount(new Account(username, password, adminStatus), selectedAccount.getUsername());
+		
 	}
-
+	/**
+	 * checks if the edited account was the logged in one
+	 * 
+	 * just checks if the passed in string matches the logged in account (account in var by same name) name 
+	 * equals the passed in string.
+	 * @param username = string which is the edit account id
+	 * @return Boolean, true = logged in account is the edited one, false = logged in account isn't the edited one.
+	 */
+public boolean wasLoggedInAccountEditted(String username) {
+	return logedInAccount.getUsername().equals(username);
+}
+	
 // storage
 	/**
 	 * gets all the storage locations that are like the input. gets all the storage
