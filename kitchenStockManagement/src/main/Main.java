@@ -10,7 +10,7 @@ import view.RootView;
 /**
  * is the main method for the kitchen stock management system.
  * 
- * @author Georgettest
+ * @author George
  *
  */
 public class Main extends Application {

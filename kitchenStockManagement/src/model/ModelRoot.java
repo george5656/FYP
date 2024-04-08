@@ -201,9 +201,28 @@ public class ModelRoot {
 	 * @return String that say what error is, if no error get "";
 	 */
 	public String dateValidationPresentIsOptional(String input, LocalDate date) {
+		
 		return validation.dateValidationPresentIsOptional(input, date);
 	}
-
+	/**
+	 * extension to dateValidationPresentIsOptional
+	 * 
+	 * the way it is an extension is that it makes sure that date and input value match when both in string format.
+	 * the only exception to this is if input is length zero as imply no input so will give back ""
+	 * @param input = String
+	 * @param date  = LocalDate
+	 * @return String that say what error is, if no error get "";
+	 */
+public String dateValidationPresentIsOptionalPlusCheckSame(String input, LocalDate date) {
+if (input.length()==0) {
+	return "";
+}
+	
+	if(input.length()!=10) {
+		return "data found but not in correct size";
+	}
+		return validation.dateValidationPresentIsOptionalExtension(formatDate(input), date);
+	}
 	/**
 	 * validates the inputed string it checks the length so not over 50 characters
 	 * and makes sure its only [0-9]+
@@ -1663,14 +1682,13 @@ public boolean wasLoggedInAccountEditted(String username) {
 	 * 
 	 * @return ObservableList<StockType>
 	 */
-
-	public ObservableList<StockType> getSelectedMenuStockType() {
+		public ObservableList<StockType> getSelectedMenuStockType() {
+		
 		currentStock = db.getAllCurrentStock();
 
 		return getAMenusNeedStock(selectedMenu);
 
 	}
-
 	/**
 	 * this gets all the need stock, eg the stock that a menu needs but the database
 	 * doesn't have. it gets it for every menu, and merges them in to one list.
@@ -1720,6 +1738,7 @@ public boolean wasLoggedInAccountEditted(String username) {
 	 */
 
 	public ObservableList<StockType> getAMenusNeedStock(Menu menu) {
+		
 		// selectedMenu
 		Menu inputtedMenu = menu;
 
@@ -1727,13 +1746,14 @@ public boolean wasLoggedInAccountEditted(String username) {
 
 		ArrayList<Dish> dishes = new ArrayList<>();
 		// so not sharing the same memory location
-		inputtedMenu.getHeldDishes().forEach((Dish i) -> dishes.add(i));
+		inputtedMenu.getHeldDishes().forEach((Dish i) -> dishes.add(db.getASpecificDishes(i.getDishName())));
 		// simply a containe for the shopping list
 		ArrayList<StockType> output = new ArrayList<>();
 		ArrayList<Integer> indexTracker = new ArrayList<>();
 		ArrayList<StockType> shoppingList = new ArrayList<>();
 		// not this is for removing any duplicates that may be present.
 		ArrayList<StockType> shoppingListNoDuplicates = new ArrayList<>();
+		
 		int counter = 0;
 		int counter2 = 0;
 		int counter3 = 0;
@@ -1746,6 +1766,7 @@ public boolean wasLoggedInAccountEditted(String username) {
 			while (counter2 != dishStock.size()) {
 				StockType st = dishStock.get(counter2);
 
+				
 				if (!currentStock.contains(st)) {
 					// so know have no stock that matches it so can just simply,
 
@@ -1753,6 +1774,7 @@ public boolean wasLoggedInAccountEditted(String username) {
 				} else {
 					ArrayList<CurrentStock> allCSThatMatchOneGot = new ArrayList<>();
 					// so know there is a match for the name.
+					
 					while (counter3 != currentStock.size()) {
 						CurrentStock cs = currentStock.get(counter3);
 
@@ -1787,17 +1809,19 @@ public boolean wasLoggedInAccountEditted(String username) {
 								// so if have the stock in as it needed quantity,
 								// is less than what got in, can just for get about it.
 								// do need to decrease it from the list so it not effecting the future stuff.
-								stfl.setQuanity(stflDouble - stDouble + "");
+								stfl.setQuanity((stflDouble - stDouble) + "");
 								// so is now holding one with less stock
 								currentStock.set(indexTracker.get(counter4), stfl);
 								// as filled it so don't need to keep going.
 								addToShoppingList = false;
 								break;
 							} else if (stDouble.equals(stflDouble)) {
-
+								stfl.setQuanity("0");
+								// so is now holding one with less stock
+								currentStock.set(indexTracker.get(counter4), stfl);
 								// as have all the stock can can forget about it but need
 								// to edit current stock so future stock not effected
-								currentStock.remove(stfl);
+								//currentStock.remove(stfl);
 								// currentStock.remove(indexTracker.get(counter4));
 								addToShoppingList = false;
 								break;
@@ -1805,11 +1829,20 @@ public boolean wasLoggedInAccountEditted(String username) {
 
 								// the stock isn't enough to remove it all so both need to be decreased.
 								// order of operations so don't need brackets
-
+								
+								
+								st.setQuanity((stDouble - stflDouble) + "");
+								stfl.setQuanity("0");
+								// so is now holding one with less stock
+								currentStock.set(indexTracker.get(counter4), stfl);
+								addToShoppingList = true;
+								/*
 								st.setQuanity(stDouble - stflDouble + "");
+								
 								// as not enough to remove it so implies self is smaller so would be removed
 								currentStock.remove(stfl);
 								addToShoppingList = true;
+								*/
 							}
 
 							// st.setQuanity(""+(Double.parseDouble(st.getQuanity())-Double.parseDouble(stfl.getQuanity())));
@@ -1839,9 +1872,11 @@ public boolean wasLoggedInAccountEditted(String username) {
 
 				shoppingListNoDuplicates.forEach((StockType i) -> {
 					// so if the one that equals it, it does this
-					if (i.equals(stfl)) {
-
+					
+					if (i.getName().equals(stfl.getName())) {
+						
 						i.setQuanity((Double.parseDouble(i.getQuanity()) + Double.parseDouble(stfl.getQuanity())) + "");
+					
 					}
 				});
 
@@ -1855,6 +1890,7 @@ public boolean wasLoggedInAccountEditted(String username) {
 
 		// convert it all to a string to be outputed
 		shoppingListNoDuplicates.forEach((StockType i) -> {
+			
 			output.add(i);
 
 		});
@@ -1870,27 +1906,23 @@ public boolean wasLoggedInAccountEditted(String username) {
 	 * @return String = how much the budget is left after the shopping list cost
 	 *         have been removed, as a String to two decimal places
 	 */
+	
 	public String getBudgetSizeMinusTheShoppingList() {
-
+		
 		Double BudgetAmount = selectedMenu.getBudget().getAmount();
 		Double totalCost = 0.00;
 
-		ArrayList<String> valueHold = new ArrayList<>();
-		getSelectedMenuStockType().forEach((StockType i) -> {
-			valueHold.add(i.toStringDishDetails());
-		});
-
+	
 		// sli = shopping list items
-		ObservableList<String> sli = FXCollections.observableArrayList(valueHold);
+		
 
 		// slis =shopping list items string
 
-		for (String slis : sli) {
+		for (StockType st : getSelectedMenuStockType()) {
 
-			String quantity = slis.substring(slis.indexOf("quanity") + 9);
-			String cost = slis.substring(slis.indexOf("cost") + 7, slis.indexOf("quantity") - 2);
+			
 
-			totalCost = totalCost + (Double.parseDouble(quantity) * Double.parseDouble(cost));
+			totalCost = (totalCost + (Double.parseDouble(st.getQuanity()) *  Double.parseDouble(st.getCost())));
 
 		}
 
@@ -2233,8 +2265,9 @@ public boolean wasLoggedInAccountEditted(String username) {
 
 		master.forEach((Menu i) -> {
 
+			if(!output.contains(i)) {
 			output.add(i);
-
+			}
 		});
 
 		return FXCollections.observableArrayList(output);
@@ -2283,8 +2316,11 @@ public boolean wasLoggedInAccountEditted(String username) {
 		// so can still use own name
 
 		while (currentMenus.size() != count) {
+			
 			if (currentMenus.get(count).getName().equals(name)) {
-				if (selectedMenu.equals(null) || !selectedMenu.getName().equals(name)) {
+				
+				if (selectedMenu == null || !selectedMenu.getName().equals(name)) {
+				
 					output = true;
 				}
 			}
@@ -2331,20 +2367,9 @@ public boolean wasLoggedInAccountEditted(String username) {
 
 		while (counter != st.size()) {
 
-			String value = st.get(counter).toString();
+			
 
-			int equals1 = value.indexOf("=");
-			int equals2 = value.indexOf("=", equals1 + 1);
-			int equals3 = value.indexOf("=", equals2 + 1);
-
-			// so know where they end
-			int comma1 = value.indexOf(",");
-			int comma2 = value.indexOf(",", comma1 + 1);
-			String name = value.substring(equals1 + 2, comma1);
-			String quanity = value.substring(equals2 + 2, comma2);
-			String quanityType = value.substring(equals3 + 2);
-
-			db.saveDishStockConnection(name, selectedDish.getDishName(), quanity, quanityType);
+			db.saveDishStockConnection(st.get(counter).getName(), selectedDish.getDishName(),st.get(counter).getQuanity(),st.get(counter).getQuanityType());
 			counter = counter + 1;
 			// so is shown as soon goes back
 
@@ -2407,21 +2432,8 @@ public boolean wasLoggedInAccountEditted(String username) {
 
 		while (counter != st.size()) {
 
-			String value = st.get(counter).toString();
 
-			int equals1 = value.indexOf("=");
-			int equals2 = value.indexOf("=", equals1 + 1);
-			int equals3 = value.indexOf("=", equals2 + 1);
-
-			// so know where they end
-			int comma1 = value.indexOf(",");
-			int comma2 = value.indexOf(",", comma1 + 1);
-
-			String name = value.substring(equals1 + 2, comma1);
-			String quanity = value.substring(equals2 + 2, comma2);
-			String quanityType = value.substring(equals3 + 2);
-
-			db.saveDishStockConnection(name, selectedDish.getDishName(), quanity, quanityType);
+			db.saveDishStockConnection(st.get(counter).getName(), selectedDish.getDishName(), st.get(counter).getQuanity(), st.get(counter).getQuanityType());
 
 			counter = counter + 1;
 			// so is shown as soon goes back

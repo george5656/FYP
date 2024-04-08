@@ -22,12 +22,12 @@ import javafx.scene.text.Font;
 public class StockFilter extends BasicLayoutFilter {
 	private Label txtStorageLocation = new Label("Storage Location");
 	private Label txtStockType = new Label("Stock Type");
-	private Label txtMinQuanity = new Label("Have More Quantity Than");
-	private Label txtMaxQuanity = new Label("Have Less Quantity Than");
+	private Label txtMinQuanity = new Label("Have Equal To Or More Quantity Than");
+	private Label txtMaxQuanity = new Label("Have Eqaul To Or Less Quantity Than");
 	private Label txtExpiereAfterDate = new Label("Expires After");
 	private Label txtExpiereBeforeDate = new Label("Expires Before");
-	private Label txtAboveCost = new Label("Cost More Than");
-	private Label txtBelowCost = new Label("Cost Less Than");
+	private Label txtAboveCost = new Label("Cost Equal To Or More Than");
+	private Label txtBelowCost = new Label("Cost Equal To Or Less Than");
 	private TextField tfMinQuanity = new TextField();
 	private TextField tfMaxQuanity = new TextField();
 	private TextField tfAboveCost = new TextField();

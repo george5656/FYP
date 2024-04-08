@@ -216,4 +216,25 @@ public class InputValidation {
 		
 		return errorMessage;
 	}
+	/**
+	 * extension to dateValidationPresentIsOptional
+	 * 
+	 * The extstion checks that the input and the valuePresent are the same value.
+	 * @param input        = String = from datePicker textField
+	 * @param valuePresent = localDate = from datePicker
+	 * @return String that says the error or just "" if no error
+	 */
+	public String dateValidationPresentIsOptionalExtension(String input, LocalDate valuePresent) {
+		errorMessage = "";
+		if (!input.equals("") && valuePresent == null) {
+			errorMessage = "no data found, if some does exists try selecting it and preesing enter";
+		}
+		if(!input.equals(valuePresent.toString())) {
+			errorMessage= "text and selected value very, make sure they match.";
+		}
+		
+		
+		
+		return errorMessage;
+	}
 }

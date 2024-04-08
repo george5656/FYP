@@ -32,8 +32,11 @@ public class Dish {
 	 */
 	@Override
 	public String toString() {
+		
 		return "dish name = " + dishName;
 	}
+
+
 
 	/**
 	 * adds a stockType object to the held arrayList<StockType>.
