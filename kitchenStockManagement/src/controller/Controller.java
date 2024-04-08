@@ -1504,9 +1504,9 @@ public class Controller {
 			// test for date to see if the userforgot to hit entere,
 			// one part test if the user input any info, part two is testing if that input
 			// got registeres
-			String expiresAfterErrorMessage = model.dateValidationPresentIsOptionalPluusCheckSame(
+			String expiresAfterErrorMessage = model.dateValidationPresentIsOptionalPlusCheckSame(
 					view.getStockFilterDpAfterDateText(), view.getStockFilterDpAfterDateValuePresent());
-			String expiresBeforeErrorMessage = model.dateValidationPresentIsOptionalPluusCheckSame(
+			String expiresBeforeErrorMessage = model.dateValidationPresentIsOptionalPlusCheckSame(
 					view.getStockFilterDpBeforeDateText(), view.getStockFilterDpBeforeDateValuePresent());
 
 			String costMoreErrorMessage = model.doublePresentIsOptionalValidation(view.getStockFilterAboveCost());
@@ -1630,13 +1630,13 @@ public class Controller {
 					.doublePresentIsOptionalValidation(view.getBudgetFilterNoBudgetLessThan());
 			String budgetMoreErrorMessage = model
 					.doublePresentIsOptionalValidation(view.getBudgetFilterNoBudgetMoreThan());
-			String startsBeforeErrorMessage = model.dateValidationPresentIsOptionalPluusCheckSame(
+			String startsBeforeErrorMessage = model.dateValidationPresentIsOptionalPlusCheckSame(
 					view.getBudgetFilterStartsBeforeDateText(), view.getBudgetFilterStartsBeforeValuePresent());
-			String startsAfterErrorMessage = model.dateValidationPresentIsOptionalPluusCheckSame(
+			String startsAfterErrorMessage = model.dateValidationPresentIsOptionalPlusCheckSame(
 					view.getBudgetFilterStartsAfterDateText(), view.getBudgetFilterStartsAfterValuePresent());
-			String endsBeforeErrorMessage = model.dateValidationPresentIsOptionalPluusCheckSame(
+			String endsBeforeErrorMessage = model.dateValidationPresentIsOptionalPlusCheckSame(
 					view.getBudgetFilterEndsBeforeDateText(), view.getBudgetFilterEndsBeforeValuePresent());
-			String endsAfterErrorMessage = model.dateValidationPresentIsOptionalPluusCheckSame(
+			String endsAfterErrorMessage = model.dateValidationPresentIsOptionalPlusCheckSame(
 					view.getBudgetFilterEndsAfterDateText(), view.getBudgetFilterEndsAfterValuePresent());
 
 			if (!budgetLessErrorMessage.equals("")) {
