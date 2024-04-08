@@ -2864,6 +2864,17 @@ public void setDeleteConfrimationPageText(String message) {
 	 * and add self in place so is visible
 	 */
 	public void dishDetailsLoad() {
+		dishDetailsLoadNoTitleChange();
+		
+
+		ddp.setDishNameLabel("No dish name");
+
+	}
+	/**
+	 *	 * loads the dish details page. it removes any children from the root view VBox,
+	 * and add self in place so is visible but diesnt effect the title
+	 */
+	public void dishDetailsLoadNoTitleChange() {
 
 		ddp.clearTableColumn();
 
@@ -2877,7 +2888,6 @@ public void setDeleteConfrimationPageText(String message) {
 		quantityType.setCellValueFactory(new PropertyValueFactory<StockType, String>("quanityType"));
 		quanity.setCellValueFactory(new PropertyValueFactory<StockType, String>("quanity"));
 
-		ddp.setDishNameLabel("No dish name");
 
 		ArrayList<TableColumn<StockType, String>> tableColumns = new ArrayList<>();
 		tableColumns.add(name);
@@ -2892,7 +2902,6 @@ public void setDeleteConfrimationPageText(String message) {
 		ddp.hideErrorMessage();
 		VBox.setVgrow(ddp, Priority.ALWAYS);
 	}
-
 	/**
 	 * set the text of the label in the dish details page and make it visible
 	 * 
