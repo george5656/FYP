@@ -38,7 +38,7 @@ public class AccountFilter extends BasicLayoutFilter {
 		toggleGroupLayout.getChildren().addAll(rbYes, rbNo);
 		HBox.setHgrow(rbYes, Priority.ALWAYS);
 		HBox.setHgrow(rbNo, Priority.ALWAYS);
-
+		
 		labels.getChildren().add(txtIsAdmin);
 		userTextInput.getChildren().add(toggleGroupLayout);
 

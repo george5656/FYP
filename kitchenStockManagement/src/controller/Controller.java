@@ -494,7 +494,7 @@ public class Controller {
 						|| model.getSelectedAccountUsername().equals(model.getLogedInAccountId()))) {
 					// this is the final check, making sure the last admin cant just delete there
 					// account
-					if (model.doesTheDatabaseHaveMoreThanOneAdminLeft()) {
+					if (model.doesTheDatabaseHaveMoreThanOneAdminLeft() || model.getSelectedAccountAdminStatus().equals(false) ) {
 						
 						view.setDeleteConfirmationPage(model.getSelectedAccountUsername() );
 						
@@ -1081,6 +1081,7 @@ public class Controller {
 	 * @author Student
 	 *
 	 */
+	
 	private class EHStockDetailsBtnSave implements EventHandler<ActionEvent> {
 
 		@Override
@@ -1097,7 +1098,7 @@ public class Controller {
 			String nameErrorMessage = model.stringMustBePresetValidation(view.getStockDetailsStockName());
 			String quanityErrorMessage = model.doubleMustBePresetValidation(view.getStockDetailsQuantity());
 			String quanityTypeErrorMessage = model.stringMustBePresetValidation(view.getStockDetailsQuanitType());
-			String expiereDateErrorMessage = model.dateValidation(view.getStockDetailsDateText(),
+			String expiereDateErrorMessage = model.dateValidationPlusCheckSame(view.getStockDetailsDateText(),
 					view.getStockDetailsDateValueAsLocalDate());
 
 			String costErrorMessage = model.doubleMustBePresetValidation(view.getStockDetailsCost());
@@ -1503,9 +1504,9 @@ public class Controller {
 			// test for date to see if the userforgot to hit entere,
 			// one part test if the user input any info, part two is testing if that input
 			// got registeres
-			String expiresAfterErrorMessage = model.dateValidationPresentIsOptional(
+			String expiresAfterErrorMessage = model.dateValidationPresentIsOptionalPlusCheckSame(
 					view.getStockFilterDpAfterDateText(), view.getStockFilterDpAfterDateValuePresent());
-			String expiresBeforeErrorMessage = model.dateValidationPresentIsOptional(
+			String expiresBeforeErrorMessage = model.dateValidationPresentIsOptionalPlusCheckSame(
 					view.getStockFilterDpBeforeDateText(), view.getStockFilterDpBeforeDateValuePresent());
 
 			String costMoreErrorMessage = model.doublePresentIsOptionalValidation(view.getStockFilterAboveCost());
@@ -1584,7 +1585,7 @@ public class Controller {
 				}
 				if (!view.getStockFilterBelowCost().equals("")) {
 					whereClause = whereClause + "tbl_stock_type.cost <= \""
-							+ view.getStockFilterAboveCost() + "\" And ";
+							+ view.getStockFilterBelowCost() + "\" And ";
 
 				}
 				// so doesn't run and crash if none put in, and also remove that \"and\" have at
@@ -1629,13 +1630,13 @@ public class Controller {
 					.doublePresentIsOptionalValidation(view.getBudgetFilterNoBudgetLessThan());
 			String budgetMoreErrorMessage = model
 					.doublePresentIsOptionalValidation(view.getBudgetFilterNoBudgetMoreThan());
-			String startsBeforeErrorMessage = model.dateValidationPresentIsOptional(
+			String startsBeforeErrorMessage = model.dateValidationPresentIsOptionalPlusCheckSame(
 					view.getBudgetFilterStartsBeforeDateText(), view.getBudgetFilterStartsBeforeValuePresent());
-			String startsAfterErrorMessage = model.dateValidationPresentIsOptional(
+			String startsAfterErrorMessage = model.dateValidationPresentIsOptionalPlusCheckSame(
 					view.getBudgetFilterStartsAfterDateText(), view.getBudgetFilterStartsAfterValuePresent());
-			String endsBeforeErrorMessage = model.dateValidationPresentIsOptional(
+			String endsBeforeErrorMessage = model.dateValidationPresentIsOptionalPlusCheckSame(
 					view.getBudgetFilterEndsBeforeDateText(), view.getBudgetFilterEndsBeforeValuePresent());
-			String endsAfterErrorMessage = model.dateValidationPresentIsOptional(
+			String endsAfterErrorMessage = model.dateValidationPresentIsOptionalPlusCheckSame(
 					view.getBudgetFilterEndsAfterDateText(), view.getBudgetFilterEndsAfterValuePresent());
 
 			if (!budgetLessErrorMessage.equals("")) {
@@ -1854,9 +1855,9 @@ public class Controller {
 			String amountErrorMessage = model
 					.doubleMustBePresetValidation(view.getBudgetDetailsInputtedAmount().toString());
 
-			String startDateErrorMessage = model.dateValidation(view.getBudgetDetailsInputtedStartDate(),
+			String startDateErrorMessage = model.dateValidationPlusCheckSame(view.getBudgetDetailsInputtedStartDate(),
 					view.getBudgetDetailsInputtedStartDateAsLocalDate());
-			String endDateErrorMessage = model.dateValidation(view.getBudgetDetailsInputtedEndDate(),
+			String endDateErrorMessage = model.dateValidationPlusCheckSame(view.getBudgetDetailsInputtedEndDate(),
 					view.getBudgetDetailsInputtedEndDateAsLocalDate());
 
 			if (!nameErrorMessage.equals("")) {
@@ -1984,8 +1985,28 @@ public class Controller {
 
 				} else {
 
+					if(model.wasLoggedInAccountEditted(view.getAccountDetailsUserName())) {
+					if (!model.doesTheDatabaseHaveMoreThanOneAdminLeft()) {
+						model.makeAlert("admin issue", "last admin cant remove admin status").show();
+						return;
+					}
+					}
+					
 					model.updateAccount(view.getAccountDetailsUserName(),
 							model.hash(view.getAccountDetailsUserPassword()), adminStatus);
+					
+					if(model.wasLoggedInAccountEditted(view.getAccountDetailsUserName())) {
+						model.setLogedInAccount(view.getAccountDetailsUserName());
+						model.checkAdminStatusInDb(view.getAccountDetailsUserName());
+
+						view.homePageMenuLoad(model.getLoggedInAccountAdminStatus());
+						
+					}
+					
+					
+					
+					
+					
 				}
 				loadAccountListPage();
 			} else {
@@ -2158,6 +2179,7 @@ public class Controller {
 	 * @author Student
 	 *
 	 */
+	
 	private class EHStockDetailsBtnLoadFromFile implements EventHandler<ActionEvent> {
 
 		@Override
@@ -2420,7 +2442,7 @@ public class Controller {
 			}
 			if (masterIssue.equals("")) {
 
-				// done a head so can get the equal sign so know that all values are jus two
+				// done a head so can get the equal sign so know that all values are just two
 				// place behind them
 
 				view.setDishDetailsUserInput(view.getDishDetailsSelectedItem().getName(),
@@ -2597,25 +2619,27 @@ public class Controller {
 		public void handle(ActionEvent event) {
 			String issueFrom = "";
 			String masterError = "";
-
 			String nameErrorMessage = model.stringMustBePresetValidation(view.getMenuSettingName());
-
+		
 			if (!nameErrorMessage.equals("")) {
+			
 				issueFrom = "name";
 				masterError = nameErrorMessage;
 			} else if (view.getMenuSettingBudgetIndex() == -1) {
+				
 				issueFrom = "budget";
 				masterError = "no budget selected";
 			} else if (model.doesMenuNameAlreadyExist(view.getMenuSettingName())) {
+				
 				issueFrom = "name";
 				masterError = "name already taken";
 
 			}
 
 			if (masterError.equals("")) {
-
+				
 				view.resetMenuDetailsPage();
-
+		
 				view.setMenuDetailsDishList(model.getAllDishes());
 
 				// needs both as makes a menu object
@@ -2669,13 +2693,18 @@ public class Controller {
 				// if no errors does this part
 
 				model.addDishToSelectedMenu(view.getMenuDetailsDishListSelectedItemValueIdOnly());
+				
 				view.setMenuDetailsMenuListItems(model.getSelectedMenuDishes());
+			
 				model.resetMenuDetailList();
+				
 				view.setMenuDetailsDishList(model.getNotSelectedDishesAsString());
+				
 				view.setMenuDetailsShoppingList(model.getSelectedMenuStockType());
+				
 				// +"" is simply to convert it to a string
 				view.setMenuDetailsBudgetValue(model.getBudgetSizeMinusTheShoppingList() + "");
-
+				
 			} else {
 
 				// so they have to give it a name, the selected menu is made in the seating save
@@ -2909,7 +2938,7 @@ public class Controller {
 						|| !cmtInput.equals("null")) {
 					// actaully runs it and get results
 
-					view.setMenuDetailsDishList(model.getDishFilterResults(niaInput, nibInput, cltInput, cmtInput));
+					view.setMenuDetailsDishList(model.getDishFilterResults(nibInput, niaInput, cltInput, cmtInput));
 				} else {
 					// just bascially removes any filters if none have been applied.
 					if (model.getSelectedMenu() == null) {
@@ -3012,11 +3041,11 @@ public class Controller {
 
 					if (view.getMenuDetailsMenuListSize() != 0) {
 
-						pw.write("shopping list for\nmenu name = " + model.getSelectedMenu().getName() + "\n");
+						pw.write("shopping list for = " + model.getSelectedMenu().getName() + "\n");
 
 						model.getSelectedMenuStockType().forEach((StockType i) -> {
 
-							pw.print(i + "\n");
+							pw.print(i.toStringDishDetails() + "\n");
 
 						});
 						// need else it wont write it

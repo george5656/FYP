@@ -127,6 +127,7 @@ public class StockType {
 	 */
 	@Override
 	public String toString() {
+		
 		return "name = " + name + ", cost = " + cost + ", quantityType = " + quanityType;
 	}
 

@@ -2012,7 +2012,6 @@ public void setDeleteConfrimationPageText(String message) {
 	 * 
 	 * @return LocalDate that the datePicker has
 	 */
-
 	public LocalDate getBudgetDetailsInputtedEndDateAsLocalDate() {
 		return bdp.getEndDate().getValue();
 	}
