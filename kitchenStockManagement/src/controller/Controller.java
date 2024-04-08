@@ -1340,8 +1340,7 @@ public class Controller {
 				model.selectedDishIngrednitnRemove(view.getDishDetailsSelectedItem());
 				view.setDishDetailsList(model.getSelectedDishList(), model.getSelctedDishDishName());
 				view.setDishDetailsErrorMessageFalse();
-
-				view.dishDetailsLoad();
+				view.dishDetailsLoadNoTitleChange();
 
 			} else if (model.getDeleteFrom().equals("ChefRecommedation")) {
 				model.deleteARecommedation(view.getChefRecommedationSelectedItem().getId() + "");
@@ -1380,7 +1379,7 @@ public class Controller {
 			} else if (model.getDeleteFrom().equals("MenuList")) {
 				view.menuListLoad(model.getAllMenus());
 			} else if (model.getDeleteFrom().equals("dishDetails")) {
-				view.dishDetailsLoad();
+				view.dishDetailsLoadNoTitleChange();
 			} else if (model.getDeleteFrom().equals("ChefRecommedation")) {
 				view.chefRecommedationLoad(model.getAllRecommedation());
 
@@ -2853,9 +2852,11 @@ public class Controller {
 				} else {
 					view.setMenuDetailsDishList(model.updateDishDetails());
 				}
-
+			
 				// seperate as doesnt mess with the list so only need one
 				view.MenuDetailsRestFindInput();
+				view.setMenuDetailsShoppingList(model.getSelectedMenuStockType());
+				view.setMenuDetailsBudgetValue(model.getBudgetSizeMinusTheShoppingList() + "");
 				view.MenuDetailsLoad();
 				view.clearMenuDetailsListSelection();
 				model.setSelectedDish(null);
