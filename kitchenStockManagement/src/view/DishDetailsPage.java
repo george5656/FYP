@@ -37,7 +37,7 @@ public class DishDetailsPage extends PaneMenu {
 	private Label txtErrorMessage = new Label("Error");
 	private Label txtDishName = new Label("Dish Name");
 	private Label txtIngredientName = new Label("Ingredient Name");
-	private Label txtQuantity = new Label("Qantity");
+	private Label txtQuantity = new Label("Quantity");
 	private Label txtUnit = new Label("Unit");
 	private Label txtEstimatedCost = new Label("Cost Per Unit In Pounds");
 	private TableView<StockType> tvIngredients = new TableView<>();

@@ -54,7 +54,7 @@ public class Controller {
 		view.setHomeBtnChefRecommedationtEventHandler(new EHChefRecommedationLoadFromHomePage());
 		view.setHomeBtnAdminRecommedationEventHandler(new EHAdminRecommidationLoadFromHomePage());
 		view.setHomeBtnAboutEventHandler((ActionEvent event) -> {
-			model.makeInfoAlert("this is the main navigation page, click a button to go somewhere").show();
+			model.makeInfoAlert("This is the main navigation page, click a button to go somewhere").show();
 		});
 
 		// stockList page
@@ -64,7 +64,7 @@ public class Controller {
 		view.setStockListBtnFindEventHandler(new EHStockListBtnFind());
 		view.setStockListBtnEditEventHandler(new EHStockListBtnEdit());
 		view.setStockListBtnAboutEventHandler((ActionEvent event) -> {
-			model.makeInfoAlert("this page displays all the current stock. it "
+			model.makeInfoAlert("This page displays all the current stock. it "
 					+ "also is used to navigate to pages that manipulate the stock").show();
 		});
 
@@ -73,15 +73,15 @@ public class Controller {
 		view.setStockDetailsBtnCancelEventHandler(new EHStockListLaod());
 		view.setStockDetailsBtnLoadFromFileEventHandler(new EHStockDetailsBtnLoadFromFile());
 		view.setStockDetailsBtnAboutEventHandler((ActionEvent event) -> {
-			model.makeInfoAlert("this page is where you can add or"
-					+ " update a stock depeding on the button picked in the previous page").show();
+			model.makeInfoAlert("This page is where you can add or"
+					+ " update a stock depending on the button picked in the previous page").show();
 		});
 
 		// page to filter the stock seen in stock list page
 		view.setStockFilterBtnApply(new EHStockFilterBtnApply());
 		view.setStockFilterBtnCancel(new EHStockListLaod());
 		view.setStockFilterBtnAbout((ActionEvent event) -> {
-			model.makeInfoAlert("pick the filter to be applied to the list on the page just left").show();
+			model.makeInfoAlert("Pick the filter to be applied to the list on the page just left").show();
 		});
 
 		// menuList page
@@ -91,7 +91,7 @@ public class Controller {
 		view.setMenuListBtnDeleteEventHandler(new EHMenuListBtnDelete());
 		view.setMenuListBtnEditEventHandler(new EHMenuListBtnEdit());
 		view.setMenuListBtnAboutEventHandler((ActionEvent event) -> {
-			model.makeInfoAlert("this page displays all the current menus. it "
+			model.makeInfoAlert("This page displays all the current menus. It "
 					+ "also is used to navigate to pages that manipulate the menus").show();
 		});
 
@@ -108,22 +108,22 @@ public class Controller {
 		view.setMenuDetailsBtnEditEventHandler(new EHMenuDetailsBtnEdit());
 		view.setMenuDetailsBtnLoadFromFileChooserEventHandler(new EHMenuDetailsBtnLoadFromFileChooser());
 		view.setMenuDetailsBtnAboutEventHandler((ActionEvent event) -> {
-			model.makeInfoAlert("this page shows all the dish, is used to make or edit a menu "
-					+ "and is used to navaget to the dishes manipulation").show();
+			model.makeInfoAlert("This page shows all the dishes, it is used to make or edit a menu "
+					+ "and is used to navaget to the dishes options").show();
 		});
 
 		// page to set the menu budget and name
 		view.setMenuSettingBtnSaveEventHandler(new EHMenuSettingBtnSave());
 		view.setMenuSettingBtnCancelEventHandler(new EHMenuDetailsLoad());
 		view.setMenuSettingBtnAboutEventHandler((ActionEvent event) -> {
-			model.makeInfoAlert("this page is used to set the menu name and the budget the menu uses").show();
+			model.makeInfoAlert("This page is used to set the menu name and the budget the menu uses").show();
 		});
 
 		// page to filter menus on the menu list page
 		view.setMenufilterBtnSaveEventHandler(new EHMenuFilterBtnSave());
 		view.setMenufilterBtnCancelEventHandler(new EHMenuListLoad());
 		view.setMenufilterBtnAboutEventHandler((ActionEvent event) -> {
-			model.makeInfoAlert("pick the filter to be applied to the list on the page just left").show();
+			model.makeInfoAlert("Pick the filter to be applied to the list on the page just left").show();
 		});
 
 		// page to list the budgets
@@ -133,15 +133,15 @@ public class Controller {
 		view.setBudgetListBtnDeleteEventHandler(new EHBudgteListBtnDelete());
 		view.setBudgetListBtnEditEventHandler(new EHBudgetBtnEdit());
 		view.setBudgetListBtnAboutEventHandler((ActionEvent event) -> {
-			model.makeInfoAlert("this page displays all the current budgets. it "
-					+ "also is used to navigate to pages that manipulate the budgets").show();
+			model.makeInfoAlert("This page displays all the current budgets. It is "
+					+ "also used to navigate to pages that manipulate the budgets").show();
 		});
 
 		// page to create or edit a budget
 		view.setBudgetDetailsBtnSaveEventHandler(new EHBudgetDetailsBtnSave());
 		view.setBudgetDetailsBtnCancelEventHandler(new EHBudgetListLoad());
 		view.setBudgetDetailsBtnAboutEventHandler((ActionEvent event) -> {
-			model.makeInfoAlert("this page is where you can add or"
+			model.makeInfoAlert("This page is where you can add or"
 					+ " update a budget depeding on the button picked in the previous page").show();
 		});
 
@@ -149,7 +149,7 @@ public class Controller {
 		view.setBudgetFilterBtnSaveEventHandler(new EHBudgetFilterBtnApply());
 		view.setBudgetFilterBtnCancelEventHandler(new EHBudgetListLoad());
 		view.setBudgetFilterBtnAboutEventHandler((ActionEvent event) -> {
-			model.makeInfoAlert("pick the filter to be applied to the list on the page just left").show();
+			model.makeInfoAlert("Pick the filter to be applied to the list on the page just left").show();
 		});
 
 		// page list all the storage locations
@@ -159,7 +159,7 @@ public class Controller {
 		view.setStorgaeLocationListBtnDeleteEventHandler(new EHStorageListBtnDelete());
 		view.setStorgaeLocationListBtnEditEventHandler(new EHStorageListBtnEdit());
 		view.setStorgaeLocationListBtnAboutEventHandler((ActionEvent event) -> {
-			model.makeInfoAlert("this page displays all the current storage locations. it "
+			model.makeInfoAlert("This page displays all the current storage locations. It "
 					+ "also is used to navigate to pages that manipulate the storage locations").show();
 		});
 
@@ -167,15 +167,15 @@ public class Controller {
 		view.setStorageFilterBtnApplyEventHandler(new EHStorageFilterBtnApply());
 		view.setStorageFilterBtnCancelEventHandler(new EHStorageListLoad());
 		view.setStorageFilterBtnAboutEventHandler((ActionEvent event) -> {
-			model.makeInfoAlert("pick the filter to be applied to the list on the page just left").show();
+			model.makeInfoAlert("Pick the filter to be applied to the list on the page just left").show();
 		});
 
 		// page to add or edit a stoarge locations details
 		view.setStorageDetailsBtnSaveEventHandler(new EHStorageDetailsBtnSave());
 		view.setStorageDetailsBtnCancelEventHandler(new EHStorageListLoad());
 		view.setStorageDetailsBtnAbooutEventHandler((ActionEvent event) -> {
-			model.makeInfoAlert("this page is where you can add or"
-					+ " update a Storage location depeding on the button picked in the previous page").show();
+			model.makeInfoAlert("This page is where you can add or"
+					+ " update a Storage location depending on the button picked in the previous page").show();
 		});
 
 		// page to list all the accounts
@@ -185,7 +185,7 @@ public class Controller {
 		view.setAccountListBtnDeleteEventHandler(new EHAccountListBtnDelete());
 		view.setAccountListBtnEditEventHandler(new EHAccountListBtnEdit());
 		view.setAccountListBtnAboutEventHandler((ActionEvent event) -> {
-			model.makeInfoAlert("this page displays all the current accounts. it "
+			model.makeInfoAlert("This page displays all the current accounts. It "
 					+ "also is used to navigate to pages that manipulate the accounts").show();
 		});
 
@@ -193,22 +193,22 @@ public class Controller {
 		view.setAccountDetailsBtnSaveEventHandler(new EHAccountDetailsBtnSave());
 		view.setAccountDetailsBtnCancelEventHandler(new EHAccountListLoad());
 		view.setAccountDetailsBtnAboutEventHandler((ActionEvent event) -> {
-			model.makeInfoAlert("this page is where you can add or"
-					+ " update a account depeding on the button picked in the previous page").show();
+			model.makeInfoAlert("This page is where you can add or"
+					+ " update a account depending on the button picked in the previous page").show();
 		});
 
 		// page to filter all the accounts listed
 		view.setAccountFilterBtnApplyEventHandler(new EHAccountFilterBtnApply());
 		view.setAccountFilterBtnCancelEventHandler(new EHAccountListLoad());
 		view.setAccountFilterBtnAboutEventHandler((ActionEvent event) -> {
-			model.makeInfoAlert("pick the filter to be applied to the list on the page just left").show();
+			model.makeInfoAlert("Pick the filter to be applied to the list on the page just left").show();
 		});
 
 		// page to delete data
 		view.setDeleteConfirmationBtnConfirmEventHandler(new EHDeleteBtnConfirm());
 		view.setDeleteConfirmationBtnCancelEventHandler(new EHDeleteBtnCancel());
 		view.setDeleteConfirmationBtnAboutEventHandler((ActionEvent event) -> {
-			model.makeInfoAlert("select if you want the shown item to be delted").show();
+			model.makeInfoAlert("Select if you want the shown item to be deleted").show();
 		});
 
 		// set the funcanality for the menu bar
@@ -229,7 +229,7 @@ public class Controller {
 		view.setDishFilterBtnApplyEventHandler(new EHDishFilterBtnApply());
 		view.setDishFilterBtnCancelEventHandler(new EHMenuDetailsLoad());
 		view.setDishFilterBtnAboutEventHandler((ActionEvent event) -> {
-			model.makeInfoAlert("pick the filter to be applied to the list on the page just left").show();
+			model.makeInfoAlert("Pick the filter to be applied to the list on the page just left").show();
 		});
 
 		// page for outtpung the list in the menu details page
@@ -239,24 +239,24 @@ public class Controller {
 		view.setOutputBtnBackToMenuDetailsEventHandler(new EHMenuDetailsLoad());
 		view.setOutputBtnBackToMenuListEventHandler(new EHMenuListLoad());
 		view.setOutputBtnAboutEventHandler((ActionEvent event) -> {
-			model.makeInfoAlert("pick if you would like to save to the database or to a text document").show();
+			model.makeInfoAlert("Pick if you would like to save to the database or to a text file").show();
 		});
 
 		view.setAdminRecommedationBtnCancel(new EHHomeLoad());
 		view.setAdminRecommedationBtnSave(new EHAdminRecommidationSave());
 		view.setAdminRecommedationBtnAboutEventHandler((ActionEvent event) -> {
-			model.makeInfoAlert("write a message to be sent to the chefs").show();
+			model.makeInfoAlert("Write a message to be sent to the chefs").show();
 		});
 
 		view.setAlertBtnBack(new EHHomeLoad());
 		view.setAlertBtnAboutEventHandler((ActionEvent event) -> {
-			model.makeInfoAlert("show all the stock that is need so that every menu can be done").show();
+			model.makeInfoAlert("Show all the stock that is needed so that every menu can be done").show();
 		});
 
 		view.setChefRecommedaitonBtnBackEventHandler(new EHHomeLoad());
 		view.setChefRecommedaitonBtnDeleteEventHandler(new EHChefRecommedationBtnDelete());
 		view.setChefRecommedationBtnAboutEventHandler((ActionEvent event) -> {
-			model.makeInfoAlert("shows all the recommendations made by admin").show();
+			model.makeInfoAlert("Shows all the recommendations made by the admin").show();
 		});
 	}
 
@@ -309,7 +309,7 @@ public class Controller {
 
 				if (!model.passwordAndUsernameAreValid(view.getLoginUserUsernameInput(),
 						model.hash(view.getLoginUserPasswordInput()))) {
-					alert = model.makeAlert("input issue", "user name and password didn't match");
+					alert = model.makeAlert("Input issue", "User name and password didn't match");
 					alert.show();
 				} else {
 					model.checkAdminStatusInDb(view.getLoginUserUsernameInput());
@@ -401,7 +401,7 @@ public class Controller {
 			view.setMenuDetailsDishList(model.getAllDishes());
 			model.resetSelectedMenu();
 			view.resetMenuDetailsPage();
-			view.setMenuDetailsBudgetValue("not selected");
+			view.setMenuDetailsBudgetValue("Not Selected");
 			view.MenuDetailsLoad();
 		}
 
@@ -430,7 +430,7 @@ public class Controller {
 				model.setDeleteFrom("StockList");
 				view.deleteConfirmationLoad();
 			} else {
-				view.setStockListError("No data selected");
+				view.setStockListError("No Data Selected");
 
 			}
 		}
@@ -464,7 +464,7 @@ public class Controller {
 
 			} else {
 
-				view.setBudgetListErrorMessage("No data selected");
+				view.setBudgetListErrorMessage("No Data Selected");
 
 			}
 		}
@@ -505,7 +505,7 @@ public class Controller {
 					}
 
 				} else {
-					view.setAccountListError("must be that admin to delete that account");
+					view.setAccountListError("Must be that admin to delete that account");
 				}
 			} else {
 				view.setAccountListError("No data selected");
@@ -538,7 +538,7 @@ public class Controller {
 				model.setDeleteFrom("Storage");
 				view.deleteConfirmationLoad();
 			} else {
-				view.setStorageListErrorMessage("No data selected");
+				view.setStorageListErrorMessage("No Data Selected");
 
 			}
 		}
@@ -584,12 +584,12 @@ public class Controller {
 			String masterErrorMessage = "";
 			if (view.getMenuDetailsDishListSelectedItemIndex() == -1
 					&& view.getMenuDetailsMenuListSelectedIndex() == -1) {
-				issueFrom = "the lists";
-				masterErrorMessage = "no item selected";
+				issueFrom = "The lists";
+				masterErrorMessage = "No item selected";
 			} else if (view.getMenuDetailsDishListSelectedItemIndex() != -1
 					&& view.getMenuDetailsMenuListSelectedIndex() != -1) {
-				issueFrom = "the list";
-				masterErrorMessage = "please only select from one list at a time";
+				issueFrom = "The list";
+				masterErrorMessage = "Please only select from one list at a time";
 			}
 
 			if (masterErrorMessage.equals("")) {
@@ -644,8 +644,8 @@ public class Controller {
 			ArrayList<String> getAllCurrentdDishes = model.getAllCurrentDishName();
 
 			if (model.getSelectedMenu() == null) {
-				issueFrom = "missing data";
-				masterErrorMessage = "need to go to setting before can continue";
+				issueFrom = "Missing data";
+				masterErrorMessage = "Need to go to settings before can continue";
 			}
 			// in here as want only alert message, but also dont want the user to have to
 			// do this of already have an error but can be in the one with the scanner as
@@ -655,11 +655,11 @@ public class Controller {
 			}
 
 			if (chosenLocation == null) {
-				issueFrom = "missing data";
-				masterErrorMessage = "no file selected";
+				issueFrom = "Missing data";
+				masterErrorMessage = "No file selected";
 			} else if (!chosenLocation.toURI().toString().endsWith(".txt")) {
-				issueFrom = "file Selected";
-				masterErrorMessage = "only .txt files allowed";
+				issueFrom = "File selected";
+				masterErrorMessage = "Only .txt files allowed";
 			}
 
 			if (masterErrorMessage.equals("")) {
@@ -704,8 +704,8 @@ public class Controller {
 			if (dishNotRecognised != 0) {
 				Alert missedDishes = new Alert(AlertType.INFORMATION);
 				missedDishes.setContentText(dishNotRecognised + " where not recognised");
-				missedDishes.setHeaderText("file input");
-				missedDishes.setTitle("warning");
+				missedDishes.setHeaderText("File input");
+				missedDishes.setTitle("Warning");
 				missedDishes.show();
 			}
 		}
@@ -842,7 +842,7 @@ public class Controller {
 					view.accountDetailsLoad();
 
 				} else {
-					view.setAccountListError("must be that admin to edit that account");
+					view.setAccountListError("Must be that admin to edit that account");
 				}
 			} else {
 				view.setAccountListError("No data selected");
@@ -1106,22 +1106,22 @@ public class Controller {
 			// userInput.getExpiereDate().getValue().toString()
 			if (!nameErrorMessage.equals("")) {
 				masterErrorMessage = nameErrorMessage;
-				issuesWith = "stock name";
+				issuesWith = "Stock name";
 			} else if (!quanityErrorMessage.equals("")) {
 				masterErrorMessage = quanityErrorMessage;
-				issuesWith = "quanity";
+				issuesWith = "Quanity";
 			} else if (!quanityTypeErrorMessage.equals("")) {
 				masterErrorMessage = quanityTypeErrorMessage;
-				issuesWith = "quantity type";
+				issuesWith = "Quantity type";
 			} else if (!expiereDateErrorMessage.equals("")) {
 				masterErrorMessage = expiereDateErrorMessage;
-				issuesWith = "expiere date";
+				issuesWith = "Expiry date";
 			} else if (!costErrorMessage.equals("")) {
 				masterErrorMessage = costErrorMessage;
-				issuesWith = "cost";
+				issuesWith = "Cost";
 			} else if (view.getStockDetails().getStorageLocation().getSelectionModel().getSelectedItem() == null) {
-				masterErrorMessage = "no item has been chosen";
-				issuesWith = "storage location";
+				masterErrorMessage = "No item has been chosen";
+				issuesWith = "Storage location";
 			}
 
 			if (masterErrorMessage.equals("")) {
@@ -1132,7 +1132,7 @@ public class Controller {
 						&& model.hasTheStockTypeQuanityTypeChanged(view.getStockDetailsQuanitType(),
 								view.getStockDetailsStockName()).equals(""))) {
 
-					options.setContentText("chaning the ");
+					options.setContentText("Changing the ");
 					if (!model.hasTheStockTypeCostChanged(view.getStockDetailsCost(), view.getStockDetailsStockName())
 							.equals("")) {
 
@@ -1146,7 +1146,7 @@ public class Controller {
 
 						if (!options.getHeaderText().equals("changing the cost of all the matching stock")) {
 
-							options.setHeaderText("quantity type");
+							options.setHeaderText("Quantity type");
 							options.setContentText(options.getContentText() + "quanityType from "
 									+ model.hasTheStockTypeQuanityTypeChanged(view.getStockDetailsQuanitType(),
 											view.getStockDetailsStockName()));

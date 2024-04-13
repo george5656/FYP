@@ -87,7 +87,7 @@ public class RootView extends VBox {
 	 * @param name = String, which is whats added to the text shown to indicate what the user is deleting.
 	 */
 public void setDeleteConfirmationPage(String name) {
-	dcp.setTxtConfirmMessage("Are you sure you wan to delete " + name + "?");
+	dcp.setTxtConfirmMessage("Are you sure you want to delete " + name + "?");
 }
 	/**
 	 * gets the stockDetails page
@@ -449,7 +449,7 @@ public void setDeleteConfirmationPage(String name) {
 		TableColumn<CurrentStock, String> quantityType = new TableColumn<>("Quantity Type");
 		TableColumn<CurrentStock, String> location = new TableColumn<>("Storage Location");
 		TableColumn<CurrentStock, String> quantity = new TableColumn<>("Quantity");
-		TableColumn<CurrentStock, String> expiereDate = new TableColumn<>("Expiere Date");
+		TableColumn<CurrentStock, String> expiereDate = new TableColumn<>("Expiry Date");
 
 		name.setCellValueFactory(new PropertyValueFactory<CurrentStock, String>("name"));
 		cost.setCellValueFactory(new PropertyValueFactory<CurrentStock, String>("cost"));
@@ -2275,7 +2275,7 @@ public void setDeleteConfrimationPageText(String message) {
 
 		TableColumn<StorageLocation, String> name = new TableColumn<>("Name");
 		TableColumn<StorageLocation, String> type = new TableColumn<>("Type");
-		TableColumn<StorageLocation, String> available = new TableColumn<>("Is Avaible");
+		TableColumn<StorageLocation, String> available = new TableColumn<>("Is Available");
 
 		name.setCellValueFactory(new PropertyValueFactory<StorageLocation, String>("name"));
 		type.setCellValueFactory(new PropertyValueFactory<StorageLocation, String>("type"));
