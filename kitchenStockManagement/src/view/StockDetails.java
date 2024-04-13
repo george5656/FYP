@@ -24,9 +24,9 @@ import javafx.scene.text.Font;
 public class StockDetails extends BasicLayoutDetails {
 	private Label txtStockName = new Label("Stock Name");
 	private Label txtStorageLocation = new Label("Storage Location");
-	private Label txtQuanity = new Label("Quanity");
+	private Label txtQuanity = new Label("Quantity");
 	private Label txtQuantityType = new Label("Quantity Type");
-	private Label txtExpiereDate = new Label("Expiere Date");
+	private Label txtExpiereDate = new Label("Expiry Date");
 	private Label txtCost = new Label("Cost Per Unit In Pounds");
 	private TextField tfStockName = new TextField();
 	private ComboBox<String> cbStorageLocation = new ComboBox<String>();
