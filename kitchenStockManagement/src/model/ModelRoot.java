@@ -62,7 +62,7 @@ public class ModelRoot {
 	// true = add, false = edit
 	private Boolean stockFrom;
 	private String loadDeleteFrom;
-
+private Menu orginalSelectedMenu;
 	/**
 	 * default constructor get all the values from the database
 	 */
@@ -1674,8 +1674,16 @@ public boolean wasLoggedInAccountEditted(String username) {
 
 	}
 
-// done for remove and add as it just get its from the list so updates it all
 
+
+	/**
+	 * determines if the selcted Menu has a value
+	 * @return Boolean, true = value present false is selectdMenu var hold null
+	 */
+	public Boolean hasABudgetBeenSelected() {
+		return selectedMenu != null;
+	}
+	
 	/**
 	 * gets all the needed stock for the selectedMenu, does this by delegating to
 	 * getAMenusNeedstock
@@ -1728,6 +1736,7 @@ public boolean wasLoggedInAccountEditted(String username) {
 
 	}
 
+	
 	/**
 	 * it gets all the stock that the passed in menu needs that is nto currently in
 	 * the database, or will expirere before the menu is finished (menu time is
@@ -2481,13 +2490,15 @@ public boolean wasLoggedInAccountEditted(String username) {
 		db.saveMenu(selectedMenu);
 	}
 
+	
+	
 	/**
 	 * update the a menu in the database. the menu that gets update is the menu in
 	 * the selectedMenu
 	 */
 	public void updateMenuFromSelectedMenu() {
 
-		db.DeleteAMenu(selectedMenu);
+		db.DeleteAMenu(orginalSelectedMenu);
 		db.saveMenu(selectedMenu);
 
 	}
@@ -2509,11 +2520,11 @@ public boolean wasLoggedInAccountEditted(String username) {
 	 */
 	public void setFromMenu(String from) {
 		if (from == null) {
-
+orginalSelectedMenu = null;
 			fromMenu = null;
 		} else {
 			fromMenu = db.getAMenuFromId(from);
-
+			orginalSelectedMenu= db.getAMenuFromId(from);
 		}
 	}
 
@@ -2528,7 +2539,7 @@ public boolean wasLoggedInAccountEditted(String username) {
 
 		Alert output = new Alert(AlertType.INFORMATION);
 		output.setTitle("Page Info");
-		output.setHeaderText("info about this page");
+		output.setHeaderText("Info about this page");
 		output.setContentText(info);
 		return output;
 
