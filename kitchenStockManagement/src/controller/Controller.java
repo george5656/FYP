@@ -64,7 +64,7 @@ public class Controller {
 		view.setStockListBtnFindEventHandler(new EHStockListBtnFind());
 		view.setStockListBtnEditEventHandler(new EHStockListBtnEdit());
 		view.setStockListBtnAboutEventHandler((ActionEvent event) -> {
-			model.makeInfoAlert("This page displays all the current stock. it "
+			model.makeInfoAlert("This page displays all the current stock. It "
 					+ "also is used to navigate to pages that manipulate the stock").show();
 		});
 
@@ -297,10 +297,10 @@ public class Controller {
 			Boolean passValidation = false;
 			Alert alert;
 			if (!errorUsername.equals("")) {
-				alert = model.makeAlert("username issue", errorUsername);
+				alert = model.makeAlert("Username issue", errorUsername);
 				alert.show();
 			} else if (!errorPassword.equals("")) {
-				alert = model.makeAlert("password issue", errorPassword);
+				alert = model.makeAlert("Password issue", errorPassword);
 				alert.show();
 			} else {
 				passValidation = true;
@@ -417,6 +417,7 @@ public class Controller {
 	 * @author Student
 	 *
 	 */
+	
 	private class EHStockListBtnDelete implements EventHandler<ActionEvent> {
 
 		@Override
@@ -430,7 +431,7 @@ public class Controller {
 				model.setDeleteFrom("StockList");
 				view.deleteConfirmationLoad();
 			} else {
-				view.setStockListError("No Data Selected");
+				view.setStockListError("No data selected");
 
 			}
 		}
@@ -464,7 +465,7 @@ public class Controller {
 
 			} else {
 
-				view.setBudgetListErrorMessage("No Data Selected");
+				view.setBudgetListErrorMessage("No data selected");
 
 			}
 		}
@@ -501,7 +502,7 @@ public class Controller {
 						model.setDeleteFrom("Account");
 						view.deleteConfirmationLoad();
 					} else {
-						view.setAccountListError("last admin in database cant \ndelete there account");
+						view.setAccountListError("Last admin in the database cant \ndelete there account");
 					}
 
 				} else {
@@ -538,7 +539,7 @@ public class Controller {
 				model.setDeleteFrom("Storage");
 				view.deleteConfirmationLoad();
 			} else {
-				view.setStorageListErrorMessage("No Data Selected");
+				view.setStorageListErrorMessage("No data selected");
 
 			}
 		}
@@ -557,10 +558,15 @@ public class Controller {
 		public void handle(ActionEvent event) {
 			model.resetEddtedStockType();
 			view.clearDishDetailsPage();
+			
 			model.setDishDetailsCameFromEdit(false);
+			
 			model.setDishDetailsOrginalId(null);
+			
 			view.dishDetailsLoad();
+		
 			view.dishDetailsAddReset();
+			
 		}
 
 	}
@@ -703,7 +709,7 @@ public class Controller {
 
 			if (dishNotRecognised != 0) {
 				Alert missedDishes = new Alert(AlertType.INFORMATION);
-				missedDishes.setContentText(dishNotRecognised + " where not recognised");
+				missedDishes.setContentText(dishNotRecognised + " dishes where not recognised");
 				missedDishes.setHeaderText("File input");
 				missedDishes.setTitle("Warning");
 				missedDishes.show();
@@ -1106,22 +1112,22 @@ public class Controller {
 			// userInput.getExpiereDate().getValue().toString()
 			if (!nameErrorMessage.equals("")) {
 				masterErrorMessage = nameErrorMessage;
-				issuesWith = "Stock name";
+				issuesWith = "stock name";
 			} else if (!quanityErrorMessage.equals("")) {
 				masterErrorMessage = quanityErrorMessage;
-				issuesWith = "Quanity";
+				issuesWith = "quanity";
 			} else if (!quanityTypeErrorMessage.equals("")) {
 				masterErrorMessage = quanityTypeErrorMessage;
-				issuesWith = "Quantity type";
+				issuesWith = "quantity type";
 			} else if (!expiereDateErrorMessage.equals("")) {
 				masterErrorMessage = expiereDateErrorMessage;
-				issuesWith = "Expiry date";
+				issuesWith = "expiry date";
 			} else if (!costErrorMessage.equals("")) {
 				masterErrorMessage = costErrorMessage;
-				issuesWith = "Cost";
+				issuesWith = "cost";
 			} else if (view.getStockDetails().getStorageLocation().getSelectionModel().getSelectedItem() == null) {
 				masterErrorMessage = "No item has been chosen";
-				issuesWith = "Storage location";
+				issuesWith = "storage location";
 			}
 
 			if (masterErrorMessage.equals("")) {
@@ -1136,7 +1142,7 @@ public class Controller {
 					if (!model.hasTheStockTypeCostChanged(view.getStockDetailsCost(), view.getStockDetailsStockName())
 							.equals("")) {
 
-						options.setHeaderText("changing the cost of all the matching stock");
+						options.setHeaderText("Changing the cost of all the matching stock");
 						options.setContentText(
 								options.getContentText() + "cost from " + model.hasTheStockTypeCostChanged(
 										view.getStockDetailsCost(), view.getStockDetailsStockName()));
@@ -1144,7 +1150,7 @@ public class Controller {
 					if (!model.hasTheStockTypeQuanityTypeChanged(view.getStockDetailsQuanitType(),
 							view.getStockDetailsStockName()).equals("")) {
 
-						if (!options.getHeaderText().equals("changing the cost of all the matching stock")) {
+						if (!options.getHeaderText().equals("Changing the cost of all the matching stock")) {
 
 							options.setHeaderText("Quantity type");
 							options.setContentText(options.getContentText() + "quanityType from "
@@ -1152,7 +1158,7 @@ public class Controller {
 											view.getStockDetailsStockName()));
 						} else {
 
-							options.setHeaderText("changing the cost and quantity type of all the matching stock");
+							options.setHeaderText("Changing the cost and quantity type of all the matching stock");
 							options.setContentText(options.getContentText() + " and quantity type from "
 									+ model.hasTheStockTypeQuanityTypeChanged(view.getStockDetailsQuanitType(),
 											view.getStockDetailsStockName()));
@@ -1206,7 +1212,7 @@ public class Controller {
 				}
 			} else {
 				// if it fails the first if, eg validation of the inputs fails
-				Alert errorPopup = model.makeAlert("issue with " + issuesWith, masterErrorMessage);
+				Alert errorPopup = model.makeAlert("Issue with " + issuesWith, masterErrorMessage);
 				errorPopup.show();
 			}
 
@@ -1513,22 +1519,22 @@ public class Controller {
 
 			if (!moreQuanityErrorMessage.equals("")) {
 				masterErrorMessage = moreQuanityErrorMessage;
-				issueFrom = "more quantit than";
+				issueFrom = "More quantity than";
 			} else if (!lessQuanityErrorMessage.equals("")) {
 				masterErrorMessage = lessQuanityErrorMessage;
-				issueFrom = "less quantit than";
+				issueFrom = "Less quantity than";
 			} else if (!expiresAfterErrorMessage.equals("")) {
 				masterErrorMessage = expiresAfterErrorMessage;
-				issueFrom = "expires after";
+				issueFrom = "Expires after";
 			} else if (!expiresBeforeErrorMessage.equals("")) {
 				masterErrorMessage = expiresBeforeErrorMessage;
-				issueFrom = "expires before";
+				issueFrom = "Expires before";
 			} else if (!costMoreErrorMessage.equals("")) {
 				masterErrorMessage = costMoreErrorMessage;
-				issueFrom = "cost more than";
+				issueFrom = "Cost more than";
 			} else if (!costLessErrorMessage.equals("")) {
 				masterErrorMessage = costLessErrorMessage;
-				issueFrom = "cost less than";
+				issueFrom = "Cost less than";
 			}
 
 			if (masterErrorMessage.equals("")) {
@@ -1640,22 +1646,22 @@ public class Controller {
 
 			if (!budgetLessErrorMessage.equals("")) {
 				masterErrorMessage = budgetLessErrorMessage;
-				issueFrom = " budget has more than";
+				issueFrom = "Budget has more than";
 			} else if (!budgetMoreErrorMessage.equals("")) {
 				masterErrorMessage = budgetMoreErrorMessage;
-				issueFrom = " budget has less than";
+				issueFrom = "Budget has less than";
 			} else if (!startsBeforeErrorMessage.equals("")) {
 				masterErrorMessage = startsBeforeErrorMessage;
-				issueFrom = " starts before";
+				issueFrom = "Starts before";
 			} else if (!startsAfterErrorMessage.equals("")) {
 				masterErrorMessage = startsAfterErrorMessage;
-				issueFrom = " starts after";
+				issueFrom = "Starts after";
 			} else if (!endsBeforeErrorMessage.equals("")) {
 				masterErrorMessage = endsBeforeErrorMessage;
-				issueFrom = " ends before";
+				issueFrom = "Ends before";
 			} else if (!endsAfterErrorMessage.equals("")) {
 				masterErrorMessage = endsAfterErrorMessage;
-				issueFrom = " ends after";
+				issueFrom = "Ends after";
 			}
 
 			if (masterErrorMessage.equals("")) {
@@ -1844,8 +1850,8 @@ public class Controller {
 			// used to inform the user the end and start date are the wrong way round
 			Alert options = new Alert(AlertType.CONFIRMATION);
 			Optional<ButtonType> output = null;
-			options.setHeaderText("potential issue");
-			options.setContentText("the start date is after the end date");
+			options.setHeaderText("Potential issue");
+			options.setContentText("The start date is after the end date");
 
 			String masterError = "";
 			String issueTitle = "";
@@ -1861,24 +1867,24 @@ public class Controller {
 
 			if (!nameErrorMessage.equals("")) {
 				masterError = nameErrorMessage;
-				issueTitle = "issue with name";
+				issueTitle = "Issue with name";
 			} else if (!amountErrorMessage.equals("")) {
 				masterError = amountErrorMessage;
-				issueTitle = "issue with amount";
+				issueTitle = "Issue with amount";
 			} else if (!startDateErrorMessage.equals("")) {
 				masterError = startDateErrorMessage;
-				issueTitle = "issue with start date";
+				issueTitle = "Issue with start date";
 			} else if (!endDateErrorMessage.equals("")) {
 				masterError = endDateErrorMessage;
-				issueTitle = "issue with end date";
+				issueTitle = "Issue with end date";
 			} else if (model.getSelectedBudget() == null
 					&& model.doesBudgetNameAlreadyExist(view.getBudgetDetailsInputtedName())) {
-				masterError = "name already taken";
-				issueTitle = "issue with name";
+				masterError = "Name already taken";
+				issueTitle = "Issue with name";
 			} else if (model.getSelectedBudget() != null
 					&& model.doesBudgetNameAlreadyExistAndIsntId(view.getBudgetDetailsInputtedName())) {
-				masterError = "name already taken";
-				issueTitle = "issue with name";
+				masterError = "Name already taken";
+				issueTitle = "Issue with name";
 			}
 
 			if (masterError.equals("")) {
@@ -1957,17 +1963,17 @@ public class Controller {
 			String passwordError = model.stringMustBePresetValidation(view.getAccountDetailsUserPassword());
 
 			if (!usernameError.equals("")) {
-				issueFrom = "username";
+				issueFrom = "Username";
 				masterError = usernameError;
 			} else if (!passwordError.equals("")) {
-				issueFrom = "password";
+				issueFrom = "Password";
 				masterError = passwordError;
 			} else if ((!view.getAccountDetailsIsAdminYesSelected()) && (!view.getAccontDetailsIsAdminNoSelected())) {
-				issueFrom = "is admin";
-				masterError = "need to select if admin or not";
+				issueFrom = "Is admin";
+				masterError = "Need to select if admin or not";
 			} else if (model.doesAccountNameAlreadyExist(view.getAccountDetailsUserName())) {
-				issueFrom = "username";
-				masterError = "username is already taken";
+				issueFrom = "Username";
+				masterError = "Username is already taken";
 			}
 
 			if (masterError.equals("")) {
@@ -1986,7 +1992,7 @@ public class Controller {
 
 					if(model.wasLoggedInAccountEditted(view.getAccountDetailsUserName())) {
 					if (!model.doesTheDatabaseHaveMoreThanOneAdminLeft()) {
-						model.makeAlert("admin issue", "last admin cant remove admin status").show();
+						model.makeAlert("Admin issue", "Last admin cant remove admin status").show();
 						return;
 					}
 					}
@@ -2040,26 +2046,26 @@ public class Controller {
 			String typeError = model.stringMustBePresetValidation(view.getStorageDetailsType());
 
 			if (!nameError.equals("")) {
-				errorFrom = "name";
+				errorFrom = "Name";
 				masterError = nameError;
 			} else if (!typeError.equals("")) {
-				errorFrom = "type";
+				errorFrom = "Type";
 				masterError = typeError;
 			} else if (view.getStorageDetailsAvailbilty() == null) {
-				errorFrom = "availability";
-				masterError = "need to select one of the options";
+				errorFrom = "Availability";
+				masterError = "Need to select one of the options";
 
 			}
 			if (model.getSelectedStorageLocation() == null) {
 				if (model.doesStorageAlreadyExist(view.getStorageDetailsName())) {
-					errorFrom = "name";
-					masterError = "name already taken";
+					errorFrom = "Name";
+					masterError = "Name already taken";
 				}
 			} else {
 				if (model.doesStorageAlreadyExist(view.getStorageDetailsName())
 						&& !model.getSelectedStorageName().equals(view.getStorageDetailsName())) {
-					errorFrom = "name";
-					masterError = "name already taken";
+					errorFrom = "Name";
+					masterError = "Name already taken";
 				}
 			}
 			if (masterError.equals("")) {
@@ -2188,10 +2194,10 @@ public class Controller {
 			if (selection != null) {
 				errorMessage = model.saveStockTypeFromFile(selection.toURI());
 			} else {
-				errorMessage = "no file seleted";
+				errorMessage = "No file seleted";
 			}
 			if (!errorMessage.equals("")) {
-				Alert fileLoadErrorPopup = model.makeAlert("file issue", errorMessage);
+				Alert fileLoadErrorPopup = model.makeAlert("File issue", errorMessage);
 				fileLoadErrorPopup.show();
 			} else {
 				loadStockListPage();
@@ -2273,19 +2279,19 @@ public class Controller {
 
 			if (!nameError.equals("")) {
 
-				masterError = "Dish name error = " + nameError;
+				masterError = "Dish name error = " + nameError.toLowerCase();
 			} else if (!ingredientNameError.equals("")) {
 
-				masterError = "Ingredeint error = " + ingredientNameError;
+				masterError = "Ingredeint error = " + ingredientNameError.toLowerCase();
 			} else if (!quanityError.equals("")) {
 
-				masterError = "Quanity error = " + quanityError;
+				masterError = "Quanity error = " + quanityError.toLowerCase();
 			} else if (!unitError.equals("")) {
 
-				masterError = "Unit error = " + unitError;
+				masterError = "Unit error = " + unitError.toLowerCase();
 			} else if (!costError.equals("")) {
 
-				masterError = "D error Cost " + costError;
+				masterError = "Cost error = " + costError.toLowerCase();
 			} else if (model.doseDishNameAlreadyExist(view.getDishDetailsDishName())) {
 
 				masterError = "Dish name already taken";
@@ -2301,11 +2307,11 @@ public class Controller {
 						&& model.hasTheStockTypeQuanityTypeChanged(view.getDishDetailsUnit(),
 								view.getDishDetailsIngrdeintName()).equals(""))) {
 
-					options.setContentText("chaning the ");
+					options.setContentText("Chaning the ");
 					if (!model.hasTheStockTypeCostChanged(view.getDishDetailsEstimateCost(),
 							view.getDishDetailsIngrdeintName()).equals("")) {
 
-						options.setHeaderText("changing the cost of all the matching stock");
+						options.setHeaderText("Changing the cost of all the matching stock");
 						options.setContentText(
 								options.getContentText() + "cost from " + model.hasTheStockTypeCostChanged(
 										view.getDishDetailsEstimateCost(), view.getDishDetailsIngrdeintName()));
@@ -2313,7 +2319,7 @@ public class Controller {
 					if (!model.hasTheStockTypeQuanityTypeChanged(view.getDishDetailsUnit(),
 							view.getDishDetailsIngrdeintName()).equals("")) {
 
-						if (!options.getHeaderText().equals("changing the cost of all the matching stock")) {
+						if (!options.getHeaderText().equals("Changing the cost of all the matching stock")) {
 
 							options.setHeaderText("quantity type");
 							options.setContentText(options.getContentText() + "quanityType from "
@@ -2321,7 +2327,7 @@ public class Controller {
 											view.getDishDetailsIngrdeintName()));
 						} else {
 
-							options.setHeaderText("changing the cost and quantity type of all the matching stock");
+							options.setHeaderText("Changing the cost and quantity type of all the matching stock");
 							options.setContentText(options.getContentText() + " and quantity type from "
 									+ model.hasTheStockTypeQuanityTypeChanged(view.getDishDetailsUnit(),
 											view.getDishDetailsIngrdeintName()));
@@ -2400,14 +2406,14 @@ public class Controller {
 
 			String masterIssue = "";
 			if (view.getDishDetailsSelectedIndex() == -1) {
-				masterIssue = "no selection made";
+				masterIssue = "No selection made";
 			}
 			if (masterIssue.equals("")) {
 
 				model.setDeleteFrom("dishDetails");
 				view.deleteConfirmationLoad();
 				view.setDeleteConfrimationPageText(
-						"Are you sure you wan to delete " + view.getDishDetailsSelectedItem().getName() + "?");
+						"Are you sure you want to delete " + view.getDishDetailsSelectedItem().getName() + "?");
 
 			} else {
 
@@ -2437,7 +2443,7 @@ public class Controller {
 
 			String masterIssue = "";
 			if (view.getDishDetailsSelectedIndex() == -1) {
-				masterIssue = "no selection made";
+				masterIssue = "No selection made";
 			}
 			if (masterIssue.equals("")) {
 
@@ -2491,7 +2497,7 @@ public class Controller {
 							model.getNotSelectedDishesThatAreLikeMenuDetailsFind(view.getMenuDetailsFindUserInput()));
 				}
 			} else {
-				Alert menuDetailsFindErrorMessage = model.makeAlert("issue with find", errorMessage);
+				Alert menuDetailsFindErrorMessage = model.makeAlert("Issue with find", errorMessage);
 				menuDetailsFindErrorMessage.show();
 			}
 
@@ -2550,7 +2556,7 @@ public class Controller {
 				// model.selectAStock(view.getSelectedStockId());
 
 				view.setDeleteConfrimationPageText(
-						"Are you sure you wan to delete " + view.getMenuListSelectedMenuId() + "?");
+						"Are you sure you want to delete " + view.getMenuListSelectedMenuId() + "?");
 				model.setDeleteFrom("MenuList");
 				view.deleteConfirmationLoad();
 			} else {
@@ -2622,16 +2628,16 @@ public class Controller {
 		
 			if (!nameErrorMessage.equals("")) {
 			
-				issueFrom = "name";
+				issueFrom = "Name";
 				masterError = nameErrorMessage;
 			} else if (view.getMenuSettingBudgetIndex() == -1) {
 				
-				issueFrom = "budget";
-				masterError = "no budget selected";
+				issueFrom = "Budget";
+				masterError = "No budget selected";
 			} else if (model.doesMenuNameAlreadyExist(view.getMenuSettingName())) {
 				
-				issueFrom = "name";
-				masterError = "name already taken";
+				issueFrom = "Name";
+				masterError = "Name already taken";
 
 			}
 
@@ -2678,14 +2684,14 @@ public class Controller {
 			String masterErrorMessage = "";
 
 			if (model.getSelectedMenu() == null) {
-				issueFrom = "missing data";
-				masterErrorMessage = "need to go to setting before can continue";
+				issueFrom = "Missing data";
+				masterErrorMessage = "Need to go to setting before can continue";
 			} else if (view.getMenuDetailsDishListSelectedItemIndex() == -1) {
-				issueFrom = "dish list";
-				masterErrorMessage = "no item selected";
+				issueFrom = "Dish list";
+				masterErrorMessage = "No item selected";
 			} else if (model.doesDishGoOverBudget(view.getMenuDetailsDishListSelectedItemValueIdOnly())) {
-				issueFrom = "dish list";
-				masterErrorMessage = "budget is to small to buy all the needed items";
+				issueFrom = "Dish list";
+				masterErrorMessage = "Budget is to small to buy all the needed items";
 			}
 
 			if (masterErrorMessage.equals("")) {
@@ -2735,10 +2741,10 @@ public class Controller {
 			if (view.getMenuDetailsMenuListSelectedIndex() == -1
 					&& view.getMenuDetailsShoppingListSelectedIndex() == -1) {
 
-				masterErrorMessage = "no item selected to be removed";
+				masterErrorMessage = "No item selected to be removed";
 			} else if (view.getMenuDetailsMenuListSelectedIndex() != -1
 					&& view.getMenuDetailsShoppingListSelectedIndex() != -1) {
-				masterErrorMessage = "please only select from one list at a time";
+				masterErrorMessage = "Please only select from one list at a time";
 				view.unselectMenuDetailsMenuAndshoppingListSelection();
 			}
 
@@ -2747,13 +2753,13 @@ public class Controller {
 				if (view.getMenuDetailsMenuListSelectedIndex() == -1) {
 					model.setDeleteFrom("RemoveFromShoppingList");
 					view.deleteConfirmationLoad();
-					view.setDeleteConfrimationPageText("Are you sure you wan to delete "
+					view.setDeleteConfrimationPageText("Are you sure you want to delete "
 							+ view.getMenuDetailsShoppingListSelectedItemValueIdOnly() + "?");
 
 				} else {
 					model.setDeleteFrom("RemoveFromMenuList");
 					view.deleteConfirmationLoad();
-					view.setDeleteConfrimationPageText("Are you sure you wan to delete "
+					view.setDeleteConfrimationPageText("Are you sure you want to delete "
 							+ view.getMenuDetailsMenuDishListSelectedItemValueIdOnly() + "?");
 
 				}
@@ -2768,7 +2774,7 @@ public class Controller {
 				 * view.setMenuDetailsBudgetValue(model.getBudgetSizeMinusTheShoppingList()+"");
 				 */
 			} else {
-				Alert removeFromListError = model.makeAlert("lists", masterErrorMessage);
+				Alert removeFromListError = model.makeAlert("Lists", masterErrorMessage);
 				removeFromListError.show();
 			}
 
@@ -2794,22 +2800,22 @@ public class Controller {
 			String masterErrorMessage = "";
 			if (view.getMenuDetailsDishListSelectedItemIndex() == -1
 					&& view.getMenuDetailsMenuListSelectedIndex() == -1) {
-				issueFrom = "the lists";
-				masterErrorMessage = "no item selected";
+				issueFrom = "The lists";
+				masterErrorMessage = "No item selected";
 			} else if (view.getMenuDetailsDishListSelectedItemIndex() != -1
 					&& view.getMenuDetailsMenuListSelectedIndex() != -1) {
-				issueFrom = "the list";
-				masterErrorMessage = "please only select from one list at a time";
+				issueFrom = "The list";
+				masterErrorMessage = "Please only select from one list at a time";
 			}
 
 			if (masterErrorMessage.equals("")) {
 
 				if (view.getMenuDetailsDishListSelectedItemIndex() != -1) {
-					view.setDeleteConfrimationPageText("Are you sure you wan to delete "
+					view.setDeleteConfrimationPageText("Are you sure you want to delete "
 							+ view.getMenuDetailsDishListSelectedItemValueIdOnly() + "?");
 
 				} else {
-					view.setDeleteConfrimationPageText("Are you sure you wan to delete "
+					view.setDeleteConfrimationPageText("Are you sure you want to delete "
 							+ view.getMenuDetailsMenuDishListSelectedItemValueIdOnly() + "?");
 
 				}
@@ -2840,7 +2846,7 @@ public class Controller {
 		public void handle(ActionEvent event) {
 
 			if (view.getDishDetailsListSize() < 1) {
-				view.setDishDetailsErrorMessage("not enough to be saved");
+				view.setDishDetailsErrorMessage("Not enough to be saved");
 				// model.makeAlert("data to be saved", "not enough to be saved").show();
 
 			} else {
@@ -2855,10 +2861,18 @@ public class Controller {
 			
 				// seperate as doesnt mess with the list so only need one
 				view.MenuDetailsRestFindInput();
+				
+				// so if the user hasn't selected a budget yet don't get an issue
+				if(model.hasABudgetBeenSelected()) {
 				view.setMenuDetailsShoppingList(model.getSelectedMenuStockType());
+				
 				view.setMenuDetailsBudgetValue(model.getBudgetSizeMinusTheShoppingList() + "");
+				
+				}
 				view.MenuDetailsLoad();
+			
 				view.clearMenuDetailsListSelection();
+				
 				model.setSelectedDish(null);
 			}
 
@@ -2893,19 +2907,19 @@ public class Controller {
 
 			// populating the master and from string so that can just be put in to an alert
 			if (!cmt.equals("")) {
-				issueFrom = "total cost more than";
+				issueFrom = "Total cost more than";
 				masterError = cmt;
 
 			} else if (!clt.equals("")) {
-				issueFrom = "total cost less than";
+				issueFrom = "Total cost less than";
 				masterError = clt;
 
 			} else if (!nib.equals("")) {
-				issueFrom = "number ingredeients below";
+				issueFrom = "Number ingredeients below";
 				masterError = nib;
 
 			} else if (!nia.equals("")) {
-				issueFrom = "number ingredeints above";
+				issueFrom = "Number ingredeints above";
 				masterError = nia;
 
 			}
@@ -2979,7 +2993,7 @@ public class Controller {
 			 */
 			File chosenLocation = new FileChooser().showSaveDialog(null);
 			if (chosenLocation == null) {
-				masterErrorMessage = "no location selected";
+				masterErrorMessage = "No location selected";
 			}
 
 			if (masterErrorMessage.equals("")) {
@@ -3025,7 +3039,7 @@ public class Controller {
 
 		@Override
 		public void handle(ActionEvent event) {
-			String issueFrom = "shopping list";
+			String issueFrom = "Shopping list";
 			String masterErrorMessage = "";
 			/*
 			 * if(view.getMenuDetailsMenuListSize() == 0) { masterErrorMessage =
@@ -3033,7 +3047,7 @@ public class Controller {
 			 */
 			File chosenLocation = new FileChooser().showSaveDialog(null);
 			if (chosenLocation == null) {
-				masterErrorMessage = "no location selected";
+				masterErrorMessage = "No location selected";
 			}
 			if (masterErrorMessage.equals("")) {
 
@@ -3082,8 +3096,8 @@ public class Controller {
 			String issueFrom = "";
 			String masterErrorMessage = "";
 			if (view.getMenuDetailsMenuListSize() == 0) {
-				issueFrom = "menu list";
-				masterErrorMessage = "no data to output";
+				issueFrom = "Menu list";
+				masterErrorMessage = "No data to output";
 			}
 
 			if (masterErrorMessage.equals("")) {
@@ -3127,16 +3141,16 @@ public class Controller {
 			String dcdError = model.stringPresentIsOptionalValidation(view.getMenuFilterDoesntContainsDish());
 
 			if (!tcbError.equals("")) {
-				issueFrom = "total cost below";
+				issueFrom = "Total cost below";
 				masterErrorMessage = tcbError;
 			} else if (!tcaError.equals("")) {
-				issueFrom = "total cost above";
+				issueFrom = "Total cost above";
 				masterErrorMessage = tcaError;
 			} else if (!cdError.equals("")) {
-				issueFrom = "contians dish";
+				issueFrom = "Contians dish";
 				masterErrorMessage = cdError;
 			} else if (!dcdError.equals("")) {
-				issueFrom = "doesnt contain dish";
+				issueFrom = "Doesnt contain dish";
 				masterErrorMessage = dcdError;
 			}
 
@@ -3247,7 +3261,7 @@ public class Controller {
 				model.saveRecommedationToDatabase(view.getAdminRecommedationTextContent());
 				view.homePageMenuLoad(model.getLoggedInAccountAdminStatus());
 			} else {
-				Alert dishDetailsErrorMessage = model.makeAlert("input issue", errorMessage);
+				Alert dishDetailsErrorMessage = model.makeAlert("Input issue", errorMessage);
 				dishDetailsErrorMessage.show();
 			}
 
@@ -3270,17 +3284,17 @@ public class Controller {
 
 			String masterIssue = "";
 			if (view.getChefRecommedationSelectedItem() == null) {
-				masterIssue = "no item selected";
+				masterIssue = "No item selected";
 			}
 			if (masterIssue.equals("")) {
 
 				model.setDeleteFrom("ChefRecommedation");
 				view.deleteConfirmationLoad();
-				view.setDeleteConfrimationPageText("Are you sure you wan to delete the recommedation ?");
+				view.setDeleteConfrimationPageText("Are you sure you want to delete the recommedation ?");
 
 			} else {
 
-				Alert dishDetailsErrorMessage = model.makeAlert("selection issue", masterIssue);
+				Alert dishDetailsErrorMessage = model.makeAlert("Selection issue", masterIssue);
 				dishDetailsErrorMessage.show();
 			}
 		}

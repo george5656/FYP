@@ -24,7 +24,7 @@ public class InputValidation {
 	public String stringMustBePresetValidation(String userInput) {
 		errorMessage = stringPresentIsOptionalValidation(userInput);
 		if (userInput.length() == 0) {
-			errorMessage = "no input";
+			errorMessage = "No input";
 		}
 		return errorMessage;
 
@@ -41,22 +41,22 @@ public class InputValidation {
 	public String stringPresentIsOptionalValidation(String userInput) {
 		errorMessage = "";
 		if (userInput.length() > 50) {
-			errorMessage = "user input to big";
+			errorMessage = "User input to big";
 		}
 		if (!userInput.matches("[a-z0-9_ ]+") && !userInput.equals("")) {
-			errorMessage = "only a-z, 0-9 and _ allowed";
+			errorMessage = "Only a-z, 0-9 and _ allowed";
 		}
 		if (userInput.contains("null") || userInput.contains("name") || userInput.contains("name")
 				|| userInput.contains("cost")) {
-			errorMessage = "a key word has been inputed and must be removed";
+			errorMessage = "A key word has been inputed and must be removed";
 		}
 		if (userInput.contains("id") || userInput.contains("storage") || userInput.contains("quantity")
 				|| userInput.contains("quanity")) {
-			errorMessage = "a key word has been inputed and must be removed";
+			errorMessage = "A key word has been inputed and must be removed";
 		}
 		if (userInput.contains("amount") || userInput.contains("quantity type") || userInput.contains("account")
 				|| userInput.contains("type")) {
-			errorMessage = "a key word has been inputed and must be removed";
+			errorMessage = "A key word has been inputed and must be removed";
 		}
 		return errorMessage;
 
@@ -73,7 +73,7 @@ public class InputValidation {
 		errorMessage = intPresentIsOptionalValidation(userInput);
 
 		if (userInput.length() == 0) {
-			errorMessage = "no input";
+			errorMessage = "No input";
 		}
 
 		return errorMessage;
@@ -90,10 +90,10 @@ public class InputValidation {
 		errorMessage = "";
 
 		if (!userInput.matches("[0-9]+") && !userInput.equals("")) {
-			errorMessage = "only characters between 0-9 allowed";
+			errorMessage = "Only characters between 0-9 allowed";
 		}
 		if (userInput.length() > 50) {
-			errorMessage = "user input has to many characters";
+			errorMessage = "User input has to many characters";
 		}
 		return errorMessage;
 	}
@@ -111,7 +111,7 @@ public class InputValidation {
 		errorMessage = doublePresentIsOptionalValidation(userInput);
 
 		if (userInput.length() == 0) {
-			errorMessage = "no input";
+			errorMessage = "No input";
 		}
 
 		return errorMessage;
@@ -135,19 +135,19 @@ public class InputValidation {
 			String valueAfterDot = userInput.substring(indexOfDot + 1);
 
 			if (valueAfterDot.indexOf('.') != -1) {
-				errorMessage = "only one \'.\' allowed";
+				errorMessage = "Only one \'.\' allowed";
 			}
 			if (valueAfterDot.length() > 2) {
-				errorMessage = "only 2 decmal place allowed";
+				errorMessage = "Only 2 decmal place allowed";
 			}
 		}
 
 		if (!userInput.matches("[0-9.]+") && !userInput.equals("")) {
-			errorMessage = "only 0-9 and \'.\' characters allowed";
+			errorMessage = "Only 0-9 and \'.\' characters allowed";
 		}
 
 		if (userInput.length() > 50) {
-			errorMessage = "user input has to many characters";
+			errorMessage = "User input has to many characters";
 		}
 		return errorMessage;
 	}
@@ -167,11 +167,11 @@ public class InputValidation {
 		errorMessage = "";
 
 		if (!input.equals("") && valuePresent == null) {
-			errorMessage = "no data found, if some does exists try selecting it and preesing enter";
+			errorMessage = "No data found, if some does exists try selecting it and pressing enter";
 		}
 	
 		if (input.equals("")) {
-			errorMessage = "error no date";
+			errorMessage = "Error no date";
 		}
 		return errorMessage;
 	}
@@ -190,7 +190,7 @@ public class InputValidation {
 	public String dateValidationAndCheckValuesmatch(String input, LocalDate valuePresent) {
 		errorMessage = dateValidation(input, valuePresent);
 		if(!input.equals(valuePresent.toString())) {
-			errorMessage = "text and selected value very, make sure they match.";
+			errorMessage = "Text and selected value very, make sure they match.";
 		}
 		return errorMessage;
 	}
@@ -210,7 +210,7 @@ public class InputValidation {
 		errorMessage = "";
 
 		if (!input.equals("") && valuePresent == null) {
-			errorMessage = "no data found, if some does exists try selecting it and preesing enter";
+			errorMessage = "No data found, if some does exists try selecting it and pressing enter";
 		}
 		
 		
@@ -227,10 +227,10 @@ public class InputValidation {
 	public String dateValidationPresentIsOptionalExtension(String input, LocalDate valuePresent) {
 		errorMessage = "";
 		if (!input.equals("") && valuePresent == null) {
-			errorMessage = "no data found, if some does exists try selecting it and preesing enter";
+			errorMessage = "No data found, if some does exists try selecting it and pressing enter";
 		}
 		if(!input.equals(valuePresent.toString())) {
-			errorMessage= "text and selected value very, make sure they match.";
+			errorMessage= "Text and selected value very, make sure they match.";
 		}
 		
 		
