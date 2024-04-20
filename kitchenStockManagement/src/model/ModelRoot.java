@@ -278,6 +278,9 @@ if (input.length()==0) {
 		return FXCollections.observableArrayList(db.getAllCurrentStock());
 
 	}
+	
+	
+	
 
 	/**
 	 * gets all the storage location the database has.
@@ -290,6 +293,9 @@ if (input.length()==0) {
 
 	}
 
+	
+	
+	
 	/**
 	 * gets all the accounts that are in the database,
 	 * 

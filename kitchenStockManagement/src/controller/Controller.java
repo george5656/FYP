@@ -316,6 +316,10 @@ public class Controller {
 
 					view.homePageMenuLoad(model.getLoggedInAccountAdminStatus());
 					model.setLogedInAccount(view.getLoginUserUsernameInput());
+					
+					if(model.getAllNeedStock().size() != 0 && model.getLoggedInAccountAdminStatus().equals(true)) {
+						model.makeAlert("stock Issue", "low stock please check low stock for more details").show();
+					}
 				}
 			}
 
