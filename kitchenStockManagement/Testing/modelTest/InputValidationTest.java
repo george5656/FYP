@@ -14,7 +14,7 @@ private String stringLength50 = new String("012345678901234567890123456789012345
 	//string must be present
 	@Test
 	public void stringValidationMinBoundary() {
-		assertEquals("no input",testingclass.stringMustBePresetValidation(new String("")));
+		assertEquals("No input",testingclass.stringMustBePresetValidation(new String("")));
 	}
 	@Test
 	public void stringValidationMinBoundaryPlusOne() {
@@ -26,7 +26,7 @@ private String stringLength50 = new String("012345678901234567890123456789012345
 	}
 	@Test
 	public void stringValidationMaxBoundaryPlusOne() {
-		assertEquals("user input to big",testingclass.stringMustBePresetValidation(stringLength50+"1"));
+		assertEquals("User input to big",testingclass.stringMustBePresetValidation(stringLength50+"1"));
 	}
 	@Test
 	public void stringValidationMaxBoundaryMinusOne() {
@@ -34,11 +34,11 @@ private String stringLength50 = new String("012345678901234567890123456789012345
 	}
 	@Test
 	public void stringValidatioCharWrongType() {
-		assertEquals("only a-z and 0-9 allowed",testingclass.stringMustBePresetValidation(new String("@@@")));
+		assertEquals("Only a-z, 0-9 and _ allowed",testingclass.stringMustBePresetValidation(new String("@@@")));
 	}
 	@Test
 	public void stringValidatioCharWrongTypeCaptial() {
-		assertEquals("only a-z and 0-9 allowed",testingclass.stringMustBePresetValidation(new String("MEW")));
+		assertEquals("Only a-z, 0-9 and _ allowed",testingclass.stringMustBePresetValidation(new String("MEW")));
 	}
 	
 	@Test
@@ -51,7 +51,7 @@ private String stringLength50 = new String("012345678901234567890123456789012345
 	}
 	@Test
 	public void stringValidatioKeyWordTest() {
-		assertEquals("a key word has been inputed and must be removed",testingclass.stringMustBePresetValidation(new String("amount")));
+		assertEquals("A key word has been inputed and must be removed",testingclass.stringMustBePresetValidation(new String("amount")));
 	}
 	
 
@@ -67,7 +67,7 @@ private String stringLength50 = new String("012345678901234567890123456789012345
 	}
 	@Test
 	public void stringValidationOptionalMaxBoundaryPlusOne() {
-		assertEquals("user input to big",testingclass.stringPresentIsOptionalValidation(stringLength50+"1"));
+		assertEquals("User input to big",testingclass.stringPresentIsOptionalValidation(stringLength50+"1"));
 	}
 	@Test
 	public void stringValidationOptionalMaxBoundaryMinusOne() {
@@ -75,11 +75,11 @@ private String stringLength50 = new String("012345678901234567890123456789012345
 	}
 	@Test
 	public void stringValidatioOptionalCharWrongType() {
-		assertEquals("only a-z and 0-9 allowed",testingclass.stringPresentIsOptionalValidation(new String("@@@")));
+		assertEquals("Only a-z, 0-9 and _ allowed",testingclass.stringPresentIsOptionalValidation(new String("@@@")));
 	}
 	@Test
 	public void stringValidatioOptionalCharWrongTypeCaptial() {
-		assertEquals("only a-z and 0-9 allowed",testingclass.stringPresentIsOptionalValidation(new String("Charmander")));
+		assertEquals("Only a-z, 0-9 and _ allowed",testingclass.stringPresentIsOptionalValidation(new String("Charmander")));
 	}
 	@Test
 	public void stringValidatioOptionalCharInRangeAndWriteTypeString() {
@@ -91,7 +91,7 @@ private String stringLength50 = new String("012345678901234567890123456789012345
 	}
 	@Test
 	public void stringValidatioOptionalKeyWordTest() {
-		assertEquals("a key word has been inputed and must be removed",testingclass.stringPresentIsOptionalValidation(new String("amount")));
+		assertEquals("A key word has been inputed and must be removed",testingclass.stringPresentIsOptionalValidation(new String("amount")));
 	}
 	
 	// int present is optional
@@ -101,7 +101,7 @@ private String stringLength50 = new String("012345678901234567890123456789012345
 	}
 	@Test
 	public void intValidationMaxBoundaryPlusOne() {
-		assertEquals("user input has to many characters", testingclass.intPresentIsOptionalValidation(stringLength50 + "0"));
+		assertEquals("User input has to many characters", testingclass.intPresentIsOptionalValidation(stringLength50 + "0"));
 	}
 	@Test
 	public void intValidationMaxBoundaryMinusOne() {
@@ -109,7 +109,7 @@ private String stringLength50 = new String("012345678901234567890123456789012345
 	}
 	@Test
 	public void intValidationNotAcceptedChar() {
-		assertEquals("only characters between 0-9 allowed", testingclass.intPresentIsOptionalValidation("vaporeon"));	
+		assertEquals("Only characters between 0-9 allowed", testingclass.intPresentIsOptionalValidation("vaporeon"));	
 	}
 	@Test
 	public void intValidationNormalAccaptedInput() {
@@ -126,7 +126,7 @@ private String stringLength50 = new String("012345678901234567890123456789012345
 	}
 	@Test
 	public void intValidationNotOptionalMaxBoundaryPlusOne() {
-		assertEquals("user input has to many characters", testingclass.intMustBePresetValidation(stringLength50 + "0"));
+		assertEquals("User input has to many characters", testingclass.intMustBePresetValidation(stringLength50 + "0"));
 	}
 	@Test
 	public void intValidationNotOptionalMaxBoundaryMinusOne() {
@@ -134,7 +134,7 @@ private String stringLength50 = new String("012345678901234567890123456789012345
 	}
 	@Test
 	public void intValidationNotOptionalNotAcceptedChar() {
-		assertEquals("only characters between 0-9 allowed", testingclass.intMustBePresetValidation("clefairy"));	
+		assertEquals("Only characters between 0-9 allowed", testingclass.intMustBePresetValidation("clefairy"));	
 	}
 	@Test
 	public void intValidationNotOptionalNormalAccaptedInput() {
@@ -142,7 +142,7 @@ private String stringLength50 = new String("012345678901234567890123456789012345
 	}
 	@Test
 	public void intValidationNotOptionalMinBoundary() {
-		assertEquals("no input", testingclass.intMustBePresetValidation(new String("")));
+		assertEquals("No input", testingclass.intMustBePresetValidation(new String("")));
 	}
 	@Test
 	public void intValidationNotOptionalMinBoundaryPlusOne() {
@@ -155,7 +155,7 @@ private String stringLength50 = new String("012345678901234567890123456789012345
 	}
 	@Test
 	public void doubleValidationMaxBoundaryPlusOne() {
-		assertEquals("user input has to many characters", testingclass.doublePresentIsOptionalValidation(stringLength50+1));
+		assertEquals("User input has to many characters", testingclass.doublePresentIsOptionalValidation(stringLength50+1));
 	}
 	@Test
 	public void doubleValidationMaxBoundaryMinusOne() {
@@ -171,7 +171,7 @@ private String stringLength50 = new String("012345678901234567890123456789012345
 	}
 	@Test
 	public void doubleValidationInputWithDecimal3DecmailPlace() {
-		assertEquals("only 2 decmal place allowed",testingclass.doublePresentIsOptionalValidation(new String("25.000")));
+		assertEquals("Only 2 decmal place allowed",testingclass.doublePresentIsOptionalValidation(new String("25.000")));
 	}
 	@Test
 	public void doubleValidationNormalInputWithNoDecimalPlaces() {
@@ -179,7 +179,7 @@ private String stringLength50 = new String("012345678901234567890123456789012345
 	}
 	@Test
 	public void doubleValidationWithInvalidCharcaters() {
-		assertEquals("only 0-9 and \'.\' characters allowed",testingclass.doublePresentIsOptionalValidation(new String("bulbasaur")));
+		assertEquals("Only 0-9 and \'.\' characters allowed",testingclass.doublePresentIsOptionalValidation(new String("bulbasaur")));
 	}
 	// double present is not optional 
 	@Test
@@ -188,7 +188,7 @@ private String stringLength50 = new String("012345678901234567890123456789012345
 	}
 	@Test
 	public void doubleValidationNotOptionalMaxBoundaryPlusOne() {
-		assertEquals("user input has to many characters", testingclass.doubleMustBePresetValidation(stringLength50+1));
+		assertEquals("User input has to many characters", testingclass.doubleMustBePresetValidation(stringLength50+1));
 	}
 	@Test
 	public void doubleValidationNotOptionalMaxBoundaryMinusOne() {
@@ -196,7 +196,7 @@ private String stringLength50 = new String("012345678901234567890123456789012345
 	}
 	@Test
 	public void doubleValidationNotOptionalMinInputMinusOne() {
-		assertEquals("no input",testingclass.doubleMustBePresetValidation(new String("")));
+		assertEquals("No input",testingclass.doubleMustBePresetValidation(new String("")));
 	}
 	@Test
 	public void doubleValidationNotOptionalMinInput() {
@@ -212,7 +212,7 @@ private String stringLength50 = new String("012345678901234567890123456789012345
 	}
 	@Test
 	public void doubleValidationNotOptionalInputWithDecimal3DecmailPlace() {
-		assertEquals("only 2 decmal place allowed",testingclass.doubleMustBePresetValidation(new String("25.000")));
+		assertEquals("Only 2 decmal place allowed",testingclass.doubleMustBePresetValidation(new String("25.000")));
 	}
 	@Test
 	public void doubleValidationNotOptionalNormalInputWithNoDecimalPlaces() {
@@ -220,7 +220,7 @@ private String stringLength50 = new String("012345678901234567890123456789012345
 	}
 	@Test
 	public void doubleValidationNotOptionalWithInvalidCharcaters() {
-		assertEquals("only 0-9 and \'.\' characters allowed",testingclass.doubleMustBePresetValidation(new String("bulbasaur")));
+		assertEquals("Only 0-9 and \'.\' characters allowed",testingclass.doubleMustBePresetValidation(new String("bulbasaur")));
 	}
 	// date validation test
 	@Test
@@ -233,12 +233,12 @@ private String stringLength50 = new String("012345678901234567890123456789012345
 	}
 	@Test
 	public void dateValidationUserNotClickedEntere () {
-		assertEquals("no data found, if some does exists try selecting it and preesing enter", testingclass.dateValidationPresentIsOptional("01/01/2024", null));
+		assertEquals("No data found, if some does exists try selecting it and pressing enter", testingclass.dateValidationPresentIsOptional("01/01/2024", null));
 	}
 	//data validation not optional
 	@Test
 	public void dateValidationNotOptionalNoInput () {
-		assertEquals("error no date", testingclass.dateValidation("", null));
+		assertEquals("Error no date", testingclass.dateValidation("", null));
 	}
 	@Test
 	public void dateValidationNotOptionalNormalInput () {
@@ -246,7 +246,7 @@ private String stringLength50 = new String("012345678901234567890123456789012345
 	}
 	@Test
 	public void dateValidationNotOptionalUserNotClickedEntere () {
-		assertEquals("no data found, if some does exists try selecting it and preesing enter", testingclass.dateValidation("01/01/2024", null));
+		assertEquals("No data found, if some does exists try selecting it and pressing enter", testingclass.dateValidation("01/01/2024", null));
 	}
 	
 	
